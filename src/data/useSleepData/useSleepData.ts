@@ -1,12 +1,13 @@
 import {usePillowData} from "data/usePillowData";
-import {useMemo} from "react";
+import { useMemo} from "react";
+import { PillowSleepSession, SleepDataResponse} from "data/useSleepData/types.ts";
 
-export const useSleepData = () => {
+export const useSleepData = (): SleepDataResponse => {
   const { data, isLoading, error } = usePillowData({ type: 'csv' })
 
-  const sleepData = useMemo(() => {
-    if (!data || isLoading) {
-      return undefined
+  const sessions: PillowSleepSession[] = useMemo(() => {
+    if (!data) {
+      return []
     }
 
     const rows = data.trim().split('\n')
@@ -14,16 +15,35 @@ export const useSleepData = () => {
     const headers = values[0]
 
     return values.slice(1).map((value) => {
-      return value.reduce((acc: Record<string, string>, current, i) => {
-        acc[headers[i]] = current
-        return acc
+      return value.reduce((rawSessionData: Record<string, string>, current, i) => {
+        rawSessionData[headers[i].trim()] = current.trim()
+        return rawSessionData
       }, {})
+    }).map(record => ({
+      startTime: new Date(record['Start Time'].replace('Optional(', '').replace(')', '')),
+      endTime: new Date(record['End Time'].replace('Optional(', '').replace(')', '')),
+      audioRecordings: Number(record['Amount of audio recordings']),
+      isNap: record['Is nap'] === 'Yes',
+      mood: record['Wake-up mood'] === 'Undefined' ? undefined : record['Wake-up mood'],
+      sleepQuality: Number(record['Sleep quality']),
+      duration: {
+        total: Number(record['Time in Bed (mins)']),
+        awake: Number(record['Awake duration (mins)']),
+        light: Number(record['Light sleep duration (mins)']),
+        deep: Number(record['Deep sleep duration (mins)']),
+        rem: Number(record['REM sleep duration (mins)']),
+      }
+    })).filter(({ duration }) => {
+      // Sessions with 0 total duration are invalid
+      return duration.total !== 0
     })
-  }, [data, isLoading])
+  }, [data])
 
   return {
-    sleepData,
-    isLoading,
+    sleepData: {
+      sessions
+    },
+    loading: isLoading,
     error
   }
 }

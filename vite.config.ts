@@ -7,7 +7,9 @@ export default defineConfig({
   base: './',
   resolve: {
     alias: {
-      test: "/src/test"
+      test: "/src/test",
+      data: '/src/data',
+      modules: '/src/modules'
     }
   },
   test: {

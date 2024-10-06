@@ -12,10 +12,10 @@ export const usePillowData = ({ type }: GetPillowDataProps) => {
         }
 
         return await response.text()
-    }, [])
+    }, [type])
 
     return useQuery({
-        queryKey: ['sleepData'],
+        queryKey: ['sleepData', type],
         queryFn: readFile
     })
 }
