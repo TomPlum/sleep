@@ -19,7 +19,8 @@ export const useSleepData = (): SleepDataResponse => {
         rawSessionData[headers[i].trim()] = current.trim()
         return rawSessionData
       }, {})
-    }).map(record => ({
+    }).map((record, i) => ({
+      id: `session-${i}`,
       startTime: new Date(record['Start Time'].replace('Optional(', '').replace(')', '')),
       endTime: new Date(record['End Time'].replace('Optional(', '').replace(')', '')),
       audioRecordings: Number(record['Amount of audio recordings']),

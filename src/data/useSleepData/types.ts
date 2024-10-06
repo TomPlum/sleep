@@ -36,6 +36,12 @@ export interface PillowSessionDuration {
 
 export interface PillowSleepSession {
   /**
+   * A unique identifier for the
+   * sleep session.
+   */
+  id: string
+
+  /**
    * The time the sleep session was
    * started either manually or when
    * it was recorded in automatic mode.

@@ -12,7 +12,8 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-force-graph": "^1.44.5"
+    "react-force-graph": "^1.44.5",
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
@@ -22,6 +23,7 @@
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.169.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "@vitest/ui": "^2.1.2",
     "eslint": "^9.11.1",
