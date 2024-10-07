@@ -1,7 +1,7 @@
 import {ForceGraph3D} from 'react-force-graph'
-import {useEffect, useMemo, useRef} from "react";
+import {useCallback, useEffect, useMemo, useRef} from "react";
 import {useSleepData} from "data/useSleepData";
-import {AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial} from 'three'
+import {AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial, Color} from 'three'
 
 // TODO: Move to types file
 interface ForceGraphMethods {
@@ -46,17 +46,28 @@ export const SleepSessionsGraph = () => {
      addLabel('X', [100, 0, 0]);  // Label for X-axis
      addLabel('Y', [0, 100, 0]);  // Label for Y-axis
      addLabel('Z', [0, 0, 100]);  // Label for Z-axis
+
+     return '#9a30fe'
    }
   }, [])
 
   const graphData = useMemo(() => {
-    const nodes = sleepData?.sessions.map((session, i) => ({
-      id: session.id,
-      group: 'sleepQuality',
-      x: (i + 1) * 50,
-      y: session.sleepQuality * 50,
-      z: 0
-    }))
+    const nodes = sleepData?.sessions.flatMap((session, i) => [
+      {
+        id: session.id,
+        group: 'sleepQuality',
+        x: (i + 1) * 50,
+        y: session.sleepQuality * 50,
+        z: 0
+      },
+      {
+        id: session.id + 'awake',
+        group: 'awake',
+        x: (i + 1) * 50,
+        y: session.duration.awake * 50,
+        z: 50
+      }
+    ])
 
     const links = sleepData?.sessions.reduce((acc: Array<LinkConfig>, aSession, i) => {
       if (i < sleepData?.sessions.length - 1) {
@@ -66,6 +77,12 @@ export const SleepSessionsGraph = () => {
           source: aSession.id,
           target: bSession.id,
           value: bSession.sleepQuality
+        })
+
+        acc.push({
+          source: aSession.id + 'awake',
+          target: bSession.id + 'awake',
+          value: bSession.duration.awake
         })
 
         return acc
@@ -81,6 +98,26 @@ export const SleepSessionsGraph = () => {
   }, [sleepData?.sessions])
   console.log('Graph Data', graphData)
 
+  const linkColor = useCallback(link => {
+    console.log(link.source)
+    switch(link.source.group) {
+      case 'sleepQuality': {
+        return '#9a30fe'
+      }
+      case 'awake': {
+        return '#f89128'
+      }
+      default: {
+        return 'red'
+      }
+    }
+  }, [])
+
+  const nodeColour = useCallback(node => {
+    console.log(node)
+    return '#9a30fe'
+  }, [])
+
   if (loading) {
     return 'Loading...'
   }
@@ -92,7 +129,10 @@ export const SleepSessionsGraph = () => {
         nodeAutoColorBy='group'
         d3AlphaMin={0.1}
         d3VelocityDecay={0.9}
+        linkColor={linkColor}
+        nodeColor={nodeColour}
         graphData={graphData}
+        backgroundColor='#171717'
       />
   )
 }
