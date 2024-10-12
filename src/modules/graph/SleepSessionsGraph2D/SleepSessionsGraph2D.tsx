@@ -8,6 +8,8 @@ import {LoadingOutlined} from "@ant-design/icons";
 import {DateRangePicker} from "modules/controls/DateRangePicker";
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import { type SleepSessionGraph2DData } from "./types";
+import {useLinearRegression} from "data/useLinearRegression";
 
 dayjs.extend(isBetween);
 
@@ -64,7 +66,7 @@ export const SleepSessionsGraph2D = () => {
     }
   }, [currentMetric])
 
-  const data = useMemo(() => {
+  const data: SleepSessionGraph2DData = useMemo(() => {
     return sleepData?.sessions.map(session => ({
       _date: dayjs(session.startTime).format('MMM-YYYY'),
       date: session.startTime,
@@ -74,7 +76,15 @@ export const SleepSessionsGraph2D = () => {
     })
   }, [currentMetric, getValueAsPercentage, rangeEnd, rangeStart, sleepData?.sessions])
 
-  if (loading || !sleepData) {
+  const { regressionLineData, regressionDataKey } = useLinearRegression({
+    metric: currentMetric,
+    data: data?.map(session => ({
+      x: dayjs(session.date).valueOf(),
+      y: session[currentMetric] as number
+    })) ?? []
+  })
+
+  if (loading || !data || !sleepData) {
     return (
       <Spin
         size="large"
@@ -95,12 +105,25 @@ export const SleepSessionsGraph2D = () => {
         <LineChart data={data}>
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='_date' />
-          <YAxis dataKey={currentMetric} />
+          <YAxis
+            domain={[0, 100]}
+            dataKey={currentMetric}
+            tickFormatter={value => `${value}%`}
+            ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+          />
           <Line
             type='monotone'
             strokeWidth={3}
             stroke={lineColour}
             dataKey={currentMetric}
+          />
+          <Line
+            dot={false}
+            type='monotone'
+            strokeWidth={3}
+            data={regressionLineData}
+            stroke='rgb(255, 255, 255)'
+            dataKey={regressionDataKey}
           />
         </LineChart>
       </ResponsiveContainer>

@@ -1,1 +1,2 @@
-export * from './SleepSessionsGraph2D.tsx'
+export * from './types'
+export * from './SleepSessionsGraph2D'
