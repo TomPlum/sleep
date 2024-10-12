@@ -1,12 +1,10 @@
-import './App.css'
-import {SleepSessionsGraph} from "modules/graph/SleepSessionsGraph.tsx";
+import {SleepSessionsGraph2D} from "modules/graph/SleepSessionsGraph2D";
+import styles from './SleepApp.module.scss'
 
-function SleepApp() {
-  return (
-    <div>
-      <SleepSessionsGraph />
+const SleepApp = () => (
+    <div className={styles.container}>
+      <SleepSessionsGraph2D/>
     </div>
-  )
-}
+);
 
 export default SleepApp
