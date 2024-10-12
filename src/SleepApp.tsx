@@ -1,9 +1,9 @@
-import {SleepSessionsGraph2D} from "modules/graph/SleepSessionsGraph2D";
 import styles from './SleepApp.module.scss'
+import {Outlet} from "react-router-dom";
 
 const SleepApp = () => (
     <div className={styles.container}>
-      <SleepSessionsGraph2D/>
+      <Outlet />
     </div>
 );
 

@@ -19,6 +19,7 @@
     "react-dom": "^18.3.1",
     "react-force-graph": "^1.44.5",
     "react-i18next": "^15.0.2",
+    "react-router-dom": "^6.27.0",
     "recharts": "^2.12.7",
     "three": "^0.169.0"
   },

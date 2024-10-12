@@ -1,4 +1,4 @@
-import {CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis} from "recharts";
+import {Line, LineChart, ResponsiveContainer, XAxis, YAxis} from "recharts";
 import {PillowSleepSession, useSleepData} from "data/useSleepData";
 import {useCallback, useMemo, useState} from "react";
 import styles from './SleepSessionGraph2D.module.scss'
@@ -10,14 +10,19 @@ import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { type SleepSessionGraph2DData } from "./types";
 import {useLinearRegression} from "data/useLinearRegression";
+import {useSearchParams} from "react-router-dom";
 
 dayjs.extend(isBetween);
 
 export const SleepSessionsGraph2D = () => {
   const { sleepData, loading } = useSleepData()
-  const [rangeStart, setRangeStart] = useState(dayjs(sleepData?.latestSession).subtract(2, 'month').toDate())
+
   const [rangeEnd, setRangeEnd] = useState(sleepData?.latestSession)
-  const [currentMetric, setCurrentMetric] = useState(SleepMetric.QUALITY)
+  const [rangeStart, setRangeStart] = useState(dayjs(sleepData?.latestSession).subtract(2, 'month').toDate())
+
+  const [searchParams] = useSearchParams()
+  const defaultMetric = (searchParams.get('metric') ?? SleepMetric.QUALITY) as SleepMetric
+  const [currentMetric, setCurrentMetric] = useState(defaultMetric)
 
   const handleDateRangeChange = useCallback((min: Date, max: Date) => {
     setRangeStart(min)
@@ -103,7 +108,7 @@ export const SleepSessionsGraph2D = () => {
 
       <ResponsiveContainer width='100%' height='100%'>
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray='3 3' />
+          {/*<CartesianGrid strokeDasharray='4 5' />*/}
           <XAxis dataKey='_date' />
           <YAxis
             domain={[0, 100]}
