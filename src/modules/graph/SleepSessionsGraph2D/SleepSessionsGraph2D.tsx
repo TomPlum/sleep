@@ -5,10 +5,22 @@ import styles from './SleepSessionGraph2D.module.scss'
 import {MetricConfiguration, SleepMetric} from "modules/controls/MetricConfiguration";
 import { Spin } from "antd";
 import {LoadingOutlined} from "@ant-design/icons";
+import {DateRangePicker} from "modules/controls/DateRangePicker";
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+
+dayjs.extend(isBetween);
 
 export const SleepSessionsGraph2D = () => {
   const { sleepData, loading } = useSleepData()
+  const [rangeStart, setRangeStart] = useState(dayjs(sleepData?.latestSession).subtract(2, 'month').toDate())
+  const [rangeEnd, setRangeEnd] = useState(sleepData?.latestSession)
   const [currentMetric, setCurrentMetric] = useState(SleepMetric.QUALITY)
+
+  const handleDateRangeChange = useCallback((min: Date, max: Date) => {
+    setRangeStart(min)
+    setRangeEnd(max)
+  }, [])
 
   const getValueAsPercentage = useCallback((session: PillowSleepSession) => {
     const sessionDurationTotal = session.duration.total
@@ -54,12 +66,15 @@ export const SleepSessionsGraph2D = () => {
 
   const data = useMemo(() => {
     return sleepData?.sessions.map(session => ({
-      date: session.startTime.toString(),
+      _date: dayjs(session.startTime).format('MMM-YYYY'),
+      date: session.startTime,
       [currentMetric]: getValueAsPercentage(session)
-    }))
-  }, [currentMetric, getValueAsPercentage, sleepData?.sessions])
+    })).filter(({ date }) => {
+      return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
+    })
+  }, [currentMetric, getValueAsPercentage, rangeEnd, rangeStart, sleepData?.sessions])
 
-  if (loading) {
+  if (loading || !sleepData) {
     return (
       <Spin
         size="large"
@@ -69,21 +84,32 @@ export const SleepSessionsGraph2D = () => {
   }
 
   return (
-      <div className={styles.container}>
-        <MetricConfiguration
-          current={currentMetric}
-          className={styles.configPanel}
-          onMetricChange={setCurrentMetric}
-        />
+    <div className={styles.container}>
+      <MetricConfiguration
+        current={currentMetric}
+        className={styles.configPanel}
+        onMetricChange={setCurrentMetric}
+      />
 
-        <ResponsiveContainer width='100%' height='100%'>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray='3 3' />
-            <XAxis dataKey='date' />
-            <YAxis dataKey={currentMetric} />
-            <Line type='monotone' dataKey={currentMetric} stroke={lineColour} />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width='100%' height='100%'>
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='_date' />
+          <YAxis dataKey={currentMetric} />
+          <Line
+            type='monotone'
+            strokeWidth={3}
+            stroke={lineColour}
+            dataKey={currentMetric}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+
+      <DateRangePicker
+        onChange={handleDateRangeChange}
+        rangeEnd={sleepData.latestSession}
+        rangeStart={sleepData.earliestSession}
+      />
+    </div>
   )
 }

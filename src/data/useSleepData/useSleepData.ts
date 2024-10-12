@@ -40,9 +40,20 @@ export const useSleepData = (): SleepDataResponse => {
     })
   }, [data])
 
+  const { earliestSession, latestSession } = useMemo(() => {
+    const earliestSession = new Date(Math.min(...sessions.map(session => session.startTime.getTime())))
+    const latestSession = new Date(Math.max(...sessions.map(session => session.endTime.getTime())))
+    return {
+      earliestSession,
+      latestSession
+    }
+  }, [sessions])
+
   return {
     sleepData: {
-      sessions
+      sessions,
+      earliestSession,
+      latestSession,
     },
     loading: isLoading,
     error

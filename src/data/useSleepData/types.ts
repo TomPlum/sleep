@@ -94,6 +94,18 @@ export interface PillowSleepData {
    * exported from my iPhone.
    */
   sessions: PillowSleepSession[]
+
+  /**
+   * The date of the earliest sleep
+   * session recorded.
+   */
+  earliestSession: Date
+
+  /**
+   * The date of the most recent sleep
+   * session recorded.
+   */
+  latestSession: Date
 }
 
 export interface SleepDataResponse {
