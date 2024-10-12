@@ -2,13 +2,27 @@ import {DatePicker, } from "antd";
 import {useCallback} from "react";
 import {DateRangePickerProps} from "modules/controls/DateRangePicker/types.ts";
 import dayjs, {Dayjs} from "dayjs";
+import {useQueryParams} from "hooks/useQueryParams";
 
 export const DateRangePicker = ({ rangeStart, rangeEnd, onChange }: DateRangePickerProps) => {
+  const { updateQueryParam } = useQueryParams()
+
   const handleChange = useCallback((dates: [start: Dayjs | null, end: Dayjs | null] | null) => {
     if (dates && dates[0] && dates[1]) {
-      onChange(dates[0].toDate(), dates[1].toDate())
+      const newStartDate = dates[0].toDate()
+      const newEndDate = dates[1].toDate()
+
+      onChange(newStartDate, newEndDate)
+
+      updateQueryParam({
+        route: '/sleep',
+        params: {
+          start: newStartDate.getTime().toString(),
+          end: newEndDate.getTime().toString()
+        }
+      })
     }
-  }, [onChange])
+  }, [onChange, updateQueryParam])
 
   return (
     <DatePicker.RangePicker

@@ -11,14 +11,16 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { type SleepSessionGraph2DData } from "./types";
 import {useLinearRegression} from "data/useLinearRegression";
 import {useSearchParams} from "react-router-dom";
+import {useQueryParams} from "hooks/useQueryParams";
 
 dayjs.extend(isBetween);
 
 export const SleepSessionsGraph2D = () => {
   const { sleepData, loading } = useSleepData()
 
-  const [rangeEnd, setRangeEnd] = useState(sleepData?.latestSession)
-  const [rangeStart, setRangeStart] = useState(dayjs(sleepData?.latestSession).subtract(2, 'month').toDate())
+  const { queryParams: { start, end } } = useQueryParams()
+  const [rangeEnd, setRangeEnd] = useState(end ?? sleepData?.latestSession)
+  const [rangeStart, setRangeStart] = useState(start ?? dayjs(sleepData?.latestSession).subtract(2, 'month').toDate())
 
   const [searchParams] = useSearchParams()
   const defaultMetric = (searchParams.get('metric') ?? SleepMetric.QUALITY) as SleepMetric

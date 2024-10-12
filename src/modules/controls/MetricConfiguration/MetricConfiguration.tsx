@@ -5,10 +5,10 @@ import {useTranslation} from "react-i18next";
 import {useCallback} from "react";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import classNames from "classnames";
-import {createSearchParams, useNavigate} from "react-router-dom";
+import {useQueryParams} from "hooks/useQueryParams";
 
 export const MetricConfiguration = ({ current, className, onMetricChange }: MetricConfigurationProps) => {
-  const navigate = useNavigate()
+  const { updateQueryParam } = useQueryParams()
 
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.metric-config' })
 
@@ -17,14 +17,14 @@ export const MetricConfiguration = ({ current, className, onMetricChange }: Metr
     if (checked) {
       onMetricChange(metric)
 
-      navigate({
-        pathname: '/sleep',
-        search: createSearchParams({
+      updateQueryParam({
+        route: '/sleep',
+        params: {
           metric
-        }).toString()
+        }
       })
     }
-  }, [navigate, onMetricChange])
+  }, [onMetricChange, updateQueryParam])
 
   return (
     <div className={classNames(styles.container, className)}>
