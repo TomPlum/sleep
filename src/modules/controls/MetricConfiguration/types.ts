@@ -5,9 +5,9 @@ export interface MetricConfigurationProps {
 }
 
 export enum SleepMetric {
-  QUALITY,
-  LIGHT_SLEEP,
-  DEEP_SLEEP,
-  REM_SLEEP,
-  AWAKE_TIME
+  QUALITY = 'quality',
+  LIGHT_SLEEP = 'light_sleep',
+  DEEP_SLEEP = 'deep_sleep',
+  REM_SLEEP = 'rem_sleep',
+  AWAKE_TIME = 'awake_time'
 }

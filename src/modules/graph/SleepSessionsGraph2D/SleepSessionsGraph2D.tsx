@@ -10,22 +10,44 @@ export const SleepSessionsGraph2D = () => {
   const { sleepData, loading } = useSleepData()
   const [currentMetric, setCurrentMetric] = useState(SleepMetric.QUALITY)
 
-  const getValue = useCallback((session: PillowSleepSession) => {
+  const getValueAsPercentage = useCallback((session: PillowSleepSession) => {
+    const sessionDurationTotal = session.duration.total
+
     switch (currentMetric) {
       case SleepMetric.QUALITY: {
         return session.sleepQuality
       }
       case SleepMetric.AWAKE_TIME: {
-        return session.duration.awake
+        return (session.duration.awake / sessionDurationTotal) * 100
       }
       case SleepMetric.DEEP_SLEEP: {
-        return session.duration.deep
+        return (session.duration.deep / sessionDurationTotal) * 100
       }
       case SleepMetric.LIGHT_SLEEP: {
-        return session.duration.light
+        return (session.duration.light / sessionDurationTotal) * 100
       }
       case SleepMetric.REM_SLEEP: {
-        return session.duration.rem
+        return (session.duration.rem / sessionDurationTotal) * 100
+      }
+    }
+  }, [currentMetric])
+
+  const lineColour = useMemo(() => {
+    switch (currentMetric) {
+      case SleepMetric.LIGHT_SLEEP: {
+        return 'rgb(84,234,153)'
+      }
+      case SleepMetric.AWAKE_TIME: {
+        return 'rgb(255,188,21)'
+      }
+      case SleepMetric.DEEP_SLEEP: {
+        return 'rgb(21,150,255)'
+      }
+      case SleepMetric.REM_SLEEP: {
+        return 'rgb(255,71,231)'
+      }
+      case SleepMetric.QUALITY: {
+        return 'rgb(145,71,255)'
       }
     }
   }, [currentMetric])
@@ -33,9 +55,9 @@ export const SleepSessionsGraph2D = () => {
   const data = useMemo(() => {
     return sleepData?.sessions.map(session => ({
       date: session.startTime.toString(),
-      quality: getValue(session)
+      [currentMetric]: getValueAsPercentage(session)
     }))
-  }, [getValue, sleepData?.sessions])
+  }, [currentMetric, getValueAsPercentage, sleepData?.sessions])
 
   if (loading) {
     return (
@@ -58,8 +80,8 @@ export const SleepSessionsGraph2D = () => {
           <LineChart data={data}>
             <CartesianGrid strokeDasharray='3 3' />
             <XAxis dataKey='date' />
-            <YAxis dataKey='quality' />
-            <Line type='monotone' dataKey='quality' />
+            <YAxis dataKey={currentMetric} />
+            <Line type='monotone' dataKey={currentMetric} stroke={lineColour} />
           </LineChart>
         </ResponsiveContainer>
       </div>
