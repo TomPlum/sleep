@@ -17,7 +17,7 @@ export const useLinearRegression = ({ data, metric }: LinearRegressionProps): Li
     const intercept = (sumY - slope * sumX) / n;
 
     return data.map(point => ({
-      _date: dayjs(point.x).format('MMM-YYYY'),
+      _date: dayjs(point.x).format('MMM YY'),
       [metric]: slope * point.x + intercept,
     }))
   }, [data, metric])

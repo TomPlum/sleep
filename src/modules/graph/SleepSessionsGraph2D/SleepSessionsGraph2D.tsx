@@ -15,6 +15,12 @@ import {useQueryParams} from "hooks/useQueryParams";
 
 dayjs.extend(isBetween);
 
+const CustomYAxisTick = ({ x, y, payload}: any) => {
+  return (
+    <text x={x + 15} y={y + 5} textAnchor="start" fill="#666">{payload.value}%</text>
+  )
+}
+
 export const SleepSessionsGraph2D = () => {
   const { sleepData, loading } = useSleepData()
 
@@ -75,7 +81,7 @@ export const SleepSessionsGraph2D = () => {
 
   const data: SleepSessionGraph2DData = useMemo(() => {
     return sleepData?.sessions.map(session => ({
-      _date: dayjs(session.startTime).format('MMM-YYYY'),
+      _date: dayjs(session.startTime).format('MMM YY'),
       date: session.startTime,
       [currentMetric]: getValueAsPercentage(session)
     })).filter(({ date }) => {
@@ -109,21 +115,30 @@ export const SleepSessionsGraph2D = () => {
       />
 
       <ResponsiveContainer width='100%' height='100%'>
-        <LineChart data={data}>
-          {/*<CartesianGrid strokeDasharray='4 5' />*/}
-          <XAxis dataKey='_date' />
+        <LineChart data={data} margin={{ left: -50, top: 15 }}>
+          <XAxis
+            dataKey='_date'
+            padding={{ left: 60 }}
+          />
+
           <YAxis
+            axisLine={false}
             domain={[0, 100]}
+            orientation='left'
             dataKey={currentMetric}
+            padding={{ bottom: 30 }}
+            tick={<CustomYAxisTick />}
             tickFormatter={value => `${value}%`}
             ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
           />
+
           <Line
             type='monotone'
             strokeWidth={3}
             stroke={lineColour}
             dataKey={currentMetric}
           />
+
           <Line
             dot={false}
             type='monotone'
