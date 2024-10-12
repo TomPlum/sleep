@@ -9,7 +9,8 @@ export default defineConfig({
     alias: {
       test: "/src/test",
       data: '/src/data',
-      modules: '/src/modules'
+      modules: '/src/modules',
+      locales: '/src/locales'
     }
   },
   test: {

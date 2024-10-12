@@ -1,0 +1,13 @@
+{
+  "sleep": {
+    "metric-config": {
+      "checkbox": {
+        "quality": "Sleep Quality",
+        "deep": "Deep Sleep",
+        "light": "Light Sleep",
+        "rem": "REM Sleep",
+        "awake": "Awake Time"
+      }
+    }
+  }
+}

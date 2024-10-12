@@ -1,0 +1,10 @@
+{
+  "sleep": {
+    "metric-config": {
+      "checkbox": {
+        "quality": "睡眠の質",
+        "deep": "深睡眠"
+      }
+    }
+  }
+}
