@@ -8,14 +8,9 @@ import isBetween from 'dayjs/plugin/isBetween';
 import {type SleepSessionGraph2DData} from "./types";
 import {useLinearRegression} from "data/useLinearRegression";
 import {useSleepContext} from "context";
+import {CustomYAxisTick} from "modules/graph/CustomYAxisTick";
 
 dayjs.extend(isBetween);
-
-const CustomYAxisTick = ({ x, y, payload}: any) => {
-  return (
-    <text x={x + 15} y={y + 5} textAnchor="start" fill="#666">{payload.value}%</text>
-  )
-}
 
 export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
   const { sleepData } = useSleepContext()
@@ -86,6 +81,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
         <XAxis
           dataKey='_date'
           padding={{ left: 60 }}
+          stroke='rgb(255, 255, 255)'
         />
 
         <YAxis
@@ -94,8 +90,9 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           orientation='left'
           dataKey={currentMetric}
           padding={{ bottom: 30 }}
-          tick={<CustomYAxisTick />}
+          stroke='rgb(255, 255, 255)'
           tickFormatter={value => `${value}%`}
+          tick={props => <CustomYAxisTick {...props} />}
           ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
         />
 
