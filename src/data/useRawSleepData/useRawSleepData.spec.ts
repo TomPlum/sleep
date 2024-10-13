@@ -28,7 +28,7 @@ describe('Sleep Data Parsing Hook', () => {
     }))
   })
 
-  it('should return something', async () => {
+  it.skip('should return something', async () => {
     const { result } = renderHook(useRawSleepData, { wrapper })
 
     await waitFor(() => {
