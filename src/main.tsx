@@ -5,8 +5,9 @@ import {QueryClientProvider} from "@tanstack/react-query";
 import {queryClient} from "./data/queryClient.ts";
 import './i18n.ts'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import { SleepSessionsGraph2D } from 'modules/graph/SleepSessionsGraph2D';
 import SleepApp from "SleepApp.tsx";
+import {SleepPage} from "pages/SleepPage.tsx";
+import {SleepContextProvider} from "context";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/sleep',
-        element: <SleepSessionsGraph2D />
+        element: <SleepPage />
       }
     ]
   }
@@ -23,7 +24,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <SleepContextProvider>
+        <RouterProvider router={router} />
+      </SleepContextProvider>
     </QueryClientProvider>
   </StrictMode>
 )

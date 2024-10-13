@@ -1,17 +1,13 @@
 import {Line, LineChart, ResponsiveContainer, XAxis, YAxis} from "recharts";
-import {PillowSleepSession, useSleepData} from "data/useSleepData";
-import {useCallback, useMemo, useState} from "react";
-import styles from './SleepSessionGraph2D.module.scss'
-import {MetricConfiguration, SleepMetric} from "modules/controls/MetricConfiguration";
-import { Spin } from "antd";
-import {LoadingOutlined} from "@ant-design/icons";
-import {DateRangePicker} from "modules/controls/DateRangePicker";
+import {PillowSleepSession} from "data/useSleepData";
+import {useCallback, useMemo} from "react";
+import {SleepSessionsGraph2DProps} from './'
+import {SleepMetric} from "modules/controls/MetricConfiguration";
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { type SleepSessionGraph2DData } from "./types";
+import {type SleepSessionGraph2DData} from "./types";
 import {useLinearRegression} from "data/useLinearRegression";
-import {useSearchParams} from "react-router-dom";
-import {useQueryParams} from "hooks/useQueryParams";
+import {useSleepContext} from "context";
 
 dayjs.extend(isBetween);
 
@@ -21,21 +17,8 @@ const CustomYAxisTick = ({ x, y, payload}: any) => {
   )
 }
 
-export const SleepSessionsGraph2D = () => {
-  const { sleepData, loading } = useSleepData()
-
-  const { queryParams: { start, end } } = useQueryParams()
-  const [rangeEnd, setRangeEnd] = useState(end ?? sleepData?.latestSession)
-  const [rangeStart, setRangeStart] = useState(start ?? dayjs(sleepData?.latestSession).subtract(2, 'month').toDate())
-
-  const [searchParams] = useSearchParams()
-  const defaultMetric = (searchParams.get('metric') ?? SleepMetric.QUALITY) as SleepMetric
-  const [currentMetric, setCurrentMetric] = useState(defaultMetric)
-
-  const handleDateRangeChange = useCallback((min: Date, max: Date) => {
-    setRangeStart(min)
-    setRangeEnd(max)
-  }, [])
+export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
+  const { sleepData } = useSleepContext()
 
   const getValueAsPercentage = useCallback((session: PillowSleepSession) => {
     const sessionDurationTotal = session.duration.total
@@ -97,64 +80,41 @@ export const SleepSessionsGraph2D = () => {
     })) ?? []
   })
 
-  if (loading || !data || !sleepData) {
-    return (
-      <Spin
-        size="large"
-        indicator={<LoadingOutlined spin />}
-      />
-    )
-  }
-
   return (
-    <div className={styles.container}>
-      <MetricConfiguration
-        current={currentMetric}
-        className={styles.configPanel}
-        onMetricChange={setCurrentMetric}
-      />
+    <ResponsiveContainer width='100%' height='100%'>
+      <LineChart data={data} margin={{ left: -50, top: 15 }}>
+        <XAxis
+          dataKey='_date'
+          padding={{ left: 60 }}
+        />
 
-      <ResponsiveContainer width='100%' height='100%'>
-        <LineChart data={data} margin={{ left: -50, top: 15 }}>
-          <XAxis
-            dataKey='_date'
-            padding={{ left: 60 }}
-          />
+        <YAxis
+          axisLine={false}
+          domain={[0, 100]}
+          orientation='left'
+          dataKey={currentMetric}
+          padding={{ bottom: 30 }}
+          tick={<CustomYAxisTick />}
+          tickFormatter={value => `${value}%`}
+          ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+        />
 
-          <YAxis
-            axisLine={false}
-            domain={[0, 100]}
-            orientation='left'
-            dataKey={currentMetric}
-            padding={{ bottom: 30 }}
-            tick={<CustomYAxisTick />}
-            tickFormatter={value => `${value}%`}
-            ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-          />
+        <Line
+          type='monotone'
+          strokeWidth={3}
+          stroke={lineColour}
+          dataKey={currentMetric}
+        />
 
-          <Line
-            type='monotone'
-            strokeWidth={3}
-            stroke={lineColour}
-            dataKey={currentMetric}
-          />
-
-          <Line
-            dot={false}
-            type='monotone'
-            strokeWidth={3}
-            data={regressionLineData}
-            stroke='rgb(255, 255, 255)'
-            dataKey={regressionDataKey}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-
-      <DateRangePicker
-        onChange={handleDateRangeChange}
-        rangeEnd={sleepData.latestSession}
-        rangeStart={sleepData.earliestSession}
-      />
-    </div>
+        <Line
+          dot={false}
+          type='monotone'
+          strokeWidth={3}
+          data={regressionLineData}
+          stroke='rgb(255, 255, 255)'
+          dataKey={regressionDataKey}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   )
 }
