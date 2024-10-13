@@ -11,12 +11,13 @@ export const useQueryParams = (): QueryParamsResponse => {
     const updatedSearchParams = new URLSearchParams(searchParams)
     Object.entries(params).forEach(([key, value]) => {
       updatedSearchParams.set(key, value)
-      updatedSearchParams.set(key, value)
     })
 
     navigate({
       pathname: route,
       search: updatedSearchParams.toString()
+    }, {
+      replace: true
     })
   }, [navigate, searchParams])
 
