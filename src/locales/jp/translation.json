@@ -1,5 +1,10 @@
 {
   "sleep": {
+    "graph2d": {
+      "tooltip": {
+        "date": "日付"
+      }
+    },
     "metric-config": {
       "checkbox": {
         "quality": "睡眠の質",

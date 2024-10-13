@@ -1,5 +1,4 @@
-import {Line, LineChart, ResponsiveContainer, XAxis, YAxis} from "recharts";
-import {PillowSleepSession} from "data/useSleepData";
+import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {useCallback, useMemo} from "react";
 import {SleepSessionsGraph2DProps} from './'
 import {SleepMetric} from "modules/controls/MetricConfiguration";
@@ -9,33 +8,16 @@ import {type SleepSessionGraph2DData} from "./types";
 import {useLinearRegression} from "data/useLinearRegression";
 import {useSleepContext} from "context";
 import {CustomYAxisTick} from "modules/graph/CustomYAxisTick";
+import {SleepSessionTooltip} from "modules/graph/SleepSessionTooltip";
 
 dayjs.extend(isBetween);
 
 export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
   const { sleepData } = useSleepContext()
 
-  const getValueAsPercentage = useCallback((session: PillowSleepSession) => {
-    const sessionDurationTotal = session.duration.total
-
-    switch (currentMetric) {
-      case SleepMetric.QUALITY: {
-        return session.sleepQuality
-      }
-      case SleepMetric.AWAKE_TIME: {
-        return (session.duration.awake / sessionDurationTotal) * 100
-      }
-      case SleepMetric.DEEP_SLEEP: {
-        return (session.duration.deep / sessionDurationTotal) * 100
-      }
-      case SleepMetric.LIGHT_SLEEP: {
-        return (session.duration.light / sessionDurationTotal) * 100
-      }
-      case SleepMetric.REM_SLEEP: {
-        return (session.duration.rem / sessionDurationTotal) * 100
-      }
-    }
-  }, [currentMetric])
+  const convertDurationToPercentage = useCallback((duration: number, total: number) => {
+    return (duration / total) * 100
+  }, [])
 
   const lineColour = useMemo(() => {
     switch (currentMetric) {
@@ -57,15 +39,22 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
     }
   }, [currentMetric])
 
-  const data: SleepSessionGraph2DData = useMemo(() => {
-    return sleepData?.sessions.map(session => ({
-      _date: dayjs(session.startTime).format('MMM YY'),
-      date: session.startTime,
-      [currentMetric]: getValueAsPercentage(session)
-    })).filter(({ date }) => {
+  const data = useMemo<SleepSessionGraph2DData>(() => {
+    return sleepData?.sessions.map(session => {
+      const totalDuration = session.duration.total
+      return {
+        _date: dayjs(session.startTime).format('MMM YY'),
+        date: session.startTime,
+        [SleepMetric.QUALITY]: session.sleepQuality,
+        [SleepMetric.AWAKE_TIME]: convertDurationToPercentage(session.duration.awake, totalDuration),
+        [SleepMetric.DEEP_SLEEP]: convertDurationToPercentage(session.duration.deep, totalDuration),
+        [SleepMetric.REM_SLEEP]: convertDurationToPercentage(session.duration.rem, totalDuration),
+        [SleepMetric.LIGHT_SLEEP]: convertDurationToPercentage(session.duration.light, totalDuration)
+      }
+    }).filter(({ date }) => {
       return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
     })
-  }, [currentMetric, getValueAsPercentage, rangeEnd, rangeStart, sleepData?.sessions])
+  }, [convertDurationToPercentage, rangeEnd, rangeStart, sleepData?.sessions])
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
     metric: currentMetric,
@@ -77,7 +66,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
-      <LineChart data={data} margin={{ left: -50, top: 15 }}>
+      <LineChart data={data ? [...data] : data} margin={{ left: -50, top: 15 }}>
         <XAxis
           dataKey='_date'
           padding={{ left: 60 }}
@@ -88,28 +77,36 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           axisLine={false}
           domain={[0, 100]}
           orientation='left'
+          tick={CustomYAxisTick}
           dataKey={currentMetric}
           padding={{ bottom: 30 }}
           stroke='rgb(255, 255, 255)'
           tickFormatter={value => `${value}%`}
-          tick={props => <CustomYAxisTick {...props} />}
           ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
         />
+
+        <Tooltip content={SleepSessionTooltip} />
 
         <Line
           type='monotone'
           strokeWidth={3}
           stroke={lineColour}
           dataKey={currentMetric}
+          isAnimationActive={true}
+          animationDuration={500}
+          animationEasing='ease-in-out'
         />
 
         <Line
           dot={false}
           type='monotone'
           strokeWidth={3}
+          animationDuration={500}
+          isAnimationActive={true}
           data={regressionLineData}
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
+          animationEasing='ease-in-out'
         />
       </LineChart>
     </ResponsiveContainer>
