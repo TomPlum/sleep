@@ -15,11 +15,11 @@ dayjs.extend(isBetween);
 export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
   const { sleepData } = useSleepContext()
 
-  const convertDurationToPercentage = useCallback((duration: number, total: number) => {
+  const toPercentage = useCallback((duration: number, total: number) => {
     return (duration / total) * 100
   }, [])
 
-  const lineColour = useMemo(() => {
+  const lineColour = useMemo<string>(() => {
     switch (currentMetric) {
       case SleepMetric.LIGHT_SLEEP: {
         return 'rgb(84,234,153)'
@@ -41,20 +41,22 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
 
   const data = useMemo<SleepSessionGraph2DData>(() => {
     return sleepData?.sessions.map(session => {
-      const totalDuration = session.duration.total
+      const duration = session.duration
+      const totalDuration = duration.total
+
       return {
         _date: dayjs(session.startTime).format('MMM YY'),
         date: session.startTime,
         [SleepMetric.QUALITY]: session.sleepQuality,
-        [SleepMetric.AWAKE_TIME]: convertDurationToPercentage(session.duration.awake, totalDuration),
-        [SleepMetric.DEEP_SLEEP]: convertDurationToPercentage(session.duration.deep, totalDuration),
-        [SleepMetric.REM_SLEEP]: convertDurationToPercentage(session.duration.rem, totalDuration),
-        [SleepMetric.LIGHT_SLEEP]: convertDurationToPercentage(session.duration.light, totalDuration)
+        [SleepMetric.AWAKE_TIME]: toPercentage(duration.awake, totalDuration),
+        [SleepMetric.DEEP_SLEEP]: toPercentage(duration.deep, totalDuration),
+        [SleepMetric.REM_SLEEP]: toPercentage(duration.rem, totalDuration),
+        [SleepMetric.LIGHT_SLEEP]: toPercentage(duration.light, totalDuration)
       }
     }).filter(({ date }) => {
       return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
     })
-  }, [convertDurationToPercentage, rangeEnd, rangeStart, sleepData?.sessions])
+  }, [toPercentage, rangeEnd, rangeStart, sleepData?.sessions])
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
     metric: currentMetric,
@@ -63,6 +65,20 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
       y: session[currentMetric] as number
     })) ?? []
   })
+
+  const strokeWidth = useMemo<number>(() => {
+    if (!data) {
+      return 3
+    }
+
+    if (data.length < 50) {
+      return 5
+    } else if (data.length > 50 && data.length < 500) {
+      return 3
+    } else {
+      return 1
+    }
+  }, [data])
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -89,21 +105,21 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
 
         <Line
           type='monotone'
-          strokeWidth={3}
           stroke={lineColour}
           dataKey={currentMetric}
-          isAnimationActive={true}
           animationDuration={500}
+          isAnimationActive={true}
+          strokeWidth={strokeWidth}
           animationEasing='ease-in-out'
         />
 
         <Line
           dot={false}
           type='monotone'
-          strokeWidth={3}
           animationDuration={500}
           isAnimationActive={true}
           data={regressionLineData}
+          strokeWidth={strokeWidth}
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'

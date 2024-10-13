@@ -29,6 +29,7 @@ export const MetricConfiguration = ({ current, className, onMetricChange }: Metr
   return (
     <div className={classNames(styles.container, className)}>
       <Checkbox
+        className={styles.checkbox}
         checked={current === SleepMetric.QUALITY}
         onChange={e => handleChange(e, SleepMetric.QUALITY)}
       >
@@ -36,6 +37,7 @@ export const MetricConfiguration = ({ current, className, onMetricChange }: Metr
       </Checkbox>
 
       <Checkbox
+        className={styles.checkbox}
         checked={current === SleepMetric.DEEP_SLEEP}
         onChange={e => handleChange(e, SleepMetric.DEEP_SLEEP)}
       >
@@ -43,6 +45,7 @@ export const MetricConfiguration = ({ current, className, onMetricChange }: Metr
       </Checkbox>
 
       <Checkbox
+        className={styles.checkbox}
         checked={current === SleepMetric.LIGHT_SLEEP}
         onChange={e => handleChange(e, SleepMetric.LIGHT_SLEEP)}
       >
@@ -50,6 +53,7 @@ export const MetricConfiguration = ({ current, className, onMetricChange }: Metr
       </Checkbox>
 
       <Checkbox
+        className={styles.checkbox}
         checked={current === SleepMetric.REM_SLEEP}
         onChange={e => handleChange(e, SleepMetric.REM_SLEEP)}
       >
@@ -57,6 +61,7 @@ export const MetricConfiguration = ({ current, className, onMetricChange }: Metr
       </Checkbox>
 
       <Checkbox
+        className={styles.checkbox}
         checked={current === SleepMetric.AWAKE_TIME}
         onChange={e => handleChange(e, SleepMetric.AWAKE_TIME)}
       >
