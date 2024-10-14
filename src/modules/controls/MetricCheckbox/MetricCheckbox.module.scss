@@ -1,0 +1,8 @@
+.checkbox {
+  color: white;
+
+  span input[type="checkbox"]:checked + span {
+    background-color: var(--background-color);
+    border-color: var(--border-color);
+  }
+}
