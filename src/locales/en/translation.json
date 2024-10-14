@@ -19,5 +19,12 @@
         "awake": "Awake Time"
       }
     }
+  },
+  "not-found": {
+    "status": "404",
+    "heading": "You've wandered off into dreamland!",
+    "title": "Oops! This isn't the page you were dreaming of...",
+    "message": "It looks like you’ve stumbled into the land of uncharted naps. Unfortunately, we don’t have any sleep data here… just an endless snooze.",
+    "home-button": "Home"
   }
 }

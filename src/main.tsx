@@ -8,6 +8,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SleepApp from "SleepApp.tsx";
 import {SleepPage} from "pages/SleepPage.tsx";
 import {SleepContextProvider} from "context";
+import {NotFoundPage} from "pages/NotFoundPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: '/sleep',
         element: <SleepPage />
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />
       }
     ]
   }
