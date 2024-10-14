@@ -87,6 +87,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
         <XAxis
           interval={20}
           dataKey='_date'
+          strokeWidth={3}
           axisLine={false}
           padding={{ left: 60 }}
           tick={CustomXAxisTick}
@@ -94,6 +95,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
         />
 
         <YAxis
+          strokeWidth={3}
           axisLine={false}
           domain={[0, 100]}
           orientation='left'
