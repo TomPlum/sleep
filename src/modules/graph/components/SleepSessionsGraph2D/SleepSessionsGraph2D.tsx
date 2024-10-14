@@ -1,24 +1,27 @@
 import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {useCallback, useMemo} from "react";
-import {SleepSessionsGraph2DProps} from './'
-import {SleepMetric} from "modules/controls/MetricConfiguration";
+import {useMemo} from "react";
+import {SleepSessionsGraph2DProps} from './index.ts'
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import {type SleepSessionGraph2DData} from "./types";
 import {useLinearRegression} from "data/useLinearRegression";
-import {useSleepContext} from "context";
-import {CustomYAxisTick} from "modules/graph/CustomYAxisTick";
-import {SleepSessionTooltip} from "modules/graph/SleepSessionTooltip";
-import {CustomXAxisTick} from "modules/graph/CustomXAxisTick";
+import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
+import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip";
+import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
+import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
+import {SleepMetric} from "modules/controls/MetricConfiguration";
 
 dayjs.extend(isBetween);
 
 export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
-  const { sleepData } = useSleepContext()
+  const { data } = useSleepGraph2DData({ rangeStart, rangeEnd })
 
-  const toPercentage = useCallback((duration: number, total: number) => {
-    return (duration / total) * 100
-  }, [])
+  const { regressionLineData, regressionDataKey } = useLinearRegression({
+    metric: currentMetric,
+    data: data?.map(session => ({
+      x: dayjs(session.date).valueOf(),
+      y: session[currentMetric] as number
+    })) ?? []
+  })
 
   const lineColour = useMemo<string>(() => {
     switch (currentMetric) {
@@ -39,33 +42,6 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
       }
     }
   }, [currentMetric])
-
-  const data = useMemo<SleepSessionGraph2DData>(() => {
-    return sleepData?.sessions.map(session => {
-      const duration = session.duration
-      const totalDuration = duration.total
-
-      return {
-        _date: dayjs(session.startTime).format('MMM YY'),
-        date: session.startTime,
-        [SleepMetric.QUALITY]: session.sleepQuality,
-        [SleepMetric.AWAKE_TIME]: toPercentage(duration.awake, totalDuration),
-        [SleepMetric.DEEP_SLEEP]: toPercentage(duration.deep, totalDuration),
-        [SleepMetric.REM_SLEEP]: toPercentage(duration.rem, totalDuration),
-        [SleepMetric.LIGHT_SLEEP]: toPercentage(duration.light, totalDuration)
-      }
-    }).filter(({ date }) => {
-      return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
-    })
-  }, [toPercentage, rangeEnd, rangeStart, sleepData?.sessions])
-
-  const { regressionLineData, regressionDataKey } = useLinearRegression({
-    metric: currentMetric,
-    data: data?.map(session => ({
-      x: dayjs(session.date).valueOf(),
-      y: session[currentMetric] as number
-    })) ?? []
-  })
 
   const strokeWidth = useMemo<number>(() => {
     if (!data) {

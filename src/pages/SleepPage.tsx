@@ -6,7 +6,7 @@ import {LoadingOutlined} from "@ant-design/icons";
 import {DateRangePicker} from "modules/controls/DateRangePicker";
 import dayjs from 'dayjs';
 import {useQueryParams} from "hooks/useQueryParams";
-import {SleepSessionsGraph2D} from "modules/graph/SleepSessionsGraph2D";
+import {SleepSessionsGraph2D} from "modules/graph/components/SleepSessionsGraph2D";
 import {useSleepContext} from "context";
 
 export const SleepPage = () => {
