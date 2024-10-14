@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import {useQueryParams} from "hooks/useQueryParams";
 import {SleepSessionsGraph2D} from "modules/graph/components/SleepSessionsGraph2D";
 import {useSleepContext} from "context";
+import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
 
 export const SleepPage = () => {
   const { sleepData, isSleepDataLoading } = useSleepContext()
@@ -16,6 +17,7 @@ export const SleepPage = () => {
   const [rangeEnd, setRangeEnd] = useState(end)
   const [rangeStart, setRangeStart] = useState(start)
   const [currentMetric, setCurrentMetric] = useState(metric)
+  const { data } = useSleepGraph2DData({ rangeStart, rangeEnd })
 
   useEffect(() => {
     if (!isSleepDataLoading && sleepData) {
@@ -54,6 +56,10 @@ export const SleepPage = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.sessions}>
+        {data?.length} sessions
+      </div>
+
       <div className={styles.controls}>
         <MetricConfiguration
           current={currentMetric}

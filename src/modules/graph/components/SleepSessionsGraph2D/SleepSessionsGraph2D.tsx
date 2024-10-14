@@ -35,38 +35,27 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
     }
   }, [data])
 
+  const xAxisInterval = useMemo<number>(() => {
+    if (!data) {
+      return 5
+    }
+
+    if (data.length < 100) {
+      return 5
+    } else if (data.length > 100 && data.length < 250) {
+      return 10
+    } else {
+      return 60
+    }
+  }, [data])
+
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <LineChart
         data={[...data ?? []]}
         id='sleeps-sessions-graph-2d'
-        margin={{ left: -52, bottom: -22 }}
+        margin={{ left: -53, bottom: -22 }}
       >
-        <XAxis
-          interval={20}
-          dataKey='_date'
-          strokeWidth={3}
-          axisLine={false}
-          padding={{ left: 60 }}
-          tick={CustomXAxisTick}
-          stroke='rgb(255, 255, 255)'
-        />
-
-        <YAxis
-          strokeWidth={3}
-          axisLine={false}
-          domain={[0, 100]}
-          orientation='left'
-          tick={CustomYAxisTick}
-          dataKey={currentMetric}
-          stroke='rgb(255, 255, 255)'
-          padding={{ bottom: 40, top: 40 }}
-          tickFormatter={value => `${value}%`}
-          ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-        />
-
-        <Tooltip content={SleepSessionTooltip} />
-
         <Line
           type='monotone'
           dataKey={currentMetric}
@@ -90,6 +79,32 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           animationEasing='ease-in-out'
           id={`${currentMetric}_regression_line`}
         />
+
+        <XAxis
+          dataKey='_date'
+          strokeWidth={3}
+          axisLine={false}
+          padding={{ left: 0 }}
+          tick={CustomXAxisTick}
+          interval={xAxisInterval}
+          allowDataOverflow={true}
+          stroke='rgb(255, 255, 255)'
+        />
+
+        <YAxis
+          strokeWidth={3}
+          axisLine={false}
+          domain={[0, 100]}
+          orientation='left'
+          tick={CustomYAxisTick}
+          dataKey={currentMetric}
+          stroke='rgb(255, 255, 255)'
+          padding={{ bottom: 40, top: 60 }}
+          tickFormatter={value => `${value}%`}
+          ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
+        />
+
+        <Tooltip content={SleepSessionTooltip} />
       </LineChart>
     </ResponsiveContainer>
   )

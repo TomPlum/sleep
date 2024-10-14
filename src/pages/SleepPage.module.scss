@@ -4,12 +4,23 @@
   position: relative;
   background-color: #0e0e0e;
 
+
+  .sessions {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    font-size: 0.8rem;
+  }
+
   .controls {
     position: absolute;
+    z-index: 10;
     top: 10px;
     right: 10px;
+    display: flex;
+    flex-direction: column;
 
-    .metricConfig {
+    .configPanel {
       margin-bottom: 10px;
     }
   }
