@@ -2,15 +2,12 @@ import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recha
 import {useMemo} from "react";
 import {SleepSessionsGraph2DProps} from './index.ts'
 import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween';
 import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
 import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip";
 import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
 import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
-
-dayjs.extend(isBetween);
 
 export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
   const { data } = useSleepGraph2DData({ rangeStart, rangeEnd })
@@ -59,7 +56,11 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
-      <LineChart data={data ? [...data] : data} margin={{ left: -52, top: 15, bottom: -22 }}>
+      <LineChart
+        data={[...data ?? []]}
+        id='sleeps-sessions-graph-2d'
+        margin={{ left: -52, bottom: -22 }}
+      >
         <XAxis
           interval={20}
           dataKey='_date'
@@ -77,8 +78,8 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           orientation='left'
           tick={CustomYAxisTick}
           dataKey={currentMetric}
-          padding={{ bottom: 30 }}
           stroke='rgb(255, 255, 255)'
+          padding={{ bottom: 40, top: 40 }}
           tickFormatter={value => `${value}%`}
           ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
         />
@@ -92,6 +93,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
+          id={`${currentMetric}_line`}
           animationEasing='ease-in-out'
         />
 
@@ -105,6 +107,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
+          id={`${currentMetric}_regression_line`}
         />
       </LineChart>
     </ResponsiveContainer>

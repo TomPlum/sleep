@@ -4,6 +4,9 @@ import dayjs from "dayjs";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
 import {useSleepContext} from "context";
 import {SleepGraph2DDataProps, SleepGraph2DDataResponse} from "modules/graph/hooks/useSleepGraph2DData/types.ts";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(isBetween);
 
 export const useSleepGraph2DData = ({ rangeStart, rangeEnd }: SleepGraph2DDataProps): SleepGraph2DDataResponse => {
   const { sleepData, isSleepDataLoading } = useSleepContext()
