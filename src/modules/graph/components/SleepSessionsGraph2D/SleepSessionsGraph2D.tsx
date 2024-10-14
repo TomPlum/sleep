@@ -7,9 +7,10 @@ import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
 import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip";
 import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
 import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
-import {SleepMetric} from "modules/controls/MetricConfiguration";
+import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 
 export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
+  const { getMetricColour } = useGraphStyles()
   const { data } = useSleepGraph2DData({ rangeStart, rangeEnd })
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
@@ -19,26 +20,6 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
       y: session[currentMetric] as number
     })) ?? []
   })
-
-  const lineColour = useMemo<string>(() => {
-    switch (currentMetric) {
-      case SleepMetric.LIGHT_SLEEP: {
-        return 'rgb(84,234,153)'
-      }
-      case SleepMetric.AWAKE_TIME: {
-        return 'rgb(255,188,21)'
-      }
-      case SleepMetric.DEEP_SLEEP: {
-        return 'rgb(21,150,255)'
-      }
-      case SleepMetric.REM_SLEEP: {
-        return 'rgb(255,71,231)'
-      }
-      case SleepMetric.QUALITY: {
-        return 'rgb(145,71,255)'
-      }
-    }
-  }, [currentMetric])
 
   const strokeWidth = useMemo<number>(() => {
     if (!data) {
@@ -88,13 +69,13 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
 
         <Line
           type='monotone'
-          stroke={lineColour}
           dataKey={currentMetric}
           animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
           id={`${currentMetric}_line`}
           animationEasing='ease-in-out'
+          stroke={getMetricColour(currentMetric)}
         />
 
         <Line

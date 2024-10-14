@@ -39,6 +39,7 @@ export interface SleepSessionGraph2DDatum {
   date: Date
 
   /**
+   * TODO: These can be hardcoded as metrics now
    * The value, as a percentage of the
    * current selected sleep data metric.
    * E.g. Quality, Deep Sleep, REM etc.

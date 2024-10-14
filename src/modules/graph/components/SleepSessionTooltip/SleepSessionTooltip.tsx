@@ -3,6 +3,7 @@ import styles from './SleepSessionTooltip.module.scss'
 import {Typography} from "antd";
 import dayjs from "dayjs";
 import {useTranslation} from "react-i18next";
+import {DurationBreakdownPie} from "modules/graph/components/DurationBreakdownPie";
 
 export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.tooltip' })
@@ -28,37 +29,14 @@ export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, st
           {data.quality}%
         </Typography>
 
-        <Typography className={styles.label}>
-          {t('rem')}
-        </Typography>
-
-        <Typography className={styles.value}>
-          {Number(data.rem_sleep).toFixed(0)}%
-        </Typography>
-
-        <Typography className={styles.label}>
-          {t('deep')}
-        </Typography>
-
-        <Typography className={styles.value}>
-          {Number(data.deep_sleep).toFixed(0)}%
-        </Typography>
-
-        <Typography className={styles.label}>
-          {t('light')}
-        </Typography>
-
-        <Typography className={styles.value}>
-          {Number(data.light_sleep).toFixed(0)}%
-        </Typography>
-
-        <Typography className={styles.label}>
-          {t('awake')}
-        </Typography>
-
-        <Typography className={styles.value}>
-          {Number(data.awake_time).toFixed(0)}%
-        </Typography>
+        <DurationBreakdownPie
+          data={{
+            rem: data.rem_sleep,
+            deep: data.deep_sleep,
+            awake: data.awake_time,
+            light: data.light_sleep
+          }}
+        />
       </div>
     )
   }
