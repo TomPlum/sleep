@@ -61,9 +61,9 @@ export const useRawSleepData = () => {
       return undefined
     }
 
-    let dataFrames: Record<string, Array<Record<string, string>>> = {}
+    const dataFrames: Record<string, Array<Record<string, string>>> = {}
     let currentTable: string | undefined
-    let rows = []
+    let rows: Array<Record<string, string>> = []
 
     data.split('\n').map(line => {
       const lineData = line.trim()
@@ -80,12 +80,12 @@ export const useRawSleepData = () => {
       }
     })
 
-    dataFrames['ZSLEEPSESSION'].forEach(session => {
+    dataFrames['ZSLEEPSESSION'].forEach(() => {
 
     })
 
     return rows
-  }, [data, isLoading])
+  }, [data, isLoading, parseLine])
 
   return {
     error,
