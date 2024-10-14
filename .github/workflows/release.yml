@@ -3,7 +3,7 @@ run-name: deploy-sleep-app
 on:
   push:
     branches:
-      - main
+      - release
 permissions:
   contents: write
 jobs:
