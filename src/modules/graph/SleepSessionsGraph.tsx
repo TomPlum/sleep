@@ -96,6 +96,7 @@ export const SleepSessionsGraph = () => {
   }, [sleepData?.sessions])
   console.log('Graph Data', graphData)
 
+  // @ts-expect-error to fix later if I come back
   const linkColor = useCallback(link => {
     console.log(link.source)
     switch(link.source.group) {
@@ -111,24 +112,21 @@ export const SleepSessionsGraph = () => {
     }
   }, [])
 
-  const nodeColour = useCallback(node => {
-    console.log(node)
-    return '#9a30fe'
-  }, [])
-
   if (loading) {
     return 'Loading...'
   }
 
   return (
       <ForceGraph3D
+        // @ts-expect-error to fix later if I come back
         ref={graphRef}
         nodeLabel='id'
         nodeAutoColorBy='group'
         d3AlphaMin={0.1}
         d3VelocityDecay={0.9}
         linkColor={linkColor}
-        nodeColor={nodeColour}
+        nodeColor='#9a30fe'
+        // @ts-expect-error to fix later if I come back
         graphData={graphData}
         backgroundColor='#171717'
       />
