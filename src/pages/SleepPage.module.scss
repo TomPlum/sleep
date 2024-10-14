@@ -4,9 +4,13 @@
   position: relative;
   background-color: #0e0e0e;
 
-  .configPanel {
+  .controls {
     position: absolute;
     top: 10px;
     right: 10px;
+
+    .metricConfig {
+      margin-bottom: 10px;
+    }
   }
 }

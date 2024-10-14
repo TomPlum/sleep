@@ -9,6 +9,7 @@ import {useLinearRegression} from "data/useLinearRegression";
 import {useSleepContext} from "context";
 import {CustomYAxisTick} from "modules/graph/CustomYAxisTick";
 import {SleepSessionTooltip} from "modules/graph/SleepSessionTooltip";
+import {CustomXAxisTick} from "modules/graph/CustomXAxisTick";
 
 dayjs.extend(isBetween);
 
@@ -82,10 +83,13 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
-      <LineChart data={data ? [...data] : data} margin={{ left: -50, top: 15 }}>
+      <LineChart data={data ? [...data] : data} margin={{ left: -52, top: 15, bottom: -22 }}>
         <XAxis
+          interval={20}
           dataKey='_date'
+          axisLine={false}
           padding={{ left: 60 }}
+          tick={CustomXAxisTick}
           stroke='rgb(255, 255, 255)'
         />
 

@@ -54,11 +54,19 @@ export const SleepPage = () => {
 
   return (
     <div className={styles.container}>
-      <MetricConfiguration
-        current={currentMetric}
-        className={styles.configPanel}
-        onMetricChange={setCurrentMetric}
-      />
+      <div className={styles.controls}>
+        <MetricConfiguration
+          current={currentMetric}
+          className={styles.configPanel}
+          onMetricChange={setCurrentMetric}
+        />
+
+        <DateRangePicker
+          onChange={handleDateRangeChange}
+          rangeEnd={sleepData.latestSession}
+          rangeStart={sleepData.earliestSession}
+        />
+      </div>
 
       {rangeStart && rangeEnd && (
         <SleepSessionsGraph2D
@@ -67,12 +75,6 @@ export const SleepPage = () => {
           currentMetric={currentMetric}
         />
       )}
-
-      <DateRangePicker
-        onChange={handleDateRangeChange}
-        rangeEnd={sleepData.latestSession}
-        rangeStart={sleepData.earliestSession}
-      />
     </div>
   )
 }
