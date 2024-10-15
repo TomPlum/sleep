@@ -17,9 +17,11 @@ export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, st
           {t('date')}
         </Typography>
 
-        <Typography className={styles.value}>
-          {dayjs(data.date.toString()).format('DD-MM-YYYY HH:mm:ss')}
-        </Typography>
+        {data.date && (
+          <Typography className={styles.value}>
+            {dayjs(data.date.toString()).format('DD-MM-YYYY HH:mm:ss')}
+          </Typography>
+        )}
 
         <Typography className={styles.label}>
           {t('quality')}

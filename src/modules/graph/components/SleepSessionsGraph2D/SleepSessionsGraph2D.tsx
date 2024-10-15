@@ -1,4 +1,4 @@
-import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import dayjs from 'dayjs';
 import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
@@ -7,6 +7,7 @@ import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
 import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 import styles from './SleepSessionGraph2D.module.scss'
+import {useMemo} from "react";
 
 export const SleepSessionsGraph2D = () => {
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
@@ -19,6 +20,20 @@ export const SleepSessionsGraph2D = () => {
       y: session[sleepMetric] as number
     })) ?? []
   })
+
+  const regressionDeltaHorizontal = useMemo(() => {
+    const firstSession = regressionLineData[0]
+    const x = firstSession._date
+    const y = firstSession[sleepMetric]
+    return { x, y }
+  }, [regressionLineData, sleepMetric])
+
+  const regressionDeltaVertical = useMemo(() => {
+    const x = regressionLineData[regressionLineData.length - 1]._date
+    console.log(x)
+    return { x }
+  }, [regressionLineData])
+  console.log(data)
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -51,6 +66,23 @@ export const SleepSessionsGraph2D = () => {
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
           id={`${sleepMetric}_regression_line`}
+        />
+
+        <ReferenceLine
+          type='monotone'
+          strokeDasharray='3 3'
+          stroke='rgb(255, 255, 255)'
+          x={regressionDeltaHorizontal.x}
+          y={regressionDeltaHorizontal.y}
+          id={`${sleepMetric}_regression_line_delta_h`}
+        />
+
+        <ReferenceLine
+          type='monotone'
+          strokeDasharray='3 3'
+          stroke='rgb(255, 255, 255)'
+          x={regressionDeltaVertical.x}
+          id={`${sleepMetric}_regression_line_delta_v`}
         />
 
         <XAxis
