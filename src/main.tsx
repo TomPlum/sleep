@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <SleepApp />,
     children: [
       {
-        path: '/sleep',
+        path: '/',
         element: <SleepPage />
       },
       {

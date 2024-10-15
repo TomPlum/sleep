@@ -10,7 +10,7 @@ export const NotFoundPage = () => {
 
   const handleClickHome = useCallback(() => {
     navigate({
-      pathname: '/sleep'
+      pathname: '/'
     })
   }, [navigate])
 

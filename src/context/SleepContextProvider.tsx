@@ -39,7 +39,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
         end: selectedEnd.getTime().toString()
       }
 
-      updateQueryParam({ route: '/sleep', params})
+      updateQueryParam({ route: '/', params})
     }
   }, [currentMetric, loading, rangeEnd, rangeStart, sleepData, updateQueryParam])
 

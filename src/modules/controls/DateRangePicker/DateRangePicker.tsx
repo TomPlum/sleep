@@ -17,7 +17,7 @@ export const DateRangePicker = () => {
       setRangeEnd(newEndDate)
 
       updateQueryParam({
-        route: '/sleep',
+        route: '/',
         params: {
           start: newStartDate.getTime().toString(),
           end: newEndDate.getTime().toString()

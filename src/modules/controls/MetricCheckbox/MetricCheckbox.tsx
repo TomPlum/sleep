@@ -18,7 +18,7 @@ export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
       setSleepMetric(metric)
 
       updateQueryParam({
-        route: '/sleep',
+        route: '/',
         params: {
           metric
         }
