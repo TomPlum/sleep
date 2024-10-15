@@ -24,13 +24,13 @@ export const SleepSessionsGraph2D = () => {
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
   const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
 
-  const { regressionLineData, regressionDataKey, regressionDelta, xRegressionDeltaLine, yRegressionDeltaLine } = useLinearRegression({
-    metric: sleepMetric,
-    data: data?.map(session => ({
-      x: dayjs(session.date).valueOf(),
-      y: session[sleepMetric] as number
-    })) ?? []
-  })
+  const {
+    regressionLineData,
+    regressionDataKey,
+    regressionDelta,
+    xRegressionDeltaLine,
+    yRegressionDeltaLine
+  } = useLinearRegression()
 
   const typicalSleepSession = useMemo(() => {
     const lastSession = data?.length - 1
@@ -62,7 +62,6 @@ export const SleepSessionsGraph2D = () => {
       }
     }
   }, [data, sleepMetric])
-  console.log(typicalSleepSession)
 
   return (
     <ResponsiveContainer width='100%' height='100%'>

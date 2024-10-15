@@ -1,15 +1,3 @@
-import {SleepMetric} from "modules/controls/MetricConfiguration";
-
-export interface LinearRegressionDataPoint {
-  x: number
-  y: number
-}
-
-export interface LinearRegressionProps {
-  metric: SleepMetric
-  data: LinearRegressionDataPoint[]
-}
-
 export interface LinearRegressionPlotPoint {
   _date: string
   [metric: string]: number | string

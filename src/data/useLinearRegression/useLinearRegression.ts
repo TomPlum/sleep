@@ -1,11 +1,20 @@
 import { useMemo} from "react";
 import {
-  LinearRegressionProps,
   LinearRegressionResponse
 } from "data/useLinearRegression/types.ts";
 import dayjs from "dayjs";
+import {useSleepContext} from "context";
 
-export const useLinearRegression = ({ data, metric }: LinearRegressionProps): LinearRegressionResponse => {
+export const useLinearRegression = (): LinearRegressionResponse => {
+  const { graphData2d, sleepMetric } = useSleepContext()
+
+  const data = useMemo(() => {
+    return graphData2d.data?.map(session => ({
+      x: dayjs(session.date).valueOf(),
+      y: session[sleepMetric] as number
+    })) ?? []
+  }, [graphData2d.data, sleepMetric])
+
   const regressionLineData = useMemo(() => {
     const n = data.length;
     const sumX = data.reduce((acc, point) => acc + point.x, 0);
@@ -18,26 +27,26 @@ export const useLinearRegression = ({ data, metric }: LinearRegressionProps): Li
 
     return data.map(point => ({
       _date: dayjs(point.x).format('MMM YY'),
-      [metric]: slope * point.x + intercept,
+      [sleepMetric]: slope * point.x + intercept,
     }))
-  }, [data, metric])
+  }, [data, sleepMetric])
 
   const yRegressionDeltaLine = useMemo(() => {
     const firstSession = regressionLineData[0]
-    return firstSession[metric] as number
-  }, [regressionLineData, metric])
+    return firstSession[sleepMetric] as number
+  }, [regressionLineData, sleepMetric])
 
   const xRegressionDeltaLine = useMemo(() => {
     return regressionLineData.length - 1
   }, [regressionLineData])
 
-  const minimum = regressionLineData[0][metric] as number
-  const maximum = regressionLineData[regressionLineData.length - 1][metric] as number
+  const minimum = regressionLineData[0][sleepMetric] as number
+  const maximum = regressionLineData[regressionLineData.length - 1][sleepMetric] as number
 
   return {
     regressionLineData,
     regressionDelta: (maximum - minimum).toFixed(1),
-    regressionDataKey: metric,
+    regressionDataKey: sleepMetric,
     xRegressionDeltaLine,
     yRegressionDeltaLine
   }
