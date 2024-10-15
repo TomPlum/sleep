@@ -8,7 +8,6 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import dayjs from 'dayjs';
 import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
 import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip";
@@ -16,11 +15,10 @@ import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
 import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 import styles from './SleepSessionGraph2D.module.scss'
-import {useMemo} from "react";
-import {SleepStage} from "modules/graph/components/SleepSessionsGraph2D";
-import {SleepMetric} from "modules/controls/MetricConfiguration";
+import {useTypicalSession} from "modules/graph/hooks/useTypicalSession/useTypicalSession.ts";
 
 export const SleepSessionsGraph2D = () => {
+  const { typicalSleepSession } = useTypicalSession()
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
   const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
 
@@ -31,37 +29,6 @@ export const SleepSessionsGraph2D = () => {
     xRegressionDeltaLine,
     yRegressionDeltaLine
   } = useLinearRegression()
-
-  const typicalSleepSession = useMemo(() => {
-    const lastSession = data?.length - 1
-    const sleepStage = sleepMetric as SleepStage
-    switch (sleepStage) {
-      case SleepMetric.AWAKE_TIME: {
-        return {
-          x1: 0, y1: 0,
-          x2: lastSession, y2: 5
-        }
-      }
-      case SleepMetric.DEEP_SLEEP: {
-        return {
-          x1: 0, y1: 5,
-          x2: lastSession, y2: 20
-        }
-      }
-      case SleepMetric.LIGHT_SLEEP: {
-        return {
-          x1: 0, y1: 40,
-          x2: lastSession, y2: 50
-        }
-      }
-      case SleepMetric.REM_SLEEP: {
-        return {
-          x1: 0, y1: 20,
-          x2: lastSession, y2: 25
-        }
-      }
-    }
-  }, [data, sleepMetric])
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
