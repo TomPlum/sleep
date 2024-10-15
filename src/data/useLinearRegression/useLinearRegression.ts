@@ -22,8 +22,12 @@ export const useLinearRegression = ({ data, metric }: LinearRegressionProps): Li
     }))
   }, [data, metric])
 
+  const minimum = regressionLineData[0][metric] as number
+  const maximum = regressionLineData[regressionLineData.length - 1][metric] as number
+
   return {
     regressionLineData,
+    regressionDelta: (maximum - minimum).toFixed(1),
     regressionDataKey: metric
   }
 }

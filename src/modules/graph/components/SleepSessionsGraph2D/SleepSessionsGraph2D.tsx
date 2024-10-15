@@ -1,4 +1,13 @@
-import {Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {
+  Line,
+  LineChart,
+  ReferenceArea,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
+} from "recharts";
 import dayjs from 'dayjs';
 import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
@@ -8,12 +17,14 @@ import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 import styles from './SleepSessionGraph2D.module.scss'
 import {useMemo} from "react";
+import {SleepStage} from "modules/graph/components/SleepSessionsGraph2D";
+import {SleepMetric} from "modules/controls/MetricConfiguration";
 
 export const SleepSessionsGraph2D = () => {
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
   const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
 
-  const { regressionLineData, regressionDataKey } = useLinearRegression({
+  const { regressionLineData, regressionDataKey, regressionDelta } = useLinearRegression({
     metric: sleepMetric,
     data: data?.map(session => ({
       x: dayjs(session.date).valueOf(),
@@ -23,17 +34,47 @@ export const SleepSessionsGraph2D = () => {
 
   const regressionDeltaHorizontal = useMemo(() => {
     const firstSession = regressionLineData[0]
-    const x = firstSession._date
     const y = firstSession[sleepMetric]
-    return { x, y }
+    return { y }
   }, [regressionLineData, sleepMetric])
 
   const regressionDeltaVertical = useMemo(() => {
-    const x = regressionLineData[regressionLineData.length - 1]._date
-    console.log(x)
+    const x = regressionLineData.length - 1
     return { x }
   }, [regressionLineData])
-  console.log(data)
+
+  const typicalSleepSession = useMemo(() => {
+    const firstSession = data[0]
+    const lastSession = data?.length - 1
+    const sleepStage = sleepMetric as SleepStage
+    switch (sleepStage) {
+      case SleepMetric.AWAKE_TIME: {
+        return {
+          x1: 0, y1: 0,
+          x2: lastSession, y2: 5
+        }
+      }
+      case SleepMetric.DEEP_SLEEP: {
+        return {
+          x1: 0, y1: 5,
+          x2: lastSession, y2: 20
+        }
+      }
+      case SleepMetric.LIGHT_SLEEP: {
+        return {
+          x1: 0, y1: 40,
+          x2: lastSession, y2: 50
+        }
+      }
+      case SleepMetric.REM_SLEEP: {
+        return {
+          x1: 0, y1: 20,
+          x2: lastSession, y2: 25
+        }
+      }
+    }
+  }, [data, sleepMetric])
+  console.log(typicalSleepSession)
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -72,7 +113,7 @@ export const SleepSessionsGraph2D = () => {
           type='monotone'
           strokeDasharray='3 3'
           stroke='rgb(255, 255, 255)'
-          x={regressionDeltaHorizontal.x}
+          label={`Δ ${regressionDelta}%`}
           y={regressionDeltaHorizontal.y}
           id={`${sleepMetric}_regression_line_delta_h`}
         />
@@ -84,6 +125,17 @@ export const SleepSessionsGraph2D = () => {
           x={regressionDeltaVertical.x}
           id={`${sleepMetric}_regression_line_delta_v`}
         />
+
+        {typicalSleepSession && (
+          <ReferenceArea
+            x1={typicalSleepSession.x1}
+            x2={typicalSleepSession.x2}
+            y1={typicalSleepSession.y1}
+            y2={typicalSleepSession.y2}
+            id={`${sleepMetric}_typical_sleep_session_area`}
+            fill={currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.3)')}
+          />
+        )}
 
         <XAxis
           dataKey='_date'

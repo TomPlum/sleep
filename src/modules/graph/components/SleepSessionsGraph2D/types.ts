@@ -1,3 +1,5 @@
+import {SleepMetric} from "modules/controls/MetricConfiguration";
+
 export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[] | undefined
 
 export interface SleepSessionGraph2DDatum {
@@ -22,3 +24,5 @@ export interface SleepSessionGraph2DDatum {
    */
   [metric: string]: number | string | Date
 }
+
+export type SleepStage = SleepMetric.DEEP_SLEEP | SleepMetric.LIGHT_SLEEP | SleepMetric.REM_SLEEP | SleepMetric.AWAKE_TIME

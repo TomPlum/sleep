@@ -18,6 +18,7 @@ export interface LinearRegressionPlotPoint {
 export interface LinearRegressionResponse {
   regressionLineData: LinearRegressionPlotPoint[]
   regressionDataKey: string
+  regressionDelta: string
 }
 
 
