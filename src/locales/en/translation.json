@@ -3,12 +3,9 @@
     "graph2d": {
       "tooltip": {
         "date": "Date",
-        "quality": "Sleep Quality (%)",
-        "deep": "Deep Sleep (%)",
-        "light": "Light Sleep (%)",
-        "rem": "REM Sleep (%)",
-        "awake": "Awake Time (%)"
-      }
+        "quality": "Sleep Quality (%)"
+      },
+      "typical-sleep-session": "Typical Sleep Session"
     },
     "metric-config": {
       "checkbox": {

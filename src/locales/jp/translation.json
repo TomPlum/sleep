@@ -2,14 +2,26 @@
   "sleep": {
     "graph2d": {
       "tooltip": {
-        "date": "日付"
-      }
+        "date": "日付",
+        "quality": "睡眠の質 (%)"
+      },
+      "typical-sleep-session": "典型的な睡眠セッション"
     },
     "metric-config": {
       "checkbox": {
         "quality": "睡眠の質",
-        "deep": "深睡眠"
+        "deep": "深睡眠",
+        "light": "浅い眠",
+        "rem": "レム眠",
+        "awake": "目覚め"
       }
     }
+  },
+  "not-found": {
+    "status": "404",
+    "heading": "夢の国に迷い込んでしまったようだ！",
+    "title": "おっと！これはあなたが夢見ていたページではない...。",
+    "message": "未知の昼寝の国に迷い込んだようだ。残念ながら、ここには睡眠データはありません...ただ、延々と居眠りをしているだけです。",
+    "home-button": "ホーム"
   }
 }
