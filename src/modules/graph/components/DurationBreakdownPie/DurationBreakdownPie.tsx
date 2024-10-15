@@ -39,6 +39,7 @@ export const DurationBreakdownPie = ({ data }: DurationBreakdownPieProps) => {
         data={pieData}
         dataKey='value'
         outerRadius={80}
+        stroke='#0e0e0e'
         labelLine={false}
         label={renderCustomizedLabel}
       >

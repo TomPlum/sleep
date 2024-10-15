@@ -4,7 +4,7 @@ import {GetMetricColour, GraphStylesResponse} from "modules/graph/hooks/useGraph
 import {useSleepContext} from "context";
 
 export const useGraphStyles = (): GraphStylesResponse => {
-  const { activeSessions } = useSleepContext()
+  const { sleepMetric, activeSessions } = useSleepContext()
 
   const getMetricColour = useCallback<GetMetricColour>((metric: SleepMetric) => {
     switch (metric) {
@@ -25,6 +25,8 @@ export const useGraphStyles = (): GraphStylesResponse => {
       }
     }
   }, [])
+
+  const currentMetricColour = getMetricColour(sleepMetric)
 
   const strokeWidth = useMemo<number>(() => {
     if (activeSessions < 50) {
@@ -57,6 +59,7 @@ export const useGraphStyles = (): GraphStylesResponse => {
   }, [activeSessions])
 
   return {
+    currentMetricColour,
     getMetricColour,
     strokeWidth,
     xAxisInterval,

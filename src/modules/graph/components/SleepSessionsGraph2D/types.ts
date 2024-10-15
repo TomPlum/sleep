@@ -1,3 +1,5 @@
+import {SleepMetric} from "modules/controls/MetricConfiguration";
+
 export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[] | undefined
 
 export interface SleepSessionGraph2DDatum {
@@ -15,10 +17,44 @@ export interface SleepSessionGraph2DDatum {
   date: Date
 
   /**
-   * TODO: These can be hardcoded as metrics now
-   * The value, as a percentage of the
-   * current selected sleep data metric.
-   * E.g. Quality, Deep Sleep, REM etc.
+   * The total duration of the sleep
+   * session in minutes.
+   * I.e. How long I slept for.
    */
-  [metric: string]: number | string | Date
+  duration: number
+
+  /**
+   * The value, as a percentage, of
+   * sleep quality as determined by
+   * Pillow for the current session.
+   */
+  [SleepMetric.QUALITY]: number
+
+  /**
+   * The value, as a percentage of
+   * the session, of deep sleep recorded
+   * during the current session.
+   */
+  [SleepMetric.DEEP_SLEEP]: number
+
+  /**
+   * The value, as a percentage of
+   * the session, of light sleep recorded
+   * during the current session.
+   */
+  [SleepMetric.LIGHT_SLEEP]: number
+
+  /**
+   * The value, as a percentage of
+   * the session, of REM sleep recorded
+   * during the current session.
+   */
+  [SleepMetric.REM_SLEEP]: number
+
+  /**
+   * The value, as a percentage of
+   * the session, of awake time recorded
+   * during the current session.
+   */
+  [SleepMetric.AWAKE_TIME]: number
 }

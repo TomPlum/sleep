@@ -5,11 +5,18 @@ export type GetMetricColour = (metric: SleepMetric) => string
 export interface GraphStylesResponse {
   /**
    * Gets the thematic colour used in
-   * visualisations based on the current
-   * sleep metric in context.
-   * @param metric The sleep metric.
+   * visualisations from the given
+   * sleep metric.
+   * @param metric The metric to get the colour for.
    */
   getMetricColour: (metric: SleepMetric) => string
+
+  /**
+   * The thematic colour used in
+   * visualisations based on the current
+   * sleep metric in context.
+   */
+  currentMetricColour: string
 
   /**
    * The width of the line or "stroke"

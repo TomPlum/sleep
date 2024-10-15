@@ -4,11 +4,10 @@
       "tooltip": {
         "date": "Date",
         "quality": "Sleep Quality (%)",
-        "deep": "Deep Sleep (%)",
-        "light": "Light Sleep (%)",
-        "rem": "REM Sleep (%)",
-        "awake": "Awake Time (%)"
-      }
+        "duration": "Duration"
+      },
+      "typical-sleep-session": "Healthy Range",
+      "sessions": "{{ active }} / {{ total }} sessions"
     },
     "metric-config": {
       "checkbox": {
