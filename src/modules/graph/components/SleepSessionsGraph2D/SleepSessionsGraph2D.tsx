@@ -1,6 +1,5 @@
 import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {useMemo} from "react";
-import {SleepSessionsGraph2DProps} from './index.ts'
 import dayjs from 'dayjs';
 import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
@@ -8,16 +7,18 @@ import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip"
 import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
 import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
 import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
+import {useSleepContext} from "context";
 
-export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: SleepSessionsGraph2DProps) => {
+export const SleepSessionsGraph2D = () => {
   const { getMetricColour } = useGraphStyles()
+  const { rangeStart, rangeEnd, sleepMetric } = useSleepContext()
   const { data } = useSleepGraph2DData({ rangeStart, rangeEnd })
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
-    metric: currentMetric,
+    metric: sleepMetric,
     data: data?.map(session => ({
       x: dayjs(session.date).valueOf(),
-      y: session[currentMetric] as number
+      y: session[sleepMetric] as number
     })) ?? []
   })
 
@@ -58,13 +59,13 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
       >
         <Line
           type='monotone'
-          dataKey={currentMetric}
+          dataKey={sleepMetric}
           animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
-          id={`${currentMetric}_line`}
+          id={`${sleepMetric}_line`}
           animationEasing='ease-in-out'
-          stroke={getMetricColour(currentMetric)}
+          stroke={getMetricColour(sleepMetric)}
         />
 
         <Line
@@ -77,7 +78,7 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
-          id={`${currentMetric}_regression_line`}
+          id={`${sleepMetric}_regression_line`}
         />
 
         <XAxis
@@ -96,8 +97,8 @@ export const SleepSessionsGraph2D = ({ currentMetric, rangeStart, rangeEnd }: Sl
           axisLine={false}
           domain={[0, 100]}
           orientation='left'
+          dataKey={sleepMetric}
           tick={CustomYAxisTick}
-          dataKey={currentMetric}
           stroke='rgb(255, 255, 255)'
           padding={{ bottom: 40, top: 60 }}
           tickFormatter={value => `${value}%`}

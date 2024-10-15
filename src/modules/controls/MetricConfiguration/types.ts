@@ -1,7 +1,5 @@
 export interface MetricConfigurationProps {
-  current: SleepMetric
   className?: string
-  onMetricChange: (metric: SleepMetric) => void
 }
 
 export enum SleepMetric {

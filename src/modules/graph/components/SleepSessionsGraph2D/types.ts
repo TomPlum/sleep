@@ -1,28 +1,4 @@
-import {SleepMetric} from "modules/controls/MetricConfiguration";
-
 export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[] | undefined
-
-export interface SleepSessionsGraph2DProps {
-  /**
-   * The sleep metric to render against
-   * the y-axis as a percentage.
-   */
-  currentMetric: SleepMetric
-
-  /**
-   * The lower bound within which to
-   * filter the sleep sessions to in
-   * the rendered graph.
-   */
-  rangeStart: Date
-
-  /**
-   * The upper bound within which to
-   * filter the sleep sessions to in
-   * the rendered graph.
-   */
-  rangeEnd: Date
-}
 
 export interface SleepSessionGraph2DDatum {
   /**
