@@ -1,6 +1,6 @@
 export interface LinearRegressionPlotPoint {
   _date: string
-  [metric: string]: number | string
+  y: number
 }
 
 export interface LinearRegressionResponse {

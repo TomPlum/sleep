@@ -1,5 +1,6 @@
 import { useMemo} from "react";
 import {
+  LinearRegressionPlotPoint,
   LinearRegressionResponse
 } from "data/useLinearRegression/types.ts";
 import dayjs from "dayjs";
@@ -11,11 +12,11 @@ export const useLinearRegression = (): LinearRegressionResponse => {
   const data = useMemo(() => {
     return graphData2d.data?.map(session => ({
       x: dayjs(session.date).valueOf(),
-      y: session[sleepMetric] as number
+      y: session[sleepMetric]
     })) ?? []
   }, [graphData2d.data, sleepMetric])
 
-  const regressionLineData = useMemo(() => {
+  const regressionLineData = useMemo<LinearRegressionPlotPoint[]>(() => {
     const n = data.length;
     const sumX = data.reduce((acc, point) => acc + point.x, 0);
     const sumY = data.reduce((acc, point) => acc + point.y, 0);
@@ -27,21 +28,21 @@ export const useLinearRegression = (): LinearRegressionResponse => {
 
     return data.map(point => ({
       _date: dayjs(point.x).format('MMM YY'),
-      [sleepMetric]: slope * point.x + intercept,
+      y: slope * point.x + intercept,
     }))
-  }, [data, sleepMetric])
+  }, [data])
 
-  const yRegressionDeltaLine = useMemo(() => {
+  const yRegressionDeltaLine = useMemo<number>(() => {
     const firstSession = regressionLineData[0]
-    return firstSession[sleepMetric] as number
-  }, [regressionLineData, sleepMetric])
+    return firstSession.y
+  }, [regressionLineData])
 
-  const xRegressionDeltaLine = useMemo(() => {
+  const xRegressionDeltaLine = useMemo<number>(() => {
     return regressionLineData.length - 1
   }, [regressionLineData])
 
-  const minimum = regressionLineData[0][sleepMetric] as number
-  const maximum = regressionLineData[regressionLineData.length - 1][sleepMetric] as number
+  const minimum = regressionLineData[0].y
+  const maximum = regressionLineData[regressionLineData.length - 1].y
 
   return {
     regressionLineData,

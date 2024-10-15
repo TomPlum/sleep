@@ -33,10 +33,10 @@ export const SleepSessionsGraph2D = () => {
 
   const { yDomain, yTicks } = useMemo(() => {
     if (data) {
-      const smallest = Math.min(...data.map(it => Number((it[sleepMetric] as number).toFixed(0))))
-      const lowerBound = smallest < 20 ? smallest : smallest - 10
-      const biggest = Math.max(...data.map(it => Number((it[sleepMetric] as number).toFixed(0))))
-      const upperBound = biggest > 90 ? biggest : biggest + 10
+      const smallest = Math.min(...data.map(it => Number((it[sleepMetric]).toFixed(0))))
+      const lowerBound = smallest < 10 ? 0 : smallest - 10
+      const biggest = Math.max(...data.map(it => Number((it[sleepMetric]).toFixed(0))))
+      const upperBound = biggest > 90 ? 100 : biggest + 10
 
       const closestLower = Math.round(lowerBound / 10) * 10
       const closestUpper = Math.round(upperBound / 10) * 10
@@ -87,11 +87,14 @@ export const SleepSessionsGraph2D = () => {
           animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
-          data={regressionLineData}
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
           id={`${sleepMetric}_regression_line`}
+          data={regressionLineData.map(({ y, _date }) => ({
+            _date,
+            [sleepMetric]: y,
+          }))}
         />
 
         <ReferenceLine
