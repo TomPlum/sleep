@@ -1,5 +1,4 @@
 import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {useMemo} from "react";
 import dayjs from 'dayjs';
 import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
@@ -9,8 +8,8 @@ import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 
 export const SleepSessionsGraph2D = () => {
-  const { getMetricColour } = useGraphStyles()
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
+  const { getMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
     metric: sleepMetric,
@@ -19,34 +18,6 @@ export const SleepSessionsGraph2D = () => {
       y: session[sleepMetric] as number
     })) ?? []
   })
-
-  const strokeWidth = useMemo<number>(() => {
-    if (!data) {
-      return 3
-    }
-
-    if (data.length < 50) {
-      return 5
-    } else if (data.length > 50 && data.length < 500) {
-      return 3
-    } else {
-      return 1
-    }
-  }, [data])
-
-  const xAxisInterval = useMemo<number>(() => {
-    if (!data) {
-      return 5
-    }
-
-    if (data.length < 100) {
-      return 5
-    } else if (data.length > 100 && data.length < 250) {
-      return 10
-    } else {
-      return 60
-    }
-  }, [data])
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -64,6 +35,7 @@ export const SleepSessionsGraph2D = () => {
           id={`${sleepMetric}_line`}
           animationEasing='ease-in-out'
           stroke={getMetricColour(sleepMetric)}
+          dot={{ fill: undefined, r: activeDotRadius }}
         />
 
         <Line
@@ -71,8 +43,8 @@ export const SleepSessionsGraph2D = () => {
           type='monotone'
           animationDuration={500}
           isAnimationActive={true}
-          data={regressionLineData}
           strokeWidth={strokeWidth}
+          data={regressionLineData}
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
