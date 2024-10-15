@@ -8,8 +8,8 @@ import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 
 export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
-  const { updateQueryParam } = useQueryParams()
   const { getMetricColour } = useGraphStyles()
+  const { updateQueryParam } = useQueryParams()
   const { sleepMetric, setSleepMetric } = useSleepContext()
 
   const handleChange = useCallback((e: CheckboxChangeEvent) => {

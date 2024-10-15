@@ -6,10 +6,11 @@ import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip"
 import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
 import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
+import styles from './SleepSessionGraph2D.module.scss'
 
 export const SleepSessionsGraph2D = () => {
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
-  const { getMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
+  const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
     metric: sleepMetric,
@@ -33,8 +34,9 @@ export const SleepSessionsGraph2D = () => {
           isAnimationActive={true}
           strokeWidth={strokeWidth}
           id={`${sleepMetric}_line`}
+          stroke={currentMetricColour}
           animationEasing='ease-in-out'
-          stroke={getMetricColour(sleepMetric)}
+          className={styles.metricLine}
           dot={{ fill: undefined, r: activeDotRadius }}
         />
 
