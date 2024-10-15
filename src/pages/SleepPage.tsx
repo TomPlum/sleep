@@ -5,8 +5,10 @@ import {LoadingOutlined} from "@ant-design/icons";
 import {DateRangePicker} from "modules/controls/DateRangePicker";
 import {SleepSessionsGraph2D} from "modules/graph/components/SleepSessionsGraph2D";
 import {useSleepContext} from "context";
+import {useTranslation} from "react-i18next";
 
 export const SleepPage = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { activeSessions, sleepData, isSleepDataLoading } = useSleepContext()
 
   if (isSleepDataLoading) {
@@ -21,7 +23,10 @@ export const SleepPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.sessions}>
-        {activeSessions} / {sleepData?.sessions.length} sessions
+        {t('sessions', {
+          active: activeSessions,
+          total: sleepData?.sessions.length
+        })}
       </div>
 
       <div className={styles.controls}>

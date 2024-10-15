@@ -5,7 +5,8 @@
         "date": "Date",
         "quality": "Sleep Quality (%)"
       },
-      "typical-sleep-session": "Typical Sleep Session"
+      "typical-sleep-session": "Healthy Range",
+      "sessions": "{{ active }} / {{ total }} sessions"
     },
     "metric-config": {
       "checkbox": {

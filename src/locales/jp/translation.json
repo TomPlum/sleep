@@ -5,7 +5,8 @@
         "date": "日付",
         "quality": "睡眠の質 (%)"
       },
-      "typical-sleep-session": "典型的な睡眠セッション"
+      "typical-sleep-session": "健康的な範囲",
+      "sessions": "{{ active }} / {{ total }} セッション"
     },
     "metric-config": {
       "checkbox": {

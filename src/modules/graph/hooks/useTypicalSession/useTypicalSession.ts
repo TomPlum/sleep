@@ -14,6 +14,7 @@ export const useTypicalSession = (): TypicalSessionResponse => {
   const typicalSleepSession = useMemo<TypicalSessionArea>(() => {
     const lastSession = data?.length - 1
     const sleepStage = sleepMetric as SleepStage
+
     switch (sleepStage) {
       case SleepMetric.AWAKE_TIME: {
         return {
@@ -23,14 +24,14 @@ export const useTypicalSession = (): TypicalSessionResponse => {
       }
       case SleepMetric.DEEP_SLEEP: {
         return {
-          x1: 0, y1: 5,
-          x2: lastSession, y2: 20
+          x1: 0, y1: 10,
+          x2: lastSession, y2: 25
         }
       }
       case SleepMetric.LIGHT_SLEEP: {
         return {
           x1: 0, y1: 40,
-          x2: lastSession, y2: 50
+          x2: lastSession, y2: 60
         }
       }
       case SleepMetric.REM_SLEEP: {
