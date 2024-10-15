@@ -35,7 +35,7 @@ export const SleepSessionsGraph2D = () => {
       <LineChart
         data={[...data ?? []]}
         id='sleeps-sessions-graph-2d'
-        margin={{ left: -53, bottom: -22 }}
+        margin={{ left: -55, bottom: -22 }}
       >
         <Line
           type='monotone'
@@ -82,6 +82,7 @@ export const SleepSessionsGraph2D = () => {
 
         {typicalSleepSession && (
           <ReferenceArea
+            ifOverflow='extendDomain'
             x1={typicalSleepSession.x1}
             x2={typicalSleepSession.x2}
             y1={typicalSleepSession.y1}
@@ -95,7 +96,7 @@ export const SleepSessionsGraph2D = () => {
           dataKey='_date'
           strokeWidth={3}
           axisLine={false}
-          padding={{ left: 0 }}
+          padding={{ left: -5 }}
           tick={CustomXAxisTick}
           interval={xAxisInterval}
           allowDataOverflow={true}
