@@ -16,6 +16,7 @@ import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 import styles from './SleepSessionGraph2D.module.scss'
 import {useTypicalSession} from "modules/graph/hooks/useTypicalSession/useTypicalSession.ts";
+import {useMemo} from "react";
 
 export const SleepSessionsGraph2D = () => {
   const { typicalSleepSession } = useTypicalSession()
@@ -29,6 +30,36 @@ export const SleepSessionsGraph2D = () => {
     xRegressionDeltaLine,
     yRegressionDeltaLine
   } = useLinearRegression()
+
+  const { yDomain, yTicks } = useMemo(() => {
+    if (data) {
+      const smallest = Math.min(...data.map(it => Number((it[sleepMetric] as number).toFixed(0))))
+      const lowerBound = smallest < 20 ? smallest : smallest - 10
+      const biggest = Math.max(...data.map(it => Number((it[sleepMetric] as number).toFixed(0))))
+      const upperBound = biggest > 90 ? biggest : biggest + 10
+
+      const closestLower = Math.round(lowerBound / 10) * 10
+      const closestUpper = Math.round(upperBound / 10) * 10
+
+      const yTicks = Array.from({
+        length: Math.floor(closestUpper / 10) - Math.ceil(closestLower / 10) + 1
+      }).reduce((acc: number[], _, i) => {
+        return acc.concat(Math.ceil(closestLower / 10) * 10 + i * 10)
+      }, [])
+
+      return {
+        yDomain: [lowerBound, upperBound],
+        yTicks
+      }
+    }
+
+    return {
+      yDomain: [],
+      yTicks: []
+    }
+  }, [data, sleepMetric])
+
+  console.log(yDomain, yTicks)
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -88,7 +119,7 @@ export const SleepSessionsGraph2D = () => {
             y1={typicalSleepSession.y1}
             y2={typicalSleepSession.y2}
             id={`${sleepMetric}_typical_sleep_session_area`}
-            fill={currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.3)')}
+            fill={currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.25)')}
           />
         )}
 
@@ -104,16 +135,16 @@ export const SleepSessionsGraph2D = () => {
         />
 
         <YAxis
+          ticks={yTicks}
           strokeWidth={3}
           axisLine={false}
-          domain={[0, 100]}
+          domain={yDomain}
           orientation='left'
           dataKey={sleepMetric}
           tick={CustomYAxisTick}
           stroke='rgb(255, 255, 255)'
           padding={{ bottom: 40, top: 60 }}
           tickFormatter={value => `${value}%`}
-          ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
         />
 
         <Tooltip content={SleepSessionTooltip} />
