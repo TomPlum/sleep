@@ -8,8 +8,6 @@ export const CustomYAxisTick = ({ x, y, payload }: CustomYAxisTickProps) => {
   const xLocation = x + 15
   const yLocation = y + 5
 
-  console.log(payload, textValue, rectWidth, rectHeight)
-
   return (
     <g>
       <rect

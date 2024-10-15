@@ -5,14 +5,12 @@ import {useLinearRegression} from "data/useLinearRegression";
 import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
 import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip";
 import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
-import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
 import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 
 export const SleepSessionsGraph2D = () => {
   const { getMetricColour } = useGraphStyles()
-  const { rangeStart, rangeEnd, sleepMetric } = useSleepContext()
-  const { data } = useSleepGraph2DData({ rangeStart, rangeEnd })
+  const { graphData2d: { data }, sleepMetric } = useSleepContext()
 
   const { regressionLineData, regressionDataKey } = useLinearRegression({
     metric: sleepMetric,

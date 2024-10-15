@@ -7,9 +7,9 @@ import {SleepSessionsGraph2D} from "modules/graph/components/SleepSessionsGraph2
 import {useSleepContext} from "context";
 
 export const SleepPage = () => {
-  const { sleepData, isSleepDataLoading } = useSleepContext()
+  const { activeSessions, isSleepDataLoading } = useSleepContext()
 
-  if (isSleepDataLoading || !sleepData) {
+  if (isSleepDataLoading) {
     return (
       <Spin
         size="large"
@@ -21,7 +21,7 @@ export const SleepPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.sessions}>
-        {sleepData?.sessions.length} sessions
+        {activeSessions} sessions
       </div>
 
       <div className={styles.controls}>

@@ -1,6 +1,9 @@
 import type {SleepSessionGraph2DData} from "modules/graph/components/SleepSessionsGraph2D";
+import {PillowSleepData} from "data/useSleepData";
 
 export interface SleepGraph2DDataProps {
+  sleepData?: PillowSleepData
+  isSleepDataLoading: boolean
   /**
    * The lower bound within which to
    * filter the sleep sessions to in

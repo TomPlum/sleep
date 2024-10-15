@@ -20,5 +20,10 @@ export const SleepContext = createContext<SleepContextBag>({
   sleepMetric: SleepMetric.QUALITY,
   setSleepMetric: (metric: SleepMetric) => {
     console.debug(`Tried to setSleepMetric(${metric}) in the SleepContext before initialisation.`)
+  },
+  activeSessions: 0,
+  graphData2d: {
+    data: [],
+    isSleepDataLoading: true
   }
 })

@@ -5,6 +5,7 @@ import {useSleepData} from "data/useSleepData";
 import {useQueryParams} from "hooks/useQueryParams";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
 import dayjs from "dayjs";
+import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { sleepData, loading } = useSleepData()
@@ -14,8 +15,15 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const [rangeStart, setRangeStart] = useState(start)
   const [currentMetric, setCurrentMetric] = useState(metric)
 
+  const sleepGraphData2d = useSleepGraph2DData({
+    sleepData,
+    isSleepDataLoading: loading,
+    rangeStart: rangeStart ?? new Date(),
+    rangeEnd: rangeEnd ?? new Date()
+  })
+
   useEffect(() => {
-    if (!loading && sleepData) {
+    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric)) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
@@ -43,12 +51,14 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     rangeEnd: rangeEnd ?? new Date(),
     setRangeEnd,
     sleepMetric: currentMetric ?? SleepMetric.QUALITY,
-    setSleepMetric: setCurrentMetric
-  }), [currentMetric, loading, rangeEnd, rangeStart, sleepData])
+    setSleepMetric: setCurrentMetric,
+    graphData2d: sleepGraphData2d ?? { data: [], isSleepDataLoading : true },
+    activeSessions: sleepGraphData2d?.data?.length ?? 0
+  }), [currentMetric, sleepGraphData2d, loading, rangeEnd, rangeStart, sleepData])
 
   return (
-      <SleepContext.Provider value={value}>
-        {children}
-      </SleepContext.Provider>
+    <SleepContext.Provider value={value}>
+      {children}
+    </SleepContext.Provider>
   )
 }
