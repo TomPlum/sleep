@@ -6,10 +6,12 @@
 
   .sessions {
     position: absolute;
+    font-family: "Fira Code", sans-serif;
     top: 3px;
     left: 6px;
-    font-size: 0.8rem;
-    color: #19ee19;
+    font-size: 0.7rem;
+    color: #34f1f1;
+    text-transform: uppercase;
   }
 
   .controls {

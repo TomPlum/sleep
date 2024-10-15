@@ -8,6 +8,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SleepApp from "SleepApp.tsx";
 import {SleepPage} from "pages/SleepPage.tsx";
 import {NotFoundPage} from "pages/NotFoundPage.tsx";
+import {ConfigProvider, theme} from 'antd';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,13 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ConfigProvider
+        theme={{
+          algorithm: theme.darkAlgorithm
+        }}
+      >
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </QueryClientProvider>
   </StrictMode>
 )
