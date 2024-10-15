@@ -6,8 +6,10 @@ import {DateRangePicker} from "modules/controls/DateRangePicker";
 import {SleepSessionsGraph2D} from "modules/graph/components/SleepSessionsGraph2D";
 import {useSleepContext} from "context";
 import {useTranslation} from "react-i18next";
+import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 
 export const SleepPage = () => {
+  const { currentMetricColour } = useGraphStyles()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { activeSessions, sleepData, isSleepDataLoading } = useSleepContext()
 
@@ -23,10 +25,12 @@ export const SleepPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.sessions}>
-        {t('sessions', {
-          active: activeSessions,
-          total: sleepData?.sessions.length
-        })}
+        <span style={{ color: currentMetricColour }}>
+          {t('sessions', {
+            active: activeSessions,
+            total: sleepData?.sessions.length
+          })}
+        </span>
       </div>
 
       <div className={styles.controls}>
