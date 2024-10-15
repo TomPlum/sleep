@@ -3,7 +3,8 @@
     "graph2d": {
       "tooltip": {
         "date": "日付",
-        "quality": "睡眠の質 (%)"
+        "quality": "睡眠の質 (%)",
+        "duration": "期間"
       },
       "typical-sleep-session": "健康的な範囲",
       "sessions": "{{ active }} / {{ total }} セッション"

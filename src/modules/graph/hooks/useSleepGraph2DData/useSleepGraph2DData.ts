@@ -20,6 +20,7 @@ export const useSleepGraph2DData = ({ sleepData, isSleepDataLoading, rangeStart,
       return {
         _date: dayjs(session.startTime).format('MMM YY'),
         date: session.startTime,
+        duration: totalDuration,
         [SleepMetric.QUALITY]: session.sleepQuality,
         [SleepMetric.AWAKE_TIME]: toPercentage(duration.awake, totalDuration),
         [SleepMetric.DEEP_SLEEP]: toPercentage(duration.deep, totalDuration),

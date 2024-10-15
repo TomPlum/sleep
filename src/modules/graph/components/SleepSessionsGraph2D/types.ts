@@ -17,6 +17,13 @@ export interface SleepSessionGraph2DDatum {
   date: Date
 
   /**
+   * The total duration of the sleep
+   * session in minutes.
+   * I.e. How long I slept for.
+   */
+  duration: number
+
+  /**
    * The value, as a percentage, of
    * sleep quality as determined by
    * Pillow for the current session.
@@ -51,5 +58,3 @@ export interface SleepSessionGraph2DDatum {
    */
   [SleepMetric.AWAKE_TIME]: number
 }
-
-export type SleepStage = SleepMetric.DEEP_SLEEP | SleepMetric.LIGHT_SLEEP | SleepMetric.REM_SLEEP | SleepMetric.AWAKE_TIME

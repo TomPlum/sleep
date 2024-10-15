@@ -3,7 +3,8 @@
     "graph2d": {
       "tooltip": {
         "date": "Date",
-        "quality": "Sleep Quality (%)"
+        "quality": "Sleep Quality (%)",
+        "duration": "Duration"
       },
       "typical-sleep-session": "Healthy Range",
       "sessions": "{{ active }} / {{ total }} sessions"
