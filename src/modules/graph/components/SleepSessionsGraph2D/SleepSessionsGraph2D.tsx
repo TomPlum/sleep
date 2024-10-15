@@ -24,7 +24,7 @@ export const SleepSessionsGraph2D = () => {
   const { graphData2d: { data }, sleepMetric } = useSleepContext()
   const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
 
-  const { regressionLineData, regressionDataKey, regressionDelta } = useLinearRegression({
+  const { regressionLineData, regressionDataKey, regressionDelta, xRegressionDeltaLine, yRegressionDeltaLine } = useLinearRegression({
     metric: sleepMetric,
     data: data?.map(session => ({
       x: dayjs(session.date).valueOf(),
@@ -32,19 +32,7 @@ export const SleepSessionsGraph2D = () => {
     })) ?? []
   })
 
-  const regressionDeltaHorizontal = useMemo(() => {
-    const firstSession = regressionLineData[0]
-    const y = firstSession[sleepMetric]
-    return { y }
-  }, [regressionLineData, sleepMetric])
-
-  const regressionDeltaVertical = useMemo(() => {
-    const x = regressionLineData.length - 1
-    return { x }
-  }, [regressionLineData])
-
   const typicalSleepSession = useMemo(() => {
-    const firstSession = data[0]
     const lastSession = data?.length - 1
     const sleepStage = sleepMetric as SleepStage
     switch (sleepStage) {
@@ -112,17 +100,17 @@ export const SleepSessionsGraph2D = () => {
         <ReferenceLine
           type='monotone'
           strokeDasharray='3 3'
+          y={yRegressionDeltaLine}
           stroke='rgb(255, 255, 255)'
           label={`Δ ${regressionDelta}%`}
-          y={regressionDeltaHorizontal.y}
           id={`${sleepMetric}_regression_line_delta_h`}
         />
 
         <ReferenceLine
           type='monotone'
           strokeDasharray='3 3'
+          x={xRegressionDeltaLine}
           stroke='rgb(255, 255, 255)'
-          x={regressionDeltaVertical.x}
           id={`${sleepMetric}_regression_line_delta_v`}
         />
 
