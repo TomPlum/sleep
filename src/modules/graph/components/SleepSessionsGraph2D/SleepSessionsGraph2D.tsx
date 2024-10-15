@@ -36,9 +36,14 @@ export const SleepSessionsGraph2D = () => {
 
   const { yDomain, yTicks } = useMemo(() => {
     if (data) {
-      const smallest = Math.min(...data.map(it => Number((it[sleepMetric]).toFixed(0))))
+      const percentages = data.map(datum => {
+        return Number((datum[sleepMetric]).toFixed(0))
+      })
+
+      const smallest = Math.min(...percentages)
       const lowerBound = smallest < 10 ? 0 : smallest - 10
-      const biggest = Math.max(...data.map(it => Number((it[sleepMetric]).toFixed(0))))
+
+      const biggest = Math.max(...percentages)
       const upperBound = biggest > 90 ? 100 : biggest + 10
 
       const closestLower = Math.round(lowerBound / 10) * 10
@@ -61,8 +66,6 @@ export const SleepSessionsGraph2D = () => {
       yTicks: []
     }
   }, [data, sleepMetric])
-
-  console.log(yDomain, yTicks)
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -157,7 +160,7 @@ export const SleepSessionsGraph2D = () => {
           dataKey={sleepMetric}
           tick={CustomYAxisTick}
           stroke='rgb(255, 255, 255)'
-          padding={{ bottom: 40, top: 60 }}
+          padding={{ bottom: 40, top: 80 }}
           tickFormatter={value => `${value}%`}
         />
 

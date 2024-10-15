@@ -1,5 +1,4 @@
 import {useMemo} from "react";
-import {SleepStage} from "modules/graph/components/SleepSessionsGraph2D";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
 import {useSleepContext} from "context";
 import {TypicalSessionArea, TypicalSessionResponse} from "modules/graph/hooks/useTypicalSession/types.ts";
@@ -13,9 +12,8 @@ export const useTypicalSession = (): TypicalSessionResponse => {
 
   const typicalSleepSession = useMemo<TypicalSessionArea>(() => {
     const lastSession = data?.length - 1
-    const sleepStage = sleepMetric as SleepStage
 
-    switch (sleepStage) {
+    switch (sleepMetric) {
       case SleepMetric.AWAKE_TIME: {
         return {
           x1: 0, y1: 0,
@@ -38,6 +36,12 @@ export const useTypicalSession = (): TypicalSessionResponse => {
         return {
           x1: 0, y1: 20,
           x2: lastSession, y2: 25
+        }
+      }
+      case SleepMetric.QUALITY: {
+        return {
+          x1: 0, y1: 80,
+          x2: lastSession, y2: 100
         }
       }
     }
