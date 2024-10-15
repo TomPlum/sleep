@@ -1,8 +1,11 @@
-import {useCallback} from "react";
+import {useCallback, useMemo} from "react";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
-import {GetMetricColour} from "modules/graph/hooks/useGraphStyles/types.ts";
+import {GetMetricColour, GraphStylesResponse} from "modules/graph/hooks/useGraphStyles/types.ts";
+import {useSleepContext} from "context";
 
-export const useGraphStyles = () => {
+export const useGraphStyles = (): GraphStylesResponse => {
+  const { activeSessions } = useSleepContext()
+
   const getMetricColour = useCallback<GetMetricColour>((metric: SleepMetric) => {
     switch (metric) {
       case SleepMetric.LIGHT_SLEEP: {
@@ -23,7 +26,40 @@ export const useGraphStyles = () => {
     }
   }, [])
 
+  const strokeWidth = useMemo<number>(() => {
+    if (activeSessions < 50) {
+      return 5
+    } else if (activeSessions > 50 && activeSessions < 500) {
+      return 3
+    } else {
+      return 1
+    }
+  }, [activeSessions])
+
+  const xAxisInterval = useMemo<number>(() => {
+    if (activeSessions < 100) {
+      return 5
+    } else if (activeSessions > 100 && activeSessions < 250) {
+      return 10
+    } else {
+      return 60
+    }
+  }, [activeSessions])
+
+  const activeDotRadius = useMemo<number>(() => {
+    if (activeSessions < 100) {
+      return 10
+    } else if (activeSessions > 100 && activeSessions < 300) {
+      return 8
+    } else {
+      return 3
+    }
+  }, [activeSessions])
+
   return {
-    getMetricColour
+    getMetricColour,
+    strokeWidth,
+    xAxisInterval,
+    activeDotRadius
   }
 }

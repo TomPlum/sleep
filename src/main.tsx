@@ -7,15 +7,19 @@ import './i18n.ts'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SleepApp from "SleepApp.tsx";
 import {SleepPage} from "pages/SleepPage.tsx";
-import {SleepContextProvider} from "context";
+import {NotFoundPage} from "pages/NotFoundPage.tsx";
 
 const router = createBrowserRouter([
   {
     element: <SleepApp />,
     children: [
       {
-        path: '/sleep',
+        path: '/',
         element: <SleepPage />
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />
       }
     ]
   }
@@ -24,9 +28,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <SleepContextProvider>
-        <RouterProvider router={router} />
-      </SleepContextProvider>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>
 )
