@@ -4,13 +4,24 @@
   position: relative;
   background-color: #0e0e0e;
 
-  .sessions {
+  .topLeftControls {
     position: absolute;
     font-family: "Fira Code", sans-serif;
     top: 3px;
     left: 6px;
     font-size: 0.7rem;
     text-transform: uppercase;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+
+    .sessions {
+      margin: 0;
+    }
+
+    .languageSwitch {
+      margin-left: 10px;
+    }
   }
 
   .controls {
