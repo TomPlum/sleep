@@ -6,6 +6,7 @@ import {useQueryParams} from "hooks/useQueryParams";
 import {MetricCheckboxProps} from "modules/controls/MetricCheckbox/types.ts";
 import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
+import {PageRoutes} from "routes.ts";
 
 export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
   const { getMetricColour } = useGraphStyles()
@@ -18,7 +19,7 @@ export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
       setSleepMetric(metric)
 
       updateQueryParam({
-        route: '/',
+        route: PageRoutes.SLEEP,
         params: {
           metric
         }

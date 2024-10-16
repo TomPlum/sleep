@@ -6,6 +6,7 @@ import {useQueryParams} from "hooks/useQueryParams";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
 import dayjs from "dayjs";
 import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData";
+import {PageRoutes} from "routes.ts";
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { sleepData, loading } = useSleepData()
@@ -39,7 +40,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
         end: selectedEnd.getTime().toString()
       }
 
-      updateQueryParam({ route: '/', params})
+      updateQueryParam({ route: PageRoutes.SLEEP, params})
     }
   }, [currentMetric, loading, rangeEnd, rangeStart, sleepData, updateQueryParam])
 
