@@ -31,7 +31,13 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ConfigProvider
         theme={{
-          algorithm: theme.darkAlgorithm
+          algorithm: theme.darkAlgorithm,
+          components: {
+            Switch: {
+              colorPrimary: '#7e7e7e',
+              colorPrimaryHover: '#595959'
+            }
+          }
         }}
       >
         <RouterProvider router={router} />

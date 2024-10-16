@@ -7,7 +7,11 @@
         "duration": "Duration"
       },
       "typical-sleep-session": "Healthy Range",
-      "sessions": "{{ active }} / {{ total }} sessions"
+      "sessions": "{{ active }} / {{ total }} sessions",
+      "language": {
+        "checked": "Japanese",
+        "unchecked": "English"
+      }
     },
     "metric-config": {
       "checkbox": {
