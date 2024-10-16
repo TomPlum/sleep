@@ -9,13 +9,14 @@ import SleepApp from "SleepApp.tsx";
 import {SleepPage} from "pages/SleepPage.tsx";
 import {NotFoundPage} from "pages/NotFoundPage.tsx";
 import {ConfigProvider, theme} from 'antd';
+import {PageRoutes} from "routes.ts";
 
 const router = createBrowserRouter([
   {
     element: <SleepApp />,
     children: [
       {
-        path: '/',
+        path: PageRoutes.SLEEP,
         element: <SleepPage />
       },
       {

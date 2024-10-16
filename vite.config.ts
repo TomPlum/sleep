@@ -2,9 +2,9 @@ import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react-swc'
 import tsconfigPaths from "vite-tsconfig-paths"
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react(), tsconfigPaths()],
-  base: '/sleep/',
+  base: mode === 'production' ? '/sleep/' : '/',
   resolve: {
     alias: {
       test: "/src/test",
@@ -28,7 +28,7 @@ export default defineConfig({
       reporter: ['text', 'html'],
       exclude: [
         'node_modules/'
-      ],
-    },
+      ]
+    }
   }
-})
+}))

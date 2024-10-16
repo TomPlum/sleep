@@ -3,6 +3,7 @@ import styles from './NotFoundPage.module.scss'
 import {Button} from "antd";
 import {useNavigate} from "react-router-dom";
 import {useCallback} from "react";
+import {PageRoutes} from "routes.ts";
 
 export const NotFoundPage = () => {
   const navigate = useNavigate()
@@ -10,7 +11,7 @@ export const NotFoundPage = () => {
 
   const handleClickHome = useCallback(() => {
     navigate({
-      pathname: '/'
+      pathname: PageRoutes.SLEEP
     })
   }, [navigate])
 
