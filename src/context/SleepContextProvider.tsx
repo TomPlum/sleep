@@ -17,10 +17,10 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const [currentMetric, setCurrentMetric] = useState(metric)
 
   const sleepGraphData2d = useSleepGraph2DData({
-    sleepData,
-    isSleepDataLoading: loading,
+    sessions: sleepData?.sessions ?? [],
     rangeStart: rangeStart ?? new Date(),
-    rangeEnd: rangeEnd ?? new Date()
+    rangeEnd: rangeEnd ?? new Date(),
+    isSleepDataLoading: loading
   })
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     setSleepMetric: setCurrentMetric,
     graphData2d: sleepGraphData2d ?? { data: [], isSleepDataLoading : true },
     activeSessions: sleepGraphData2d?.data?.length ?? 0
-  }), [currentMetric, sleepGraphData2d, loading, rangeEnd, rangeStart, sleepData])
+  }), [currentMetric, loading, rangeEnd, rangeStart, sleepData, sleepGraphData2d])
 
   return (
     <SleepContext.Provider value={value}>

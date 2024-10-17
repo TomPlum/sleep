@@ -1,5 +1,5 @@
 export interface LinearRegressionPlotPoint {
-  _date: string
+  xDate: number
   y: number
 }
 
@@ -44,17 +44,4 @@ export interface LinearRegressionResponse {
    * shows the delta.
    */
   yRegressionDeltaLine: number
-}
-
-
-/**
- * Details of a regression line that
- * can be plotted via the equation
- * y = mx + b, where (m) is the slope
- * or gradient and b is the point in
- * which the line intercepts the y-axis.
- */
-export interface RegressionLine {
-  slope: number
-  yIntercept: number
 }

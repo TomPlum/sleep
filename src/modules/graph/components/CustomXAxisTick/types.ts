@@ -4,4 +4,6 @@ export interface CustomXAxisTickProps {
   x: number
   y: number
   payload: TickItem
+  earliestSession: Date
+  latestSession: Date
 }
