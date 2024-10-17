@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { SleepContextBag } from 'context/types.ts'
+import { SleepContextBag } from 'context/types'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export const SleepContext = createContext<SleepContextBag>({

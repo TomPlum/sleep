@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { GetMetricColour, GraphStylesResponse } from 'modules/graph/hooks/useGraphStyles/types.ts'
+import { GetMetricColour, GraphStylesResponse } from 'modules/graph/hooks/useGraphStyles/types'
 import { useSleepContext } from 'context'
 
 export const useGraphStyles = (): GraphStylesResponse => {

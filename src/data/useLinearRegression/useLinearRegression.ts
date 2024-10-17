@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import {
   LinearRegressionPlotPoint,
   LinearRegressionResponse
-} from 'data/useLinearRegression/types.ts'
+} from 'data/useLinearRegression/types'
 import dayjs from 'dayjs'
 import { useSleepContext } from 'context'
 

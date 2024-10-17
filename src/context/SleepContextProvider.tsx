@@ -1,12 +1,12 @@
-import { SleepContext } from 'context/SleepContext.ts'
+import { SleepContext } from 'context/SleepContext'
 import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
-import { SleepContextBag } from 'context/types.ts'
+import { SleepContextBag } from 'context/types'
 import { useSleepData } from 'data/useSleepData'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import dayjs from 'dayjs'
 import { useSleepGraph2DData } from 'modules/graph/hooks/useSleepGraph2DData'
-import { PageRoutes } from 'routes.ts'
+import { PageRoutes } from 'routes'
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { sleepData, loading } = useSleepData()

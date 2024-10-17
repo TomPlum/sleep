@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useRawSleepData } from './useRawSleepData.ts'
+import { useRawSleepData } from './useRawSleepData'
 import { wrapper } from 'test'
 import { beforeAll, beforeEach } from 'vitest'
 import { resolve } from 'path'

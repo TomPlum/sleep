@@ -1,5 +1,5 @@
 import styles from './CustomXAxisTick.module.scss'
-import { CustomXAxisTickProps } from './types.ts'
+import { CustomXAxisTickProps } from './types'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 

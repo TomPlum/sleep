@@ -1,4 +1,4 @@
-import { CustomYAxisTickProps } from 'modules/graph/components/CustomYAxisTick/types.ts'
+import { CustomYAxisTickProps } from 'modules/graph/components/CustomYAxisTick/types'
 import styles from './CustomYAxisTick.module.scss'
 
 export const CustomYAxisTick = ({ x, y, payload }: CustomYAxisTickProps) => {

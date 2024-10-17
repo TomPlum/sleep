@@ -3,7 +3,7 @@ import styles from './NotFoundPage.module.scss'
 import { Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useCallback } from 'react'
-import { PageRoutes } from 'routes.ts'
+import { PageRoutes } from 'routes'
 
 export const NotFoundPage = () => {
   const navigate = useNavigate()

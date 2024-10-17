@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react'
-import { useLinearRegression } from 'data/useLinearRegression/useLinearRegression.ts'
+import { useLinearRegression } from 'data/useLinearRegression/useLinearRegression'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionGraph2DData } from 'modules/graph/components/SleepSessionsGraph2D'
-import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types.ts'
+import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types'
 
 const mockSleepContext = vi.fn()
 vi.mock('context/useSleepContext', () => ({

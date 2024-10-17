@@ -3,7 +3,7 @@ import {
   BreakdownPieLabelProps,
   DurationBreakdownPieDataRaw,
   DurationBreakdownPieProps
-} from 'modules/graph/components/DurationBreakdownPie/types.ts'
+} from 'modules/graph/components/DurationBreakdownPie/types'
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useSleepContext } from 'context'
-import { Axes2D } from 'modules/graph/hooks/useAxes2D/types.ts'
+import { Axes2D } from 'modules/graph/hooks/useAxes2D/types'
 
 export const useAxes2D = (): Axes2D => {
   const { graphData2d: { data }, sleepMetric, activeSessions } = useSleepContext()

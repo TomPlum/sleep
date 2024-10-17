@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useCallback, useMemo } from 'react'
-import { QueryParamsResponse, SleepQueryParams, UpdateQueryParamsArgs } from 'hooks/useQueryParams/types.ts'
+import { QueryParamsResponse, SleepQueryParams, UpdateQueryParamsArgs } from 'hooks/useQueryParams/types'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export const useQueryParams = (): QueryParamsResponse => {

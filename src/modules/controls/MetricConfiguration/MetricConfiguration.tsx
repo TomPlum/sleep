@@ -1,4 +1,4 @@
-import { MetricConfigurationProps, SleepMetric } from './types.ts'
+import { MetricConfigurationProps, SleepMetric } from './types'
 import styles from './MetricConfiguration.module.scss'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'

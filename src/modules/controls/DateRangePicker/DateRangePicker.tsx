@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { useSleepContext } from 'context'
-import { PageRoutes } from 'routes.ts'
+import { PageRoutes } from 'routes'
 
 export const DateRangePicker = () => {
   const { updateQueryParam } = useQueryParams()
