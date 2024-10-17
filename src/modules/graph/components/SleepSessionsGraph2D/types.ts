@@ -4,11 +4,12 @@ export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[] | undefined
 
 export interface SleepSessionGraph2DDatum {
   /**
-   * The date of the sleep session as a
-   * pretty formatted date string for
-   * rendering on the graphs x-axis.
+   * The date of the sleep session as
+   * the number of milliseconds from the
+   * epoch so the x-axis can be used in a
+   * number format and timescale.
    */
-  _date: string
+  xDate: number
 
   /**
    * The date of the sleep session. Left in

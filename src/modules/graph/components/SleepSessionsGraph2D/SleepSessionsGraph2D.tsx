@@ -67,14 +67,28 @@ export const SleepSessionsGraph2D = () => {
     }
   }, [data, sleepMetric])
 
+  const xTicks = useMemo(() => {
+    if (data) {
+      return data.map(({ date }) => {
+        return date.getTime()
+      })
+    }
+
+    return []
+  }, [data])
+
+  if (!data) {
+    return null
+  }
+
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <LineChart
-        data={[...data ?? []]}
         id='sleeps-sessions-graph-2d'
         margin={{ left: -55, bottom: -22 }}
       >
         <Line
+          data={data}
           type='monotone'
           dataKey={sleepMetric}
           animationDuration={500}
@@ -97,8 +111,8 @@ export const SleepSessionsGraph2D = () => {
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
           id={`${sleepMetric}_regression_line`}
-          data={regressionLineData.map(({ y, _date }) => ({
-            _date,
+          data={regressionLineData.map(({ y, xDate }) => ({
+            xDate,
             [sleepMetric]: y,
           }))}
         />
@@ -141,9 +155,13 @@ export const SleepSessionsGraph2D = () => {
         )}
 
         <XAxis
-          dataKey='_date'
+          type='number'
+          scale='time'
+          dataKey='xDate'
           strokeWidth={3}
+          ticks={xTicks}
           axisLine={false}
+          domain={[Math.min(...data.map(it => it.xDate)), Math.max(...data.map(it => it.xDate))]}
           padding={{ left: -5 }}
           tick={CustomXAxisTick}
           interval={xAxisInterval}

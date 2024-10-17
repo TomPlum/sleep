@@ -2,6 +2,7 @@ import {renderHook} from "@testing-library/react";
 import {useLinearRegression} from "data/useLinearRegression/useLinearRegression.ts";
 import {SleepMetric} from "modules/controls/MetricConfiguration";
 import {SleepSessionGraph2DData} from "modules/graph/components/SleepSessionsGraph2D";
+import {LinearRegressionPlotPoint} from "data/useLinearRegression/types.ts";
 
 const mockSleepContext = vi.fn()
 vi.mock('context/useSleepContext', () => ({
@@ -10,7 +11,7 @@ vi.mock('context/useSleepContext', () => ({
 
 const validGraphData2D: SleepSessionGraph2DData = [
   {
-    _date: 'Aug 24',
+    xDate: 1724454000000,
     date: new Date(2024, 7, 24),
     duration: 520,
     [SleepMetric.AWAKE_TIME]: 10,
@@ -20,7 +21,7 @@ const validGraphData2D: SleepSessionGraph2DData = [
     [SleepMetric.REM_SLEEP]: 70
   },
   {
-    _date: 'Aug 25',
+    xDate: 1724540400000,
     date: new Date(2024, 7, 25),
     duration: 520,
     [SleepMetric.AWAKE_TIME]: 10,
@@ -43,13 +44,13 @@ describe('Linear Regression Hook', () => {
 
     const { result } = renderHook(useLinearRegression)
 
-    expect(result.current.regressionLineData).toStrictEqual([
+    expect(result.current.regressionLineData).toStrictEqual<LinearRegressionPlotPoint[]>([
       {
-        _date: "Aug 24",
+        xDate: 1724454000000,
         y: 59.99999932863284,
       },
       {
-        _date: "Aug 24",
+        xDate: 1724540400000,
         y: 20.000000671483576,
       },
     ])
@@ -69,7 +70,7 @@ describe('Linear Regression Hook', () => {
     expect(result.current.yRegressionDeltaLine).toBe(59.99999932863284)
   })
 
-  it('should return a the x-ordinate (as a date index) that the regression line delta triangles vertical line intercepts the x-axis', () => {
+  it('should return a the x-ordinate (as epoch ms) that the regression line delta triangles vertical line intercepts the x-axis', () => {
     mockSleepContext.mockReturnValueOnce({
       sleepMetric: SleepMetric.DEEP_SLEEP,
       graphData2d: {
@@ -80,7 +81,7 @@ describe('Linear Regression Hook', () => {
 
     const { result } = renderHook(useLinearRegression)
 
-    expect(result.current.xRegressionDeltaLine).toBe(1)
+    expect(result.current.xRegressionDeltaLine).toBe(1724540400000)
   })
 
   it('should return the difference between the highest and lowest sleep metric value as the regression line delta', () => {
