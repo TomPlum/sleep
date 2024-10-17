@@ -116,7 +116,13 @@ export const SleepSessionsGraph2D = () => {
           ticks={xTicks}
           axisLine={false}
           padding={{ left: -5 }}
-          tick={CustomXAxisTick}
+          tick={props => (
+            <CustomXAxisTick
+              {...props}
+              earliestSession={earliestSession}
+              latestSession={latestSession}
+            />
+          )}
           interval={xAxisInterval}
           allowDataOverflow={true}
           stroke='rgb(255, 255, 255)'
