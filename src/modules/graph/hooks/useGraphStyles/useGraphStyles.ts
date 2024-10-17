@@ -38,23 +38,15 @@ export const useGraphStyles = (): GraphStylesResponse => {
     }
   }, [activeSessions])
 
-  const xAxisInterval = useMemo<number>(() => {
-    if (activeSessions < 100) {
-      return 5
-    } else if (activeSessions > 100 && activeSessions < 250) {
-      return 10
-    } else {
-      return 60
-    }
-  }, [activeSessions])
-
   const activeDotRadius = useMemo<number>(() => {
     if (activeSessions < 100) {
       return 10
     } else if (activeSessions > 100 && activeSessions < 300) {
       return 8
-    } else {
+    } else if (activeSessions > 300 && activeSessions < 1000) {
       return 3
+    } else {
+      return 0
     }
   }, [activeSessions])
 
@@ -62,7 +54,6 @@ export const useGraphStyles = (): GraphStylesResponse => {
     currentMetricColour,
     getMetricColour,
     strokeWidth,
-    xAxisInterval,
     activeDotRadius
   }
 }

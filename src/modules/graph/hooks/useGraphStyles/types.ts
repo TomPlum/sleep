@@ -29,16 +29,6 @@ export interface GraphStylesResponse {
   strokeWidth: number
 
   /**
-   * The number of ticks that will
-   * render on the x-axis relative
-   * to the number of active sessions.
-   * A greater number of sessions will
-   * mean fewer ticks and more spacing
-   * between them for legibility.
-   */
-  xAxisInterval: number
-
-  /**
    * The radius of the circle that
    * is the "active dot" on the line.
    * These are bigger and prominent

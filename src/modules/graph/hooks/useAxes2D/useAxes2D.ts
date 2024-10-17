@@ -3,7 +3,7 @@ import {useSleepContext} from "context";
 import {Axes2D} from "modules/graph/hooks/useAxes2D/types.ts";
 
 export const useAxes2D = (): Axes2D => {
-  const { graphData2d: { data }, sleepMetric } = useSleepContext()
+  const { graphData2d: { data }, sleepMetric, activeSessions } = useSleepContext()
 
   const { yDomain, yTicks } = useMemo(() => {
     if (data) {
@@ -48,11 +48,22 @@ export const useAxes2D = (): Axes2D => {
     return []
   }, [data])
 
-  console.log(xTicks, yTicks, yDomain)
+  const xAxisInterval = useMemo<number>(() => {
+    if (activeSessions < 100) {
+      return 5
+    } else if (activeSessions > 100 && activeSessions < 250) {
+      return 10
+    } else if (activeSessions > 250 && activeSessions < 1000) {
+      return 60
+    } else {
+      return 100
+    }
+  }, [activeSessions])
 
   return {
     xTicks,
     yTicks,
-    yDomain
+    yDomain,
+    xAxisInterval
   }
 }

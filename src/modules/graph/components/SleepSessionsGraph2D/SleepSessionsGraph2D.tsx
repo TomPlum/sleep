@@ -21,10 +21,10 @@ import {useTranslation} from "react-i18next";
 import {useAxes2D} from "modules/graph/hooks/useAxes2D";
 
 export const SleepSessionsGraph2D = () => {
-  const { xTicks, yTicks, yDomain } = useAxes2D()
   const { typicalSleepSession } = useTypicalSession()
+  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
-  const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
+  const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
   const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
 
   const {
