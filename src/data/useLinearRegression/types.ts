@@ -63,13 +63,10 @@ export interface LinearRegressionResponse {
   regressionLineDeltaVertical: DeltaLinePlotPoint[]
 
   /**
-   * The percentage value along the
-   * y-axis of the graph that can be used
-   * to render a horizontal line that intercepts
-   * the y-axis at this point. The line shows
-   * the start of the linear regression line
-   * to form part of the dotted triangle that
-   * shows the delta.
+   * A set of two plot-points for plotting
+   * a horizontal line on the chart between
+   * the left-most point of the regression
+   * line and the right edge of the chart.
    */
-  yRegressionDeltaLine: number
+  regressionLineDeltaHorizontal: DeltaLinePlotPoint[]
 }

@@ -54,32 +54,39 @@ export const useLinearRegression = (): LinearRegressionResponse => {
     return []
   }, [data])
 
-  const yRegressionDeltaLine = useMemo<number>(() => {
-    if (regressionLineData.length > 0) {
-      const firstSession = regressionLineData[0]
-      return firstSession.y
-    }
-
-    return 0
-  }, [regressionLineData])
-
   const minimum = regressionLineData[0]?.y
   const maximum = regressionLineData[regressionLineData.length - 1]?.y
   const regressionDelta= (maximum - minimum).toFixed(1)
 
   const regressionLineDeltaVertical = useMemo<DeltaLinePlotPoint[]>(() => {
+    const yIntercept = regressionLineData[0].y
     const xRegressionDeltaLine = regressionLineData[regressionLineData.length - 1]?.xDate
+
     return [
       {
-        y: yRegressionDeltaLine,
+        y: yIntercept,
         xDate: xRegressionDeltaLine
       },
       {
-        y: yRegressionDeltaLine + Number(regressionDelta),
+        y: yIntercept + Number(regressionDelta),
         xDate: xRegressionDeltaLine
       }
     ]
-  }, [regressionDelta, regressionLineData, yRegressionDeltaLine])
+  }, [regressionDelta, regressionLineData])
+
+  const regressionLineDeltaHorizontal = useMemo<DeltaLinePlotPoint[]>(() => {
+    const firstSession = regressionLineData[0]
+    return [
+      {
+        y: firstSession.y,
+        xDate: firstSession?.xDate
+      },
+      {
+        y: firstSession.y,
+        xDate: regressionLineData[regressionLineData.length - 1]?.xDate
+      }
+    ]
+  }, [regressionLineData])
 
 
   return {
@@ -87,6 +94,6 @@ export const useLinearRegression = (): LinearRegressionResponse => {
     regressionDelta: (maximum - minimum).toFixed(1),
     regressionDataKey: sleepMetric,
     regressionLineDeltaVertical,
-    yRegressionDeltaLine
+    regressionLineDeltaHorizontal
   }
 }

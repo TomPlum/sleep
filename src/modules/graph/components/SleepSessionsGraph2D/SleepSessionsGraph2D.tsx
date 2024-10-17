@@ -3,7 +3,6 @@ import {
   Line,
   LineChart,
   ReferenceArea,
-  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -20,6 +19,8 @@ import { useTypicalSession } from 'modules/graph/hooks/useTypicalSession/useTypi
 import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
 
+const animationDuration = 500
+
 export const SleepSessionsGraph2D = () => {
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
@@ -31,9 +32,11 @@ export const SleepSessionsGraph2D = () => {
     regressionLineData,
     regressionDataKey,
     regressionDelta,
-    yRegressionDeltaLine,
-    regressionLineDeltaVertical
+    regressionLineDeltaVertical,
+    regressionLineDeltaHorizontal
   } = useLinearRegression()
+
+  console.log(regressionLineDeltaHorizontal)
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -58,33 +61,38 @@ export const SleepSessionsGraph2D = () => {
         <Line
           dot={false}
           type='monotone'
-          animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
           id={`${sleepMetric}_regression_line`}
+          animationDuration={animationDuration}
           data={regressionLineData.map(({ y, xDate }) => ({
             xDate,
             [sleepMetric]: y,
           }))}
         />
 
-        <ReferenceLine
+        <Line
+          dot={false}
+          dataKey='y'
           type='monotone'
           strokeWidth={1}
           strokeDasharray='10 15'
-          y={yRegressionDeltaLine}
           stroke='rgb(255, 255, 255)'
+          data={regressionLineDeltaHorizontal}
+          animationDuration={animationDuration}
+          label={(d) => {
+            const yOffset = Number(regressionDelta) > 0 ? d.y - 15 : d.y + 25
+            return (
+              <text x={d.x - 10} y={yOffset} fill='#dcdcdc' textAnchor='end'>
+                {`Δ ${regressionDelta}%`}
+              </text>
+            )
+          }}
           id={`${sleepMetric}_regression_line_delta_h`}
-        >
-          <Label
-            offset={10}
-            position='insideBottomRight'
-            value={`Δ ${regressionDelta}%`}
-          />
-        </ReferenceLine>
+        />
 
         <Line
           dot={false}
@@ -92,9 +100,9 @@ export const SleepSessionsGraph2D = () => {
           type='monotone'
           strokeWidth={2}
           strokeDasharray='10 15'
-          isAnimationActive={false}
           stroke='rgb(255, 255, 255)'
           data={regressionLineDeltaVertical}
+          animationDuration={animationDuration}
           id={`${sleepMetric}_regression_line_delta_v`}
         />
 
