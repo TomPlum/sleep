@@ -40,6 +40,7 @@ export const SleepPage = () => {
 
         <Switch
           size='small'
+          defaultChecked
           onChange={handleChangeLanguage}
           className={styles.languageSwitch}
           checkedChildren={t('language.checked')}
