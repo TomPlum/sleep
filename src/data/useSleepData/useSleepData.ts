@@ -38,7 +38,8 @@ export const useSleepData = (): SleepDataResponse => {
       // Sessions with 0 total duration are invalid
       const hasDuration = duration.total !== 0
       const hasValidBreakdown = [duration.light, duration.deep, duration.rem, duration.awake].every(v => v > 0)
-      return hasDuration && hasValidBreakdown
+      const hasValidAwakeTime = duration.awake < duration.total
+      return hasDuration && hasValidBreakdown && hasValidAwakeTime
     })
   }, [data])
 
