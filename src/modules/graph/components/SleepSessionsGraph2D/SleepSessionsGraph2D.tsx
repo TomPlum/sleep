@@ -17,10 +17,11 @@ import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
 import {useSleepContext} from "context";
 import styles from './SleepSessionGraph2D.module.scss'
 import {useTypicalSession} from "modules/graph/hooks/useTypicalSession/useTypicalSession.ts";
-import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
+import {useAxes2D} from "modules/graph/hooks/useAxes2D";
 
 export const SleepSessionsGraph2D = () => {
+  const { xTicks, yTicks, yDomain } = useAxes2D()
   const { typicalSleepSession } = useTypicalSession()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
@@ -33,53 +34,6 @@ export const SleepSessionsGraph2D = () => {
     xRegressionDeltaLine,
     yRegressionDeltaLine
   } = useLinearRegression()
-
-  const { yDomain, yTicks } = useMemo(() => {
-    if (data) {
-      const percentages = data.map(datum => {
-        return Number((datum[sleepMetric]).toFixed(0))
-      })
-
-      const smallest = Math.min(...percentages)
-      const lowerBound = smallest < 10 ? 0 : smallest - 10
-
-      const biggest = Math.max(...percentages)
-      const upperBound = biggest > 90 ? 100 : biggest + 10
-
-      const closestLower = Math.round(lowerBound / 10) * 10
-      const closestUpper = Math.round(upperBound / 10) * 10
-
-      const yTicks = Array.from({
-        length: Math.floor(closestUpper / 10) - Math.ceil(closestLower / 10) + 1
-      }).reduce((acc: number[], _, i) => {
-        return acc.concat(Math.ceil(closestLower / 10) * 10 + i * 10)
-      }, [])
-
-      return {
-        yDomain: [lowerBound, upperBound],
-        yTicks
-      }
-    }
-
-    return {
-      yDomain: [],
-      yTicks: []
-    }
-  }, [data, sleepMetric])
-
-  const xTicks = useMemo(() => {
-    if (data) {
-      return data.map(({ date }) => {
-        return date.getTime()
-      })
-    }
-
-    return []
-  }, [data])
-
-  if (!data) {
-    return null
-  }
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
