@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import {
+  DeltaLinePlotPoint,
   LinearRegressionPlotPoint,
   LinearRegressionResponse
 } from 'data/useLinearRegression/types'
@@ -62,18 +63,30 @@ export const useLinearRegression = (): LinearRegressionResponse => {
     return 0
   }, [regressionLineData])
 
-  const xRegressionDeltaLine = useMemo<number>(() => {
-    return regressionLineData[regressionLineData.length - 1]?.xDate
-  }, [regressionLineData])
-
   const minimum = regressionLineData[0]?.y
   const maximum = regressionLineData[regressionLineData.length - 1]?.y
+  const regressionDelta= (maximum - minimum).toFixed(1)
+
+  const regressionLineDeltaVertical = useMemo<DeltaLinePlotPoint[]>(() => {
+    const xRegressionDeltaLine = regressionLineData[regressionLineData.length - 1]?.xDate
+    return [
+      {
+        y: yRegressionDeltaLine,
+        xDate: xRegressionDeltaLine
+      },
+      {
+        y: yRegressionDeltaLine + Number(regressionDelta),
+        xDate: xRegressionDeltaLine
+      }
+    ]
+  }, [regressionDelta, regressionLineData, yRegressionDeltaLine])
+
 
   return {
     regressionLineData,
     regressionDelta: (maximum - minimum).toFixed(1),
     regressionDataKey: sleepMetric,
-    xRegressionDeltaLine,
+    regressionLineDeltaVertical,
     yRegressionDeltaLine
   }
 }

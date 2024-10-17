@@ -1,5 +1,35 @@
 export interface LinearRegressionPlotPoint {
+  /**
+   * The number of milliseconds since the epoch
+   * of the date on the x-axis of the graph that
+   * can be used to render the linear regression
+   * line of best fit.
+   */
   xDate: number
+
+  /**
+   * The percentage value of the y-axis to
+   * plot the point against.
+   */
+  y: number
+}
+
+export interface DeltaLinePlotPoint {
+  /**
+   * The number of milliseconds since the epoch
+   * of the date on the x-axis of the graph that
+   * can be used to render a vertical line that
+   * intercepts the x-axis. The line shows
+   * the end of the linear regression line
+   * to form part of the dotted triangle that
+   * shows the delta.
+   */
+  xDate: number
+
+  /**
+   * The percentage value of the y-axis to
+   * plot the point against.
+   */
   y: number
 }
 
@@ -24,15 +54,13 @@ export interface LinearRegressionResponse {
   regressionDelta: string
 
   /**
-   * The index of the date value along the
-   * x-axis of the graph that can be used
-   * to render a vertical line that intercepts
-   * the x-axis at this point. The line shows
-   * the end of the linear regression line
-   * to form part of the dotted triangle that
-   * shows the delta.
+   * A set of two plot-points for plotting
+   * a vertical line on the chart between
+   * the right-most point of the regression
+   * line and the point at which it would
+   * intercept with its horizontal variant.
    */
-  xRegressionDeltaLine: number
+  regressionLineDeltaVertical: DeltaLinePlotPoint[]
 
   /**
    * The percentage value along the

@@ -31,8 +31,8 @@ export const SleepSessionsGraph2D = () => {
     regressionLineData,
     regressionDataKey,
     regressionDelta,
-    xRegressionDeltaLine,
-    yRegressionDeltaLine
+    yRegressionDeltaLine,
+    regressionLineDeltaVertical
   } = useLinearRegression()
 
   return (
@@ -86,18 +86,23 @@ export const SleepSessionsGraph2D = () => {
           />
         </ReferenceLine>
 
-        <ReferenceLine
+        <Line
+          dot={false}
+          dataKey='y'
           type='monotone'
           strokeWidth={2}
           strokeDasharray='10 15'
-          x={xRegressionDeltaLine}
+          isAnimationActive={false}
           stroke='rgb(255, 255, 255)'
+          data={regressionLineDeltaVertical}
           id={`${sleepMetric}_regression_line_delta_v`}
         />
 
         {typicalSleepSession && (
           <ReferenceArea
             {...typicalSleepSession}
+            isUpdateAnimationActive
+            isAnimationActive
             ifOverflow='extendDomain'
             fill={typicalSleepSessionFill}
             id={`${sleepMetric}_typical_sleep_session_area`}
