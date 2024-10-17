@@ -9,16 +9,16 @@ import {
   XAxis,
   YAxis
 } from "recharts"
-import {useLinearRegression} from "data/useLinearRegression"
-import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick"
-import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip"
-import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick"
-import {useGraphStyles} from "modules/graph/hooks/useGraphStyles"
-import {useSleepContext} from "context"
+import { useLinearRegression } from "data/useLinearRegression"
+import { CustomYAxisTick } from "modules/graph/components/CustomYAxisTick"
+import { SleepSessionTooltip } from "modules/graph/components/SleepSessionTooltip"
+import { CustomXAxisTick } from "modules/graph/components/CustomXAxisTick"
+import { useGraphStyles } from "modules/graph/hooks/useGraphStyles"
+import { useSleepContext } from "context"
 import styles from './SleepSessionGraph2D.module.scss'
-import {useTypicalSession} from "modules/graph/hooks/useTypicalSession/useTypicalSession.ts"
-import {useTranslation} from "react-i18next"
-import {useAxes2D} from "modules/graph/hooks/useAxes2D"
+import { useTypicalSession } from "modules/graph/hooks/useTypicalSession/useTypicalSession.ts"
+import { useTranslation } from "react-i18next"
+import { useAxes2D } from "modules/graph/hooks/useAxes2D"
 
 export const SleepSessionsGraph2D = () => {
   const { typicalSleepSession } = useTypicalSession()

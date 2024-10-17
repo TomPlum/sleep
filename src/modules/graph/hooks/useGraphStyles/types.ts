@@ -1,4 +1,4 @@
-import {SleepMetric} from "modules/controls/MetricConfiguration"
+import { SleepMetric } from "modules/controls/MetricConfiguration"
 
 export type GetMetricColour = (metric: SleepMetric) => string
 

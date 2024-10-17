@@ -1,7 +1,7 @@
-import {useMemo} from "react"
-import {SleepMetric} from "modules/controls/MetricConfiguration"
-import {useSleepContext} from "context"
-import {TypicalSessionArea, TypicalSessionResponse} from "modules/graph/hooks/useTypicalSession/types.ts"
+import { useMemo } from "react"
+import { SleepMetric } from "modules/controls/MetricConfiguration"
+import { useSleepContext } from "context"
+import { TypicalSessionArea, TypicalSessionResponse } from "modules/graph/hooks/useTypicalSession/types.ts"
 
 export const useTypicalSession = (): TypicalSessionResponse => {
   const { graphData2d, sleepMetric } = useSleepContext()

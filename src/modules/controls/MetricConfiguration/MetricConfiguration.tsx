@@ -1,8 +1,8 @@
-import {MetricConfigurationProps, SleepMetric} from "./types.ts"
+import { MetricConfigurationProps, SleepMetric } from "./types.ts"
 import styles from './MetricConfiguration.module.scss'
-import {useTranslation} from "react-i18next"
+import { useTranslation } from "react-i18next"
 import classNames from "classnames"
-import {MetricCheckbox} from "modules/controls/MetricCheckbox"
+import { MetricCheckbox } from "modules/controls/MetricCheckbox"
 
 export const MetricConfiguration = ({ className }: MetricConfigurationProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.metric-config' })

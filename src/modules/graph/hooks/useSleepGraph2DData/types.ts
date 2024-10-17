@@ -1,5 +1,5 @@
-import type {SleepSessionGraph2DData} from "modules/graph/components/SleepSessionsGraph2D"
-import { PillowSleepSession} from "data/useSleepData"
+import type { SleepSessionGraph2DData } from "modules/graph/components/SleepSessionsGraph2D"
+import { PillowSleepSession } from "data/useSleepData"
 
 export interface SleepGraph2DDataProps {
   /**

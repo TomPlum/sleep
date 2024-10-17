@@ -23,6 +23,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       'semi': ['error', 'never'],
       '@typescript-eslint/semi': 'off',
+      'object-curly-spacing': ['error', 'always'],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

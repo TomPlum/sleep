@@ -1,12 +1,12 @@
-import {SleepContext} from "context/SleepContext.ts"
-import {PropsWithChildren, useEffect, useMemo, useState} from "react"
-import {SleepContextBag} from "context/types.ts"
-import {useSleepData} from "data/useSleepData"
-import {useQueryParams} from "hooks/useQueryParams"
-import {SleepMetric} from "modules/controls/MetricConfiguration"
+import { SleepContext } from "context/SleepContext.ts"
+import { PropsWithChildren, useEffect, useMemo, useState } from "react"
+import { SleepContextBag } from "context/types.ts"
+import { useSleepData } from "data/useSleepData"
+import { useQueryParams } from "hooks/useQueryParams"
+import { SleepMetric } from "modules/controls/MetricConfiguration"
 import dayjs from "dayjs"
-import {useSleepGraph2DData} from "modules/graph/hooks/useSleepGraph2DData"
-import {PageRoutes} from "routes.ts"
+import { useSleepGraph2DData } from "modules/graph/hooks/useSleepGraph2DData"
+import { PageRoutes } from "routes.ts"
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { sleepData, loading } = useSleepData()
@@ -40,7 +40,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
         end: selectedEnd.getTime().toString()
       }
 
-      updateQueryParam({ route: PageRoutes.SLEEP, params})
+      updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
   }, [currentMetric, loading, rangeEnd, rangeStart, sleepData, updateQueryParam])
 
