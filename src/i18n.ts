@@ -1,4 +1,4 @@
-import {initReactI18next} from "react-i18next";
+import {initReactI18next} from "react-i18next"
 import i18n from "i18next"
 import english from 'locales/en/translation.json'
 import japanese from 'locales/jp/translation.json'

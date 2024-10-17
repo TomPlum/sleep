@@ -1,7 +1,7 @@
 import styles from './CustomXAxisTick.module.scss'
-import {CustomXAxisTickProps} from "./types.ts";
-import dayjs from "dayjs";
-import {useMemo} from "react";
+import {CustomXAxisTickProps} from "./types.ts"
+import dayjs from "dayjs"
+import {useMemo} from "react"
 
 export const CustomXAxisTick = ({ x, y, payload, earliestSession, latestSession }: CustomXAxisTickProps) => {
   const epochMillis = payload.value

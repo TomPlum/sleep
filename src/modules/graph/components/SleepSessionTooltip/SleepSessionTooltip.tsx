@@ -1,9 +1,9 @@
-import {TooltipProps} from "recharts";
+import {TooltipProps} from "recharts"
 import styles from './SleepSessionTooltip.module.scss'
-import {Typography} from "antd";
-import dayjs from "dayjs";
-import {useTranslation} from "react-i18next";
-import {DurationBreakdownPie} from "modules/graph/components/DurationBreakdownPie";
+import {Typography} from "antd"
+import dayjs from "dayjs"
+import {useTranslation} from "react-i18next"
+import {DurationBreakdownPie} from "modules/graph/components/DurationBreakdownPie"
 
 export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.tooltip' })

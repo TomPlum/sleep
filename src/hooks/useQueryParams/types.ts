@@ -1,4 +1,4 @@
-import {SleepMetric} from "modules/controls/MetricConfiguration";
+import {SleepMetric} from "modules/controls/MetricConfiguration"
 
 export type QueryParams = Record<string, string>
 

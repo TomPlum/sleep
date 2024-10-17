@@ -1,9 +1,9 @@
-import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next"
 import styles from './NotFoundPage.module.scss'
-import {Button} from "antd";
-import {useNavigate} from "react-router-dom";
-import {useCallback} from "react";
-import {PageRoutes} from "routes.ts";
+import {Button} from "antd"
+import {useNavigate} from "react-router-dom"
+import {useCallback} from "react"
+import {PageRoutes} from "routes.ts"
 
 export const NotFoundPage = () => {
   const navigate = useNavigate()
