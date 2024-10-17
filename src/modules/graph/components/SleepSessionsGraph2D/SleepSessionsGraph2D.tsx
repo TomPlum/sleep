@@ -22,9 +22,9 @@ import {useTranslation} from "react-i18next";
 
 export const SleepSessionsGraph2D = () => {
   const { typicalSleepSession } = useTypicalSession()
-  const { graphData2d: { data }, sleepMetric } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
+  const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
 
   const {
     regressionLineData,
@@ -161,12 +161,12 @@ export const SleepSessionsGraph2D = () => {
           strokeWidth={3}
           ticks={xTicks}
           axisLine={false}
-          domain={[Math.min(...data.map(it => it.xDate)), Math.max(...data.map(it => it.xDate))]}
           padding={{ left: -5 }}
           tick={CustomXAxisTick}
           interval={xAxisInterval}
           allowDataOverflow={true}
           stroke='rgb(255, 255, 255)'
+          domain={[earliestSession.getTime(), latestSession.getTime()]}
         />
 
         <YAxis

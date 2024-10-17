@@ -11,8 +11,8 @@ export const useTypicalSession = (): TypicalSessionResponse => {
   }, [graphData2d.data])
 
   const typicalSleepSession = useMemo<TypicalSessionArea>(() => {
-    const firstSession = data[0].xDate
-    const lastSession = data[data.length - 1].xDate
+    const firstSession = data[0]?.xDate
+    const lastSession = data[data.length - 1]?.xDate
 
     switch (sleepMetric) {
       case SleepMetric.AWAKE_TIME: {

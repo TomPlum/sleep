@@ -24,6 +24,8 @@ export const SleepContext = createContext<SleepContextBag>({
   activeSessions: 0,
   graphData2d: {
     data: [],
+    earliestSession: new Date(),
+    latestSession: new Date(),
     isSleepDataLoading: true
   }
 })

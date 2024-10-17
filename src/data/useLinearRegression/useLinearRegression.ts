@@ -18,47 +18,56 @@ export const useLinearRegression = (): LinearRegressionResponse => {
 
   const regressionLineData = useMemo<LinearRegressionPlotPoint[]>(() => {
     const n = data.length;
-    // Calculate sums for linear regression formula
-    const sumX = data.reduce((acc, point) => acc + point.x, 0);
-    const sumY = data.reduce((acc, point) => acc + point.y, 0);
-    const sumXY = data.reduce((acc, point) => acc + point.x * point.y, 0);
-    const sumX2 = data.reduce((acc, point) => acc + point.x * point.x, 0);
 
-    // Calculate slope (m) and intercept (b)
-    const m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-    const b = (sumY - m * sumX) / n;
+    if (n > 1) {
+      // Calculate sums for linear regression formula
+      const sumX = data.reduce((acc, point) => acc + point.x, 0);
+      const sumY = data.reduce((acc, point) => acc + point.y, 0);
+      const sumXY = data.reduce((acc, point) => acc + point.x * point.y, 0);
+      const sumX2 = data.reduce((acc, point) => acc + point.x * point.x, 0);
 
-    // Get first and last points
-    const xMin = data[0].x;
-    const xMax = data[n - 1].x;
+      // Calculate slope (m) and intercept (b)
+      const m = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+      const b = (sumY - m * sumX) / n;
 
-    // Calculate corresponding y values
-    const yMin = m * xMin + b;
-    const yMax = m * xMax + b;
+      // Get first and last points
+      const xMin = data[0].x;
+      const xMax = data[n - 1].x;
 
-    return [
-      {
-        xDate: xMin,
-        y: yMin
-      },
-      {
-        xDate: xMax,
-        y: yMax
-      }
-    ]
+      // Calculate corresponding y values
+      const yMin = m * xMin + b;
+      const yMax = m * xMax + b;
+
+      return [
+        {
+          xDate: xMin,
+          y: yMin
+        },
+        {
+          xDate: xMax,
+          y: yMax
+        }
+      ]
+    }
+
+    return []
   }, [data])
 
   const yRegressionDeltaLine = useMemo<number>(() => {
-    const firstSession = regressionLineData[0]
-    return firstSession.y
+    if (regressionLineData.length > 0) {
+      const firstSession = regressionLineData[0]
+      return firstSession.y
+    }
+
+    return 0
   }, [regressionLineData])
 
   const xRegressionDeltaLine = useMemo<number>(() => {
-    return regressionLineData[regressionLineData.length - 1].xDate
+    return regressionLineData[regressionLineData.length - 1]?.xDate
   }, [regressionLineData])
 
-  const minimum = regressionLineData[0].y
-  const maximum = regressionLineData[regressionLineData.length - 1].y
+  const minimum = regressionLineData[0]?.y
+  const maximum = regressionLineData[regressionLineData.length - 1]?.y
 
   return {
     regressionLineData,

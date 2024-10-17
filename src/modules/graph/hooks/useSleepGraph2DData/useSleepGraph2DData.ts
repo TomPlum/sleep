@@ -7,13 +7,13 @@ import isBetween from "dayjs/plugin/isBetween";
 
 dayjs.extend(isBetween);
 
-export const useSleepGraph2DData = ({ sleepData, isSleepDataLoading, rangeStart, rangeEnd }: SleepGraph2DDataProps): SleepGraph2DDataResponse => {
+export const useSleepGraph2DData = ({ sessions, isSleepDataLoading, rangeStart, rangeEnd }: SleepGraph2DDataProps): SleepGraph2DDataResponse => {
   const toPercentage = useCallback((duration: number, total: number) => {
     return (duration / total) * 100
   }, [])
 
   const data = useMemo<SleepSessionGraph2DData>(() => {
-    return sleepData?.sessions.map(session => {
+    return sessions.map(session => {
       const duration = session.duration
       const totalDuration = duration.total
 
@@ -30,10 +30,21 @@ export const useSleepGraph2DData = ({ sleepData, isSleepDataLoading, rangeStart,
     }).filter(({ date }) => {
       return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
     })
-  }, [toPercentage, rangeEnd, rangeStart, sleepData?.sessions])
+  }, [toPercentage, rangeEnd, rangeStart, sessions])
+
+  const { earliestSession, latestSession } = useMemo(() => {
+    const earliestSession = new Date(Math.min(...data.map(session => session.date.getTime())))
+    const latestSession = new Date(Math.max(...data.map(session => session.date.getTime())))
+    return {
+      earliestSession,
+      latestSession
+    }
+  }, [data])
 
   return {
     data,
+    latestSession,
+    earliestSession,
     isSleepDataLoading
   }
 }

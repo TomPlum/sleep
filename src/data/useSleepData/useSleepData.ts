@@ -5,7 +5,7 @@ import { PillowSleepSession, SleepDataResponse} from "data/useSleepData/types.ts
 export const useSleepData = (): SleepDataResponse => {
   const { data, isLoading, error } = usePillowData({ type: 'csv' })
 
-  const sessions: PillowSleepSession[] = useMemo(() => {
+  const sessions = useMemo<PillowSleepSession[]>(() => {
     if (!data) {
       return []
     }
