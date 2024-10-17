@@ -16,7 +16,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
 
   return (
     <text x={x} y={y} fill="#0e0e0e" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-      {`${value.toFixed(0)}%`}
+      {`${(value ?? 0).toFixed(0)}%`}
     </text>
   )
 }

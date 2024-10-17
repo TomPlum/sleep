@@ -21,9 +21,9 @@ import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
 
 export const SleepSessionsGraph2D = () => {
-  const { typicalSleepSession } = useTypicalSession()
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
+  const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession()
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
   const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
 
@@ -73,7 +73,8 @@ export const SleepSessionsGraph2D = () => {
 
         <ReferenceLine
           type='monotone'
-          strokeDasharray='3 3'
+          strokeWidth={1}
+          strokeDasharray='10 15'
           y={yRegressionDeltaLine}
           stroke='rgb(255, 255, 255)'
           id={`${sleepMetric}_regression_line_delta_h`}
@@ -87,7 +88,8 @@ export const SleepSessionsGraph2D = () => {
 
         <ReferenceLine
           type='monotone'
-          strokeDasharray='3 3'
+          strokeWidth={2}
+          strokeDasharray='10 15'
           x={xRegressionDeltaLine}
           stroke='rgb(255, 255, 255)'
           id={`${sleepMetric}_regression_line_delta_v`}
@@ -97,8 +99,8 @@ export const SleepSessionsGraph2D = () => {
           <ReferenceArea
             {...typicalSleepSession}
             ifOverflow='extendDomain'
+            fill={typicalSleepSessionFill}
             id={`${sleepMetric}_typical_sleep_session_area`}
-            fill={currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.25)')}
           >
             <Label
               offset={10}
