@@ -18,6 +18,7 @@ import styles from './SleepSessionGraph2D.module.scss'
 import { useTypicalSession } from 'modules/graph/hooks/useTypicalSession/useTypicalSession'
 import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
+import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLabel'
 
 const animationDuration = 500
 
@@ -83,15 +84,8 @@ export const SleepSessionsGraph2D = () => {
           stroke='rgb(255, 255, 255)'
           data={regressionLineDeltaHorizontal}
           animationDuration={animationDuration}
-          label={(d) => {
-            const yOffset = Number(regressionDelta) > 0 ? d.y - 15 : d.y + 25
-            return (
-              <text x={d.x - 10} y={yOffset} fill='#dcdcdc' textAnchor='end'>
-                {`Δ ${regressionDelta}%`}
-              </text>
-            )
-          }}
           id={`${sleepMetric}_regression_line_delta_h`}
+          label={props => <RegressionDeltaLabel {...props} regressionDelta={regressionDelta} />}
         />
 
         <Line
