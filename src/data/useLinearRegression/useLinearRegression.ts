@@ -10,10 +10,10 @@ export const useLinearRegression = (): LinearRegressionResponse => {
   const { graphData2d, sleepMetric } = useSleepContext()
 
   const data = useMemo(() => {
-    return graphData2d.data.map(session => ({
+    return graphData2d.data?.map(session => ({
       x: dayjs(session.date).valueOf(),
       y: session[sleepMetric]
-    }))
+    })) ?? []
   }, [graphData2d.data, sleepMetric])
 
   const regressionLineData = useMemo<LinearRegressionPlotPoint[]>(() => {
@@ -54,16 +54,20 @@ export const useLinearRegression = (): LinearRegressionResponse => {
   }, [data])
 
   const yRegressionDeltaLine = useMemo<number>(() => {
-    const firstSession = regressionLineData[0]
-    return firstSession.y
+    if (regressionLineData.length > 0) {
+      const firstSession = regressionLineData[0]
+      return firstSession.y
+    }
+
+    return 0
   }, [regressionLineData])
 
   const xRegressionDeltaLine = useMemo<number>(() => {
-    return regressionLineData[regressionLineData.length - 1].xDate
+    return regressionLineData[regressionLineData.length - 1]?.xDate
   }, [regressionLineData])
 
-  const minimum = regressionLineData[0].y
-  const maximum = regressionLineData[regressionLineData.length - 1].y
+  const minimum = regressionLineData[0]?.y
+  const maximum = regressionLineData[regressionLineData.length - 1]?.y
 
   return {
     regressionLineData,
