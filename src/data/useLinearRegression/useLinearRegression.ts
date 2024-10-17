@@ -1,10 +1,10 @@
-import { useMemo } from "react"
+import { useMemo } from 'react'
 import {
   LinearRegressionPlotPoint,
   LinearRegressionResponse
-} from "data/useLinearRegression/types.ts"
-import dayjs from "dayjs"
-import { useSleepContext } from "context"
+} from 'data/useLinearRegression/types.ts'
+import dayjs from 'dayjs'
+import { useSleepContext } from 'context'
 
 export const useLinearRegression = (): LinearRegressionResponse => {
   const { graphData2d, sleepMetric } = useSleepContext()

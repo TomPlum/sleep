@@ -1,6 +1,6 @@
 import { ForceGraph3D } from 'react-force-graph'
-import { useCallback, useEffect, useMemo, useRef } from "react"
-import { useSleepData } from "data/useSleepData"
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useSleepData } from 'data/useSleepData'
 import { AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial } from 'three'
 
 // TODO: Move to types file

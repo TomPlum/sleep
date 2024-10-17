@@ -24,6 +24,7 @@ export default tseslint.config(
       'semi': ['error', 'never'],
       '@typescript-eslint/semi': 'off',
       'object-curly-spacing': ['error', 'always'],
+      'quotes': ['error', 'single'],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

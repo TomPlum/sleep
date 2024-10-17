@@ -1,6 +1,6 @@
-import { usePillowData } from "data/usePillowData"
-import { useMemo } from "react"
-import { PillowSleepSession, SleepDataResponse } from "data/useSleepData/types.ts"
+import { usePillowData } from 'data/usePillowData'
+import { useMemo } from 'react'
+import { PillowSleepSession, SleepDataResponse } from 'data/useSleepData/types.ts'
 
 export const useSleepData = (): SleepDataResponse => {
   const { data, isLoading, error } = usePillowData({ type: 'csv' })

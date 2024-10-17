@@ -1,13 +1,13 @@
 import styles from './SleepPage.module.scss'
-import { MetricConfiguration } from "modules/controls/MetricConfiguration"
-import { Spin, Switch } from "antd"
-import { LoadingOutlined } from "@ant-design/icons"
-import { DateRangePicker } from "modules/controls/DateRangePicker"
-import { SleepSessionsGraph2D } from "modules/graph/components/SleepSessionsGraph2D"
-import { useSleepContext } from "context"
-import { useTranslation } from "react-i18next"
-import { useGraphStyles } from "modules/graph/hooks/useGraphStyles"
-import { useCallback } from "react"
+import { MetricConfiguration } from 'modules/controls/MetricConfiguration'
+import { Spin, Switch } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { DateRangePicker } from 'modules/controls/DateRangePicker'
+import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
+import { useSleepContext } from 'context'
+import { useTranslation } from 'react-i18next'
+import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { useCallback } from 'react'
 
 export const SleepPage = () => {
   const { currentMetricColour } = useGraphStyles()
