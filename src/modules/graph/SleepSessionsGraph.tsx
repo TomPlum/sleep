@@ -1,7 +1,7 @@
-import {ForceGraph3D} from 'react-force-graph'
-import {useCallback, useEffect, useMemo, useRef} from "react";
-import {useSleepData} from "data/useSleepData";
-import {AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial} from 'three'
+import { ForceGraph3D } from 'react-force-graph'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useSleepData } from 'data/useSleepData'
+import { AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial } from 'three'
 
 // TODO: Move to types file
 interface ForceGraphMethods {
@@ -43,9 +43,9 @@ export const SleepSessionsGraph = () => {
      }
 
      // Add labels to the axes
-     addLabel('X', [100, 0, 0]);  // Label for X-axis
-     addLabel('Y', [0, 100, 0]);  // Label for Y-axis
-     addLabel('Z', [0, 0, 100]);  // Label for Z-axis
+     addLabel('X', [100, 0, 0])  // Label for X-axis
+     addLabel('Y', [0, 100, 0])  // Label for Y-axis
+     addLabel('Z', [0, 0, 100])  // Label for Z-axis
    }
   }, [])
 

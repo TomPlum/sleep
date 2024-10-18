@@ -1,1 +1,1 @@
-export * from './usePillowData.ts'
+export * from './usePillowData'

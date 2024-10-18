@@ -1,4 +1,4 @@
-import {useContext} from "react";
-import {SleepContext} from "context/SleepContext.ts";
+import { useContext } from 'react'
+import { SleepContext } from 'context/SleepContext'
 
 export const useSleepContext = () => useContext(SleepContext)

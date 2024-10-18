@@ -1,5 +1,5 @@
-import {initReactI18next} from "react-i18next";
-import i18n from "i18next"
+import { initReactI18next } from 'react-i18next'
+import i18n from 'i18next'
 import english from 'locales/en/translation.json'
 import japanese from 'locales/jp/translation.json'
 
@@ -14,7 +14,7 @@ i18n.use(initReactI18next).init({
   },
   debug: true,
   lng: 'en',
-  fallbackLng: "jp",
+  fallbackLng: 'jp',
   interpolation: {
     escapeValue: false
   }

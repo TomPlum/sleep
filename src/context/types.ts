@@ -1,6 +1,6 @@
-import {PillowSleepData} from "data/useSleepData";
-import {SleepMetric} from "modules/controls/MetricConfiguration";
-import {SleepGraph2DDataResponse} from "modules/graph/hooks/useSleepGraph2DData";
+import { PillowSleepData } from 'data/useSleepData'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData'
 
 export interface SleepContextBag {
   /**

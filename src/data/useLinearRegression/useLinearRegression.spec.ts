@@ -1,8 +1,8 @@
-import {renderHook} from "@testing-library/react";
-import {useLinearRegression} from "data/useLinearRegression/useLinearRegression.ts";
-import {SleepMetric} from "modules/controls/MetricConfiguration";
-import {SleepSessionGraph2DData} from "modules/graph/components/SleepSessionsGraph2D";
-import {LinearRegressionPlotPoint} from "data/useLinearRegression/types.ts";
+import { renderHook } from '@testing-library/react'
+import { useLinearRegression } from 'data/useLinearRegression/useLinearRegression'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { SleepSessionGraph2DData } from 'modules/graph/components/SleepSessionsGraph2D'
+import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types'
 
 const mockSleepContext = vi.fn()
 vi.mock('context/useSleepContext', () => ({
@@ -56,7 +56,7 @@ describe('Linear Regression Hook', () => {
     ])
   })
 
-  it('should return a the y-ordinate that the regression line delta triangles horizontal line intercepts the y-axis', () => {
+  it('should return the regression line delta triangles horizontal line coordinates', () => {
     mockSleepContext.mockReturnValueOnce({
       sleepMetric: SleepMetric.DEEP_SLEEP,
       graphData2d: {
@@ -67,10 +67,19 @@ describe('Linear Regression Hook', () => {
 
     const { result } = renderHook(useLinearRegression)
 
-    expect(result.current.yRegressionDeltaLine).toBe(59.99999932863284)
+    expect(result.current.regressionLineDeltaHorizontal).toStrictEqual([
+      {
+        'xDate': 1724454000000,
+        'y': 59.99999932863284
+      },
+      {
+        'xDate': 1724540400000,
+        'y': 59.99999932863284
+      }
+    ])
   })
 
-  it('should return a the x-ordinate (as epoch ms) that the regression line delta triangles vertical line intercepts the x-axis', () => {
+  it('should return the regression line delta triangles vertical line coordinates', () => {
     mockSleepContext.mockReturnValueOnce({
       sleepMetric: SleepMetric.DEEP_SLEEP,
       graphData2d: {
@@ -81,7 +90,16 @@ describe('Linear Regression Hook', () => {
 
     const { result } = renderHook(useLinearRegression)
 
-    expect(result.current.xRegressionDeltaLine).toBe(1724540400000)
+    expect(result.current.regressionLineDeltaVertical).toStrictEqual([
+      {
+        'xDate': 1724540400000,
+        'y': 59.99999932863284
+      },
+      {
+        'xDate': 1724540400000,
+        'y': 19.99999932863284
+      }
+    ])
   })
 
   it('should return the difference between the highest and lowest sleep metric value as the regression line delta', () => {
@@ -102,16 +120,7 @@ describe('Linear Regression Hook', () => {
     mockSleepContext.mockReturnValue({
       sleepMetric: SleepMetric.DEEP_SLEEP,
       graphData2d: {
-        data: [{
-          _date: 'Aug 25',
-          date: new Date(2024, 7, 25),
-          duration: 520,
-          [SleepMetric.AWAKE_TIME]: 10,
-          [SleepMetric.DEEP_SLEEP]: 20,
-          [SleepMetric.LIGHT_SLEEP]: 300,
-          [SleepMetric.QUALITY]: 84,
-          [SleepMetric.REM_SLEEP]: 70
-        }],
+        data: validGraphData2D,
         isSleepDataLoading: false
       }
     })

@@ -3,36 +3,38 @@ import {
   Line,
   LineChart,
   ReferenceArea,
-  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis
-} from "recharts";
-import {useLinearRegression} from "data/useLinearRegression";
-import {CustomYAxisTick} from "modules/graph/components/CustomYAxisTick";
-import {SleepSessionTooltip} from "modules/graph/components/SleepSessionTooltip";
-import {CustomXAxisTick} from "modules/graph/components/CustomXAxisTick";
-import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
-import {useSleepContext} from "context";
+} from 'recharts'
+import { useLinearRegression } from 'data/useLinearRegression'
+import { CustomYAxisTick } from 'modules/graph/components/CustomYAxisTick'
+import { SleepSessionTooltip } from 'modules/graph/components/SleepSessionTooltip'
+import { CustomXAxisTick } from 'modules/graph/components/CustomXAxisTick'
+import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { useSleepContext } from 'context'
 import styles from './SleepSessionGraph2D.module.scss'
-import {useTypicalSession} from "modules/graph/hooks/useTypicalSession/useTypicalSession.ts";
-import {useTranslation} from "react-i18next";
-import {useAxes2D} from "modules/graph/hooks/useAxes2D";
+import { useTypicalSession } from 'modules/graph/hooks/useTypicalSession/useTypicalSession'
+import { useTranslation } from 'react-i18next'
+import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
+import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLabel'
+
+const animationDuration = 500
 
 export const SleepSessionsGraph2D = () => {
-  const { xTicks, yTicks, yDomain } = useAxes2D()
-  const { typicalSleepSession } = useTypicalSession()
+  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
-  const { currentMetricColour, strokeWidth, xAxisInterval, activeDotRadius } = useGraphStyles()
+  const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession()
+  const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
   const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
 
   const {
     regressionLineData,
     regressionDataKey,
     regressionDelta,
-    xRegressionDeltaLine,
-    yRegressionDeltaLine
+    regressionLineDeltaVertical,
+    regressionLineDeltaHorizontal
   } = useLinearRegression()
 
   return (
@@ -58,38 +60,41 @@ export const SleepSessionsGraph2D = () => {
         <Line
           dot={false}
           type='monotone'
-          animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
           id={`${sleepMetric}_regression_line`}
+          animationDuration={animationDuration}
           data={regressionLineData.map(({ y, xDate }) => ({
             xDate,
             [sleepMetric]: y,
           }))}
         />
 
-        <ReferenceLine
+        <Line
+          dot={false}
+          dataKey='y'
           type='monotone'
-          strokeDasharray='3 3'
-          y={yRegressionDeltaLine}
+          strokeWidth={1}
+          strokeDasharray='10 15'
           stroke='rgb(255, 255, 255)'
+          data={regressionLineDeltaHorizontal}
+          animationDuration={animationDuration}
           id={`${sleepMetric}_regression_line_delta_h`}
-        >
-          <Label
-            offset={10}
-            position='insideBottomRight'
-            value={`Δ ${regressionDelta}%`}
-          />
-        </ReferenceLine>
+          label={props => <RegressionDeltaLabel {...props} regressionDelta={regressionDelta} />}
+        />
 
-        <ReferenceLine
+        <Line
+          dot={false}
+          dataKey='y'
           type='monotone'
-          strokeDasharray='3 3'
-          x={xRegressionDeltaLine}
+          strokeWidth={2}
+          strokeDasharray='10 15'
           stroke='rgb(255, 255, 255)'
+          data={regressionLineDeltaVertical}
+          animationDuration={animationDuration}
           id={`${sleepMetric}_regression_line_delta_v`}
         />
 
@@ -97,13 +102,14 @@ export const SleepSessionsGraph2D = () => {
           <ReferenceArea
             {...typicalSleepSession}
             ifOverflow='extendDomain'
+            fill={typicalSleepSessionFill}
             id={`${sleepMetric}_typical_sleep_session_area`}
-            fill={currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.25)')}
           >
             <Label
               offset={10}
               position='insideTopLeft'
               value={t('typical-sleep-session')}
+              className={styles.healthyRangeLabel}
             />
           </ReferenceArea>
         )}
@@ -115,7 +121,6 @@ export const SleepSessionsGraph2D = () => {
           strokeWidth={3}
           ticks={xTicks}
           axisLine={false}
-          padding={{ left: -5 }}
           tick={props => (
             <CustomXAxisTick
               {...props}

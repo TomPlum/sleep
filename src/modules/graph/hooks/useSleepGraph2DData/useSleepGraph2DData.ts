@@ -1,11 +1,11 @@
-import {useCallback, useMemo} from "react";
-import type {SleepSessionGraph2DData} from "modules/graph/components/SleepSessionsGraph2D";
-import dayjs from "dayjs";
-import {SleepMetric} from "modules/controls/MetricConfiguration";
-import {SleepGraph2DDataProps, SleepGraph2DDataResponse} from "modules/graph/hooks/useSleepGraph2DData/types.ts";
-import isBetween from "dayjs/plugin/isBetween";
+import { useCallback, useMemo } from 'react'
+import type { SleepSessionGraph2DData } from 'modules/graph/components/SleepSessionsGraph2D'
+import dayjs from 'dayjs'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { SleepGraph2DDataProps, SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData/types'
+import isBetween from 'dayjs/plugin/isBetween'
 
-dayjs.extend(isBetween);
+dayjs.extend(isBetween)
 
 export const useSleepGraph2DData = ({ sessions, isSleepDataLoading, rangeStart, rangeEnd }: SleepGraph2DDataProps): SleepGraph2DDataResponse => {
   const toPercentage = useCallback((duration: number, total: number) => {

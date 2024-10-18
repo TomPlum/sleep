@@ -1,14 +1,14 @@
-import {Cell, Pie, PieChart } from "recharts";
+import { Cell, Pie, PieChart } from 'recharts'
 import {
   BreakdownPieLabelProps,
   DurationBreakdownPieDataRaw,
   DurationBreakdownPieProps
-} from "modules/graph/components/DurationBreakdownPie/types.ts";
-import {useMemo} from "react";
-import {SleepMetric} from "modules/controls/MetricConfiguration";
-import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
+} from 'modules/graph/components/DurationBreakdownPie/types'
+import { useMemo } from 'react'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
 
-const RADIAN = Math.PI / 180;
+const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }: BreakdownPieLabelProps) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
   const x = cx + radius * Math.cos(-midAngle * RADIAN)
@@ -16,7 +16,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
 
   return (
     <text x={x} y={y} fill="#0e0e0e" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-      {`${value.toFixed(0)}%`}
+      {`${(value ?? 0).toFixed(0)}%`}
     </text>
   )
 }

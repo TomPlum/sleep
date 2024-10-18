@@ -1,4 +1,4 @@
-import {SleepMetric} from "modules/controls/MetricConfiguration";
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export type GetMetricColour = (metric: SleepMetric) => string
 
@@ -27,16 +27,6 @@ export interface GraphStylesResponse {
    * is thinned out for legibility.
    */
   strokeWidth: number
-
-  /**
-   * The number of ticks that will
-   * render on the x-axis relative
-   * to the number of active sessions.
-   * A greater number of sessions will
-   * mean fewer ticks and more spacing
-   * between them for legibility.
-   */
-  xAxisInterval: number
 
   /**
    * The radius of the circle that

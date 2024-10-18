@@ -1,12 +1,12 @@
-import {Checkbox} from "antd";
-import styles from "./MetricCheckbox.module.scss";
-import {CSSProperties, useCallback} from "react";
-import {CheckboxChangeEvent} from "antd/es/checkbox";
-import {useQueryParams} from "hooks/useQueryParams";
-import {MetricCheckboxProps} from "modules/controls/MetricCheckbox/types.ts";
-import {useGraphStyles} from "modules/graph/hooks/useGraphStyles";
-import {useSleepContext} from "context";
-import {PageRoutes} from "routes.ts";
+import { Checkbox } from 'antd'
+import styles from './MetricCheckbox.module.scss'
+import { CSSProperties, useCallback } from 'react'
+import { CheckboxChangeEvent } from 'antd/es/checkbox'
+import { useQueryParams } from 'hooks/useQueryParams'
+import { MetricCheckboxProps } from 'modules/controls/MetricCheckbox/types'
+import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { useSleepContext } from 'context'
+import { PageRoutes } from 'routes'
 
 export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
   const { getMetricColour } = useGraphStyles()

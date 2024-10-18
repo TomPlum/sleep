@@ -1,5 +1,5 @@
-import {usePillowData} from "../usePillowData";
-import {useCallback, useMemo} from "react";
+import { usePillowData } from '../usePillowData'
+import { useCallback, useMemo } from 'react'
 
 /*const tables = [
   'ZPILLOWUSER',
@@ -32,7 +32,7 @@ const tables = [
 ]
 
 export const useRawSleepData = () => {
-  const { data, isLoading, error } = usePillowData({ type: 'raw'})
+  const { data, isLoading, error } = usePillowData({ type: 'raw' })
 
   const parseLine = useCallback((line: string) => {
     const tokens = line.split(' ')
