@@ -1,7 +1,7 @@
 import styles from './SleepPage.module.scss'
 import { MetricConfiguration } from 'modules/controls/MetricConfiguration'
 import { Spin, Switch } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { GithubOutlined, LoadingOutlined } from '@ant-design/icons'
 import { DateRangePicker } from 'modules/controls/DateRangePicker'
 import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
@@ -14,9 +14,9 @@ export const SleepPage = () => {
   const { t, i18n } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { activeSessions, sleepData, isSleepDataLoading } = useSleepContext()
 
-  const handleChangeLanguage = useCallback(() => {
+  const handleChangeLanguage = useCallback(async () => {
     const isEnglish = i18n.language === 'en'
-    i18n.changeLanguage(isEnglish ? 'jp' : 'en')
+    await i18n.changeLanguage(isEnglish ? 'jp' : 'en')
   }, [i18n])
 
   if (isSleepDataLoading) {
@@ -31,13 +31,12 @@ export const SleepPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.topLeftControls}>
-        <p style={{ color: currentMetricColour }} className={styles.sessions}>
-          {t('sessions', {
-            active: activeSessions,
-            total: sleepData?.sessions.length
-          })}
-        </p>
-
+        <a href='https://github.com/TomPlum/sleep' rel='noreferrer'>
+          <GithubOutlined
+            className={styles.github}
+          />
+        </a>
+        
         <Switch
           size='small'
           defaultChecked
@@ -46,6 +45,13 @@ export const SleepPage = () => {
           checkedChildren={t('language.checked')}
           unCheckedChildren={t('language.unchecked')}
         />
+
+        <p style={{ color: currentMetricColour }} className={styles.sessions}>
+          {t('sessions', {
+            active: activeSessions,
+            total: sleepData?.sessions.length
+          })}
+        </p>
       </div>
 
       <div className={styles.controls}>
@@ -53,10 +59,10 @@ export const SleepPage = () => {
           className={styles.configPanel}
         />
 
-        <DateRangePicker />
+        <DateRangePicker/>
       </div>
 
-      <SleepSessionsGraph2D />
+      <SleepSessionsGraph2D/>
     </div>
   )
 }

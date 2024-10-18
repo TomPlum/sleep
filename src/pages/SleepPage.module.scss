@@ -5,22 +5,30 @@
   background-color: #0e0e0e;
 
   .topLeftControls {
+    font-family: "Nunito", sans-serif;
     position: absolute;
-    font-family: "Fira Code", sans-serif;
     top: 3px;
     left: 6px;
-    font-size: 0.7rem;
-    text-transform: uppercase;
     z-index: 10;
     display: flex;
     align-items: center;
+    gap: 10px;
 
     .sessions {
       margin: 0;
+      font-size: 0.8rem;
+      text-transform: uppercase;
     }
 
-    .languageSwitch {
-      margin-left: 10px;
+    .github {
+      font-size: 1.1em;
+      color: #efefef;
+      transition: all ease-in-out 0.2s;
+
+      &:hover {
+        color: #ffffff;
+        cursor: pointer;
+      }
     }
   }
 
