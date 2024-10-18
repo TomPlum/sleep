@@ -37,8 +37,6 @@ export const SleepSessionsGraph2D = () => {
     regressionLineDeltaHorizontal
   } = useLinearRegression()
 
-  console.log(regressionLineDeltaHorizontal)
-
   return (
     <ResponsiveContainer width='100%' height='100%'>
       <LineChart
@@ -103,8 +101,6 @@ export const SleepSessionsGraph2D = () => {
         {typicalSleepSession && (
           <ReferenceArea
             {...typicalSleepSession}
-            isUpdateAnimationActive
-            isAnimationActive
             ifOverflow='extendDomain'
             fill={typicalSleepSessionFill}
             id={`${sleepMetric}_typical_sleep_session_area`}
@@ -113,6 +109,7 @@ export const SleepSessionsGraph2D = () => {
               offset={10}
               position='insideTopLeft'
               value={t('typical-sleep-session')}
+              className={styles.healthyRangeLabel}
             />
           </ReferenceArea>
         )}
@@ -124,7 +121,6 @@ export const SleepSessionsGraph2D = () => {
           strokeWidth={3}
           ticks={xTicks}
           axisLine={false}
-          padding={{ left: -5 }}
           tick={props => (
             <CustomXAxisTick
               {...props}

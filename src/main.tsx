@@ -33,6 +33,9 @@ createRoot(document.getElementById('root')!).render(
       <ConfigProvider
         theme={{
           algorithm: theme.darkAlgorithm,
+          token: {
+            fontFamily: 'Nunito'
+          },
           components: {
             Switch: {
               colorPrimary: '#7e7e7e',
