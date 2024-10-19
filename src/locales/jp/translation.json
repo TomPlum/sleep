@@ -15,14 +15,16 @@
         "unchecked": "英語"
       }
     },
-    "metric-config": {
-      "checkbox": {
-        "quality": "睡眠の質",
-        "deep": "深睡眠",
-        "light": "浅い眠",
-        "rem": "レム眠",
-        "awake": "目覚め",
-        "duration": "期間"
+    "graph-controls": {
+      "metric-config": {
+        "checkbox": {
+          "quality": "睡眠の質",
+          "deep": "深睡眠",
+          "light": "浅い眠",
+          "rem": "レム眠",
+          "awake": "目覚め",
+          "duration": "期間"
+        }
       }
     }
   },

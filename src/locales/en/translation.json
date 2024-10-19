@@ -15,14 +15,17 @@
         "unchecked": "English"
       }
     },
-    "metric-config": {
-      "checkbox": {
-        "quality": "Quality",
-        "deep": "Deep",
-        "light": "Light",
-        "rem": "REM",
-        "awake": "Awake",
-        "duration": "Duration"
+    "graph-controls" : {
+      "show-all": "All",
+      "metric-config": {
+        "checkbox": {
+          "quality": "Quality",
+          "deep": "Deep",
+          "light": "Light",
+          "rem": "REM",
+          "awake": "Awake",
+          "duration": "Duration"
+        }
       }
     }
   },

@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { MetricCheckbox } from 'modules/controls/MetricCheckbox'
 
 export const MetricConfiguration = ({ className }: MetricConfigurationProps) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.metric-config' })
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config' })
 
   return (
     <div className={classNames(styles.container, className)}>
