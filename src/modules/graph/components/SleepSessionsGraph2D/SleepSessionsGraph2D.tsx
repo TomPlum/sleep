@@ -2,7 +2,7 @@ import {
   Label,
   Line,
   LineChart,
-  ReferenceArea,
+  ReferenceArea, ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -36,6 +36,10 @@ export const SleepSessionsGraph2D = () => {
     regressionLineDeltaVertical,
     regressionLineDeltaHorizontal
   } = useLinearRegression()
+
+  const improvementDate = data.find(({ date }) => {
+    return date.getFullYear() === 2024 && date.getMonth() === 8 && date.getDate() === 6
+  })?.date
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -113,6 +117,19 @@ export const SleepSessionsGraph2D = () => {
             />
           </ReferenceArea>
         )}
+
+        <ReferenceLine
+          strokeDasharray='3 10'
+          stroke='rgb(255, 255, 255)'
+          x={improvementDate?.getTime()}
+          id='started_making_improvements_date_line'
+        >
+          <Label
+            dy={-100}
+            position='insideBottomRight'
+            value={t('improvement-label')}
+          />
+        </ReferenceLine>
 
         <XAxis
           type='number'

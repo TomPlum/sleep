@@ -7,6 +7,7 @@
         "duration": "期間",
         "nap": "昼寝"
       },
+      "improvement-label": "改善期間",
       "typical-sleep-session": "健康的な範囲",
       "sessions": "{{ active }} / {{ total }} セッション",
       "language": {
