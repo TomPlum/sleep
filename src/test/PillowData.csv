@@ -1,6 +1,6 @@
 Start Time, End Time, Time in Bed (mins), Is nap, Sleep quality, Awake duration (mins), REM sleep duration (mins), Light sleep duration (mins), Deep sleep duration (mins), Amount of audio recordings, Wake-up mood,
 Optional(2018-08-16 22:16:57 +0000), Optional(2018-08-17 05:36:42 +0000), 440, No, 56, 90, 50, 170, 130, 65, OK, 
-Optional(2018-08-17 21:57:59 +0000), Optional(2018-08-18 06:31:27 +0000), 513, No, 50, 885, 90, 190, 330, 69, OK, 
+Optional(2018-08-17 21:57:59 +0000), Optional(2018-08-18 06:31:27 +0000), 513, No, 50, 420, 90, 190, 330, 69, OK,
 Optional(2018-08-18 22:53:27 +0000), Optional(2018-08-19 07:30:35 +0000), 517, No, 72, 67, 70, 190, 190, 12, Good, 
 Optional(2018-08-19 22:38:42 +0000), Optional(2018-08-20 06:00:39 +0000), 442, No, 56, 102, 30, 160, 150, 5, Undefined, 
 Optional(2018-08-20 21:35:34 +0000), Optional(2018-08-21 06:00:21 +0000), 505, No, 76, 45, 70, 240, 150, 9, Good,
