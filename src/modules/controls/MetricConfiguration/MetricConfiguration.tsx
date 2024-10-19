@@ -33,6 +33,11 @@ export const MetricConfiguration = ({ className }: MetricConfigurationProps) => 
         label={t('checkbox.awake')}
         metric={SleepMetric.AWAKE_TIME}
       />
+
+      <MetricCheckbox
+        label={t('checkbox.duration')}
+        metric={SleepMetric.DURATION}
+      />
     </div>
   )
 }

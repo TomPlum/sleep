@@ -14,21 +14,25 @@ const validGraphData2D: SleepSessionGraph2DData = [
     xDate: 1724454000000,
     date: new Date(2024, 7, 24),
     duration: 520,
+    isNap: false,
     [SleepMetric.AWAKE_TIME]: 10,
     [SleepMetric.DEEP_SLEEP]: 60,
     [SleepMetric.LIGHT_SLEEP]: 300,
     [SleepMetric.QUALITY]: 84,
-    [SleepMetric.REM_SLEEP]: 70
+    [SleepMetric.REM_SLEEP]: 70,
+    [SleepMetric.DURATION]: 80
   },
   {
     xDate: 1724540400000,
     date: new Date(2024, 7, 25),
     duration: 520,
+    isNap: false,
     [SleepMetric.AWAKE_TIME]: 10,
     [SleepMetric.DEEP_SLEEP]: 20,
     [SleepMetric.LIGHT_SLEEP]: 300,
     [SleepMetric.QUALITY]: 84,
-    [SleepMetric.REM_SLEEP]: 70
+    [SleepMetric.REM_SLEEP]: 70,
+    [SleepMetric.DURATION]: 75
   }
 ]
 

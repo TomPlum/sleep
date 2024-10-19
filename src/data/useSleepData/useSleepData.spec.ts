@@ -62,7 +62,7 @@ describe('Sleep Data (CSV) Parsing Hook', () => {
           {
             'audioRecordings': 69,
             'duration': {
-              'awake': 885,
+              'awake': 420,
               'deep': 330,
               'light': 190,
               'rem': 90,

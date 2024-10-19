@@ -47,6 +47,12 @@ export const useTypicalSession = (): TypicalSessionResponse => {
           x2: lastSession, y2: 100
         }
       }
+      case SleepMetric.DURATION: {
+        return {
+          x1: firstSession, y1: 90,
+          x2: lastSession, y2: 110
+        }
+      }
     }
   }, [data, sleepMetric])
 

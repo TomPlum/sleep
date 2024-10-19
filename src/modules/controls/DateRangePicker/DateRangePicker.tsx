@@ -4,8 +4,9 @@ import dayjs, { Dayjs } from 'dayjs'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { useSleepContext } from 'context'
 import { PageRoutes } from 'routes'
+import { DateRangePickerProps } from './types'
 
-export const DateRangePicker = () => {
+export const DateRangePicker = ({ className }: DateRangePickerProps) => {
   const { updateQueryParam } = useQueryParams()
   const { setRangeStart, setRangeEnd, sleepData } = useSleepContext()
 
@@ -29,9 +30,11 @@ export const DateRangePicker = () => {
 
   return (
     <DatePicker.RangePicker
+      size='small'
       picker='month'
-      onChange={handleChange}
       format='MMM YYYY'
+      className={className}
+      onChange={handleChange}
       maxDate={dayjs(sleepData?.latestSession)}
       minDate={dayjs(sleepData?.earliestSession)}
       defaultValue={[dayjs(sleepData?.latestSession).subtract(2, 'months'), dayjs(sleepData?.latestSession)]}

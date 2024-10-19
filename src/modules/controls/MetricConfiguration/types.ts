@@ -7,5 +7,6 @@ export enum SleepMetric {
   LIGHT_SLEEP = 'light_sleep',
   DEEP_SLEEP = 'deep_sleep',
   REM_SLEEP = 'rem_sleep',
-  AWAKE_TIME = 'awake_time'
+  AWAKE_TIME = 'awake_time',
+  DURATION = 'duration_percent'
 }

@@ -23,7 +23,7 @@ export const useQueryParams = (): QueryParamsResponse => {
 
   const queryParams = useMemo<SleepQueryParams>(() => {
     return {
-      metric: searchParams.get('sleep') as SleepMetric,
+      metric: searchParams.get('metric') as SleepMetric,
       start: searchParams.has('start') ? new Date(Number(searchParams.get('start'))) : undefined,
       end: searchParams.has('end') ? new Date(Number(searchParams.get('end'))) : undefined
     }

@@ -4,6 +4,22 @@
   border: 1px solid #d2d2d2;
   border-radius: 5px;
   padding: 10px;
+  position: relative;
+
+  .nap {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.8em;
+    background-color: #535bf2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 600;
+    width: 40px;
+    height: 25px;
+  }
 
   .label {
     color: #e0e0e0;
