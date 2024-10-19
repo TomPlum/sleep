@@ -37,33 +37,5 @@
     z-index: 10;
     top: 3px;
     right: 10px;
-    display: flex;
-    flex-direction: column;
-
-    * {
-      opacity: 0.7;
-      transition: opacity ease-in-out 0.5s;
-    }
-
-    &:hover {
-      * {
-        opacity: 1;
-      }
-    }
-
-    .configPanel {
-      margin-bottom: 10px;
-    }
-
-    .bottom {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      .dateRangePicker {
-        flex: 1;
-      }
-    }
   }
 }

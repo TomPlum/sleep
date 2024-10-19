@@ -1,13 +1,11 @@
 import styles from './SleepPage.module.scss'
-import { MetricConfiguration } from 'modules/controls/MetricConfiguration'
 import { Spin } from 'antd'
 import { GithubOutlined, LoadingOutlined } from '@ant-design/icons'
-import { DateRangePicker } from 'modules/controls/DateRangePicker'
 import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
 import { useTranslation } from 'react-i18next'
 import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
-import { LocaleToggle } from 'modules/controls/LocaleToggle'
+import { GraphControls } from 'modules/controls/GraphControls'
 
 export const SleepPage = () => {
   const { currentMetricColour } = useGraphStyles()
@@ -40,16 +38,7 @@ export const SleepPage = () => {
         </p>
       </div>
 
-      <div className={styles.controls}>
-        <MetricConfiguration
-          className={styles.configPanel}
-        />
-
-        <div className={styles.bottom}>
-          <LocaleToggle className={styles.localeToggle} />
-          <DateRangePicker className={styles.dateRangePicker} />
-        </div>
-      </div>
+      <GraphControls className={styles.controls} />
 
       <SleepSessionsGraph2D/>
     </div>
