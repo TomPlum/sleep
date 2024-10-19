@@ -4,15 +4,22 @@ import { Typography } from 'antd'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { DurationBreakdownPie } from 'modules/graph/components/DurationBreakdownPie'
+import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
 
 export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.tooltip' })
 
-  const data = payload?.[0]?.payload
+  const data = payload?.[0]?.payload as SleepSessionGraph2DDatum
 
   if (active && data) {
     return (
       <div className={styles.tooltip}>
+        {data.isNap && (
+          <div className={styles.nap}>
+            {t('nap')}
+          </div>
+        )}
+
         <Typography className={styles.label}>
           {t('date')}
         </Typography>

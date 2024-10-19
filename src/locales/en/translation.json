@@ -4,7 +4,8 @@
       "tooltip": {
         "date": "Date",
         "quality": "Sleep Quality (%)",
-        "duration": "Duration"
+        "duration": "Duration",
+        "nap": "Nap"
       },
       "typical-sleep-session": "Healthy Range",
       "sessions": "{{ active }} / {{ total }} sessions",
