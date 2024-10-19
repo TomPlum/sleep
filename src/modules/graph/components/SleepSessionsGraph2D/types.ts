@@ -58,4 +58,10 @@ export interface SleepSessionGraph2DDatum {
    * during the current session.
    */
   [SleepMetric.AWAKE_TIME]: number
+
+  /**
+   * The total duration of the sleep
+   * session as a percentage of 8 hours.
+   */
+  [SleepMetric.DURATION]: number
 }

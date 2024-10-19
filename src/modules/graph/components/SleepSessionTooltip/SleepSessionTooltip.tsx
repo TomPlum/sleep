@@ -28,7 +28,7 @@ export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, st
         </Typography>
 
         <Typography className={styles.value}>
-          {Math.floor(data.duration / 60)}h {data.duration % 60}m
+          {Math.floor(data.duration / 60)}h {Math.round(data.duration % 60)}m
         </Typography>
 
         <Typography className={styles.label}>

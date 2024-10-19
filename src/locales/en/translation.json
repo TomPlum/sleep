@@ -19,7 +19,8 @@
         "deep": "Deep",
         "light": "Light",
         "rem": "REM",
-        "awake": "Awake"
+        "awake": "Awake",
+        "duration": "Duration"
       }
     }
   },

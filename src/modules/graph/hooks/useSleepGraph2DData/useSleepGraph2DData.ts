@@ -25,7 +25,8 @@ export const useSleepGraph2DData = ({ sessions, isSleepDataLoading, rangeStart, 
         [SleepMetric.AWAKE_TIME]: toPercentage(duration.awake, totalDuration),
         [SleepMetric.DEEP_SLEEP]: toPercentage(duration.deep, totalDuration),
         [SleepMetric.REM_SLEEP]: toPercentage(duration.rem, totalDuration),
-        [SleepMetric.LIGHT_SLEEP]: toPercentage(duration.light, totalDuration)
+        [SleepMetric.LIGHT_SLEEP]: toPercentage(duration.light, totalDuration),
+        [SleepMetric.DURATION]: toPercentage(totalDuration, 8 * 60)
       }
     }).filter(({ date }) => {
       return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')

@@ -23,6 +23,9 @@ export const useGraphStyles = (): GraphStylesResponse => {
       case SleepMetric.QUALITY: {
         return 'rgb(145,71,255)'
       }
+      case SleepMetric.DURATION: {
+        return 'rgb(248,242,32)'
+      }
     }
   }, [])
 

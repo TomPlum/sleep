@@ -28,6 +28,7 @@ export const SleepSessionsGraph2D = () => {
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession()
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
   const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
+  console.log(yDomain, yTicks)
 
   const {
     regressionLineData,
