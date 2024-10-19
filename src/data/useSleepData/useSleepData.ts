@@ -35,11 +35,10 @@ export const useSleepData = (): SleepDataResponse => {
         rem: Number(record['REM sleep duration (mins)']),
       }
     })).filter(({ duration }) => {
-      // Sessions with 0 total duration are invalid
-      const hasDuration = duration.total !== 0
+      const hasValidDuration = duration.total > 0 && duration.total < (60 * 15)
       const hasValidBreakdown = [duration.light, duration.deep, duration.rem, duration.awake].every(v => v > 0)
       const hasValidAwakeTime = duration.awake < duration.total
-      return hasDuration && hasValidBreakdown && hasValidAwakeTime
+      return hasValidDuration && hasValidBreakdown && hasValidAwakeTime
     })
   }, [data])
 
