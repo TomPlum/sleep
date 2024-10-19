@@ -16,7 +16,10 @@
       }
     },
     "graph-controls" : {
-      "show-all": "All",
+      "show-all": {
+        "all": "All",
+        "default": "Recent"
+      },
       "metric-config": {
         "checkbox": {
           "quality": "Quality",

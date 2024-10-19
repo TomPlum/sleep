@@ -16,6 +16,10 @@
       }
     },
     "graph-controls": {
+      "show-all": {
+        "all": "すべて",
+        "default": "最近"
+      },
       "metric-config": {
         "checkbox": {
           "quality": "睡眠の質",
