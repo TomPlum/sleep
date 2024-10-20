@@ -1,4 +1,5 @@
 import {
+  CartesianGrid,
   Label,
   Line,
   LineChart,
@@ -116,7 +117,8 @@ export const SleepSessionsGraph2D = () => {
 
         {improvementDate && (
           <ReferenceLine
-            strokeDasharray='3 10'
+            strokeWidth={2}
+            strokeDasharray='5 10'
             stroke='rgb(255, 255, 255)'
             x={improvementDate?.getTime()}
             id='started_making_improvements_date_line'
@@ -165,6 +167,11 @@ export const SleepSessionsGraph2D = () => {
         />
 
         <Tooltip content={SleepSessionTooltip} />
+
+        <CartesianGrid
+          strokeDasharray="3 10"
+          stroke='rgba(255, 255, 255, 0.2)'
+        />
       </LineChart>
     </ResponsiveContainer>
   )
