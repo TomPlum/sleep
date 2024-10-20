@@ -26,6 +26,12 @@ export interface SleepGraph2DDataProps {
    * the rendered graph.
    */
   rangeEnd: Date
+
+  /**
+   * Whether to include nap sessions
+   * in the data output.
+   */
+  includeNaps: boolean
 }
 
 export interface SleepGraph2DDataResponse {

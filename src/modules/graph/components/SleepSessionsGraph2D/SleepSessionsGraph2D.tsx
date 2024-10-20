@@ -125,6 +125,7 @@ export const SleepSessionsGraph2D = () => {
           id='started_making_improvements_date_line'
         >
           <Label
+            dx={-10}
             dy={-100}
             position='insideBottomRight'
             value={t('improvement-label')}

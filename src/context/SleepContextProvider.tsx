@@ -23,7 +23,8 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sessions: sleepData?.sessions ?? [],
     rangeStart: rangeStart ?? new Date(),
     rangeEnd: rangeEnd ?? new Date(),
-    isSleepDataLoading: loading
+    isSleepDataLoading: loading,
+    includeNaps: false
   })
 
   useEffect(() => {

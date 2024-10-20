@@ -9,7 +9,7 @@
       },
       "improvement-label": "改善期間",
       "typical-sleep-session": "健康的な範囲",
-      "sessions": "{{ active }} / {{ total }} セッション",
+      "sessions": "{{ active }} / {{ total }} セッション (0 / {{ naps }} 昼寝)",
       "language": {
         "checked": "日本語",
         "unchecked": "英語"

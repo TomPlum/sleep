@@ -9,7 +9,7 @@
       },
       "improvement-label": "Improvements Made",
       "typical-sleep-session": "Healthy Range",
-      "sessions": "{{ active }} / {{ total }} sessions",
+      "sessions": "{{ active }} / {{ total }} sessions (0 / {{ naps }} naps)",
       "language": {
         "checked": "Japanese",
         "unchecked": "English"

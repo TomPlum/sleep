@@ -33,7 +33,8 @@ export const SleepPage = () => {
         <p style={{ color: currentMetricColour }} className={styles.sessions}>
           {t('sessions', {
             active: activeSessions,
-            total: sleepData?.sessions.length
+            total: sleepData?.sessions.length,
+            naps: sleepData?.sessions.filter(session => session.isNap).length
           })}
         </p>
       </div>
