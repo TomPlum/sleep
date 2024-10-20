@@ -27,7 +27,7 @@ export const SleepSessionsGraph2D = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession()
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
-  const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
+  const { graphData2d: { data, earliestSession, latestSession }, sleepMetric, improvementDate } = useSleepContext()
 
   const {
     regressionLineData,
@@ -36,10 +36,6 @@ export const SleepSessionsGraph2D = () => {
     regressionLineDeltaVertical,
     regressionLineDeltaHorizontal
   } = useLinearRegression()
-
-  const improvementDate = data.find(({ date }) => {
-    return date.getFullYear() === 2024 && date.getMonth() === 8 && date.getDate() === 6
-  })?.date
 
   return (
     <ResponsiveContainer width='100%' height='100%'>
@@ -118,19 +114,22 @@ export const SleepSessionsGraph2D = () => {
           </ReferenceArea>
         )}
 
-        <ReferenceLine
-          strokeDasharray='3 10'
-          stroke='rgb(255, 255, 255)'
-          x={improvementDate?.getTime()}
-          id='started_making_improvements_date_line'
-        >
-          <Label
-            dx={-10}
-            dy={-100}
-            position='insideBottomRight'
-            value={t('improvement-label')}
-          />
-        </ReferenceLine>
+        {improvementDate && (
+          <ReferenceLine
+            strokeDasharray='3 10'
+            stroke='rgb(255, 255, 255)'
+            x={improvementDate?.getTime()}
+            id='started_making_improvements_date_line'
+          >
+            <Label
+              dx={-8}
+              dy={-100}
+              position='insideBottomRight'
+              value={t('improvement-label')}
+              className={styles.improvementLabel}
+            />
+          </ReferenceLine>
+        )}
 
         <XAxis
           type='number'

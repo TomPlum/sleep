@@ -27,6 +27,10 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     includeNaps: false
   })
 
+  const improvementDate = sleepGraphData2d.data.find(({ date }) => {
+    return date.getFullYear() === 2024 && date.getMonth() === 8 && date.getDate() === 6
+  })?.date
+
   useEffect(() => {
     if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng)) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
@@ -68,8 +72,9 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sleepMetric: currentMetric ?? SleepMetric.QUALITY,
     setSleepMetric: setCurrentMetric,
     graphData2d: sleepGraphData2d ?? { data: [], isSleepDataLoading : true },
-    activeSessions: sleepGraphData2d?.data?.length ?? 0
-  }), [currentMetric, loading, rangeEnd, rangeStart, sleepData, sleepGraphData2d])
+    activeSessions: sleepGraphData2d?.data?.length ?? 0,
+    improvementDate
+  }), [currentMetric, loading, rangeEnd, rangeStart, sleepData, sleepGraphData2d, improvementDate])
 
   return (
     <SleepContext.Provider value={value}>
