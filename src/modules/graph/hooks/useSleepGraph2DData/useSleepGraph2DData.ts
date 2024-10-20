@@ -50,7 +50,7 @@ export const useSleepGraph2DData = ({
       latestSession
     }
   }, [data])
-console.log(data)
+
   return {
     data,
     latestSession,

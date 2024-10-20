@@ -13,7 +13,14 @@ export const DateRangePicker = ({ className }: DateRangePickerProps) => {
     if (dates && dates[0] && dates[1]) {
       const newStartDate = dates[0].toDate()
       const newEndDate = dates[1].toDate()
-      setDateRange(newStartDate, newEndDate)
+
+      if (newStartDate.getTime() === newEndDate.getTime()) {
+        const monthStart = new Date(newStartDate.getFullYear(), newStartDate.getMonth(), 0)
+        const monthEnd = new Date(newStartDate.getFullYear(), newStartDate.getMonth() + 1, 0)
+        setDateRange(monthStart, monthEnd)
+      } else {
+        setDateRange(newStartDate, newEndDate)
+      }
     }
   }, [setDateRange])
 
