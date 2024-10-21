@@ -59,7 +59,7 @@ export const useLinearRegression = (): LinearRegressionResponse => {
   const regressionDelta= (maximum - minimum).toFixed(1)
 
   const regressionLineDeltaVertical = useMemo<DeltaLinePlotPoint[]>(() => {
-    const yIntercept = regressionLineData[0].y
+    const yIntercept = regressionLineData[0]?.y
     const xRegressionDeltaLine = regressionLineData[regressionLineData.length - 1]?.xDate
 
     return [
@@ -78,11 +78,11 @@ export const useLinearRegression = (): LinearRegressionResponse => {
     const firstSession = regressionLineData[0]
     return [
       {
-        y: firstSession.y,
+        y: firstSession?.y,
         xDate: firstSession?.xDate
       },
       {
-        y: firstSession.y,
+        y: firstSession?.y,
         xDate: regressionLineData[regressionLineData.length - 1]?.xDate
       }
     ]

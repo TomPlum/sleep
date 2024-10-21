@@ -1,0 +1,42 @@
+.container {
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  .top {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+
+    .sessions {
+      margin: 0;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      transition: all ease-in-out 0.5s;
+    }
+
+    .github {
+      font-size: 1.1em;
+      color: #d5d5d5;
+      transition: all ease-in-out 0.2s;
+
+      &:hover {
+        color: #ffffff;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .dataExportVersion {
+    font-size: 0.7rem;
+    margin: -3px 0 0 26px;
+    color: #e1e1e1;
+    opacity: 0.6;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      color: #ffffff;
+      opacity: 1;
+    }
+  }
+}

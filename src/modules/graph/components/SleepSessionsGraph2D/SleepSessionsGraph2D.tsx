@@ -1,8 +1,9 @@
 import {
+  CartesianGrid,
   Label,
   Line,
   LineChart,
-  ReferenceArea,
+  ReferenceArea, ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -27,7 +28,7 @@ export const SleepSessionsGraph2D = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession()
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
-  const { graphData2d: { data, earliestSession, latestSession }, sleepMetric } = useSleepContext()
+  const { graphData2d: { data, earliestSession, latestSession }, sleepMetric, improvementDate } = useSleepContext()
 
   const {
     regressionLineData,
@@ -114,6 +115,24 @@ export const SleepSessionsGraph2D = () => {
           </ReferenceArea>
         )}
 
+        {improvementDate && (
+          <ReferenceLine
+            strokeWidth={2}
+            strokeDasharray='5 10'
+            stroke='rgb(255, 255, 255)'
+            x={improvementDate?.getTime()}
+            id='started_making_improvements_date_line'
+          >
+            <Label
+              dx={-8}
+              dy={-100}
+              position='insideBottomRight'
+              value={t('improvement-label')}
+              className={styles.improvementLabel}
+            />
+          </ReferenceLine>
+        )}
+
         <XAxis
           type='number'
           scale='time'
@@ -148,6 +167,11 @@ export const SleepSessionsGraph2D = () => {
         />
 
         <Tooltip content={SleepSessionTooltip} />
+
+        <CartesianGrid
+          strokeDasharray="3 10"
+          stroke='rgba(255, 255, 255, 0.2)'
+        />
       </LineChart>
     </ResponsiveContainer>
   )

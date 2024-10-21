@@ -43,11 +43,11 @@ export const useGraphStyles = (): GraphStylesResponse => {
 
   const activeDotRadius = useMemo<number>(() => {
     if (activeSessions < 100) {
-      return 10
+      return 7
     } else if (activeSessions > 100 && activeSessions < 300) {
-      return 8
+      return 6
     } else if (activeSessions > 300 && activeSessions < 1000) {
-      return 3
+      return 2
     } else {
       return 0
     }

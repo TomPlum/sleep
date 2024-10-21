@@ -27,5 +27,6 @@ export const SleepContext = createContext<SleepContextBag>({
     earliestSession: new Date(),
     latestSession: new Date(),
     isSleepDataLoading: true
-  }
+  },
+  improvementDate: new Date()
 })

@@ -11,6 +11,7 @@ export interface SleepQueryParams {
   metric?: SleepMetric
   start?: Date
   end?: Date
+  lng?: string
 }
 
 export interface QueryParamsResponse {

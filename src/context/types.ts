@@ -71,4 +71,17 @@ export interface SleepContextBag {
    * after any filters have been applied.
    */
   activeSessions: number
+
+  /**
+   * The date in which I started to make
+   * effective improvements to my lifestyle
+   * that positively impacted my sleep quality.
+   * The closest date from the session dataset
+   * is picked.
+   *
+   * If the current active data-set (due to
+   * filtering) does not include this date,
+   * undefined is returned.
+   */
+  improvementDate?: Date
 }

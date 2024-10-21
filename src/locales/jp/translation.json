@@ -7,21 +7,32 @@
         "duration": "期間",
         "nap": "昼寝"
       },
+      "improvement-label": "改善期間",
       "typical-sleep-session": "健康的な範囲",
-      "sessions": "{{ active }} / {{ total }} セッション",
+      "sessions": "{{ active }} / {{ total }} セッション (0 / {{ naps }} 昼寝)",
+      "data-source": {
+        "name": "PillowData-08-10-2024.csv",
+        "title": "データダウンロード"
+      },
       "language": {
         "checked": "日本語",
         "unchecked": "英語"
       }
     },
-    "metric-config": {
-      "checkbox": {
-        "quality": "睡眠の質",
-        "deep": "深睡眠",
-        "light": "浅い眠",
-        "rem": "レム眠",
-        "awake": "目覚め",
-        "duration": "期間"
+    "graph-controls": {
+      "show-all": {
+        "all": "すべて",
+        "default": "最近"
+      },
+      "metric-config": {
+        "checkbox": {
+          "quality": "睡眠の質",
+          "deep": "深睡眠",
+          "light": "浅い眠",
+          "rem": "レム眠",
+          "awake": "目覚め",
+          "duration": "期間"
+        }
       }
     }
   },

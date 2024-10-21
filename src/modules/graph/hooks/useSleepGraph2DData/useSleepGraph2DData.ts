@@ -7,7 +7,13 @@ import isBetween from 'dayjs/plugin/isBetween'
 
 dayjs.extend(isBetween)
 
-export const useSleepGraph2DData = ({ sessions, isSleepDataLoading, rangeStart, rangeEnd }: SleepGraph2DDataProps): SleepGraph2DDataResponse => {
+export const useSleepGraph2DData = ({
+  sessions,
+  isSleepDataLoading,
+  rangeStart,
+  rangeEnd,
+  includeNaps
+}: SleepGraph2DDataProps): SleepGraph2DDataResponse => {
   const toPercentage = useCallback((duration: number, total: number) => {
     return (duration / total) * 100
   }, [])
@@ -29,10 +35,12 @@ export const useSleepGraph2DData = ({ sessions, isSleepDataLoading, rangeStart, 
         [SleepMetric.LIGHT_SLEEP]: toPercentage(duration.light, totalDuration),
         [SleepMetric.DURATION]: toPercentage(totalDuration, 8 * 60)
       }
-    }).filter(({ date }) => {
-      return dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
+    }).filter(({ date, isNap }) => {
+      const isWithinDateRange = dayjs(date).isBetween(dayjs(rangeStart), dayjs(rangeEnd), 'day', '[]')
+      const isNapIncluded = isNap ? includeNaps : true
+      return isWithinDateRange && isNapIncluded
     })
-  }, [toPercentage, rangeEnd, rangeStart, sessions])
+  }, [toPercentage, rangeEnd, rangeStart, sessions, includeNaps])
 
   const { earliestSession, latestSession } = useMemo(() => {
     const earliestSession = new Date(Math.min(...data.map(session => session.date.getTime())))

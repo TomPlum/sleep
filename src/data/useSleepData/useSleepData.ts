@@ -34,12 +34,13 @@ export const useSleepData = (): SleepDataResponse => {
         deep: Number(record['Deep sleep duration (mins)']),
         rem: Number(record['REM sleep duration (mins)']),
       }
-    })).filter(({ duration }) => {
-      // Sessions with 0 total duration are invalid
-      const hasDuration = duration.total !== 0
-      const hasValidBreakdown = [duration.light, duration.deep, duration.rem, duration.awake].every(v => v > 0)
-      const hasValidAwakeTime = duration.awake < duration.total
-      return hasDuration && hasValidBreakdown && hasValidAwakeTime
+    })).filter(({ duration, isNap }) => {
+      const hasValidDuration = duration.total > 0 && duration.total < (60 * 15)
+      const hasInvalidBreakdown = [duration.light, duration.deep, duration.rem, duration.awake].every(v => v <= 0)
+      const isAllAwakeTime = [duration.light, duration.deep, duration.rem].every(v => v === 0) && duration.awake > 0
+      const hasValidAwakeTime = duration.awake <= duration.total
+      const isTooShort = !isNap && duration.total < 90
+      return hasValidDuration && !hasInvalidBreakdown && hasValidAwakeTime && !isTooShort && !isAllAwakeTime
     })
   }, [data])
 

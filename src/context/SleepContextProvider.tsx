@@ -7,11 +7,14 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import dayjs from 'dayjs'
 import { useSleepGraph2DData } from 'modules/graph/hooks/useSleepGraph2DData'
 import { PageRoutes } from 'routes'
+import { useTranslation } from 'react-i18next'
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
+  const { i18n } = useTranslation()
   const { sleepData, loading } = useSleepData()
-  const { queryParams: { start, end, metric }, updateQueryParam } = useQueryParams()
+  const { queryParams: { start, end, metric, lng }, updateQueryParam } = useQueryParams()
 
+  const [language, setLanguage] = useState(lng)
   const [rangeEnd, setRangeEnd] = useState(end)
   const [rangeStart, setRangeStart] = useState(start)
   const [currentMetric, setCurrentMetric] = useState(metric)
@@ -20,11 +23,16 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sessions: sleepData?.sessions ?? [],
     rangeStart: rangeStart ?? new Date(),
     rangeEnd: rangeEnd ?? new Date(),
-    isSleepDataLoading: loading
+    isSleepDataLoading: loading,
+    includeNaps: false
   })
 
+  const improvementDate = sleepGraphData2d.data.find(({ date }) => {
+    return date.getFullYear() === 2024 && date.getMonth() === 8 && date.getDate() === 6
+  })?.date
+
   useEffect(() => {
-    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric)) {
+    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng)) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
@@ -34,15 +42,25 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
       const selectedEnd = rangeEnd ?? sleepData.latestSession
       setRangeEnd(selectedEnd)
 
+      const selectedLanguage = language ?? 'en'
+      setLanguage(selectedLanguage)
+
       const params: Record<string, string> = {
         metric: selectedMetric,
         start: selectedStart.getTime().toString(),
-        end: selectedEnd.getTime().toString()
+        end: selectedEnd.getTime().toString(),
+        lng: selectedLanguage
       }
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [currentMetric, loading, rangeEnd, rangeStart, sleepData, updateQueryParam])
+  }, [currentMetric, language, lng, loading, rangeEnd, rangeStart, sleepData, updateQueryParam])
+
+  useEffect(() => {
+    i18n.changeLanguage(language).then(() => {
+      console.debug(`Set locale [${language}] from query parameters.`)
+    })
+  }, [i18n, language])
 
   const value = useMemo<SleepContextBag>(() => ({
     sleepData,
@@ -54,8 +72,9 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sleepMetric: currentMetric ?? SleepMetric.QUALITY,
     setSleepMetric: setCurrentMetric,
     graphData2d: sleepGraphData2d ?? { data: [], isSleepDataLoading : true },
-    activeSessions: sleepGraphData2d?.data?.length ?? 0
-  }), [currentMetric, loading, rangeEnd, rangeStart, sleepData, sleepGraphData2d])
+    activeSessions: sleepGraphData2d?.data?.length ?? 0,
+    improvementDate
+  }), [currentMetric, loading, rangeEnd, rangeStart, sleepData, sleepGraphData2d, improvementDate])
 
   return (
     <SleepContext.Provider value={value}>
