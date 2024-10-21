@@ -5,6 +5,7 @@ import { DateRangePicker } from 'modules/controls/DateRangePicker'
 import classNames from 'classnames'
 import { GraphControlsProps } from './types'
 import { ShowAllButton } from 'modules/controls/ShowAllButton'
+import { StackedViewToggle } from 'modules/controls/StackedViewToggle'
 
 export const GraphControls = ({ className }: GraphControlsProps) => {
   return (
@@ -15,6 +16,7 @@ export const GraphControls = ({ className }: GraphControlsProps) => {
 
       <div className={styles.bottom}>
         <LocaleToggle className={styles.localeToggle} />
+        <StackedViewToggle />
         <DateRangePicker className={styles.dateRangePicker} />
         <ShowAllButton />
       </div>

@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { GetMetricColour, GraphStylesResponse } from 'modules/graph/hooks/useGraphStyles/types'
+import { GetMetricColour, GraphStylesProps, GraphStylesResponse } from 'modules/graph/hooks/useGraphStyles/types'
 import { useSleepContext } from 'context'
 
-export const useGraphStyles = (): GraphStylesResponse => {
-  const { sleepMetric, activeSessions } = useSleepContext()
+export const useGraphStyles = ({ metric }: GraphStylesProps): GraphStylesResponse => {
+  const { activeSessions } = useSleepContext()
 
   const getMetricColour = useCallback<GetMetricColour>((metric: SleepMetric) => {
     switch (metric) {
@@ -29,7 +29,7 @@ export const useGraphStyles = (): GraphStylesResponse => {
     }
   }, [])
 
-  const currentMetricColour = getMetricColour(sleepMetric)
+  const currentMetricColour = getMetricColour(metric)
 
   const strokeWidth = useMemo<number>(() => {
     if (activeSessions < 50) {

@@ -1,14 +1,14 @@
 import { useMemo } from 'react'
 import { useSleepContext } from 'context'
-import { Axes2D } from 'modules/graph/hooks/useAxes2D/types'
+import { Axes2D, Axes2DProps } from 'modules/graph/hooks/useAxes2D/types'
 
-export const useAxes2D = (): Axes2D => {
-  const { graphData2d: { data }, sleepMetric, activeSessions } = useSleepContext()
+export const useAxes2D = ({ metric }: Axes2DProps): Axes2D => {
+  const { graphData2d: { data }, activeSessions } = useSleepContext()
 
   const { yDomain, yTicks } = useMemo(() => {
     if (data) {
       const percentages = data.map(datum => {
-        return Number((datum[sleepMetric]).toFixed(0))
+        return Number((datum[metric]).toFixed(0))
       })
 
       const smallest = Math.min(...percentages)
@@ -36,7 +36,7 @@ export const useAxes2D = (): Axes2D => {
       yDomain: [],
       yTicks: []
     }
-  }, [data, sleepMetric])
+  }, [data, metric])
 
   const xTicks = useMemo<number[]>(() => {
     if (data) {

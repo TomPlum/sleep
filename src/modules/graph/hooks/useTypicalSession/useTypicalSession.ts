@@ -1,12 +1,16 @@
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useSleepContext } from 'context'
-import { TypicalSessionArea, TypicalSessionResponse } from 'modules/graph/hooks/useTypicalSession/types'
+import {
+  TypicalSessionArea,
+  TypicalSessionProps,
+  TypicalSessionResponse
+} from 'modules/graph/hooks/useTypicalSession/types'
 import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
 
-export const useTypicalSession = (): TypicalSessionResponse => {
-  const { currentMetricColour } = useGraphStyles()
-  const { graphData2d, sleepMetric } = useSleepContext()
+export const useTypicalSession = ({ metric }: TypicalSessionProps): TypicalSessionResponse => {
+  const { graphData2d } = useSleepContext()
+  const { currentMetricColour } = useGraphStyles({ metric })
 
   const data = useMemo(() => {
     return graphData2d.data ?? []
@@ -16,7 +20,7 @@ export const useTypicalSession = (): TypicalSessionResponse => {
     const firstSession = data[0]?.xDate
     const lastSession = data[data.length - 1]?.xDate
 
-    switch (sleepMetric) {
+    switch (metric) {
       case SleepMetric.AWAKE_TIME: {
         return {
           x1: firstSession, y1: 0,
@@ -54,7 +58,7 @@ export const useTypicalSession = (): TypicalSessionResponse => {
         }
       }
     }
-  }, [data, sleepMetric])
+  }, [data, metric])
 
   const typicalSleepSessionFill = useMemo<string>(() => {
     return currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.25)')

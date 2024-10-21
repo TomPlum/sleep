@@ -22,7 +22,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
 }
 
 export const DurationBreakdownPie = ({ data }: DurationBreakdownPieProps) => {
-  const { getMetricColour } = useGraphStyles()
+  const { getMetricColour } = useGraphStyles({ metric: SleepMetric.DURATION }) // TODO: How to source metric here?
 
   const pieData = useMemo<DurationBreakdownPieDataRaw[]>(() => ([
     { name: 'Deep', value: data.deep, metric: SleepMetric.DEEP_SLEEP },

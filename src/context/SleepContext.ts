@@ -28,5 +28,14 @@ export const SleepContext = createContext<SleepContextBag>({
     latestSession: new Date(),
     isSleepDataLoading: true
   },
-  improvementDate: new Date()
+  improvementDate: new Date(),
+
+  stackedView: false,
+  setStackedView: (stackedView: boolean) => {
+    console.debug(`Tried to setStackedView(${stackedView}) in the SleepContext before initialisation.`)
+  },
+  stackedMetrics: [SleepMetric.QUALITY],
+  setStackedMetrics: () => {
+    console.debug('Tried to setStackedMetrics() in the SleepContext before initialisation.')
+  }
 })

@@ -1,3 +1,5 @@
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+
 export interface LinearRegressionPlotPoint {
   /**
    * The number of milliseconds since the epoch
@@ -31,6 +33,10 @@ export interface DeltaLinePlotPoint {
    * plot the point against.
    */
   y: number
+}
+
+export interface LinearRegressionProps {
+  metric: SleepMetric
 }
 
 export interface LinearRegressionResponse {

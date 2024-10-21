@@ -20,15 +20,16 @@ import { useTypicalSession } from 'modules/graph/hooks/useTypicalSession/useTypi
 import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLabel'
+import { SleepSessionsGraph2DProps } from './types'
 
 const animationDuration = 500
 
-export const SleepSessionsGraph2D = () => {
-  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D()
+export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2DProps) => {
+  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
-  const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession()
-  const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles()
-  const { graphData2d: { data, earliestSession, latestSession }, sleepMetric, improvementDate } = useSleepContext()
+  const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
+  const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
+  const { graphData2d: { data, earliestSession, latestSession }, improvementDate } = useSleepContext()
 
   const {
     regressionLineData,
@@ -36,22 +37,23 @@ export const SleepSessionsGraph2D = () => {
     regressionDelta,
     regressionLineDeltaVertical,
     regressionLineDeltaHorizontal
-  } = useLinearRegression()
+  } = useLinearRegression({ metric })
 
   return (
-    <ResponsiveContainer width='100%' height='100%'>
+    <ResponsiveContainer width='100%' height='50%' className={className}>
       <LineChart
         id='sleeps-sessions-graph-2d'
         margin={{ left: -55, bottom: -22 }}
+        syncId='sleep_sessions_line_chart_2d'
       >
         <Line
           data={data}
           type='monotone'
-          dataKey={sleepMetric}
+          dataKey={metric}
+          id={`${metric}_line`}
           animationDuration={500}
           isAnimationActive={true}
           strokeWidth={strokeWidth}
-          id={`${sleepMetric}_line`}
           stroke={currentMetricColour}
           animationEasing='ease-in-out'
           className={styles.metricLine}
@@ -66,11 +68,11 @@ export const SleepSessionsGraph2D = () => {
           stroke='rgb(255, 255, 255)'
           dataKey={regressionDataKey}
           animationEasing='ease-in-out'
-          id={`${sleepMetric}_regression_line`}
+          id={`${metric}_regression_line`}
           animationDuration={animationDuration}
           data={regressionLineData.map(({ y, xDate }) => ({
             xDate,
-            [sleepMetric]: y,
+            [metric]: y,
           }))}
         />
 
@@ -83,7 +85,7 @@ export const SleepSessionsGraph2D = () => {
           stroke='rgb(255, 255, 255)'
           data={regressionLineDeltaHorizontal}
           animationDuration={animationDuration}
-          id={`${sleepMetric}_regression_line_delta_h`}
+          id={`${metric}_regression_line_delta_h`}
           label={props => <RegressionDeltaLabel {...props} regressionDelta={regressionDelta} />}
         />
 
@@ -96,7 +98,7 @@ export const SleepSessionsGraph2D = () => {
           stroke='rgb(255, 255, 255)'
           data={regressionLineDeltaVertical}
           animationDuration={animationDuration}
-          id={`${sleepMetric}_regression_line_delta_v`}
+          id={`${metric}_regression_line_delta_v`}
         />
 
         {typicalSleepSession && (
@@ -104,7 +106,7 @@ export const SleepSessionsGraph2D = () => {
             {...typicalSleepSession}
             ifOverflow='extendDomain'
             fill={typicalSleepSessionFill}
-            id={`${sleepMetric}_typical_sleep_session_area`}
+            id={`${metric}_typical_sleep_session_area`}
           >
             <Label
               offset={10}
@@ -158,8 +160,8 @@ export const SleepSessionsGraph2D = () => {
           strokeWidth={3}
           axisLine={false}
           domain={yDomain}
+          dataKey={metric}
           orientation='left'
-          dataKey={sleepMetric}
           tick={CustomYAxisTick}
           stroke='rgb(255, 255, 255)'
           padding={{ bottom: 40, top: 80 }}

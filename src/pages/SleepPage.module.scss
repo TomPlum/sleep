@@ -17,4 +17,14 @@
     top: 3px;
     right: 10px;
   }
+
+  .graphContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .graph {
+      flex: 1;
+    }
+  }
 }

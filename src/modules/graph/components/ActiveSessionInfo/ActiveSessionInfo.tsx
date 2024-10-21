@@ -7,8 +7,8 @@ import { ActiveSessionInfoProps } from './types'
 import classNames from 'classnames'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
-  const { currentMetricColour } = useGraphStyles()
-  const { activeSessions, sleepData } = useSleepContext()
+  const { activeSessions, sleepData, sleepMetric } = useSleepContext()
+  const { currentMetricColour } = useGraphStyles({ metric: sleepMetric })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   return (

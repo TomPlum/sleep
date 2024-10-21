@@ -7,25 +7,39 @@ import { MetricCheckboxProps } from 'modules/controls/MetricCheckbox/types'
 import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
 import { useSleepContext } from 'context'
 import { PageRoutes } from 'routes'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
-  const { getMetricColour } = useGraphStyles()
   const { updateQueryParam } = useQueryParams()
-  const { sleepMetric, setSleepMetric } = useSleepContext()
+  const { getMetricColour } = useGraphStyles({ metric })
+  const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
 
   const handleChange = useCallback((e: CheckboxChangeEvent) => {
-    const checked = e.target.checked
-    if (checked) {
-      setSleepMetric(metric)
-
-      updateQueryParam({
-        route: PageRoutes.SLEEP,
-        params: {
+    if (e.target.checked) {
+      if (stackedView) {
+        setStackedMetrics((existing: SleepMetric[]) => [
+          ...existing,
           metric
-        }
-      })
+        ])
+      } else {
+        setSleepMetric(metric)
+
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            metric
+          }
+        })
+      }
+    } else {
+      if (stackedView) {
+        const newMetrics = stackedMetrics.filter(it => it !== metric)
+        setStackedMetrics(newMetrics)
+      }
     }
-  }, [metric, setSleepMetric, updateQueryParam])
+  }, [metric, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
+
+  const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
 
   return (
     <Checkbox
@@ -35,7 +49,7 @@ export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
         '--background-color': getMetricColour(metric),
         '--border-color': getMetricColour(metric)
       } as CSSProperties}
-      checked={sleepMetric === metric}
+      checked={checked}
     >
       {label}
     </Checkbox>

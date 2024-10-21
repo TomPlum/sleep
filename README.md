@@ -24,3 +24,4 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 
 - Select multiple sleep metric at once
 - A split view that renders stacked charts to compare two metric with a brush
+- Split SleepContext into two. Isolate configuration into its own context

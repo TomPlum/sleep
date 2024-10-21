@@ -5,9 +5,11 @@ import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGrap
 import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export const SleepPage = () => {
-  const { isSleepDataLoading } = useSleepContext()
+  const { isSleepDataLoading, stackedMetrics } = useSleepContext()
+  console.log(stackedMetrics)
 
   if (isSleepDataLoading) {
     return (
@@ -22,7 +24,15 @@ export const SleepPage = () => {
     <div className={styles.container}>
       <ActiveSessionInfo className={styles.sessionInfo} />
       <GraphControls className={styles.controls} />
-      <SleepSessionsGraph2D/>
+      <div className={styles.graphContainer}>
+        {stackedMetrics.map((metric: SleepMetric) => (
+          <SleepSessionsGraph2D
+            metric={metric}
+            className={styles.graph}
+            key={`sleep-graph-2d-${metric}`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
