@@ -1,0 +1,23 @@
+.container {
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .sessions {
+    margin: 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .github {
+    font-size: 1.1em;
+    color: #efefef;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}
