@@ -10,7 +10,10 @@
       "improvement-label": "Improvements Made",
       "typical-sleep-session": "Healthy Range",
       "sessions": "{{ active }} / {{ total }} sessions (0 / {{ naps }} naps)",
-      "data-source": "PillowData-08-10-2024.csv",
+      "data-source": {
+        "name": "PillowData-08-10-2024.csv",
+        "title": "Download source data"
+      },
       "language": {
         "checked": "Japanese",
         "unchecked": "English"

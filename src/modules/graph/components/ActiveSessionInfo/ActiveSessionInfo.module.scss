@@ -4,7 +4,7 @@
   flex-direction: column;
 
   .top {
-    gap: 10px;
+    gap: 8px;
     display: flex;
     align-items: center;
 
@@ -16,7 +16,7 @@
 
     .github {
       font-size: 1.1em;
-      color: #efefef;
+      color: #d5d5d5;
       transition: all ease-in-out 0.2s;
 
       &:hover {
@@ -28,8 +28,14 @@
 
   .dataExportVersion {
     font-size: 0.7rem;
-    margin: -3px 0 0 28px;
+    margin: -3px 0 0 26px;
     color: #e1e1e1;
     opacity: 0.6;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      color: #ffffff;
+      opacity: 1;
+    }
   }
 }
