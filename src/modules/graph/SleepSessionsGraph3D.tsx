@@ -14,7 +14,7 @@ interface LinkConfig {
   value: number
 }
 
-export const SleepSessionsGraph = () => {
+export const SleepSessionsGraph3D = () => {
   const graphRef = useRef<ForceGraphMethods>()
   const { sleepData, loading } = useSleepData()
   console.log(sleepData)
