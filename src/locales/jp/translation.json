@@ -21,7 +21,8 @@
       "language": {
         "checked": "日本語",
         "unchecked": "英語"
-      }
+      },
+      "select-second-metric": "比較する2つ目の睡眠タイプを選択する"
     },
     "graph-controls": {
       "show-all": {

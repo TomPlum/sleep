@@ -26,5 +26,25 @@
     .graph {
       flex: 1;
     }
+
+    .selectPlaceholder {
+      height: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      transition: all ease-in-out 0.5s;
+
+      .infoIcon {
+        font-size: 2em;
+      }
+
+      .selectText {
+        margin: 0;
+        font-size: 1.5em;
+        font-family: 'Nunito', sans-serif;
+      }
+    }
   }
 }

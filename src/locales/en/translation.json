@@ -21,7 +21,8 @@
       "language": {
         "checked": "Japanese",
         "unchecked": "English"
-      }
+      },
+      "select-second-metric": "Select a second sleep metric to compare"
     },
     "graph-controls" : {
       "show-all": {
