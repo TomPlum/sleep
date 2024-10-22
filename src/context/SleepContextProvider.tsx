@@ -12,14 +12,14 @@ import { useTranslation } from 'react-i18next'
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
   const { sleepData, loading } = useSleepData()
-  const { queryParams: { start, end, metric, lng }, updateQueryParam } = useQueryParams()
+  const { queryParams: { start, end, metric, lng, stacked }, updateQueryParam } = useQueryParams()
 
   const [language, setLanguage] = useState(lng)
   const [rangeEnd, setRangeEnd] = useState(end)
   const [rangeStart, setRangeStart] = useState(start)
   const [currentMetric, setCurrentMetric] = useState(metric)
 
-  const [stackedView, setStackedView] = useState(false)
+  const [stackedView, setStackedView] = useState(stacked)
   const [stackedMetrics, setStackedMetrics] = useState([SleepMetric.QUALITY])
 
   const sleepGraphData2d = useSleepGraph2DData({
@@ -35,7 +35,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   })?.date
 
   useEffect(() => {
-    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng)) {
+    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng || stackedView === undefined)) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
@@ -48,16 +48,20 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
       const selectedLanguage = language ?? 'en'
       setLanguage(selectedLanguage)
 
+      const selectedStackedView = stackedView !== undefined ? stackedView : false
+      setStackedView(selectedStackedView)
+
       const params: Record<string, string> = {
         metric: selectedMetric,
         start: selectedStart.getTime().toString(),
         end: selectedEnd.getTime().toString(),
-        lng: selectedLanguage
+        lng: selectedLanguage,
+        stacked: String(selectedStackedView)
       }
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [currentMetric, language, lng, loading, rangeEnd, rangeStart, sleepData, updateQueryParam])
+  }, [currentMetric, language, lng, loading, rangeEnd, rangeStart, sleepData, stackedView, updateQueryParam])
 
   useEffect(() => {
     i18n.changeLanguage(language).then(() => {
@@ -77,7 +81,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     graphData2d: sleepGraphData2d ?? { data: [], isSleepDataLoading : true },
     activeSessions: sleepGraphData2d?.data?.length ?? 0,
     improvementDate,
-    stackedView,
+    stackedView: stackedView ?? false,
     setStackedView,
     stackedMetrics,
     setStackedMetrics

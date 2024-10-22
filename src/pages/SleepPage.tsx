@@ -28,10 +28,12 @@ export const SleepPage = () => {
 
   if (isSleepDataLoading) {
     return (
-      <Spin
-        size="large"
-        indicator={<LoadingOutlined spin />}
-      />
+      <div className={styles.loading}>
+        <Spin
+          size="large"
+          indicator={<LoadingOutlined spin />}
+        />
+      </div>
     )
   }
 
@@ -53,7 +55,10 @@ export const SleepPage = () => {
 
           {stackedMetrics.length < 2 && (
             [...Array(2 - stackedMetrics.length).keys()].map(i => (
-              <StackedGraphPlaceholder id={i} />
+              <StackedGraphPlaceholder
+                id={i}
+                key={`graph-placeholder-${i}`}
+              />
             ))
           )}
         </div>

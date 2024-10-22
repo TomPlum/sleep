@@ -17,7 +17,7 @@ export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) =>
   }, [stackedMetrics])
 
   return (
-    <div className={styles.placeholder} key={`graph-placeholder-${id}`}>
+    <div className={styles.placeholder}>
       <InfoCircleOutlined className={styles.infoIcon} />
 
       <p className={styles.selectText}>
@@ -26,7 +26,11 @@ export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) =>
 
       <div>
         {availableMetrics.map(metric => (
-          <MetricCheckbox label={metric} metric={metric} />
+          <MetricCheckbox
+            label={metric}
+            metric={metric}
+            key={`placeholder-metric-checkbox-${metric}`}
+          />
         ))}
       </div>
     </div>
