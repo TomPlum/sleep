@@ -20,4 +20,13 @@
     font-size: 1.5em;
     font-family: 'Nunito', sans-serif;
   }
+
+  .metrics {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+
+    .checkbox {
+    }
+  }
 }

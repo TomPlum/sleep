@@ -1,41 +1,38 @@
 import { MetricConfigurationProps, SleepMetric } from './types'
 import styles from './MetricConfiguration.module.scss'
-import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import { MetricCheckbox } from 'modules/controls/MetricCheckbox'
 
 export const MetricConfiguration = ({ className }: MetricConfigurationProps) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config' })
-
   return (
     <div className={classNames(styles.container, className)}>
       <MetricCheckbox
+        type='checkbox'
         metric={SleepMetric.QUALITY}
-        label={t('checkbox.quality')}
       />
 
       <MetricCheckbox
-        label={t('checkbox.deep')}
+        type='checkbox'
         metric={SleepMetric.DEEP_SLEEP}
       />
 
       <MetricCheckbox
-        label={t('checkbox.light')}
+        type='checkbox'
         metric={SleepMetric.LIGHT_SLEEP}
       />
 
       <MetricCheckbox
-        label={t('checkbox.rem')}
+        type='checkbox'
         metric={SleepMetric.REM_SLEEP}
       />
 
       <MetricCheckbox
-        label={t('checkbox.awake')}
+        type='checkbox'
         metric={SleepMetric.AWAKE_TIME}
       />
 
       <MetricCheckbox
-        label={t('checkbox.duration')}
+        type='checkbox'
         metric={SleepMetric.DURATION}
       />
     </div>
