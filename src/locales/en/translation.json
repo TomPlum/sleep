@@ -22,7 +22,12 @@
         "checked": "Japanese",
         "unchecked": "English"
       },
-      "select-second-metric": "Select a second sleep metric to compare"
+      "placeholder": {
+        "message": {
+          "first": "Select a sleep metric",
+          "second": "Select a second sleep metric to compare"
+        }
+      }
     },
     "graph-controls" : {
       "show-all": {
