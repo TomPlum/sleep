@@ -15,7 +15,7 @@ export const useAxes2D = ({ metric }: Axes2DProps): Axes2D => {
       const lowerBound = smallest < 10 ? 0 : smallest - 10
 
       const biggest = Math.max(...percentages)
-      const upperBound = biggest > 100 ? Math.round(biggest + 10) : biggest > 90 ? 100 : biggest + 10
+      const upperBound = biggest > 100 ? Math.round(biggest + 10) : biggest > 90 ? 100 : biggest + 5
 
       const closestLower = Math.round(lowerBound / 10) * 10
       const closestUpper = Math.round(upperBound / 10) * 10
