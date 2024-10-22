@@ -4,7 +4,7 @@ import { CSSProperties, useCallback } from 'react'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { MetricCheckboxProps } from 'modules/controls/MetricCheckbox/types'
-import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { useSleepContext } from 'context'
 import { PageRoutes } from 'routes'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
@@ -13,7 +13,6 @@ import classNames from 'classnames'
 
 export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
-  const { getMetricColour } = useGraphStyles({ metric })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
   const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
 

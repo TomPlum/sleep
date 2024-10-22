@@ -6,7 +6,7 @@ import { Button } from 'antd'
 import { MetricButtonProps } from 'modules/controls/MetricButton/types'
 
 export const MetricButton = ({ metric, className }: MetricButtonProps) => {
-  const {  setStackedMetrics } = useSleepContext()
+  const { setStackedMetrics } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
 
   const handleButtonClick = useCallback(() => {
