@@ -29,7 +29,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
-  const { graphData2d: { data, earliestSession, latestSession }, improvementDate } = useSleepContext()
+  const { graphData2d: { data, earliestSession, latestSession }, improvementDate, stackedView, stackedMetrics } = useSleepContext()
 
   const {
     regressionLineData,
@@ -39,8 +39,10 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
     regressionLineDeltaHorizontal
   } = useLinearRegression({ metric })
 
+  const isTopGraph = stackedMetrics.indexOf(metric) === 0
+
   return (
-    <ResponsiveContainer width='100%' height='50%' className={className}>
+    <ResponsiveContainer width='100%' height={stackedView ? '50%' : '100%'} className={className}>
       <LineChart
         id='sleeps-sessions-graph-2d'
         margin={{ left: -55, bottom: -22 }}
@@ -152,6 +154,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           interval={xAxisInterval}
           allowDataOverflow={true}
           stroke='rgb(255, 255, 255)'
+          hide={stackedView && isTopGraph}
           domain={[earliestSession.getTime(), latestSession.getTime()]}
         />
 
@@ -164,7 +167,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           orientation='left'
           tick={CustomYAxisTick}
           stroke='rgb(255, 255, 255)'
-          padding={{ bottom: 40, top: 80 }}
+          padding={{ bottom: 40, top: !stackedView ? 80 : stackedView && isTopGraph ? 80 : 0 }} // TODO: Move to graph styles or axes hook
           tickFormatter={value => `${value}%`}
         />
 

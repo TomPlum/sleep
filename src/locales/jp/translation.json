@@ -9,7 +9,11 @@
       },
       "improvement-label": "改善期間",
       "typical-sleep-session": "健康的な範囲",
-      "sessions": "{{ active }} / {{ total }} セッション (0 / {{ naps }} 昼寝)",
+      "sessions": {
+        "delimiter": " / ",
+        "sessions": " セッション ",
+        "naps": " (0 / {{ naps }} 昼寝)"
+      },
       "data-source": {
         "name": "PillowData-08-10-2024.csv",
         "title": "データダウンロード"

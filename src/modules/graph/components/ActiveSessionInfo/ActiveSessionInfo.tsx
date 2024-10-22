@@ -5,11 +5,33 @@ import { useTranslation } from 'react-i18next'
 import { useSleepContext } from 'context'
 import { ActiveSessionInfoProps } from './types'
 import classNames from 'classnames'
+import { CSSProperties, useMemo } from 'react'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
-  const { activeSessions, sleepData, sleepMetric } = useSleepContext()
-  const { currentMetricColour } = useGraphStyles({ metric: sleepMetric })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
+  const { activeSessions, sleepData, stackedMetrics, stackedView, sleepMetric } = useSleepContext()
+
+  const { currentMetricColour: firstColour } = useGraphStyles({
+    metric: stackedView ? stackedMetrics[0] : sleepMetric
+  })
+
+  const { currentMetricColour: secondColour } = useGraphStyles({
+    metric: stackedView ? stackedMetrics[ stackedMetrics.length > 1 ? 1 : 0] : sleepMetric
+  })
+
+  const linearGradient = useMemo<CSSProperties| undefined>(() => {
+    if (!stackedView || stackedMetrics.length <= 1) {
+      return {
+        color: firstColour
+      }
+    }
+
+    return {
+      background: `linear-gradient(to right, ${firstColour}, ${secondColour})`,
+      WebkitBackgroundClip: 'text',
+      color: 'transparent'
+    }
+  }, [firstColour, secondColour, stackedMetrics.length, stackedView])
 
   return (
     <div className={classNames(styles.container, className)}>
@@ -20,12 +42,28 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           />
         </a>
 
-        <p style={{ color: currentMetricColour }} className={styles.sessions}>
-          {t('sessions', {
-            active: activeSessions,
-            total: sleepData?.sessions.length,
-            naps: sleepData?.sessions.filter(session => session.isNap).length
-          })}
+        <p className={styles.sessions}>
+          <span style={{ color: firstColour }}>
+            {activeSessions}
+          </span>
+
+          <span style={linearGradient}>
+            {t('sessions.delimiter')}
+          </span>
+
+          <span style={{ color: secondColour }}>
+            {sleepData?.sessions.length}
+          </span>
+
+          <span style={linearGradient}>
+            {t('sessions.sessions')}
+          </span>
+
+          <span style={linearGradient}>
+            {t('sessions.naps', {
+              naps: sleepData?.sessions.filter(session => session.isNap).length
+            })}
+          </span>
         </p>
       </div>
 

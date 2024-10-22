@@ -9,7 +9,11 @@
       },
       "improvement-label": "Improvements Made",
       "typical-sleep-session": "Healthy Range",
-      "sessions": "{{ active }} / {{ total }} sessions (0 / {{ naps }} naps)",
+      "sessions": {
+        "delimiter": " / ",
+        "sessions": " sessions ",
+        "naps": " (0 / {{ naps }} naps)"
+      },
       "data-source": {
         "name": "PillowData-08-10-2024.csv",
         "title": "Download source data"
