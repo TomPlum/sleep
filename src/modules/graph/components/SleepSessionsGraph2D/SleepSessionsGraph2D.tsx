@@ -127,7 +127,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
             x={improvementDate?.getTime()}
             id='started_making_improvements_date_line'
           >
-            {isTopGraph && (
+            {(!stackedView || isTopGraph) && (
               <Label
                 dx={-8}
                 dy={-100}
@@ -173,7 +173,9 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           tickFormatter={value => `${value}%`}
         />
 
-        <Tooltip content={isTopGraph ? SleepSessionTooltip : <div />} />
+        <Tooltip
+          content={(!stackedView || isTopGraph) ? SleepSessionTooltip : <div />}
+        />
 
         <CartesianGrid
           strokeDasharray="3 10"
