@@ -1,16 +1,15 @@
 import styles from './SleepPage.module.scss'
 import { Spin } from 'antd'
-import { InfoCircleOutlined, LoadingOutlined } from '@ant-design/icons'
+import { LoadingOutlined } from '@ant-design/icons'
 import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 
 export const SleepPage = () => {
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric } = useSleepContext()
 
   useEffect(() => {
@@ -52,13 +51,10 @@ export const SleepPage = () => {
             />
           ))}
 
-          {stackedMetrics.length === 1 && (
-            <div className={styles.selectPlaceholder}>
-              <InfoCircleOutlined className={styles.infoIcon} />
-              <p className={styles.selectText}>
-                {t('select-second-metric')}
-              </p>
-            </div>
+          {stackedMetrics.length < 2 && (
+            [...Array(2 - stackedMetrics.length).keys()].map(i => (
+              <StackedGraphPlaceholder id={i} />
+            ))
           )}
         </div>
       )}
