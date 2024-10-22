@@ -17,10 +17,12 @@ export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
   const handleChange = useCallback((e: CheckboxChangeEvent) => {
     if (e.target.checked) {
       if (stackedView) {
-        setStackedMetrics((existing: SleepMetric[]) => [
-          ...existing,
-          metric
-        ])
+        if (stackedMetrics.length < 2) {
+          setStackedMetrics((existing: SleepMetric[]) => [
+            ...existing,
+            metric
+          ])
+        }
       } else {
         setSleepMetric(metric)
 
