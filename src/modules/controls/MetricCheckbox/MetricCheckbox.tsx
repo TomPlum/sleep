@@ -1,4 +1,4 @@
-import { Button, Checkbox } from 'antd'
+import { Checkbox } from 'antd'
 import styles from './MetricCheckbox.module.scss'
 import { CSSProperties, useCallback } from 'react'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
@@ -11,7 +11,7 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 
-export const MetricCheckbox = ({ metric, type, className }: MetricCheckboxProps) => {
+export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
   const { getMetricColour } = useGraphStyles({ metric })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
@@ -44,41 +44,19 @@ export const MetricCheckbox = ({ metric, type, className }: MetricCheckboxProps)
     }
   }, [metric, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
 
-  const handleButtonClick = useCallback(() => {
-    setStackedMetrics((existing: SleepMetric[]) => [
-      ...existing,
-      metric
-    ])
-  }, [metric, setStackedMetrics])
+  const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
 
-  const metricLabel = t(metric.split('_')[0])
-
-  if (type === 'checkbox') {
-    const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
-
-    return (
-      <Checkbox
-        checked={checked}
-        onChange={handleCheckboxChange}
-        className={classNames(styles.checkbox, className)}
-        style={{
-          '--background-color': getMetricColour(metric),
-          '--border-color': getMetricColour(metric)
-        } as CSSProperties}
-      >
-        {metricLabel}
-      </Checkbox>
-    )
-  } else {
-    return (
-      <Button
-        size='large'
-        type='dashed'
-        className={className}
-        onClick={handleButtonClick}
-      >
-        {metricLabel}
-      </Button>
-    )
-  }
+  return (
+    <Checkbox
+      checked={checked}
+      onChange={handleCheckboxChange}
+      className={classNames(styles.checkbox, className)}
+      style={{
+        '--background-color': getMetricColour(metric),
+        '--border-color': getMetricColour(metric)
+      } as CSSProperties}
+    >
+      {t(metric.split('_')[0])}
+    </Checkbox>
+  )
 }

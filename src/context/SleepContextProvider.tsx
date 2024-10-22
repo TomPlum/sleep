@@ -20,7 +20,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const [currentMetric, setCurrentMetric] = useState(metric)
 
   const [stackedView, setStackedView] = useState(stacked)
-  const [stackedMetrics, setStackedMetrics] = useState([SleepMetric.QUALITY])
+  const [stackedMetrics, setStackedMetrics] = useState<SleepMetric[]>([])
 
   const sleepGraphData2d = useSleepGraph2DData({
     sessions: sleepData?.sessions ?? [],

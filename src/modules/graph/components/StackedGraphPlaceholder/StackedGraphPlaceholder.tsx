@@ -5,9 +5,9 @@ import { StackedGraphPlaceholderProps } from 'modules/graph/components/StackedGr
 import { useSleepContext } from 'context'
 import { useCallback, useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { MetricCheckbox } from 'modules/controls/MetricCheckbox'
 import { createStyles } from 'antd-style'
 import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { MetricButton } from 'modules/controls/MetricButton'
 
 const useStyle = () => {
   const { getMetricColour } = useGraphStyles({ metric: SleepMetric.QUALITY })
@@ -53,11 +53,10 @@ export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) =>
 
       <div className={styles.metrics}>
         {availableMetrics.map(metric => (
-          <MetricCheckbox
-            type='button'
+          <MetricButton
             metric={metric}
             className={getButtonStyle(metric)}
-            key={`placeholder-metric-checkbox-${metric}`}
+            key={`placeholder-metric-button-${metric}`}
           />
         ))}
       </div>
