@@ -127,13 +127,15 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
             x={improvementDate?.getTime()}
             id='started_making_improvements_date_line'
           >
-            <Label
-              dx={-8}
-              dy={-100}
-              position='insideBottomRight'
-              value={t('improvement-label')}
-              className={styles.improvementLabel}
-            />
+            {isTopGraph && (
+              <Label
+                dx={-8}
+                dy={-100}
+                position='insideBottomRight'
+                value={t('improvement-label')}
+                className={styles.improvementLabel}
+              />
+            )}
           </ReferenceLine>
         )}
 
@@ -171,7 +173,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           tickFormatter={value => `${value}%`}
         />
 
-        <Tooltip content={SleepSessionTooltip} />
+        <Tooltip content={isTopGraph ? SleepSessionTooltip : <div />} />
 
         <CartesianGrid
           strokeDasharray="3 10"
