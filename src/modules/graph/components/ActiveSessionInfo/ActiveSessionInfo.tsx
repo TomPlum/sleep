@@ -42,29 +42,37 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           />
         </a>
 
-        <p className={styles.sessions}>
-          <span style={{ color: firstColour }}>
-            {activeSessions}
-          </span>
+        {(!stackedView || stackedMetrics.length > 0) && (
+          <p className={styles.sessions}>
+            <span style={{ color: firstColour }}>
+              {activeSessions}
+            </span>
 
-          <span style={linearGradient}>
-            {t('sessions.delimiter')}
-          </span>
+              <span style={linearGradient}>
+              {t('sessions.delimiter')}
+            </span>
 
-          <span style={{ color: secondColour }}>
-            {sleepData?.sessions.length}
-          </span>
+              <span style={{ color: secondColour }}>
+              {sleepData?.sessions.length}
+            </span>
 
-          <span style={linearGradient}>
-            {t('sessions.sessions')}
-          </span>
+              <span style={linearGradient}>
+              {t('sessions.sessions')}
+            </span>
 
-          <span style={linearGradient}>
-            {t('sessions.naps', {
-              naps: sleepData?.sessions.filter(session => session.isNap).length
-            })}
-          </span>
-        </p>
+              <span style={linearGradient}>
+              {t('sessions.naps', {
+                naps: sleepData?.sessions.filter(session => session.isNap).length
+              })}
+            </span>
+          </p>
+        )}
+
+        {stackedView && stackedMetrics.length === 0 && (
+          <p className={styles.sessions}>
+            {t('sessions.please-select')}
+          </p>
+        )}
       </div>
 
       <a
