@@ -66,6 +66,7 @@ export const SleepPage = () => {
       {!stackedView && (
         <SleepSessionsGraph2D
           metric={sleepMetric}
+          className={styles.graph}
         />
       )}
     </div>
