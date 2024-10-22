@@ -28,6 +28,10 @@
         "all": "すべて",
         "default": "最近"
       },
+      "stacked": {
+        "active": "ひとつ",
+        "inactive": "複数"
+      },
       "metric-config": {
         "checkbox": {
           "quality": "睡眠の質",

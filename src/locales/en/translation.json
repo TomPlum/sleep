@@ -28,6 +28,10 @@
         "all": "All",
         "default": "Recent"
       },
+      "stacked": {
+        "active": "Single",
+        "inactive": "Stacked"
+      },
       "metric-config": {
         "checkbox": {
           "quality": "Quality",
