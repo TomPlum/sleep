@@ -46,7 +46,9 @@ describe('Linear Regression Hook', () => {
       }
     })
 
-    const { result } = renderHook(useLinearRegression)
+    const { result } = renderHook(() => useLinearRegression({
+      metric: SleepMetric.DEEP_SLEEP
+    }))
 
     expect(result.current.regressionLineData).toStrictEqual<LinearRegressionPlotPoint[]>([
       {
@@ -69,7 +71,9 @@ describe('Linear Regression Hook', () => {
       }
     })
 
-    const { result } = renderHook(useLinearRegression)
+    const { result } = renderHook(() => useLinearRegression({
+      metric: SleepMetric.DEEP_SLEEP
+    }))
 
     expect(result.current.regressionLineDeltaHorizontal).toStrictEqual([
       {
@@ -92,7 +96,9 @@ describe('Linear Regression Hook', () => {
       }
     })
 
-    const { result } = renderHook(useLinearRegression)
+    const { result } = renderHook(() => useLinearRegression({
+      metric: SleepMetric.DEEP_SLEEP
+    }))
 
     expect(result.current.regressionLineDeltaVertical).toStrictEqual([
       {
@@ -115,7 +121,9 @@ describe('Linear Regression Hook', () => {
       }
     })
 
-    const { result } = renderHook(useLinearRegression)
+    const { result } = renderHook(() => useLinearRegression({
+      metric: SleepMetric.DEEP_SLEEP
+    }))
 
     expect(result.current.regressionDelta).toBeCloseTo(-40.0)
   })
@@ -128,8 +136,10 @@ describe('Linear Regression Hook', () => {
         isSleepDataLoading: false
       }
     })
-
-    const { result } = renderHook(useLinearRegression)
+    
+    const { result } = renderHook(() => useLinearRegression({
+      metric: SleepMetric.DEEP_SLEEP
+    }))
 
     expect(result.current.regressionDataKey).toBe(SleepMetric.DEEP_SLEEP)
   })

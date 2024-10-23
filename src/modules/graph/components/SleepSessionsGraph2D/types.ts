@@ -1,5 +1,19 @@
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
+export interface SleepSessionsGraph2DProps {
+  /**
+   * The sleep metric to render on
+   * the graph.
+   */
+  metric: SleepMetric
+
+  /**
+   * An optional class name to pass into
+   * the underlying container element.
+   */
+  className?: string
+}
+
 export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[]
 
 export interface SleepSessionGraph2DDatum {

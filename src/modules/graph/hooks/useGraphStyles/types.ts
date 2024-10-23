@@ -2,6 +2,10 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export type GetMetricColour = (metric: SleepMetric) => string
 
+export interface GraphStylesProps {
+  metric: SleepMetric
+}
+
 export interface GraphStylesResponse {
   /**
    * Gets the thematic colour used in

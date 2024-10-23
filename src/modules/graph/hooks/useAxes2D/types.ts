@@ -1,3 +1,9 @@
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+
+export interface Axes2DProps {
+  metric: SleepMetric
+}
+
 export interface Axes2D {
   /**
    * The range of percentage values

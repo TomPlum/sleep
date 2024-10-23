@@ -35,12 +35,6 @@ createRoot(document.getElementById('root')!).render(
           algorithm: theme.darkAlgorithm,
           token: {
             fontFamily: 'Nunito'
-          },
-          components: {
-            Switch: {
-              colorPrimary: '#7e7e7e',
-              colorPrimaryHover: '#595959'
-            }
           }
         }}
       >

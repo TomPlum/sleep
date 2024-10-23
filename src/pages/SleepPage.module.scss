@@ -17,4 +17,34 @@
     top: 3px;
     right: 10px;
   }
+
+  .graphContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .graph {
+      opacity: 0;
+      animation: fadeIn 0.5s ease-in-out forwards;
+      flex: 1;
+    }
+  }
+}
+
+.loading {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
 }

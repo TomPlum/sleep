@@ -1,35 +1,35 @@
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { GetMetricColour, GraphStylesResponse } from 'modules/graph/hooks/useGraphStyles/types'
+import { GraphStylesProps, GraphStylesResponse } from 'modules/graph/hooks/useGraphStyles/types'
 import { useSleepContext } from 'context'
 
-export const useGraphStyles = (): GraphStylesResponse => {
-  const { sleepMetric, activeSessions } = useSleepContext()
-
-  const getMetricColour = useCallback<GetMetricColour>((metric: SleepMetric) => {
-    switch (metric) {
-      case SleepMetric.LIGHT_SLEEP: {
-        return 'rgb(84,234,153)'
-      }
-      case SleepMetric.AWAKE_TIME: {
-        return 'rgb(255,188,21)'
-      }
-      case SleepMetric.DEEP_SLEEP: {
-        return 'rgb(21,150,255)'
-      }
-      case SleepMetric.REM_SLEEP: {
-        return 'rgb(255,71,231)'
-      }
-      case SleepMetric.QUALITY: {
-        return 'rgb(145,71,255)'
-      }
-      case SleepMetric.DURATION: {
-        return 'rgb(248,242,32)'
-      }
+export const getMetricColour = (metric: SleepMetric): string => {
+  switch (metric) {
+    case SleepMetric.LIGHT_SLEEP: {
+      return 'rgb(84,234,153)'
     }
-  }, [])
+    case SleepMetric.AWAKE_TIME: {
+      return 'rgb(255,188,21)'
+    }
+    case SleepMetric.DEEP_SLEEP: {
+      return 'rgb(21,150,255)'
+    }
+    case SleepMetric.REM_SLEEP: {
+      return 'rgb(255,71,231)'
+    }
+    case SleepMetric.QUALITY: {
+      return 'rgb(145,71,255)'
+    }
+    case SleepMetric.DURATION: {
+      return 'rgb(248,242,32)'
+    }
+  }
+}
 
-  const currentMetricColour = getMetricColour(sleepMetric)
+export const useGraphStyles = ({ metric }: GraphStylesProps): GraphStylesResponse => {
+  const { activeSessions } = useSleepContext()
+
+  const currentMetricColour = getMetricColour(metric)
 
   const strokeWidth = useMemo<number>(() => {
     if (activeSessions < 50) {

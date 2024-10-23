@@ -9,7 +9,12 @@
       },
       "improvement-label": "Improvements Made",
       "typical-sleep-session": "Healthy Range",
-      "sessions": "{{ active }} / {{ total }} sessions (0 / {{ naps }} naps)",
+      "sessions": {
+        "delimiter": " / ",
+        "sessions": " sessions ",
+        "naps": " (0 / {{ naps }} naps)",
+        "please-select": "Awaiting metric selection..."
+      },
       "data-source": {
         "name": "PillowData-08-10-2024.csv",
         "title": "Download source data"
@@ -17,12 +22,22 @@
       "language": {
         "checked": "Japanese",
         "unchecked": "English"
+      },
+      "placeholder": {
+        "message": {
+          "first": "Select a sleep metric",
+          "second": "Select a second sleep metric to compare"
+        }
       }
     },
     "graph-controls" : {
       "show-all": {
         "all": "All",
         "default": "Recent"
+      },
+      "stacked": {
+        "active": "Single",
+        "inactive": "Stacked"
       },
       "metric-config": {
         "checkbox": {
