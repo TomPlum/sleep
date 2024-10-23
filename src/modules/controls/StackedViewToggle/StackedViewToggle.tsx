@@ -20,14 +20,14 @@ export const StackedViewToggle = () => {
         route: PageRoutes.SLEEP,
         key: 'metrics'
       })
-    } else {
-      updateQueryParam({
-        route: PageRoutes.SLEEP,
-        params: {
-          stacked: String(newStackedValue)
-        }
-      })
     }
+
+    updateQueryParam({
+      route: PageRoutes.SLEEP,
+      params: {
+        stacked: String(newStackedValue)
+      }
+    })
   }, [removeQueryParam, setStackedMetrics, setStackedView, stackedView, updateQueryParam])
 
   return (
