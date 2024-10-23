@@ -6,22 +6,29 @@ import { useQueryParams } from 'hooks/useQueryParams'
 import { PageRoutes } from 'routes'
 
 export const StackedViewToggle = () => {
-  const { updateQueryParam } = useQueryParams()
-  const { stackedView, setStackedView, stackedMetrics } = useSleepContext()
+  const { updateQueryParam, removeQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.stacked' })
+  const { stackedView, setStackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
 
-  const handleToggle = useCallback(() => {
+  const handleToggle = useCallback((checked: boolean) => {
     const newStackedValue = !stackedView
-
     setStackedView(newStackedValue)
 
-    updateQueryParam({
-      route: PageRoutes.SLEEP,
-      params: {
-        stacked: String(newStackedValue)
-      }
-    })
-  }, [setStackedView, stackedView, updateQueryParam])
+    if (checked) {
+      setStackedMetrics([])
+      removeQueryParam({
+        route: PageRoutes.SLEEP,
+        key: 'metrics'
+      })
+    } else {
+      updateQueryParam({
+        route: PageRoutes.SLEEP,
+        params: {
+          stacked: String(newStackedValue)
+        }
+      })
+    }
+  }, [removeQueryParam, setStackedMetrics, setStackedView, stackedView, updateQueryParam])
 
   return (
     <Switch

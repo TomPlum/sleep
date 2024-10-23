@@ -1,6 +1,11 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useCallback, useMemo } from 'react'
-import { QueryParamsResponse, SleepQueryParams, UpdateQueryParamsArgs } from 'hooks/useQueryParams/types'
+import {
+  QueryParamsResponse,
+  RemoveQueryParamsArgs,
+  SleepQueryParams,
+  UpdateQueryParamsArgs
+} from 'hooks/useQueryParams/types'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export const useQueryParams = (): QueryParamsResponse => {
@@ -33,8 +38,21 @@ export const useQueryParams = (): QueryParamsResponse => {
     }
   }, [searchParams])
 
+  const removeQueryParam = useCallback(({ route, key }: RemoveQueryParamsArgs) => {
+    const updatedSearchParams = new URLSearchParams(searchParams)
+    updatedSearchParams.delete(key)
+
+    navigate({
+      pathname: route,
+      search: updatedSearchParams.toString()
+    }, {
+      replace: true
+    })
+  }, [navigate, searchParams])
+
   return {
     queryParams,
+    removeQueryParam,
     updateQueryParam
   }
 }

@@ -7,6 +7,11 @@ export interface UpdateQueryParamsArgs {
   params: QueryParams
 }
 
+export interface RemoveQueryParamsArgs {
+  route: string
+  key: string
+}
+
 export interface SleepQueryParams {
   metric?: SleepMetric
   metrics?: SleepMetric[]
@@ -19,4 +24,5 @@ export interface SleepQueryParams {
 export interface QueryParamsResponse {
   queryParams: SleepQueryParams
   updateQueryParam: (args: UpdateQueryParamsArgs) => void
+  removeQueryParam: (args: RemoveQueryParamsArgs) => void
 }
