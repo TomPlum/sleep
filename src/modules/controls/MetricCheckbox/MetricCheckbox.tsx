@@ -20,10 +20,21 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
     if (e.target.checked) {
       if (stackedView) {
         if (stackedMetrics.length < 2) {
-          setStackedMetrics((existing: SleepMetric[]) => [
-            ...existing,
-            metric
-          ])
+          setStackedMetrics((existing: SleepMetric[]) => {
+            const newMetrics = [
+              ...existing,
+              metric
+            ]
+
+            updateQueryParam({
+              route: PageRoutes.SLEEP,
+              params: {
+                metrics: newMetrics.join(',')
+              }
+            })
+
+            return newMetrics
+          })
         }
       } else {
         setSleepMetric(metric)
@@ -38,7 +49,15 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
     } else {
       if (stackedView) {
         const newMetrics = stackedMetrics.filter(it => it !== metric)
+
         setStackedMetrics(newMetrics)
+
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            metrics: newMetrics.join(',')
+          }
+        })
       }
     }
   }, [metric, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])

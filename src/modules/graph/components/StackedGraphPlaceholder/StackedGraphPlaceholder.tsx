@@ -17,12 +17,20 @@ export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) =>
     return allMetrics.filter(metric => !stackedMetrics.includes(metric))
   }, [stackedMetrics])
 
+  const messageKey = useMemo<'first' | 'second'>(() => {
+    if (stackedMetrics.length === 0) {
+      return id === 0 ? 'first' : 'second'
+    }
+
+    return 'second'
+  }, [id, stackedMetrics.length])
+
   return (
     <div className={styles.placeholder}>
       <InfoCircleOutlined className={styles.infoIcon} />
 
       <p className={styles.selectText}>
-        {t(`message.${id === 0 ? 'first' : 'second'}`)}
+        {t(`message.${messageKey}`)}
       </p>
 
       <div className={styles.metrics}>

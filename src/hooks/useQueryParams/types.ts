@@ -9,6 +9,7 @@ export interface UpdateQueryParamsArgs {
 
 export interface SleepQueryParams {
   metric?: SleepMetric
+  metrics?: SleepMetric[]
   start?: Date
   end?: Date
   lng?: string

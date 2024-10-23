@@ -174,7 +174,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
         />
 
         <Tooltip
-          content={(!stackedView || isTopGraph) ? SleepSessionTooltip : <div />}
+          content={(!stackedView || !isTopGraph) ? SleepSessionTooltip : <div />}
         />
 
         <CartesianGrid

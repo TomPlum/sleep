@@ -1,5 +1,5 @@
 import { SleepContext } from 'context/SleepContext'
-import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
+import { PropsWithChildren, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 import { SleepContextBag } from 'context/types'
 import { useSleepData } from 'data/useSleepData'
 import { useQueryParams } from 'hooks/useQueryParams'
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
   const { sleepData, loading } = useSleepData()
-  const { queryParams: { start, end, metric, lng, stacked }, updateQueryParam } = useQueryParams()
+  const { queryParams: { start, end, metric, lng, stacked, metrics }, updateQueryParam } = useQueryParams()
 
   const [language, setLanguage] = useState(lng)
   const [rangeEnd, setRangeEnd] = useState(end)
@@ -20,7 +20,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const [currentMetric, setCurrentMetric] = useState(metric)
 
   const [stackedView, setStackedView] = useState(stacked)
-  const [stackedMetrics, setStackedMetrics] = useState<SleepMetric[]>([])
+  const [stackedMetrics, setStackedMetrics] = useState(metrics)
 
   const sleepGraphData2d = useSleepGraph2DData({
     sessions: sleepData?.sessions ?? [],
@@ -34,8 +34,9 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     return date.getFullYear() === 2024 && date.getMonth() === 8 && date.getDate() === 6
   })?.date
 
+  // TODO: Move to another hook and cleanup
   useEffect(() => {
-    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng || stackedView === undefined)) {
+    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng || stackedView === undefined || !stackedMetrics)) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
@@ -51,6 +52,9 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
       const selectedStackedView = stackedView !== undefined ? stackedView : false
       setStackedView(selectedStackedView)
 
+      const selectedStackedMetrics = stackedMetrics ?? []
+      setStackedMetrics(selectedStackedMetrics)
+
       const params: Record<string, string> = {
         metric: selectedMetric,
         start: selectedStart.getTime().toString(),
@@ -61,13 +65,23 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [currentMetric, language, lng, loading, rangeEnd, rangeStart, sleepData, stackedView, updateQueryParam])
+  }, [currentMetric, language, lng, loading, rangeEnd, rangeStart, sleepData, stackedMetrics, stackedView, updateQueryParam])
 
   useEffect(() => {
     i18n.changeLanguage(language).then(() => {
       console.debug(`Set locale [${language}] from query parameters.`)
     })
   }, [i18n, language])
+
+  const handleSetStackedMetrics = useCallback((setState: SetStateAction<SleepMetric[]>) => {
+    setStackedMetrics(existing => {
+      if (typeof setState === 'function') {
+        return (setState as (existing: SleepMetric[] | undefined) => SleepMetric[])(existing)
+      }
+
+      return setState
+    })
+  }, [])
 
   const value = useMemo<SleepContextBag>(() => ({
     sleepData,
@@ -83,9 +97,9 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     improvementDate,
     stackedView: stackedView ?? false,
     setStackedView,
-    stackedMetrics,
-    setStackedMetrics
-  }), [sleepData, loading, rangeStart, rangeEnd, currentMetric, sleepGraphData2d, improvementDate, stackedView, stackedMetrics])
+    stackedMetrics: stackedMetrics ?? [],
+    setStackedMetrics: handleSetStackedMetrics
+  }), [sleepData, loading, rangeStart, rangeEnd, currentMetric, sleepGraphData2d, improvementDate, stackedView, stackedMetrics, handleSetStackedMetrics])
 
   return (
     <SleepContext.Provider value={value}>

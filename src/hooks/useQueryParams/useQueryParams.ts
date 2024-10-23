@@ -28,7 +28,8 @@ export const useQueryParams = (): QueryParamsResponse => {
       start: searchParams.has('start') ? new Date(Number(searchParams.get('start'))) : undefined,
       end: searchParams.has('end') ? new Date(Number(searchParams.get('end'))) : undefined,
       lng: searchParams.get('lng') ?? 'en',
-      stacked: searchParams.has('stacked') ? searchParams.get('stacked') === 'true' : undefined
+      stacked: searchParams.has('stacked') ? searchParams.get('stacked') === 'true' : undefined,
+      metrics: searchParams.has('metrics') ? searchParams.get('metrics')?.split(',') as SleepMetric[] : undefined
     }
   }, [searchParams])
 
