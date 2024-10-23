@@ -4,40 +4,77 @@ import { CSSProperties, useCallback } from 'react'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { MetricCheckboxProps } from 'modules/controls/MetricCheckbox/types'
-import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { useSleepContext } from 'context'
 import { PageRoutes } from 'routes'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 
-export const MetricCheckbox = ({ label, metric }: MetricCheckboxProps) => {
-  const { getMetricColour } = useGraphStyles()
+export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
-  const { sleepMetric, setSleepMetric } = useSleepContext()
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
+  const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
 
-  const handleChange = useCallback((e: CheckboxChangeEvent) => {
-    const checked = e.target.checked
-    if (checked) {
-      setSleepMetric(metric)
+  const handleCheckboxChange = useCallback((e: CheckboxChangeEvent) => {
+    if (e.target.checked) {
+      if (stackedView) {
+        if (stackedMetrics.length < 2) {
+          setStackedMetrics((existing: SleepMetric[]) => {
+            const newMetrics = [
+              ...existing,
+              metric
+            ]
 
-      updateQueryParam({
-        route: PageRoutes.SLEEP,
-        params: {
-          metric
+            updateQueryParam({
+              route: PageRoutes.SLEEP,
+              params: {
+                metrics: newMetrics.join(',')
+              }
+            })
+
+            return newMetrics
+          })
         }
-      })
+      } else {
+        setSleepMetric(metric)
+
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            metric
+          }
+        })
+      }
+    } else {
+      if (stackedView) {
+        const newMetrics = stackedMetrics.filter(it => it !== metric)
+
+        setStackedMetrics(newMetrics)
+
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            metrics: newMetrics.join(',')
+          }
+        })
+      }
     }
-  }, [metric, setSleepMetric, updateQueryParam])
+  }, [metric, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
+
+  const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
 
   return (
     <Checkbox
-      onChange={handleChange}
-      className={styles.checkbox}
+      checked={checked}
+      onChange={handleCheckboxChange}
+      className={classNames(styles.checkbox, className)}
       style={{
         '--background-color': getMetricColour(metric),
         '--border-color': getMetricColour(metric)
       } as CSSProperties}
-      checked={sleepMetric === metric}
     >
-      {label}
+      {t(metric.split('_')[0])}
     </Checkbox>
   )
 }

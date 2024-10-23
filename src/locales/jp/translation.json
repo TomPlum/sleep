@@ -9,7 +9,12 @@
       },
       "improvement-label": "改善期間",
       "typical-sleep-session": "健康的な範囲",
-      "sessions": "{{ active }} / {{ total }} セッション (0 / {{ naps }} 昼寝)",
+      "sessions": {
+        "delimiter": " / ",
+        "sessions": " セッション ",
+        "naps": " (0 / {{ naps }} 昼寝)",
+        "please-select": "メトリックの選択待ち..."
+      },
       "data-source": {
         "name": "PillowData-08-10-2024.csv",
         "title": "データダウンロード"
@@ -17,12 +22,22 @@
       "language": {
         "checked": "日本語",
         "unchecked": "英語"
+      },
+      "placeholder": {
+        "message": {
+          "first": "睡眠タイプを選択する",
+          "second": "比較する2つ目の睡眠タイプを選択する"
+        }
       }
     },
     "graph-controls": {
       "show-all": {
         "all": "すべて",
         "default": "最近"
+      },
+      "stacked": {
+        "active": "ひとつ",
+        "inactive": "複数"
       },
       "metric-config": {
         "checkbox": {

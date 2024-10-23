@@ -6,7 +6,7 @@ import {
 } from 'modules/graph/components/DurationBreakdownPie/types'
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useGraphStyles } from 'modules/graph/hooks/useGraphStyles'
+import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }: BreakdownPieLabelProps) => {
@@ -22,8 +22,6 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
 }
 
 export const DurationBreakdownPie = ({ data }: DurationBreakdownPieProps) => {
-  const { getMetricColour } = useGraphStyles()
-
   const pieData = useMemo<DurationBreakdownPieDataRaw[]>(() => ([
     { name: 'Deep', value: data.deep, metric: SleepMetric.DEEP_SLEEP },
     { name: 'Light', value: data.light, metric: SleepMetric.LIGHT_SLEEP },

@@ -1,21 +1,21 @@
 import { useMemo } from 'react'
 import {
   DeltaLinePlotPoint,
-  LinearRegressionPlotPoint,
+  LinearRegressionPlotPoint, LinearRegressionProps,
   LinearRegressionResponse
 } from 'data/useLinearRegression/types'
 import dayjs from 'dayjs'
 import { useSleepContext } from 'context'
 
-export const useLinearRegression = (): LinearRegressionResponse => {
-  const { graphData2d, sleepMetric } = useSleepContext()
+export const useLinearRegression = ({ metric }: LinearRegressionProps): LinearRegressionResponse => {
+  const { graphData2d } = useSleepContext()
 
   const data = useMemo(() => {
     return graphData2d.data?.map(session => ({
       x: dayjs(session.date).valueOf(),
-      y: session[sleepMetric]
+      y: session[metric]
     })) ?? []
-  }, [graphData2d.data, sleepMetric])
+  }, [graphData2d.data, metric])
 
   const regressionLineData = useMemo<LinearRegressionPlotPoint[]>(() => {
     const n = data.length
@@ -92,7 +92,7 @@ export const useLinearRegression = (): LinearRegressionResponse => {
   return {
     regressionLineData,
     regressionDelta: (maximum - minimum).toFixed(1),
-    regressionDataKey: sleepMetric,
+    regressionDataKey: metric,
     regressionLineDeltaVertical,
     regressionLineDeltaHorizontal
   }

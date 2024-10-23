@@ -1,0 +1,76 @@
+.placeholder {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  transition: all ease-in-out 0.5s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .infoIcon {
+    font-size: 2em;
+  }
+
+  .selectText {
+    margin: 0;
+    font-size: 1.5em;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .metrics {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+
+    .button {
+      width: 100px;
+      transition: all ease-in-out 0.2s;
+    }
+
+    .quality {
+      &:hover {
+        color: rgb(145,71,255);
+        border-color: rgb(145,71,255);
+      }
+    }
+
+    .duration_percent {
+      &:hover {
+        color: rgb(248,242,32);
+        border-color: rgb(248,242,32);
+      }
+    }
+
+    .awake_time {
+      &:hover {
+        color: rgb(255,188,21);
+        border-color: rgb(255,188,21);
+      }
+    }
+
+    .light_sleep {
+      &:hover {
+        color: rgb(84,234,153);
+        border-color: rgb(84,234,153);
+      }
+    }
+
+    .deep_sleep {
+      &:hover {
+        color: rgb(21,150,255);
+        border-color: rgb(21,150,255);
+      }
+    }
+
+    .rem_sleep {
+      &:hover {
+        color: rgb(255,71,231);
+        border-color: rgb(255,71,231);
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { PillowSleepData } from 'data/useSleepData'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData'
+import { Dispatch, SetStateAction } from 'react'
 
 export interface SleepContextBag {
   /**
@@ -84,4 +85,31 @@ export interface SleepContextBag {
    * undefined is returned.
    */
   improvementDate?: Date
+
+  /**
+   * Whether the user has toggled the option
+   * to view multiple stacked graphs together.
+   */
+  stackedView: boolean
+
+  /**
+   * A function that overrides the current
+   * value of the stacked view toggle.
+   */
+  setStackedView: (stackedView: boolean) => void
+
+  /**
+   * An array of sleep metrics in which to
+   * render graphs for if {@link stackedView}
+   * is toggled on.
+   */
+  stackedMetrics: SleepMetric[]
+
+  /**
+   * Sets the array of sleep metrics to be
+   * used to render graphs for in the stacked
+   * view.
+   * @param metrics A list of new metrics.
+   */
+  setStackedMetrics: Dispatch<SetStateAction<SleepMetric[]>>
 }
