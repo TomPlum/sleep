@@ -13,6 +13,11 @@ export default defineConfig(({ mode }) => ({
       locales: '/src/locales'
     }
   },
+  server: {
+    watch: {
+      ignored: ['!/public/**']
+    }
+  },
   test: {
     environment: 'jsdom',
     include: ['**/*.spec.{ts,tsx}'],
