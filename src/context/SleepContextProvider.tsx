@@ -4,7 +4,6 @@ import { SleepContextBag } from 'context/types'
 import { useSleepData } from 'data/useSleepData'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import dayjs from 'dayjs'
 import { useSleepGraph2DData } from 'modules/graph/hooks/useSleepGraph2DData'
 import { PageRoutes } from 'routes'
 import { useTranslation } from 'react-i18next'
@@ -40,7 +39,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
-      const selectedStart = rangeStart ?? dayjs(sleepData.latestSession).subtract(2, 'month').toDate()
+      const selectedStart = rangeStart ?? sleepData.earliestSession
       setRangeStart(selectedStart)
 
       const selectedEnd = rangeEnd ?? sleepData.latestSession
