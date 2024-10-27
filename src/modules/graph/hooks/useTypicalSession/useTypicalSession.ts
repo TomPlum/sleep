@@ -24,7 +24,7 @@ export const useTypicalSession = ({ metric }: TypicalSessionProps): TypicalSessi
       case SleepMetric.AWAKE_TIME: {
         return {
           x1: firstSession, y1: 0,
-          x2: lastSession, y2: 5
+          x2: lastSession, y2: 10
         }
       }
       case SleepMetric.DEEP_SLEEP: {
