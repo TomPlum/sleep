@@ -21,6 +21,28 @@
     height: 25px;
   }
 
+  .mood {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+
+    .good {
+      color: #3cd23c;
+    }
+
+    .ok {
+      color: #d29e3c;
+    }
+
+    .bad {
+      color: #d23c3c;
+    }
+
+    .unknown {
+      color: #cdd23c;
+    }
+  }
+
   .label {
     color: #e0e0e0;
   }

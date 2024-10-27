@@ -1,4 +1,5 @@
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { SleepMood } from 'data/useSleepData'
 
 export interface SleepSessionsGraph2DProps {
   /**
@@ -45,6 +46,8 @@ export interface SleepSessionGraph2DDatum {
    * These are usually much shorter.
    */
   isNap: boolean
+
+  mood: SleepMood
 
   /**
    * The value, as a percentage, of

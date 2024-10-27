@@ -34,6 +34,13 @@ export interface PillowSessionDuration {
   rem: number
 }
 
+export enum SleepMood {
+  GOOD = 'good',
+  OK = 'ok',
+  BAD = 'bad',
+  UNKNOWN = 'unknown'
+}
+
 export interface PillowSleepSession {
   /**
    * A unique identifier for the
@@ -85,7 +92,7 @@ export interface PillowSleepSession {
    * myself after waking up. This
    * is optionally added some days.
    */
-  mood?: string
+  mood: SleepMood
 }
 
 export interface PillowSleepData {
