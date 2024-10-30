@@ -73,4 +73,22 @@
       }
     }
   }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .description {
+    font-family: 'Nunito', sans-serif;
+    height: 25px;
+    opacity: 0;
+    max-width: 850px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
 }

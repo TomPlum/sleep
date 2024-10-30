@@ -12,4 +12,18 @@ export interface MetricButtonProps {
    * to the underlying button element.
    */
   className?: string
+
+  /**
+   * An optional callback function
+   * invoked when the user mouses
+   * over the button.
+   */
+  onMouseOver?: () => void
+
+  /**
+   * An optional callback function
+   * invoked when the user mouses
+   * out of the button.
+   */
+  onMouseOut?: () => void
 }

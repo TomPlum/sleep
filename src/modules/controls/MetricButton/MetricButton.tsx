@@ -7,7 +7,7 @@ import { MetricButtonProps } from 'modules/controls/MetricButton/types'
 import { PageRoutes } from 'routes.ts'
 import { useQueryParams } from 'hooks/useQueryParams'
 
-export const MetricButton = ({ metric, className }: MetricButtonProps) => {
+export const MetricButton = ({ metric, onMouseOver, onMouseOut, className }: MetricButtonProps) => {
   const { updateQueryParam } = useQueryParams()
   const { setStackedMetrics } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
@@ -37,6 +37,8 @@ export const MetricButton = ({ metric, className }: MetricButtonProps) => {
       size='large'
       type='dashed'
       className={className}
+      onMouseOut={onMouseOut}
+      onMouseOver={onMouseOver}
       onClick={handleButtonClick}
     >
       {t(metric.split('_')[0])}
