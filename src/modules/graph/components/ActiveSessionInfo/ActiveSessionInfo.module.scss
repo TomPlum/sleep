@@ -30,16 +30,32 @@
     }
   }
 
-  .dataExportVersion {
-    font-size: 0.7rem;
+  .bottom {
     margin: -3px 0 0 26px;
-    color: #e1e1e1;
-    opacity: 0.6;
-    transition: all ease-in-out 0.2s;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
 
-    &:hover {
-      color: #ffffff;
-      opacity: 1;
+    .dataExportVersion {
+      color: #e1e1e1;
+      opacity: 0.6;
+      transition: all ease-in-out 0.2s;
+
+      &:hover {
+        color: #ffffff;
+        opacity: 1;
+      }
+    }
+
+    .pillowWebsite {
+      color: #e1e1e1;
+      opacity: 0.6;
+      transition: all ease-in-out 0.2s;
+
+      &:hover {
+        color: #ffffff;
+        opacity: 1;
+      }
     }
   }
 }
