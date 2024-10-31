@@ -54,7 +54,7 @@ export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) =>
         ))}
       </div>
 
-      <p className={styles.description}>
+      <p className={styles.description} key={previewMetric}>
         {previewMetric ? t(`description.${previewMetric}`) : ''}
       </p>
     </div>
