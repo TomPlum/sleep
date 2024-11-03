@@ -77,21 +77,21 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
 
       <div className={styles.bottom}>
         <a
+          target='_blank'
+          title='Sleep apps website'
+          href='https://pillow.app/'
+          className={styles.pillowLogo}
+        >
+          <img src='/Pillow.png' alt='Pillow Logo' />
+        </a>
+
+        <a
           title={t('data-source.title')}
           href='/PillowData-02-11-24.csv'
           download='PillowData-02-11-24.csv'
           className={styles.dataExportVersion}
         >
           {t('data-source.name')}
-        </a>
-
-        <a
-          target='_blank'
-          title='Sleep apps website'
-          href='https://pillow.app/'
-          className={styles.pillowWebsite}
-        >
-          pillow.app
         </a>
       </div>
     </div>

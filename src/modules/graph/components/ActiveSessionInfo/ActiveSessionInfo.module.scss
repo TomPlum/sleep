@@ -31,15 +31,14 @@
   }
 
   .bottom {
-    margin: -3px 0 0 26px;
-    font-size: 0.7rem;
     display: flex;
-    justify-content: space-between;
-    min-width: 210px;
+    gap: 8px;
+    align-items: center;
 
     .dataExportVersion {
       color: #e1e1e1;
       opacity: 0.6;
+      font-size: 0.7rem;
       transition: all ease-in-out 0.2s;
 
       &:hover {
@@ -48,14 +47,19 @@
       }
     }
 
-    .pillowWebsite {
-      color: #e1e1e1;
-      opacity: 0.6;
+    .pillowLogo {
+      height: 20px;
       transition: all ease-in-out 0.2s;
+      opacity: 0.8;
 
       &:hover {
-        color: #ffffff;
         opacity: 1;
+        cursor: pointer;
+      }
+
+      img {
+        width: 18px;
+        height: 20px;
       }
     }
   }

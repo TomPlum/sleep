@@ -2,6 +2,10 @@
 
 A simple 2D line chart visualisation of my sleep data as recorded by my Apple Watch using [Pillow](https://pillow.app/) for iOS.
 
+# Examples
+- [Recent sleep quality vs awake time stacked charts](https://tomplum.github.io/sleep?metric=awake_time&start=1722911767000&end=1728182167000&lng=en&stacked=false&metrics=quality%2Cawake_time)
+- [Sleep quality over time across all recorded sessions](https://tomplum.github.io/sleep?metric=quality&start=1534457817000&end=1728199961000&lng=en&stacked=false&metrics=quality%2Cdeep_sleep)
+
 # Sleep Quality (%)
 ![quality.png](docs/images/quality.png)
 
