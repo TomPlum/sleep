@@ -77,9 +77,9 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
 
       <div className={styles.bottom}>
         <a
-          href='/PillowData.csv'
-          download='PillowData.csv'
           title={t('data-source.title')}
+          href='/PillowData-02-11-24.csv'
+          download='PillowData-02-11-24.csv'
           className={styles.dataExportVersion}
         >
           {t('data-source.name')}

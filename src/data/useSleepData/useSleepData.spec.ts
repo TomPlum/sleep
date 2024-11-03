@@ -4,7 +4,7 @@ import { readFileSync } from 'fs'
 import { renderHook, waitFor } from '@testing-library/react'
 import { wrapper } from 'test'
 import { useSleepData } from 'data/useSleepData/useSleepData'
-import { SleepDataResponse } from 'data/useSleepData/types'
+import { SleepDataResponse, SleepMood } from 'data/useSleepData/types'
 
 describe('Sleep Data (CSV) Parsing Hook', () => {
   let pillowData: string
@@ -55,7 +55,7 @@ describe('Sleep Data (CSV) Parsing Hook', () => {
             'endTime': new Date('2018-08-17T05:36:42.000Z'),
             'id': 'session-0',
             'isNap': false,
-            'mood': 'OK',
+            'mood': SleepMood.OK,
             'sleepQuality': 56,
             'startTime': new Date('2018-08-16T22:16:57.000Z'),
           },
@@ -71,7 +71,7 @@ describe('Sleep Data (CSV) Parsing Hook', () => {
             'endTime': new Date('2018-08-18T06:31:27.000Z'),
             'id': 'session-1',
             'isNap': false,
-            'mood': 'OK',
+            'mood': SleepMood.OK,
             'sleepQuality': 50,
             'startTime': new Date('2018-08-17T21:57:59.000Z'),
           },
@@ -87,7 +87,7 @@ describe('Sleep Data (CSV) Parsing Hook', () => {
             'endTime': new Date('2018-08-19T07:30:35.000Z'),
             'id': 'session-2',
             'isNap': false,
-            'mood': 'Good',
+            'mood': SleepMood.GOOD,
             'sleepQuality': 72,
             'startTime': new Date('2018-08-18T22:53:27.000Z'),
           },
@@ -103,7 +103,7 @@ describe('Sleep Data (CSV) Parsing Hook', () => {
             'endTime': new Date('2018-08-20T06:00:39.000Z'),
             'id': 'session-3',
             'isNap': false,
-            'mood': undefined,
+            'mood': SleepMood.UNKNOWN,
             'sleepQuality': 56,
             'startTime': new Date('2018-08-19T22:38:42.000Z'),
           },
@@ -119,7 +119,7 @@ describe('Sleep Data (CSV) Parsing Hook', () => {
             'endTime': new Date('2018-08-21T06:00:21.000Z'),
             'id': 'session-4',
             'isNap': false,
-            'mood': 'Good',
+            'mood': SleepMood.GOOD,
             'sleepQuality': 76,
             'startTime': new Date('2018-08-20T21:35:34.000Z'),
           }
