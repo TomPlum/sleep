@@ -14,7 +14,7 @@ export const SleepPage = () => {
 
   useEffect(() => {
     const existingFavicon = document.querySelector('link[rel=\'icon\']') as HTMLLinkElement
-    const newFaviconUrl = `/favicon-${sleepMetric.split('_')[0]}.svg`
+    const newFaviconUrl = `${import.meta.env.BASE_URL}favicon-${sleepMetric.split('_')[0]}.svg`
 
     if (existingFavicon) {
       existingFavicon.href = newFaviconUrl
