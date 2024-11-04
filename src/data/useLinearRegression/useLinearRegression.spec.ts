@@ -3,6 +3,7 @@ import { useLinearRegression } from 'data/useLinearRegression/useLinearRegressio
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionGraph2DData } from 'modules/graph/components/SleepSessionsGraph2D'
 import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types'
+import { SleepMood } from 'data/useSleepData'
 
 const mockSleepContext = vi.fn()
 vi.mock('context/useSleepContext', () => ({
@@ -15,6 +16,7 @@ const validGraphData2D: SleepSessionGraph2DData = [
     date: new Date(2024, 7, 24),
     duration: 520,
     isNap: false,
+    mood: SleepMood.GOOD,
     [SleepMetric.AWAKE_TIME]: 10,
     [SleepMetric.DEEP_SLEEP]: 60,
     [SleepMetric.LIGHT_SLEEP]: 300,
@@ -27,6 +29,7 @@ const validGraphData2D: SleepSessionGraph2DData = [
     date: new Date(2024, 7, 25),
     duration: 520,
     isNap: false,
+    mood: SleepMood.GOOD,
     [SleepMetric.AWAKE_TIME]: 10,
     [SleepMetric.DEEP_SLEEP]: 20,
     [SleepMetric.LIGHT_SLEEP]: 300,
