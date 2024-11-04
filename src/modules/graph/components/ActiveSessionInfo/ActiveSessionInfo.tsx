@@ -82,7 +82,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           href='https://pillow.app/'
           className={styles.pillowLogo}
         >
-          <img src='/Pillow.png' alt='Pillow Logo' />
+          <img src={`${import.meta.env.BASE_URL}Pillow.png`} alt='Pillow Logo' />
         </a>
 
         <a

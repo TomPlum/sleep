@@ -9,7 +9,7 @@
     "test": "vitest --watch",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "preview": "vite preview"
+    "preview": "npm run build && vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
