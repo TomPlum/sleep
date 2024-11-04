@@ -5,11 +5,35 @@ import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { DurationBreakdownPie } from 'modules/graph/components/DurationBreakdownPie'
 import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
+import { useCallback } from 'react'
+import { SleepMood } from 'data/useSleepData'
+import { FrownOutlined, MehOutlined, QuestionCircleOutlined, SmileOutlined } from '@ant-design/icons'
 
 export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.tooltip' })
 
   const data = payload?.[0]?.payload as SleepSessionGraph2DDatum
+
+  const getMoodIcon = useCallback(() => {
+    if (data) {
+      switch (data.mood) {
+        case SleepMood.GOOD: {
+          return <SmileOutlined className={styles.good} />
+        }
+        case SleepMood.OK: {
+          return <MehOutlined className={styles.ok} />
+        }
+        case SleepMood.BAD: {
+          return <FrownOutlined className={styles.bad} />
+        }
+        case SleepMood.UNKNOWN: {
+          return <QuestionCircleOutlined className={styles.unknown} />
+        }
+      }
+    }
+
+    return null
+  }, [data])
 
   if (active && data) {
     return (
@@ -20,13 +44,17 @@ export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, st
           </div>
         )}
 
+        <div className={styles.mood}>
+          {getMoodIcon()}
+        </div>
+
         <Typography className={styles.label}>
           {t('date')}
         </Typography>
 
         {data.date && (
           <Typography className={styles.value}>
-            {dayjs(data.date.toString()).format('Do MMM YYYY - HH:mm')}
+            {dayjs(data.date.toString()).format('ddd Do MMM YYYY - HH:mm')}
           </Typography>
         )}
 

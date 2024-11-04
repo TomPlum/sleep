@@ -1,9 +1,19 @@
 import { usePillowData } from 'data/usePillowData'
-import { useMemo } from 'react'
-import { PillowSleepSession, SleepDataResponse } from 'data/useSleepData/types'
+import { useCallback, useMemo } from 'react'
+import { PillowSleepSession, SleepDataResponse, SleepMood } from 'data/useSleepData/types'
 
 export const useSleepData = (): SleepDataResponse => {
   const { data, isLoading, error } = usePillowData({ type: 'csv' })
+
+  const getSleepMood = useCallback((moodValue: string): SleepMood => {
+    switch (moodValue) {
+      case 'Good': return SleepMood.GOOD
+      case 'OK': return SleepMood.OK
+      case 'Bad': return SleepMood.BAD
+      case 'Undefined': return SleepMood.UNKNOWN
+      default: return SleepMood.UNKNOWN
+    }
+  }, [])
 
   const sessions = useMemo<PillowSleepSession[]>(() => {
     if (!data) {
@@ -25,7 +35,7 @@ export const useSleepData = (): SleepDataResponse => {
       endTime: new Date(record['End Time'].replace('Optional(', '').replace(')', '')),
       audioRecordings: Number(record['Amount of audio recordings']),
       isNap: record['Is nap'] === 'Yes',
-      mood: record['Wake-up mood'] === 'Undefined' ? undefined : record['Wake-up mood'],
+      mood: getSleepMood(record['Wake-up mood']),
       sleepQuality: Number(record['Sleep quality']),
       duration: {
         total: Number(record['Time in Bed (mins)']),
@@ -42,7 +52,7 @@ export const useSleepData = (): SleepDataResponse => {
       const isTooShort = !isNap && duration.total < 90
       return hasValidDuration && !hasInvalidBreakdown && hasValidAwakeTime && !isTooShort && !isAllAwakeTime
     })
-  }, [data])
+  }, [data, getSleepMood])
 
   const { earliestSession, latestSession } = useMemo(() => {
     const earliestSession = new Date(Math.min(...sessions.map(session => session.startTime.getTime())))

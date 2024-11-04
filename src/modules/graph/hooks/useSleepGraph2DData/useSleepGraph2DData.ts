@@ -28,6 +28,7 @@ export const useSleepGraph2DData = ({
         date: session.startTime,
         duration: totalDuration,
         isNap: session.isNap,
+        mood: session.mood,
         [SleepMetric.QUALITY]: session.sleepQuality,
         [SleepMetric.AWAKE_TIME]: toPercentage(duration.awake, totalDuration),
         [SleepMetric.DEEP_SLEEP]: toPercentage(duration.deep, totalDuration),

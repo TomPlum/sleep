@@ -16,7 +16,7 @@
         "please-select": "Awaiting metric selection..."
       },
       "data-source": {
-        "name": "PillowData-08-10-2024.csv",
+        "name": "PillowData-02-11-24.csv",
         "title": "Download source data"
       },
       "language": {
@@ -27,6 +27,14 @@
         "message": {
           "first": "Select a sleep metric",
           "second": "Select a second sleep metric to compare"
+        },
+        "description": {
+          "quality": "A quality rating, as a percentage, as calculated by Pillow based on readings taken from my Apple watch and iPhone.",
+          "deep_sleep": "Deep sleep, also known as slow-wave sleep is the most rejuvenating type of sleep and it's harder to wake up from this phase. The typical amount of deep sleep decreases as we get older, from around 20% during our 20s and down to 5% during our 70s.",
+          "light_sleep": "Light sleep usually takes up 40-50% of a sleep session for adults. During this phase your body may move or you might start sleep talking. It's also a lot easier to wake up during this phase and sometimes we don't even notice it.",
+          "rem_sleep": "R.E.M stands for 'Rapid Eye Movement' and is also known as 'Paradoxical Sleep'. During this sleep phase the body is paralyzed but the brain's activity has many similarities with wakefulness. Most dreaming occurs during R.E.M. For adults, this phase should occupy 20-25% of a typical sleep session.",
+          "awake_time": "The time you spend awake in bed. The most important thing to notice here is the time it took to fall asleep and any time that you spent awake during the sleep session. Periods of increased restlessness where you are half awake may be interpreted as awake time.",
+          "duration_percent": "The total time spent in bed during a given sleep session as a percent of 8 hours. So a total of 240 minutes would equal 4 hours which is 50%. Whereas 480 minutes would be 8 hours at 100%."
         }
       }
     },

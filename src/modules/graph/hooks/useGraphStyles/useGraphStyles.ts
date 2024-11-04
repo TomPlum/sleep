@@ -45,7 +45,7 @@ export const useGraphStyles = ({ metric }: GraphStylesProps): GraphStylesRespons
     if (activeSessions < 100) {
       return 7
     } else if (activeSessions > 100 && activeSessions < 300) {
-      return 6
+      return 4
     } else if (activeSessions > 300 && activeSessions < 1000) {
       return 2
     } else {

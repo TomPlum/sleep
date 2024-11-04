@@ -30,16 +30,37 @@
     }
   }
 
-  .dataExportVersion {
-    font-size: 0.7rem;
-    margin: -3px 0 0 26px;
-    color: #e1e1e1;
-    opacity: 0.6;
-    transition: all ease-in-out 0.2s;
+  .bottom {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 
-    &:hover {
-      color: #ffffff;
-      opacity: 1;
+    .dataExportVersion {
+      color: #e1e1e1;
+      opacity: 0.6;
+      font-size: 0.7rem;
+      transition: all ease-in-out 0.2s;
+
+      &:hover {
+        color: #ffffff;
+        opacity: 1;
+      }
+    }
+
+    .pillowLogo {
+      height: 20px;
+      transition: all ease-in-out 0.2s;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+
+      img {
+        width: 18px;
+        height: 20px;
+      }
     }
   }
 }
