@@ -1,95 +1,149 @@
 import { usePillowData } from '../usePillowData'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { RawSleepDataLoadEvent, RawSleepDataProps } from './types'
+import { useWorker } from '@koale/useworker'
 
-/*const tables = [
-  'ZPILLOWUSER',
-  'ZSLEEPNOTE',
-  'Z_5SLEEPSESSION',
-  'ZSLEEPSESSION',
-  'ZSLEEPSTAGEDATAPOINT',
-  'ZSNOOZELAB',
-  'ZSOUNDDATAPOINT',
-  'Z_PRIMARYKEY',
-  'Z_METADATA',
-  'Z_MODELCACHE',
-  'Y_UBMETA',
-  'Y_UBRANGE',
-  'Y_UBKVS'
-]*/
+type PillowData = Record<string, any>[];
+type ParsedPillowData = Record<string, PillowData>;
 
-const tables = [
-  'ZPILLOWUSER',
-  'Z_5SLEEPSESSION',
-  'ZSLEEPSESSION',
-  'ZSLEEPSTAGEDATAPOINT',
-  'ZSOUNDDATAPOINT',
-  'Z_PRIMARYKEY',
-  'Z_METADATA',
-  'Z_MODELCACHE',
-  'Y_UBMETA',
-  'Y_UBRANGE',
-  'Y_UBKVS'
-]
+const parseLine = (line: string): Record<string, string | number> => {
+  const tokens = line.split(/\s+/)
+  const row: Record<string, string | number> = {}
+  let key: string | undefined
 
-export const useRawSleepData = () => {
-  const { data, isLoading, error } = usePillowData({ type: 'raw' })
+  while (tokens.length > 0) {
+    const valueParts: string[] = []
 
-  const parseLine = useCallback((line: string) => {
-    const tokens = line.split(' ')
-    const row: Record<string, string> = {}
-
-    while(tokens.length > 0) {
-      let valueParts = [tokens.pop()]
-      let valuePartOrSeparator = tokens.pop()
-
-      while(valuePartOrSeparator && valuePartOrSeparator != '->') {
-        valueParts.push(valuePartOrSeparator)
-        valuePartOrSeparator = tokens.pop()
-      }
-
-      valueParts = valueParts.reverse()
-
-      const key = tokens.pop() ?? 'UNKNOWN'
-      row[key] = valueParts.join(' ')
+    // Collect value parts until we hit a separator
+    while (tokens.length > 0) {
+      const token = tokens.shift()
+      if (token === '->') break // Stop when reaching the separator
+      if (token) valueParts.push(token)
     }
 
-    return row
-  }, [])
+    // After the separator, we can assume the next token is a key part
+    if (tokens.length > 0) {
+      const nextKeyPart = tokens.shift()
+      if (nextKeyPart) {
+        // Construct the key and its corresponding value
+        const combinedKey = (key ? key : nextKeyPart).trim()
+        const value = valueParts.join(' ').trim()
 
-  const sleepData = useMemo(() => {
+        // Handle possible numeric conversion
+        row[combinedKey] = isNaN(Number(value)) ? value : Number(value)
+        key = undefined // Reset the key after assignment
+      }
+    } else {
+      // If no more tokens, we just assign the last value collected
+      if (key) {
+        row[key] = valueParts.join(' ')
+      }
+    }
+  }
+
+  return row
+}
+
+export const useRawSleepData = ({ onLoadEvent }: RawSleepDataProps) => {
+  const { data, isLoading, error } = usePillowData({ type: 'raw' })
+
+  const [line, setLine] = useState(0)
+  const [parsedData, setParsedData] = useState()
+  const [percentage, setPercentage] = useState(0)
+
+  const [parseData, { kill }] = useWorker((fileContent: string, /*setProgress: (event: RawSleepDataLoadEvent) => void*/): ParsedPillowData => {
+    const tables = [
+      'ZPILLOWUSER', 'ZSLEEPNOTE', 'Z_2SLEEPSESSION', 'ZSLEEPSESSION',
+      'ZSLEEPSTAGEDATAPOINT', 'ZSNOOZELAB', 'ZSOUNDDATAPOINT',
+      'Z_PRIMARYKEY', 'Z_METADATA', 'Z_MODELCACHE', 'Y_UBMETA',
+      'Y_UBRANGE', 'Y_UBKVS'
+    ]
+
+    const lines = fileContent.split('\n')
+    let parsedLineCount = 0
+    let currentTable: string | null = null
+    const data: ParsedPillowData = {}
+    let rows: PillowData = []
+
+    for (const line of lines) {
+      parsedLineCount++
+      const trimmedLine = line.trim()
+
+      // If we encounter a new table header
+      if (tables.includes(trimmedLine)) {
+        // Save the previous table's data if it exists
+        if (currentTable) {
+          data[currentTable] = rows
+        }
+
+        // Set the new current table and reset rows
+        currentTable = trimmedLine
+        rows = []
+      } else if (trimmedLine === '') {
+        // If we hit an empty line, we skip it
+        continue
+      } else if (currentTable) {
+        // Only process lines if we have a current table
+        rows.push(parseLine(trimmedLine))
+
+        setProgress({
+          done: false,
+          percentage: (parsedLineCount / lines.length) * 100,
+          line: parsedLineCount
+        })
+      }
+    }
+
+    // Final save for the last table processed
+    if (currentTable) {
+      data[currentTable] = rows
+    }
+
+    // Convert values to numbers where possible
+    for (const table of Object.keys(data)) {
+      data[table] = data[table].map((row) => {
+        const parsedRow: Record<string, any> = {}
+        for (const [key, value] of Object.entries(row)) {
+          parsedRow[key] = isNaN(Number(value)) ? value : Number(value)
+        }
+        return parsedRow
+      })
+    }
+
+    return data
+  })
+
+  const startParsing = useCallback(async () => {
     if (!data || isLoading) {
       return undefined
     }
 
-    const dataFrames: Record<string, Array<Record<string, string>>> = {}
-    let currentTable: string | undefined
-    let rows: Array<Record<string, string>> = []
+    const parsed = await parseData(data/*, (progress: RawSleepDataLoadEvent) => {
+        setPercentage(progress.percentage)
+        setLine(progress.line)
+      }*/)
 
-    data.split('\n').map(line => {
-      const lineData = line.trim()
+    setParsedData(parsed)
+  }, [data, isLoading, parseData])
 
-      if (tables.includes(lineData)) {
-        if (currentTable) {
-          dataFrames[currentTable] = rows
-        }
+  useEffect(() => {
+    console.log('STARTING+')
+    startParsing()
 
-        currentTable = lineData
-        rows = []
-      } else {
-        rows.push(parseLine(lineData))
-      }
-    })
+    return () => {
+      kill()
+    }
+  }, [kill, startParsing])
 
-    dataFrames['ZSLEEPSESSION'].forEach(() => {
-
-    })
-
-    return rows
-  }, [data, isLoading, parseLine])
+  console.log('Loading raw data...', percentage, '%')
 
   return {
     error,
     isLoading,
-    sleepData
+    sleepData: parsedData,
+    loading: {
+      percent: percentage,
+      line
+    }
   }
 }

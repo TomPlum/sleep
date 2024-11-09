@@ -65,5 +65,12 @@
     "title": "Oops! This isn't the page you were dreaming of...",
     "message": "It looks like you’ve stumbled into the land of uncharted naps. Unfortunately, we don’t have any sleep data here… just an endless snooze.",
     "home-button": "Home"
+  },
+  "loading": {
+    "title": {
+      "start": "Loading sleep",
+      "apnea": "apnea",
+      "app": "app data"
+    }
   }
 }

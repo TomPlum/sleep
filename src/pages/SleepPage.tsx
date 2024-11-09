@@ -1,6 +1,4 @@
 import styles from './SleepPage.module.scss'
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
 import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
@@ -8,6 +6,7 @@ import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useEffect } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
+import { DataLoading } from 'data/DataLoading'
 
 export const SleepPage = () => {
   const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric } = useSleepContext()
@@ -28,12 +27,7 @@ export const SleepPage = () => {
 
   if (isSleepDataLoading) {
     return (
-      <div className={styles.loading}>
-        <Spin
-          size="large"
-          indicator={<LoadingOutlined spin />}
-        />
-      </div>
+      <DataLoading />
     )
   }
 

@@ -28,6 +28,7 @@ export default defineConfig(({ mode }) => ({
         classNameStrategy: 'non-scoped'
       }
     },
+    threads: 5,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
