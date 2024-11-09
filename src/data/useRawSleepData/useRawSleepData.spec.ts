@@ -5,6 +5,8 @@ import { beforeAll, beforeEach } from 'vitest'
 import { resolve } from 'path'
 import { readFileSync } from 'fs'
 import { parsePillowFile, useParse } from 'data/useRawSleepData/parse.ts'
+import { RawSleepSessionData } from 'data/useRawSleepData/types.ts'
+import dayjs from 'dayjs'
 
 describe('Sleep Data Parsing Hook', () => {
   let pillowData: string
@@ -40,7 +42,7 @@ describe('Sleep Data Parsing Hook', () => {
   })
 
   it('test', async () => {
-    const { result } = renderHook(() => useParse({ table: 'ZSLEEPSESSION' }), { wrapper })
+    const { result } = renderHook(() => useParse({ fileContents: pillowData }), { wrapper })
 
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false)
@@ -86,9 +88,14 @@ describe('Sleep Data Parsing Hook', () => {
     // ZSLEEPTRACKINGMETHODRAW -> 1
 
     const id = '529f9ec26d4c208d8ae8638ca230bc26'
-    const data = result.current.data
-    const session = data?.ZSLEEPSESSION.find(session => session.ZUNIQUEIDENTIFIER === id)
-    const sleepStageData = data?.ZSLEEPSTAGEDATAPOINT.find(session => session.ZUNIQUEIDENTIFIER === id)
+    const parse = result.current.readTable!
+    const sessionData = parse('ZSLEEPSESSION') as Record<string, RawSleepSessionData>
+    Object.keys(sessionData).forEach(key => {
+      const startTime = sessionData[key].ZSTARTTIME
+      const date = dayjs(new Date(startTime * 1000)).add(31, 'years')
+      console.log(date.format('ddd DD MMM YYYY - HH:mm'))
+    })
+    const sleepStageData = Object.entries(parse('ZSLEEPSTAGEDATAPOINT'))?.find(session => session.ZUNIQUEIDENTIFIER === id)
 
     expect(result.current.data).toStrictEqual([])
   })
