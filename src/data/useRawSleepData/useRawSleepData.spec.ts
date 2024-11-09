@@ -5,7 +5,7 @@ import { beforeAll, beforeEach } from 'vitest'
 import { resolve } from 'path'
 import { readFileSync } from 'fs'
 import { parsePillowFile, useParse } from 'data/useRawSleepData/parse.ts'
-import { RawSleepSessionData } from 'data/useRawSleepData/types.ts'
+import { RawSleepSessionData, RawSleepSoundPointData } from 'data/useRawSleepData/types.ts'
 import dayjs from 'dayjs'
 
 describe('Sleep Data Parsing Hook', () => {
@@ -87,15 +87,30 @@ describe('Sleep Data Parsing Hook', () => {
     // ZMORPHEUSVERSIONUSED -> Auto-D_v13-An_v9
     // ZSLEEPTRACKINGMETHODRAW -> 1
 
-    const id = '529f9ec26d4c208d8ae8638ca230bc26'
     const parse = result.current.readTable!
-    const sessionData = parse('ZSLEEPSESSION') as Record<string, RawSleepSessionData>
+
+    const sessionData = parse('ZSLEEPSESSION', 'Z_PK') as Record<string, RawSleepSessionData>
     Object.keys(sessionData).forEach(key => {
       const startTime = sessionData[key].ZSTARTTIME
       const date = dayjs(new Date(startTime * 1000)).add(31, 'years')
       console.log(date.format('ddd DD MMM YYYY - HH:mm'))
     })
-    const sleepStageData = Object.entries(parse('ZSLEEPSTAGEDATAPOINT'))?.find(session => session.ZUNIQUEIDENTIFIER === id)
+
+    const sleepStageData = parse('ZSLEEPSTAGEDATAPOINT', 'Z_PK')
+    const soundPoints = parse('ZSOUNDDATAPOINT', 'Z_PK') as Record<string, RawSleepSoundPointData>
+
+    const mapped = Object.keys(sessionData).reduce<Record<string, object>>((acc, sessionKey) => {
+      const session = sessionData[sessionKey]
+      const sessionSound = Object.values(soundPoints).filter(sound => {
+        return sound.ZSLEEPSESSION === Number(sessionKey)
+      })
+
+      acc[sessionKey] = {
+        session,
+        sound: sessionSound
+      }
+      return acc
+    }, {})
 
     expect(result.current.data).toStrictEqual([])
   })

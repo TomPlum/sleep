@@ -12,7 +12,7 @@ export interface RawSleepSessionData {
   ZSLEEPTRACKINGMETHODRAW: number
   ZANALYSISALGORITHMRAW: number
   ZPRODUCEDBYAPPLEWATCH: number
-  ZUNIQUEIDENTIFIER: '308462a7876101903f9e331c19083534'
+  ZUNIQUEIDENTIFIER: 308462a7876101903f9e331c19083534
   ZTIMETOSLEEP: number
   ZTIMEINREMSLEEP: number
   ZTIMEINLIGHTSLEEP: number
@@ -37,6 +37,20 @@ export interface RawSleepSessionData {
   ZGROSSMOTIONSINSESSION: number
   ZAUTOMATICSESSION: number
   ZALARMTYPERAW: number
+  Z_OPT: number
+  Z_ENT: number
+  Z_PK: number
+}
+
+export interface RawSleepSoundPointData {
+  ZRAWCATEGORY: number
+  ZISSTARRED: number
+  ZUNIQUEIDENTIFIER: '399cfd6b3da6904ff9b7c57fdaa44406'
+  ZFILENAME: '16082018-232329.caf'
+  ZTIMESTAMP: number
+  ZSLEEPSTAGE: number
+  ZSLEEPSESSION: number
+  ZDURATION: number
   Z_OPT: number
   Z_ENT: number
   Z_PK: number

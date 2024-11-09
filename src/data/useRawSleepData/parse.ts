@@ -46,7 +46,7 @@ function getDictFromString(line: string): Record<string, string> {
   return row
 }
 
-function parsePillowData(fileContents: string, table: string) {
+function parsePillowData(fileContents: string, key: string, table: string) {
   let readingTable = false
   let searchingForTable = true
   const currentTableData = {}
@@ -69,7 +69,7 @@ function parsePillowData(fileContents: string, table: string) {
 
     if (readingTable && line !== table) {
       const dictionary = getDictFromString(line)
-      currentTableData[dictionary.Z_PK ?? '999'] = dictionary
+      currentTableData[dictionary[key] ?? '999'] = dictionary
     }
 
     lineIndex++
@@ -81,8 +81,8 @@ function parsePillowData(fileContents: string, table: string) {
 export const useParse = ({ fileContents }: { fileContents: string }) => {
   const { data, isLoading, error } = usePillowData({ type: 'raw' })
 
-  const readTable = useCallback((table: string) => {
-    return parsePillowData(fileContents, table)
+  const readTable = useCallback((table: string, key: string) => {
+    return parsePillowData(fileContents, key, table)
   }, [fileContents])
 
   if (!data || isLoading || error) {
