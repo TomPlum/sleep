@@ -7,9 +7,12 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useEffect } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
+import {
+  SleepSessionStageBreakdownGraph
+} from 'modules/graph/components/SleepSessionStageBreakdownGraph/SleepSessionStageBreakdownGraph'
 
 export const SleepPage = () => {
-  const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric } = useSleepContext()
+  const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric, sleepStageData } = useSleepContext()
 
   useEffect(() => {
     const existingFavicon = document.querySelector('link[rel=\'icon\']') as HTMLLinkElement
@@ -58,11 +61,18 @@ export const SleepPage = () => {
         </div>
       )}
 
+      {sleepStageData && sleepStageData['session-2220'] && (
+        <div className={styles.breakdownGraph}>
+          <SleepSessionStageBreakdownGraph data={sleepStageData['session-2220']} />
+        </div>
+      )}
+
       {!stackedView && (
         <SleepSessionsGraph2D
           metric={sleepMetric}
           className={styles.graph}
         />
+
       )}
     </div>
   )

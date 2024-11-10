@@ -21,10 +21,14 @@ import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLabel'
 import { SleepSessionsGraph2DProps } from './types'
+import { useCallback, useState } from 'react'
 
 const animationDuration = 500
 
 export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2DProps) => {
+  const [activeSessionBreakDown, setActiveSessionBreakdown] = useState()
+  console.log(activeSessionBreakDown)
+
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
@@ -40,6 +44,11 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
   } = useLinearRegression({ metric })
 
   const isTopGraph = stackedMetrics.indexOf(metric) === 0
+
+  const handleClickActiveDot = useCallback((data, index) => {
+    console.log('data', data, 'index', index)
+    setActiveSessionBreakdown(data)
+  }, [])
 
   return (
     <ResponsiveContainer width='100%' height={stackedView ? '50%' : '100%'} className={className}>
@@ -59,6 +68,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           stroke={currentMetricColour}
           animationEasing='ease-in-out'
           className={styles.metricLine}
+          activeDot={{ onClick: handleClickActiveDot }}
           dot={{ fill: undefined, r: activeDotRadius }}
         />
 
