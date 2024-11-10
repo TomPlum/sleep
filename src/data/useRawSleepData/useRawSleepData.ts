@@ -105,6 +105,7 @@ const parseSleepStage = (rawStageValue: number): SleepStage => {
  */
 const parseRawTimestamp = (rawTimestamp: number): Date => {
   // For some reason, one (or maybe more) of the timestamps have an ƒ character in them
+  // TODO: Check a fresh export, did I add this f character by accident while trying to crtl + f?
   const sanitised = Number(rawTimestamp.toString().replace('ƒ', ''))
   return dayjs(new Date(sanitised * 1000)).add(31, 'years').toDate()
 }
@@ -114,32 +115,44 @@ type ParsedData = {
   sounds: RawSleepSessionSounds[]
 }
 
-export const useRawSleepData = ({ fileContents }: { fileContents: string }): RawSleepData => {
+export const useRawSleepData = (): RawSleepData => {
   const { data, isLoading, error } = usePillowData({ type: 'raw' })
 
   const sessions = useMemo<Record<string, RawSleepSessionData>>(() => {
+    if (!data) {
+      return {}
+    }
+
     return parsePillowData<RawSleepSessionData>(
-      fileContents,
+      data,
       TABLE_PRIMARY_KEY,
       RawSleepDataTable.SLEEP_SESSION
     )
-  }, [fileContents])
+  }, [data])
 
   const sound = useMemo<Record<string, RawSleepSoundPointData>>(() => {
+    if (!data) {
+      return {}
+    }
+
     return parsePillowData<RawSleepSoundPointData>(
-      fileContents,
+      data,
       TABLE_PRIMARY_KEY,
       RawSleepDataTable.SOUND_DATA_POINTS
     )
-  }, [fileContents])
+  }, [data])
 
   const stages = useMemo<Record<string, RawSleepStageData>>(() => {
+    if (!data) {
+      return {}
+    }
+
     return parsePillowData<RawSleepStageData>(
-      fileContents,
+      data,
       TABLE_PRIMARY_KEY,
       RawSleepDataTable.SLEEP_STAGES
     )
-  }, [fileContents])
+  }, [data])
 
   const { sleepStages, sounds } = useMemo<ParsedData>(() => {
     return Object.keys(sessions).reduce<ParsedData>((acc, sessionKey, i) => {

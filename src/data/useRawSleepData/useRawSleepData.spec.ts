@@ -28,14 +28,15 @@ describe('Sleep Data Parsing Hook', () => {
     }))
   })
 
-  it('should', async () => {
-    const { result } = renderHook(() => useRawSleepData({ fileContents: pillowData }), { wrapper })
+  it('should return stage and sound data from the raw data export', async () => {
+    const { result } = renderHook(useRawSleepData, { wrapper })
 
     await waitFor(() => {
       expect(result.current.loading).toBe(false)
     })
 
 
-    expect(result.current.sleepStageData).toStrictEqual([])
+    expect(result.current.sessionStages).toStrictEqual([])
+    expect(result.current.sessionSounds).toStrictEqual([])
   })
 })
