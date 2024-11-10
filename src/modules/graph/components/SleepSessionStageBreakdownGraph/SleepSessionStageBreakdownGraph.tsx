@@ -20,7 +20,11 @@ const CustomBar = (props: any) => {
         width={barWidth}
         height={barHeight}
         y={cy - barHeight / 2}
-        fill={getMetricColour(payload.stage)}
+        style={{
+          stroke: getMetricColour(payload.stage),
+          strokeWidth: 2
+        }}
+        fill={getMetricColour(payload.stage).replace('rgb', 'rgba').replace(')', ', 0.80)')}
       />
     </g>
   )
@@ -86,7 +90,8 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
       current = current.add(1, 'hour')
     }
 
-    // hours.unshift(dayjs(hours[0]).subtract(1, 'hour').toDate().getTime())
+    // TODO: Check this. We may need to add min/max only in certain cases
+    hours.unshift(min)
 
     return hours
   }, [xDomain])

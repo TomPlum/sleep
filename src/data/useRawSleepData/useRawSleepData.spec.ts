@@ -6,27 +6,7 @@ import { resolve } from 'path'
 import { readFileSync } from 'fs'
 
 describe('Sleep Data Parsing Hook', () => {
-  let pillowData: string
-
-  beforeAll(() => {
-    try {
-      const filePath = resolve(__dirname, '../../test/PillowDataRaw.txt')
-      pillowData = readFileSync(filePath, 'utf8')
-    } catch (e) {
-      console.error('Failed to setup useRawSleepData.spec.ts as the data could not be read', e)
-    }
-  })
-
-  beforeEach(() => {
-    vi.stubGlobal('fetch', vi.fn(() => {
-      return Promise.resolve({
-        ok: true,
-        text: () => {
-          return Promise.resolve(pillowData)
-        }
-      })
-    }))
-  })
+ c
 
   it('should return stage and sound data from the raw data export', async () => {
     const { result } = renderHook(useRawSleepData, { wrapper })

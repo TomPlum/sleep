@@ -2,85 +2,21 @@ import { usePillowData } from 'data/usePillowData'
 import { useEffect, useMemo, useState } from 'react'
 import {
   RawSleepData,
-  RawSleepDataTable,
   RawSleepSessionData, RawSleepSessionSounds,
   RawSleepSoundPointData, RawSleepSessionStages,
-  RawSleepStageData,
-  TABLE_PRIMARY_KEY
+  RawSleepStageData
 } from './types'
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 import { useWorker } from '@koale/useworker'
-
-const parseDataLine = (line: string): Record<string, string | number> => {
-  const tokens = line.split(/\s+/)
-  const row: Record<string, string | number> = {}
-
-  while (tokens.length) {
-    const valueParts: string[] = [tokens.pop()!] // Pop last token
-    let valuePartOrSep = tokens.pop() // Should be '->'
-
-    while (valuePartOrSep !== '->') {
-      valueParts.push(valuePartOrSep!)
-      valuePartOrSep = tokens.pop()
-    }
-    valueParts.reverse()
-
-    const key = tokens.pop()!
-    const joinedValueParts = valueParts.join(' ')
-    row[key] = isNaN(Number(joinedValueParts)) ? joinedValueParts : Number(joinedValueParts)
-  }
-
-  return row
-}
-
-/**
- * Parses the export of the Pillow database file and extracts
- * data from a given table.
- *
- * @param fileContents The whole contents of the export file.
- * @param key The object key whose value should be used to store each record against (E.g. Z_PK).
- * @param table The name of the table to extract data from.
- */
-const parsePillowData = <T>(fileContents: string, key: string, table: string): Record<string, T> => {
-  let readingTable = false
-  let searchingForTable = true
-  const tableData: Record<string, T> = {}
-
-  const lines = fileContents.split('\n')
-  let lineIndex = 0
-
-  while(searchingForTable || readingTable) {
-    const line = lines[lineIndex].trim()
-
-    if (line === table) {
-      readingTable = true
-      searchingForTable = false
-    }
-
-    if (readingTable && Object.values(RawSleepDataTable).includes(line) && line !== table) {
-      searchingForTable = false
-      readingTable = false
-    }
-
-    if (readingTable && line !== table) {
-      const dictionary = parseDataLine(line)
-      const keyValue = dictionary[key] ?? '999'
-      tableData[keyValue] = dictionary
-    }
-
-    lineIndex++
-  }
-
-  return tableData
-}
+import { parsePillowData, ParsePillowDataResult } from 'data/useRawSleepData/parsePillowData'
 
 interface ParseArgs {
   sessions: Record<string, RawSleepSessionData>
   stages: Record<string, RawSleepStageData>
-  sound: Record<string, RawSleepSoundPointData>
+  sounds: Record<string, RawSleepSoundPointData>
 }
 
-const parse = ({ sessions, stages, sound }: ParseArgs) => {
+const parse = ({ sessions, stages, sounds }: ParseArgs) => {
   /**
    * Converts the raw stage value into an enum value string.
    *
@@ -143,7 +79,7 @@ const parse = ({ sessions, stages, sound }: ParseArgs) => {
       timestamp: parseRawTimestamp(stageData.ZTIMESTAMP)
     }))
 
-    const sessionSound = Object.values(sound).filter(soundData => {
+    const sessionSound = Object.values(sounds).filter(soundData => {
       return soundData.ZSLEEPSESSION === Number(sessionKey)
     }).map<SleepSessionSound>(stageData => ({
       id: stageData.ZUNIQUEIDENTIFIER,
@@ -170,40 +106,16 @@ export const useRawSleepData = (): RawSleepData => {
   const [workerInProgress, setWorkerInProgress] = useState(false)
   const { data, isLoading, error } = usePillowData({ type: 'raw' })
 
-  const sessions = useMemo<Record<string, RawSleepSessionData>>(() => {
+  const { sessions, stages, sounds } = useMemo<ParsePillowDataResult>(() => {
     if (!data) {
-      return {}
+      return {
+        sounds: {},
+        stages: {},
+        sessions: {}
+      }
     }
 
-    return parsePillowData<RawSleepSessionData>(
-      data,
-      TABLE_PRIMARY_KEY,
-      RawSleepDataTable.SLEEP_SESSION
-    )
-  }, [data])
-
-  const sound = useMemo<Record<string, RawSleepSoundPointData>>(() => {
-    if (!data) {
-      return {}
-    }
-
-    return parsePillowData<RawSleepSoundPointData>(
-      data,
-      TABLE_PRIMARY_KEY,
-      RawSleepDataTable.SOUND_DATA_POINTS
-    )
-  }, [data])
-
-  const stages = useMemo<Record<string, RawSleepStageData>>(() => {
-    if (!data) {
-      return {}
-    }
-
-    return parsePillowData<RawSleepStageData>(
-      data,
-      TABLE_PRIMARY_KEY,
-      RawSleepDataTable.SLEEP_STAGES
-    )
+    return parsePillowData({ fileContents: data })
   }, [data])
 
   const [triggerParserWorker] = useWorker<(args: ParseArgs) => ParsedData>(parse, {
@@ -211,11 +123,11 @@ export const useRawSleepData = (): RawSleepData => {
   })
 
   useEffect(() => {
-    if (Object.keys(sessions).length > 0 && Object.keys(stages).length > 0  && Object.keys(sound).length > 0) {
+    if (Object.keys(sessions).length > 0 && Object.keys(stages).length > 0  && Object.keys(sounds).length > 0) {
       setWorkerInProgress(true)
       console.debug('Invoking web worker to load raw sleep data...')
 
-      triggerParserWorker({ sessions, stages, sound })
+      triggerParserWorker({ sessions, stages, sounds })
         .then((result: ParsedData) => {
           console.debug(`Loaded ${Object.keys(result.sleepStages).length} sessions from raw data web worker.`)
           setParsedData(result)
@@ -225,7 +137,7 @@ export const useRawSleepData = (): RawSleepData => {
           setWorkerInProgress(false)
         })
     }
-  }, [sessions, sound, stages, triggerParserWorker])
+  }, [sessions, sounds, stages, triggerParserWorker])
 
   if (!data || isLoading || error) {
     return {
