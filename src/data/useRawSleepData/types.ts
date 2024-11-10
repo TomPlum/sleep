@@ -1,4 +1,4 @@
-import { SleepSessionStage } from 'data/useSleepData'
+import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 
 export interface RawSleepDataLoadEvent {
   done: boolean
@@ -10,14 +10,20 @@ export interface RawSleepDataProps {
   onLoadEvent?: (event: RawSleepDataLoadEvent) => void
 }
 
-export interface RawSleepStageData {
+export interface RawSleepSessionStages {
   sessionId: string
   stages: SleepSessionStage[]
 }
 
+export interface RawSleepSessionSounds {
+  sessionId: string
+  stages: SleepSessionSound[]
+}
+
 export interface RawSleepData {
   loading: boolean
-  sleepStageData: RawSleepStageData[]
+  sessionStages: RawSleepSessionStages[]
+  sessionSounds: RawSleepSessionSounds[]
 }
 
 export const TABLE_PRIMARY_KEY = 'Z_PK'
@@ -98,6 +104,17 @@ export interface RawSleepSoundPointData {
   ZSLEEPSTAGE: number
   ZSLEEPSESSION: number
   ZDURATION: number
+  Z_OPT: number
+  Z_ENT: number
+  Z_PK: number
+}
+
+export interface RawSleepStageData {
+  ZUNIQUEIDENTIFIER: string
+  ZTIMESTAMP: number
+  ZSOUNDLEVEL: number
+  ZSLEEPSTAGE: number
+  ZSLEEPSESSION: number
   Z_OPT: number
   Z_ENT: number
   Z_PK: number

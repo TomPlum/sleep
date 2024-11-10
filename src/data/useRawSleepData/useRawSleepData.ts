@@ -3,18 +3,18 @@ import { useMemo } from 'react'
 import {
   RawSleepData,
   RawSleepDataTable,
-  RawSleepSessionData,
-  RawSleepSoundPointData,
+  RawSleepSessionData, RawSleepSessionSounds,
+  RawSleepSoundPointData, RawSleepSessionStages,
   RawSleepStageData,
   TABLE_PRIMARY_KEY
-} from 'data/useRawSleepData/types.ts'
-import { SleepSessionStage, SleepStage } from 'data/useSleepData'
+} from './types'
+import { SleepSessionSound, SleepSessionStage, SleepStage } from 'data/useSleepData'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import dayjs from 'dayjs'
 
-const parseDataLine = <T>(line: string): Record<string, T> => {
+const parseDataLine = (line: string): Record<string, string | number> => {
   const tokens = line.split(/\s+/)
-  const row: Record<string, string> = {}
+  const row: Record<string, string | number> = {}
 
   while (tokens.length) {
     const valueParts: string[] = [tokens.pop()!] // Pop last token
@@ -34,6 +34,14 @@ const parseDataLine = <T>(line: string): Record<string, T> => {
   return row
 }
 
+/**
+ * Parses the export of the Pillow database file and extracts
+ * data from a given table.
+ *
+ * @param fileContents The whole contents of the export file.
+ * @param key The object key whose value should be used to store each record against (E.g. Z_PK).
+ * @param table The name of the table to extract data from.
+ */
 const parsePillowData = <T>(fileContents: string, key: string, table: string): Record<string, T> => {
   let readingTable = false
   let searchingForTable = true
@@ -56,8 +64,9 @@ const parsePillowData = <T>(fileContents: string, key: string, table: string): R
     }
 
     if (readingTable && line !== table) {
-      const dictionary = parseDataLine<T>(line)
-      tableData[dictionary[key] ?? '999'] = dictionary
+      const dictionary = parseDataLine(line)
+      const keyValue = dictionary[key] ?? '999'
+      tableData[keyValue] = dictionary
     }
 
     lineIndex++
@@ -100,38 +109,81 @@ const parseRawTimestamp = (rawTimestamp: number): Date => {
   return dayjs(new Date(sanitised * 1000)).add(31, 'years').toDate()
 }
 
+type ParsedData = {
+  sleepStages: RawSleepSessionStages[],
+  sounds: RawSleepSessionSounds[]
+}
+
 export const useRawSleepData = ({ fileContents }: { fileContents: string }): RawSleepData => {
   const { data, isLoading, error } = usePillowData({ type: 'raw' })
 
-  const sleepStageData = useMemo<RawSleepStageData[]>(() => {
-    const sessions = parsePillowData<RawSleepSessionData>(fileContents, TABLE_PRIMARY_KEY, RawSleepDataTable.SLEEP_SESSION)
-    const stages =  parsePillowData<RawSleepSoundPointData>(fileContents, TABLE_PRIMARY_KEY, RawSleepDataTable.SOUND_DATA_POINTS)
+  const sessions = useMemo<Record<string, RawSleepSessionData>>(() => {
+    return parsePillowData<RawSleepSessionData>(
+      fileContents,
+      TABLE_PRIMARY_KEY,
+      RawSleepDataTable.SLEEP_SESSION
+    )
+  }, [fileContents])
 
-    return Object.keys(sessions).map((sessionKey, i) => {
-      const sessionSound = Object.values(stages).filter(stageData => {
+  const sound = useMemo<Record<string, RawSleepSoundPointData>>(() => {
+    return parsePillowData<RawSleepSoundPointData>(
+      fileContents,
+      TABLE_PRIMARY_KEY,
+      RawSleepDataTable.SOUND_DATA_POINTS
+    )
+  }, [fileContents])
+
+  const stages = useMemo<Record<string, RawSleepStageData>>(() => {
+    return parsePillowData<RawSleepStageData>(
+      fileContents,
+      TABLE_PRIMARY_KEY,
+      RawSleepDataTable.SLEEP_STAGES
+    )
+  }, [fileContents])
+
+  const { sleepStages, sounds } = useMemo<ParsedData>(() => {
+    return Object.keys(sessions).reduce<ParsedData>((acc, sessionKey, i) => {
+      const sessionStages = Object.values(stages).filter(stageData => {
         return stageData.ZSLEEPSESSION === Number(sessionKey)
       }).map<SleepSessionStage>(stageData => ({
+        id: stageData.ZUNIQUEIDENTIFIER,
         stage: parseSleepStage(stageData.ZSLEEPSTAGE),
+        timestamp: parseRawTimestamp(stageData.ZTIMESTAMP)
+      }))
+
+      const sessionSound = Object.values(sound).filter(soundData => {
+        return soundData.ZSLEEPSESSION === Number(sessionKey)
+      }).map<SleepSessionSound>(stageData => ({
+        id: stageData.ZUNIQUEIDENTIFIER,
         timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
         duration: stageData.ZDURATION
       }))
 
-      return {
+      acc.sleepStages.push({
+        stages: sessionStages,
+        sessionId: `session-${i}`
+      })
+
+      acc.sounds.push({
         stages: sessionSound,
         sessionId: `session-${i}`
-      }
-    })
-  }, [fileContents])
+      })
+
+      return acc
+    }, { sleepStages: [], sounds: [] })
+  }, [sessions, sound, stages])
 
   if (!data || isLoading || error) {
     return {
       loading: true,
-      sleepStageData: []
+      sessionStages: [],
+      sessionSounds: []
     }
   }
 
   return {
     loading: isLoading,
-    sleepStageData
+    sessionStages: sleepStages,
+    sessionSounds: sounds
   }
 }
