@@ -1,3 +1,5 @@
+import { SleepSessionStage } from 'data/useSleepData'
+
 export interface RawSleepDataLoadEvent {
   done: boolean
   line: number
@@ -8,11 +10,56 @@ export interface RawSleepDataProps {
   onLoadEvent?: (event: RawSleepDataLoadEvent) => void
 }
 
+export interface RawSleepStageData {
+  sessionId: string
+  stages: SleepSessionStage[]
+}
+
+export interface RawSleepData {
+  loading: boolean
+  sleepStageData: RawSleepStageData[]
+}
+
+export const TABLE_PRIMARY_KEY = 'Z_PK'
+
+/**
+ * Available table names from the
+ * raw database export file. A table
+ * is denoted by a single word on its
+ * own line and is proceeded by the data entries
+ * for that table.
+ *
+ * They enum is ordered in the order that the tables
+ * appear in the file from top to bottom.
+ */
+export enum RawSleepDataTable {
+  SLEEP_SESSION_V5 = 'Z_5SLEEPSESSION',
+  METADATA = 'Z_METADATA',
+  MODEL_CACHE = 'Z_MODELCACHE',
+  UB_METADATA = 'Y_UBMETA',
+  UB_RANGE = 'Y_UBRANGE',
+  UBKVS = 'Y_UBKVS',
+  SNOOZE_LAB = 'ZSNOOZELAB',
+  SLEEP_NOTES = 'ZSLEEPNOTE',
+  PILLOW_USER = 'ZPILLOWUSER',
+  SOUND_DATA_POINTS = 'ZSOUNDDATAPOINT',
+  CHANGES = 'ACHANGE',
+  TRANSACTIONS = 'ATRANSACTION',
+  TRANSACTION_STRINGS = 'ATRANSACTIONSTRING',
+  SLEEP_STAGES = 'ZSLEEPSTAGEDATAPOINT',
+  SLEEP_SESSION = 'ZSLEEPSESSION',
+  SNOOZE_LAB_ITEMS = 'ZSNOOZELABITEM',
+  SLEEP_AID_LOG = 'ZSLEEPAIDLOG',
+  SLEEP_DATA_FAVOURITE_TRACK = 'ZSLEEPAIDFAVORITETRACK',
+  ALARMS = 'ZALARM',
+  PRIMARY_KEYS = 'Z_PRIMARYKEY'
+}
+
 export interface RawSleepSessionData {
   ZSLEEPTRACKINGMETHODRAW: number
   ZANALYSISALGORITHMRAW: number
   ZPRODUCEDBYAPPLEWATCH: number
-  ZUNIQUEIDENTIFIER: 308462a7876101903f9e331c19083534
+  ZUNIQUEIDENTIFIER: string
   ZTIMETOSLEEP: number
   ZTIMEINREMSLEEP: number
   ZTIMEINLIGHTSLEEP: number
@@ -45,8 +92,8 @@ export interface RawSleepSessionData {
 export interface RawSleepSoundPointData {
   ZRAWCATEGORY: number
   ZISSTARRED: number
-  ZUNIQUEIDENTIFIER: '399cfd6b3da6904ff9b7c57fdaa44406'
-  ZFILENAME: '16082018-232329.caf'
+  ZUNIQUEIDENTIFIER: string
+  ZFILENAME: string
   ZTIMESTAMP: number
   ZSLEEPSTAGE: number
   ZSLEEPSESSION: number

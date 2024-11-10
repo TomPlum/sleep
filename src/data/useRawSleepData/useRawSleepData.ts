@@ -1,149 +1,137 @@
-import { usePillowData } from '../usePillowData'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { RawSleepDataLoadEvent, RawSleepDataProps } from './types'
-import { useWorker } from '@koale/useworker'
+import { usePillowData } from 'data/usePillowData'
+import { useMemo } from 'react'
+import {
+  RawSleepData,
+  RawSleepDataTable,
+  RawSleepSessionData,
+  RawSleepSoundPointData,
+  RawSleepStageData,
+  TABLE_PRIMARY_KEY
+} from 'data/useRawSleepData/types.ts'
+import { SleepSessionStage, SleepStage } from 'data/useSleepData'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import dayjs from 'dayjs'
 
-type PillowData = Record<string, any>[];
-type ParsedPillowData = Record<string, PillowData>;
-
-const parseLine = (line: string): Record<string, string | number> => {
+const parseDataLine = <T>(line: string): Record<string, T> => {
   const tokens = line.split(/\s+/)
-  const row: Record<string, string | number> = {}
-  let key: string | undefined
+  const row: Record<string, string> = {}
 
-  while (tokens.length > 0) {
-    const valueParts: string[] = []
+  while (tokens.length) {
+    const valueParts: string[] = [tokens.pop()!] // Pop last token
+    let valuePartOrSep = tokens.pop() // Should be '->'
 
-    // Collect value parts until we hit a separator
-    while (tokens.length > 0) {
-      const token = tokens.shift()
-      if (token === '->') break // Stop when reaching the separator
-      if (token) valueParts.push(token)
+    while (valuePartOrSep !== '->') {
+      valueParts.push(valuePartOrSep!)
+      valuePartOrSep = tokens.pop()
     }
+    valueParts.reverse()
 
-    // After the separator, we can assume the next token is a key part
-    if (tokens.length > 0) {
-      const nextKeyPart = tokens.shift()
-      if (nextKeyPart) {
-        // Construct the key and its corresponding value
-        const combinedKey = (key ? key : nextKeyPart).trim()
-        const value = valueParts.join(' ').trim()
-
-        // Handle possible numeric conversion
-        row[combinedKey] = isNaN(Number(value)) ? value : Number(value)
-        key = undefined // Reset the key after assignment
-      }
-    } else {
-      // If no more tokens, we just assign the last value collected
-      if (key) {
-        row[key] = valueParts.join(' ')
-      }
-    }
+    const key = tokens.pop()!
+    const joinedValueParts = valueParts.join(' ')
+    row[key] = isNaN(Number(joinedValueParts)) ? joinedValueParts : Number(joinedValueParts)
   }
 
   return row
 }
 
-export const useRawSleepData = ({ onLoadEvent }: RawSleepDataProps) => {
+const parsePillowData = <T>(fileContents: string, key: string, table: string): Record<string, T> => {
+  let readingTable = false
+  let searchingForTable = true
+  const tableData: Record<string, T> = {}
+
+  const lines = fileContents.split('\n')
+  let lineIndex = 0
+
+  while(searchingForTable || readingTable) {
+    const line = lines[lineIndex].trim()
+
+    if (line === table) {
+      readingTable = true
+      searchingForTable = false
+    }
+
+    if (readingTable && Object.values(RawSleepDataTable).includes(line) && line !== table) {
+      searchingForTable = false
+      readingTable = false
+    }
+
+    if (readingTable && line !== table) {
+      const dictionary = parseDataLine<T>(line)
+      tableData[dictionary[key] ?? '999'] = dictionary
+    }
+
+    lineIndex++
+  }
+
+  return tableData
+}
+
+const parseSleepStage = (rawStageValue: number): SleepStage => {
+  switch (rawStageValue) {
+    case 0.0: {
+      return SleepMetric.AWAKE_TIME
+    }
+    case 1.0: {
+      return SleepMetric.REM_SLEEP
+    }
+    case 2.0: {
+      return SleepMetric.LIGHT_SLEEP
+    }
+    case 3.0: {
+      return SleepMetric.DEEP_SLEEP
+    }
+    default: {
+      throw new Error(`Invalid Sleep Stage Value [${rawStageValue}]`)
+    }
+  }
+}
+
+/**
+ * For some reason the raw Pillow database export
+ * has fractional UNIX timestamps that have correct
+ * dates and months but the years are 31 years in
+ * the past.
+ *
+ * @param rawTimestamp The raw timestamp from the export.
+ */
+const parseRawTimestamp = (rawTimestamp: number): Date => {
+  // For some reason, one (or maybe more) of the timestamps have an ƒ character in them
+  const sanitised = Number(rawTimestamp.toString().replace('ƒ', ''))
+  return dayjs(new Date(sanitised * 1000)).add(31, 'years').toDate()
+}
+
+export const useRawSleepData = ({ fileContents }: { fileContents: string }): RawSleepData => {
   const { data, isLoading, error } = usePillowData({ type: 'raw' })
 
-  const [line, setLine] = useState(0)
-  const [parsedData, setParsedData] = useState()
-  const [percentage, setPercentage] = useState(0)
+  const sleepStageData = useMemo<RawSleepStageData[]>(() => {
+    const sessions = parsePillowData<RawSleepSessionData>(fileContents, TABLE_PRIMARY_KEY, RawSleepDataTable.SLEEP_SESSION)
+    const stages =  parsePillowData<RawSleepSoundPointData>(fileContents, TABLE_PRIMARY_KEY, RawSleepDataTable.SOUND_DATA_POINTS)
 
-  const [parseData, { kill }] = useWorker((fileContent: string, /*setProgress: (event: RawSleepDataLoadEvent) => void*/): ParsedPillowData => {
-    const tables = [
-      'ZPILLOWUSER', 'ZSLEEPNOTE', 'Z_2SLEEPSESSION', 'ZSLEEPSESSION',
-      'ZSLEEPSTAGEDATAPOINT', 'ZSNOOZELAB', 'ZSOUNDDATAPOINT',
-      'Z_PRIMARYKEY', 'Z_METADATA', 'Z_MODELCACHE', 'Y_UBMETA',
-      'Y_UBRANGE', 'Y_UBKVS'
-    ]
+    return Object.keys(sessions).map((sessionKey, i) => {
+      const sessionSound = Object.values(stages).filter(stageData => {
+        return stageData.ZSLEEPSESSION === Number(sessionKey)
+      }).map<SleepSessionStage>(stageData => ({
+        stage: parseSleepStage(stageData.ZSLEEPSTAGE),
+        timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
+        duration: stageData.ZDURATION
+      }))
 
-    const lines = fileContent.split('\n')
-    let parsedLineCount = 0
-    let currentTable: string | null = null
-    const data: ParsedPillowData = {}
-    let rows: PillowData = []
-
-    for (const line of lines) {
-      parsedLineCount++
-      const trimmedLine = line.trim()
-
-      // If we encounter a new table header
-      if (tables.includes(trimmedLine)) {
-        // Save the previous table's data if it exists
-        if (currentTable) {
-          data[currentTable] = rows
-        }
-
-        // Set the new current table and reset rows
-        currentTable = trimmedLine
-        rows = []
-      } else if (trimmedLine === '') {
-        // If we hit an empty line, we skip it
-        continue
-      } else if (currentTable) {
-        // Only process lines if we have a current table
-        rows.push(parseLine(trimmedLine))
-
-        setProgress({
-          done: false,
-          percentage: (parsedLineCount / lines.length) * 100,
-          line: parsedLineCount
-        })
+      return {
+        stages: sessionSound,
+        sessionId: `session-${i}`
       }
+    })
+  }, [fileContents])
+
+  if (!data || isLoading || error) {
+    return {
+      loading: true,
+      sleepStageData: []
     }
-
-    // Final save for the last table processed
-    if (currentTable) {
-      data[currentTable] = rows
-    }
-
-    // Convert values to numbers where possible
-    for (const table of Object.keys(data)) {
-      data[table] = data[table].map((row) => {
-        const parsedRow: Record<string, any> = {}
-        for (const [key, value] of Object.entries(row)) {
-          parsedRow[key] = isNaN(Number(value)) ? value : Number(value)
-        }
-        return parsedRow
-      })
-    }
-
-    return data
-  })
-
-  const startParsing = useCallback(async () => {
-    if (!data || isLoading) {
-      return undefined
-    }
-
-    const parsed = await parseData(data/*, (progress: RawSleepDataLoadEvent) => {
-        setPercentage(progress.percentage)
-        setLine(progress.line)
-      }*/)
-
-    setParsedData(parsed)
-  }, [data, isLoading, parseData])
-
-  useEffect(() => {
-    console.log('STARTING+')
-    startParsing()
-
-    return () => {
-      kill()
-    }
-  }, [kill, startParsing])
-
-  console.log('Loading raw data...', percentage, '%')
+  }
 
   return {
-    error,
-    isLoading,
-    sleepData: parsedData,
-    loading: {
-      percent: percentage,
-      line
-    }
+    loading: isLoading,
+    sleepStageData
   }
 }

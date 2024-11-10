@@ -1,3 +1,5 @@
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
+
 export interface PillowSessionDuration {
   /**
    * The total number of minutes spend
@@ -39,6 +41,30 @@ export enum SleepMood {
   OK = 'ok',
   BAD = 'bad',
   UNKNOWN = 'unknown'
+}
+
+export type SleepStage = SleepMetric.AWAKE_TIME | SleepMetric.LIGHT_SLEEP | SleepMetric.DEEP_SLEEP | SleepMetric.REM_SLEEP
+
+export interface SleepSessionStage {
+  /**
+   * The time the sleep stage started
+   * within the session.
+   */
+  timestamp: Date
+
+  /**
+   * The stage of sleep that this
+   * time period represents. Multiple
+   * of the same stage can and probably
+   * will appear in a session.
+   */
+  stage: SleepStage
+
+  /**
+   * The number of minutes that the
+   * current stage instance lasted for.
+   */
+  duration: number
 }
 
 export interface PillowSleepSession {
