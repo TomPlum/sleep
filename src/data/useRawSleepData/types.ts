@@ -10,20 +10,13 @@ export interface RawSleepDataProps {
   onLoadEvent?: (event: RawSleepDataLoadEvent) => void
 }
 
-export interface RawSleepSessionStages {
-  sessionId: string
-  stages: SleepSessionStage[]
-}
-
-export interface RawSleepSessionSounds {
-  sessionId: string
-  stages: SleepSessionSound[]
-}
+export type RawSleepSessionStages = Record<string, SleepSessionStage[]>
+export type RawSleepSessionSounds = Record<string, SleepSessionSound[]>
 
 export interface RawSleepData {
   loading: boolean
-  sessionStages: RawSleepSessionStages[]
-  sessionSounds: RawSleepSessionSounds[]
+  sessionStages: RawSleepSessionStages
+  sessionSounds: RawSleepSessionSounds
 }
 
 export const TABLE_PRIMARY_KEY = 'Z_PK'

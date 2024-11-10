@@ -23,7 +23,7 @@ export const DataLoading = () => {
   }, [])
   console.log(percentage)
 
-  const { loading } = useRawSleepData({})
+  // const { loading } = useRawSleepData()
 
 /*  useEffect(() => {
     const animate = () => {
@@ -63,14 +63,14 @@ export const DataLoading = () => {
       </div>
 
       <p>
-        {loading.line}
+        {/*{loading.line}*/}
       </p>
 
-      <Progress
+      {/*<Progress
         size={[400, 20]}
         percent={loading.percent}
         percentPosition={{ align: 'center', type: 'inner' }}
-      />
+      />*/}
     </div>
   )
 }
