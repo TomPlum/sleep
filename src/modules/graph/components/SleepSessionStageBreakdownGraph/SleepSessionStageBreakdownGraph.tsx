@@ -9,7 +9,7 @@ import { SleepStage } from 'data/useSleepData'
 const CustomBar = (props: any) => {
   const { cx, cy, payload, xAxis } = props
   const barWidth = xAxis.scale(payload.end.valueOf()) - xAxis.scale(payload.start.valueOf())
-  const barHeight = 90
+  const barHeight = 75
 
   return (
     <g>
@@ -75,6 +75,22 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
     return [min, max]
   }, [barData])
 
+  const xTicks = useMemo(() => {
+    const [min, max] = xDomain
+
+    const hours: number[] = []
+    let current = dayjs(min)
+
+    while (current.isBefore(dayjs(max)) || current.isSame(dayjs(max))) {
+      hours.push(current.toDate().getTime())
+      current = current.add(1, 'hour')
+    }
+
+    // hours.unshift(dayjs(hours[0]).subtract(1, 'hour').toDate().getTime())
+
+    return hours
+  }, [xDomain])
+
   const yDomain = useMemo(() => [
     getYValue(SleepMetric.AWAKE_TIME),
     getYValue(SleepMetric.REM_SLEEP),
@@ -89,21 +105,19 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
          type='number'
          dataKey='start'
          domain={xDomain}
+         ticks={xTicks}
          tickFormatter={(value: string) => {
            return `${dayjs(value).format('HH')}:00`
          }}
        />
 
        <YAxis
-         type='number'
+         hide
          dataKey='y'
+         type='number'
          domain={yDomain}
          ticks={[0, 1, 2, 3]}
-         padding={{ bottom: 47, top: 47 }}
-       /*  tickFormatter={(value: string) => {
-           const keyWord = value.split('_')[0]
-           return `${keyWord.slice(0, 1).toUpperCase()}${keyWord.slice(1, keyWord.length)}`
-         }}*/
+         padding={{ bottom: 70, top: 70 }}
        />
 
        <CartesianGrid
