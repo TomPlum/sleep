@@ -74,9 +74,9 @@
     },
     "status": {
       "unknown": "Loading...",
-      "reading-file": "Reading Pillow database export",
-      "not-started": "Starting",
-      "starting": "Reading database",
+      "starting": "Initialising web worker",
+      "reading-file": "Reading Pillow database export file",
+      "not-started": "Awaiting web worker initialisation",
       "sleep-stages": "Associating sleep stage data with sessions",
       "sound-data": "Associating sound recording data with sessions",
       "finishing": "Finishing up",

@@ -41,7 +41,12 @@ self.addEventListener('message', async () => {
       })
     }
 
-    return await response.text()
+    const fileContents = await response.text()
+
+    return {
+      fileContents,
+      fileSize: response.headers.get('Content-Length')
+    }
   }
 
   /**
@@ -248,15 +253,8 @@ self.addEventListener('message', async () => {
   }
 
   try {
-    postMessage({
-      loading: true,
-      status: {
-        statusCode: DataWorkerStatusCode.STARTING
-      }
-    })
-
-    const file = await readFile()
-    const { sessions, sounds, stages } = scanTables({ fileContents: file })
+    const { fileContents, fileSize } = await readFile()
+    const { sessions, sounds, stages } = scanTables({ fileContents })
     const result = parseTableData({ sessions, sounds, stages })
 
     return postMessage({

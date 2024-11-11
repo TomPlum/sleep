@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { DataWorkerStatusCode } from 'data/useDataWorker'
 import { Progress } from 'antd'
 import classNames from 'classnames'
+import { CheckCircleOutlined } from '@ant-design/icons'
 
 export const DataLoading = () => {
   const { dataWorkerStatus } = useSleepContext()
@@ -39,6 +40,10 @@ export const DataLoading = () => {
 
             {currentOperation === event && (
               '...'
+            )}
+
+            {currentOperation !== event && (
+              <CheckCircleOutlined className={styles.done} />
             )}
           </div>
         ))}

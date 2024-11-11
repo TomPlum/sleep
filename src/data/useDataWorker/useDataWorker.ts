@@ -10,8 +10,6 @@ import DataWorker from './worker?worker'
 const dataWorker = new DataWorker()
 
 export const useDataWorker = (): UseDataWorkerResponse => {
-  const initialised = useRef(false)
-
   const [error, setError] = useState<Error>()
   const [running, setRunning] = useState(true)
   const [result, setResult] = useState<DataWorkerResponse>()
@@ -22,12 +20,6 @@ export const useDataWorker = (): UseDataWorkerResponse => {
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
-    /*  if (initialised.current) {
-        return
-      }*/
-
-      initialised.current = true
-
       if (event.data?.status?.statusCode === DataWorkerStatusCode.DONE) {
         setRunning(false)
       }
@@ -41,6 +33,10 @@ export const useDataWorker = (): UseDataWorkerResponse => {
 
     console.debug('Starting web worker to read Pillow database export...')
     dataWorker.postMessage('Starting worker')
+    setStatus({
+      statusCode: DataWorkerStatusCode.STARTING,
+      percent: 0
+    })
 
     return () => dataWorker.removeEventListener('message', onMessage)
   }, [])

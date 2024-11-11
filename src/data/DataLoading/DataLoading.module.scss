@@ -21,16 +21,25 @@
 
     .eventItem {
       font-family: 'Nunito', sans-serif;
-      font-size: 2em;
+      font-size: 1.6em;
       padding: 5px;
       color: white;
       margin-bottom: 5px;
       opacity: 1;
       transition: opacity 0.5s ease-out;
       animation: fadeIn 0.5s ease-out;
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
       &:nth-child(n + 6) {
         opacity: 0;
+      }
+
+      .done {
+        font-size: 0.6em;
+        color: #3ace3a;
+        margin-top: 4px;
       }
     }
   }
