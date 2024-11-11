@@ -23,7 +23,15 @@ type TableRow = Record<string, string | number>
  * Parses a single line under a table inside the
  * raw Pillow database export.
  *
+ * Rows look something like this:
+ *
+ * "Z_PK -> 1Z_ENT -> 15Z_OPT -> 3ZDURATION -> 10ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0"
+ *
+ * They're key -> value pairs but there are no spaces between the ends of
+ * one value and the start of another key.
+ *
  * @param line The line or "table row" from the data export.
+ * @returns A record of all the key value pairs from the given line data.
  */
 const parseDataLine = (line: string): TableRow => {
   const regex = /(Z(?:_[A-Z]+|[A-Z]+)?)\s*->\s*([^Z]+)/g
@@ -89,16 +97,19 @@ export const parsePillowData = ({ fileContents }: ParsePillowDataProps): ParsePi
       readingTable = isNextTableTarget ? line as RawSleepDataTable : undefined
     }
 
+    // If we're not in the middle of reading a table and all target tables have read, stop searching
     if (!readingTable && hasReadAllTargetTables) {
       searchingForTable = false
     }
 
+    // If we're reading a table and the current line is not a table name, lets parse it as a table row
     if (readingTable && !Object.values(RawSleepDataTable).includes(line as RawSleepDataTable) && line !== '') {
       const dictionary = parseDataLine(line)
       const keyValue = dictionary[TABLE_PRIMARY_KEY] ?? '999'
       currentTableData[keyValue] = dictionary
     }
 
+    // Once we're finished with the current line, increment to move onto the next one
     lineIndex++
   }
 
