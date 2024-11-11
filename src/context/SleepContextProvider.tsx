@@ -6,7 +6,7 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useSleepGraph2DData } from 'modules/graph/hooks/useSleepGraph2DData'
 import { useTranslation } from 'react-i18next'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
-import { DataWorkerStatus } from 'data/useDataWorker/worker'
+import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
 
 export const SleepContextProvider = ({ rawData, children }: PropsWithChildren<SleepContextProps>) => {
   const { i18n } = useTranslation()
@@ -51,7 +51,7 @@ export const SleepContextProvider = ({ rawData, children }: PropsWithChildren<Sl
     sleepData,
     sleepStageData: rawData?.sessionStages ?? {},
     isSleepDataLoading: loading || (rawData?.loading ?? true),
-    dataWorkerStatus: rawData?.status ?? DataWorkerStatus.NOT_STARTED,
+    dataWorkerStatus: rawData?.status ?? { percent: 0, statusCode: DataWorkerStatusCode.NOT_STARTED },
     rangeStart: rangeStart ?? new Date(),
     setRangeStart,
     rangeEnd: rangeEnd ?? new Date(),

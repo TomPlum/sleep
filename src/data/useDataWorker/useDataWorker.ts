@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   DataWorkerMessageEvent,
-  DataWorkerResponse,
+  DataWorkerResponse, DataWorkerStatus,
   UseDataWorkerResponse
 } from 'data/useDataWorker/types'
-import worker, { DataWorkerStatus } from './worker'
+import worker, { DataWorkerStatusCode } from './worker'
 
 export const useDataWorker = (): UseDataWorkerResponse => {
   const [error, setError] = useState<Error>()
   const [running, setRunning] = useState(false)
   const [result, setResult] = useState<DataWorkerResponse>()
-  const [status, setStatus] = useState(DataWorkerStatus.NOT_STARTED)
+  const [status, setStatus] = useState<DataWorkerStatus>({
+    percent: 0,
+    statusCode: DataWorkerStatusCode.NOT_STARTED
+  })
 
   const dataWorker = useMemo(() => {
     const code = worker.toString()
@@ -25,13 +28,14 @@ export const useDataWorker = (): UseDataWorkerResponse => {
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
-      console.log(event)
       setRunning(event.data.loading)
       setError(event.data.error)
       setResult(event.data)
       setStatus(event.data.status)
     }
+
     dataWorker.addEventListener('message', onMessage)
+
     return () => dataWorker.removeEventListener('message', onMessage)
   }, [dataWorker])
 

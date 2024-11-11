@@ -71,6 +71,16 @@
       "start": "Loading sleep",
       "apnea": "apnea",
       "app": "app data"
+    },
+    "status": {
+      "unknown": "Loading...",
+      "not-started": "Starting",
+      "starting": "Reading database",
+      "sleep-stages": "Associating sleep stage data with sessions",
+      "sound-data": "Associating sound recording data with sessions",
+      "finishing": "Finishing up",
+      "done": "Done",
+      "error": "An error occurred while reading the Pillow database"
     }
   }
 }

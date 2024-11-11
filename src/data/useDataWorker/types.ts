@@ -4,7 +4,7 @@ import {
   RawSleepSessionStages, RawSleepSoundPointData,
   RawSleepStageData
 } from 'data/useRawSleepData/types'
-import { DataWorkerStatus } from 'data/useDataWorker/worker'
+import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
 
 export interface DataWorkerMessageEvent {
   sessions: Record<string, RawSleepSessionData>
@@ -30,4 +30,9 @@ export interface DataWorkerResponse {
 export type DataWorkerResult = {
   sleepStages: RawSleepSessionStages,
   sounds: RawSleepSessionSounds
+}
+
+export interface DataWorkerStatus {
+  statusCode: DataWorkerStatusCode
+  percent: number
 }

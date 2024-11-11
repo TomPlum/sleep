@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { SleepContextBag } from 'context/types'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { DataWorkerStatus } from 'data/useDataWorker/worker'
+import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
 
 export const SleepContext = createContext<SleepContextBag>({
   sleepData: {
@@ -10,7 +10,10 @@ export const SleepContext = createContext<SleepContextBag>({
     latestSession: new Date()
   },
   sleepStageData: {},
-  dataWorkerStatus: DataWorkerStatus.NOT_STARTED,
+  dataWorkerStatus: {
+    statusCode: DataWorkerStatusCode.NOT_STARTED,
+    percent: 0
+  },
   isSleepDataLoading: true,
   rangeStart: new Date(),
   setRangeStart: (start: Date) => {

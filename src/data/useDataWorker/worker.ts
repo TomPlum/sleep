@@ -1,7 +1,7 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 import { DataWorkerMessageEvent, DataWorkerResult } from 'data/useDataWorker/types'
 
-export enum DataWorkerStatus {
+export enum DataWorkerStatusCode {
   NOT_STARTED = 'not-started',
   STARTING = 'starting',
   SLEEP_STAGE_DATA = 'sleep-stages',
@@ -16,7 +16,10 @@ export default () => {
     const parse = ({ sessions, stages, sounds }: DataWorkerMessageEvent) => {
       self.postMessage({
         loading: true,
-        status: DataWorkerStatus.STARTING
+        status: {
+          statusCode: DataWorkerStatusCode.STARTING,
+          percent: 0
+        }
       })
 
       /**
@@ -72,12 +75,10 @@ export default () => {
         return date
       }
 
-      const result =  Object.keys(sessions).reduce<DataWorkerResult>((acc, sessionKey, i) => {
-        self.postMessage({
-          loading: true,
-          status: DataWorkerStatus.SLEEP_STAGE_DATA
-        })
+      const sessionKeys = Object.keys(sessions)
+      const sessionCount = sessionKeys.length
 
+      const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionKey, i) => {
         // TODO: Reduce runtime complexity here by looping less
         const sessionStages = Object.values(stages).filter(stageData => {
           return stageData.ZSLEEPSESSION === Number(sessionKey)
@@ -86,11 +87,6 @@ export default () => {
           stage: parseSleepStage(stageData.ZSLEEPSTAGE),
           timestamp: parseRawTimestamp(stageData.ZTIMESTAMP)
         }))
-
-        self.postMessage({
-          loading: true,
-          status: DataWorkerStatus.SOUND_DATA
-        })
 
         const sessionSound = Object.values(sounds).filter(soundData => {
           return soundData.ZSLEEPSESSION === Number(sessionKey)
@@ -106,12 +102,23 @@ export default () => {
         acc.sleepStages[sessionId] = sessionStages
         acc.sounds[sessionId] = sessionSound
 
+        self.postMessage({
+          loading: true,
+          status: {
+            statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
+            percent: ((i + 1) / sessionCount) * 100
+          }
+        })
+
         return acc
       }, { sleepStages: {}, sounds: {} })
 
       self.postMessage({
         loading: true,
-        status: DataWorkerStatus.FINISHING
+        status: {
+          statusCode: DataWorkerStatusCode.FINISHING,
+          percent: 100
+        }
       })
 
       return result
@@ -127,7 +134,10 @@ export default () => {
       return postMessage({
         result,
         loading: false,
-        status: DataWorkerStatus.DONE
+        status: {
+          statusCode: DataWorkerStatusCode.DONE,
+          percent: 100
+        }
       })
     } catch (e) {
       return postMessage({

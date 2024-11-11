@@ -1,5 +1,5 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
-import { DataWorkerStatus } from 'data/useDataWorker/worker'
+import { DataWorkerStatus } from 'data/useDataWorker'
 
 export interface RawSleepDataLoadEvent {
   done: boolean

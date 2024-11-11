@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react'
 import { RawSleepData } from './types'
 import { parsePillowData, ParsePillowDataResult } from 'data/useRawSleepData/parsePillowData'
 import { useDataWorker } from 'data/useDataWorker'
-import { DataWorkerStatus } from 'data/useDataWorker/worker'
+import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
 
 
 export const useRawSleepData = (): RawSleepData => {
@@ -34,7 +34,10 @@ export const useRawSleepData = (): RawSleepData => {
       loading: true,
       sessionStages: {},
       sessionSounds: {},
-      status: DataWorkerStatus.ERROR
+      status: {
+        statusCode: DataWorkerStatusCode.ERROR,
+        percent: 0
+      }
     }
   }
 
