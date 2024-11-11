@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react'
 import { RawSleepData } from './types'
 import { parsePillowData, ParsePillowDataResult } from 'data/useRawSleepData/parsePillowData'
 import { useDataWorker } from 'data/useDataWorker'
+import { DataWorkerStatus } from 'data/useDataWorker/worker'
 
 
 export const useRawSleepData = (): RawSleepData => {
@@ -20,7 +21,7 @@ export const useRawSleepData = (): RawSleepData => {
     return parsePillowData({ fileContents: data })
   }, [data])
 
-  const { result, running, startProcessing } = useDataWorker()
+  const { result, status, running, startProcessing } = useDataWorker()
 
   useEffect(() => {
     if (Object.keys(sessions).length > 0 && Object.keys(stages).length > 0  && Object.keys(sounds).length > 0) {
@@ -32,12 +33,14 @@ export const useRawSleepData = (): RawSleepData => {
     return {
       loading: true,
       sessionStages: {},
-      sessionSounds: {}
+      sessionSounds: {},
+      status: DataWorkerStatus.ERROR
     }
   }
 
   return {
     loading: isLoading || running,
+    status,
     sessionStages: result?.sleepStages ?? {},
     sessionSounds: result?.sounds ?? {}
   }

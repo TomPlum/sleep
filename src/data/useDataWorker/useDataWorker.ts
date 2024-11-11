@@ -4,12 +4,13 @@ import {
   DataWorkerResponse,
   UseDataWorkerResponse
 } from 'data/useDataWorker/types'
-import worker from './worker'
+import worker, { DataWorkerStatus } from './worker'
 
 export const useDataWorker = (): UseDataWorkerResponse => {
   const [error, setError] = useState<Error>()
   const [running, setRunning] = useState(false)
   const [result, setResult] = useState<DataWorkerResponse>()
+  const [status, setStatus] = useState(DataWorkerStatus.NOT_STARTED)
 
   const dataWorker = useMemo(() => {
     const code = worker.toString()
@@ -28,6 +29,7 @@ export const useDataWorker = (): UseDataWorkerResponse => {
       setRunning(event.data.loading)
       setError(event.data.error)
       setResult(event.data)
+      setStatus(event.data.status)
     }
     dataWorker.addEventListener('message', onMessage)
     return () => dataWorker.removeEventListener('message', onMessage)
@@ -37,6 +39,7 @@ export const useDataWorker = (): UseDataWorkerResponse => {
     startProcessing,
     running,
     error,
+    status,
     result: {
       sounds: result?.result?.sounds ?? {},
       sleepStages: result?.result?.sleepStages ?? {}

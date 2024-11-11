@@ -3,6 +3,7 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData'
 import { Dispatch, SetStateAction } from 'react'
 import { RawSleepData, RawSleepSessionStages } from 'data/useRawSleepData/types'
+import { DataWorkerStatus } from 'data/useDataWorker/worker'
 
 export interface SleepContextProps {
   rawData?: RawSleepData
@@ -22,6 +23,12 @@ export interface SleepContextBag {
    * session ID.
    */
   sleepStageData: RawSleepSessionStages
+
+  /**
+   * The status of the web worker that is
+   * responsible for loading the sleep data.
+   */
+  dataWorkerStatus: DataWorkerStatus
 
   /**
    * Whether the read IO or conversion process of

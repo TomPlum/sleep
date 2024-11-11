@@ -1,11 +1,22 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 import { DataWorkerMessageEvent, DataWorkerResult } from 'data/useDataWorker/types'
 
+export enum DataWorkerStatus {
+  NOT_STARTED = 'not-started',
+  STARTING = 'starting',
+  SLEEP_STAGE_DATA = 'sleep-stages',
+  SOUND_DATA = 'sound-data',
+  FINISHING = 'finishing',
+  DONE = 'done',
+  ERROR = 'error'
+}
+
 export default () => {
   self.addEventListener('message', (e: MessageEvent<DataWorkerMessageEvent>) => {
     const parse = ({ sessions, stages, sounds }: DataWorkerMessageEvent) => {
       self.postMessage({
-        loading: true
+        loading: true,
+        status: DataWorkerStatus.STARTING
       })
 
       /**
@@ -62,6 +73,11 @@ export default () => {
       }
 
       const result =  Object.keys(sessions).reduce<DataWorkerResult>((acc, sessionKey, i) => {
+        self.postMessage({
+          loading: true,
+          status: DataWorkerStatus.SLEEP_STAGE_DATA
+        })
+
         // TODO: Reduce runtime complexity here by looping less
         const sessionStages = Object.values(stages).filter(stageData => {
           return stageData.ZSLEEPSESSION === Number(sessionKey)
@@ -70,6 +86,11 @@ export default () => {
           stage: parseSleepStage(stageData.ZSLEEPSTAGE),
           timestamp: parseRawTimestamp(stageData.ZTIMESTAMP)
         }))
+
+        self.postMessage({
+          loading: true,
+          status: DataWorkerStatus.SOUND_DATA
+        })
 
         const sessionSound = Object.values(sounds).filter(soundData => {
           return soundData.ZSLEEPSESSION === Number(sessionKey)
@@ -88,7 +109,10 @@ export default () => {
         return acc
       }, { sleepStages: {}, sounds: {} })
 
-      self.postMessage('WORKER FINISHED')
+      self.postMessage({
+        loading: true,
+        status: DataWorkerStatus.FINISHING
+      })
 
       return result
     }
@@ -102,7 +126,8 @@ export default () => {
 
       return postMessage({
         result,
-        loading: false
+        loading: false,
+        status: DataWorkerStatus.DONE
       })
     } catch (e) {
       return postMessage({

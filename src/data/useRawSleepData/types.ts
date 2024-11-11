@@ -1,4 +1,5 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
+import { DataWorkerStatus } from 'data/useDataWorker/worker'
 
 export interface RawSleepDataLoadEvent {
   done: boolean
@@ -15,6 +16,7 @@ export type RawSleepSessionSounds = Record<string, SleepSessionSound[]>
 
 export interface RawSleepData {
   loading: boolean
+  status: DataWorkerStatus
   sessionStages: RawSleepSessionStages
   sessionSounds: RawSleepSessionSounds
 }

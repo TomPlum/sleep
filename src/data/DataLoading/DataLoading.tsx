@@ -1,76 +1,51 @@
 import { useTranslation } from 'react-i18next'
 import styles from './DataLoading.module.scss'
 import { Progress } from 'antd'
-import { useCallback, useEffect, useState } from 'react'
-import classNames from 'classnames'
-import { useRawSleepData } from 'data/useRawSleepData'
-import { RawSleepDataLoadEvent } from 'data/useRawSleepData/types'
+import { useSleepContext } from 'context'
+import { useMemo } from 'react'
+import { DataWorkerStatus } from 'data/useDataWorker/worker'
 
 export const DataLoading = () => {
-  const [started, setStarted] = useState(false)
-  const [animating, setAnimating] = useState(false)
-
-  const [line, setLine] = useState(0)
-  const [percentage, setPercentage] = useState(0)
-
+  const { dataWorkerStatus } = useSleepContext()
   const  { t } = useTranslation('translation', { keyPrefix: 'loading' })
 
-  const handleSleepDataLoadEvent = useCallback((event: RawSleepDataLoadEvent) => {
-    // console.log(JSON.stringify(event))
-    setPercentage(event.percentage)
-    console.log(event.line)
-    setLine(event.line)
-  }, [])
-  console.log(percentage)
-
-  // const { loading } = useRawSleepData()
-
-/*  useEffect(() => {
-    const animate = () => {
-      setTimeout(() => {
-        setStarted(true)
-        setAnimating(true)
-      }, 500)
-
-      setTimeout(() => {
-        setAnimating(false)
-      }, 2000)
+  const percent = useMemo<number>(() => {
+    switch (dataWorkerStatus) {
+      case DataWorkerStatus.NOT_STARTED: {
+        return 0
+      }
+      case DataWorkerStatus.STARTING: {
+        return 5
+      }
+      case DataWorkerStatus.SLEEP_STAGE_DATA: {
+        return 45
+      }
+      case DataWorkerStatus.SOUND_DATA: {
+        return 85
+      }
+      case DataWorkerStatus.FINISHING: {
+        return 95
+      }
+      case DataWorkerStatus.DONE: {
+        return 100
+      }
+      case DataWorkerStatus.ERROR: {
+        return 100
+      }
     }
-
-    animate()
-
-    return animate
-  }, [])*/
+  }, [dataWorkerStatus])
 
   return (
     <div className={styles.loading}>
-      <div className={styles.title}>
-        <p className={styles.start}>
-          {t('title.start')}
-        </p>
-
-        {(!started || animating) && (
-          <p className={classNames(styles.apnea, { [styles.strike]: animating })}>
-            {t('title.apnea')}
-          </p>
-        )}
-
-        {started && !animating && (
-          <p className={styles.app}>
-            {t('title.app')}
-          </p>
-        )}
-      </div>
-
       <p>
-        {/*{loading.line}*/}
+        {t(dataWorkerStatus)}
       </p>
 
-      {/*<Progress
+      <Progress
         size={[400, 20]}
-        percent={loading.percent}
+        percent={percent}
         percentPosition={{ align: 'center', type: 'inner' }}
-      />*/}
+      />
     </div>
   )
 }
