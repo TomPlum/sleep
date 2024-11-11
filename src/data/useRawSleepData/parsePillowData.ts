@@ -17,27 +17,22 @@ export interface ParsePillowDataResult {
 
 type TableData <T> = Record<string, T>
 
-const parseDataLine = (line: string): Record<string, string | number> => {
-  const tokens = line.split(/\s+/)
-  const row: Record<string, string | number> = {}
+type TableRow = Record<string, string | number>
 
-  while (tokens.length) {
-    const valueParts: string[] = [tokens.pop()!] // Pop last token
-    let valuePartOrSep = tokens.pop() // Should be '->'
-
-    while (valuePartOrSep !== '->') {
-      valueParts.push(valuePartOrSep!)
-      valuePartOrSep = tokens.pop()
-    }
-
-    valueParts.reverse()
-
-    const key = tokens.pop()!
-    const joinedValueParts = valueParts.join(' ')
-    row[key] = isNaN(Number(joinedValueParts)) ? joinedValueParts : Number(joinedValueParts)
-  }
-
-  return row
+/**
+ * Parses a single line under a table inside the
+ * raw Pillow database export.
+ *
+ * @param line The line or "table row" from the data export.
+ */
+const parseDataLine = (line: string): TableRow => {
+  const regex = /(Z(?:_[A-Z]+|[A-Z]+)?)\s*->\s*([^Z]+)/g
+  return Array.from(line.matchAll(regex)).reduce<TableRow>((row, match) => {
+    const [ , key, value ] = match
+    const sanitisedValue = value.trim()
+    row[key] = isNaN(Number(sanitisedValue)) ? sanitisedValue : Number(sanitisedValue)
+    return row
+  }, {})
 }
 
 /**

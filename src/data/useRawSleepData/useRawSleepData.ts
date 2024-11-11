@@ -71,6 +71,7 @@ const parse = ({ sessions, stages, sounds }: ParseArgs) => {
   }
 
   return Object.keys(sessions).reduce<ParsedData>((acc, sessionKey, i) => {
+    // TODO: Reduce runtime complexity here by looping less
     const sessionStages = Object.values(stages).filter(stageData => {
       return stageData.ZSLEEPSESSION === Number(sessionKey)
     }).map<SleepSessionStage>(stageData => ({
@@ -86,6 +87,7 @@ const parse = ({ sessions, stages, sounds }: ParseArgs) => {
       timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
       duration: stageData.ZDURATION
     }))
+
 
     const sessionId = `session-${i}`
 
@@ -129,7 +131,8 @@ export const useRawSleepData = (): RawSleepData => {
 
       triggerParserWorker({ sessions, stages, sounds })
         .then((result: ParsedData) => {
-          console.debug(`Loaded ${Object.keys(result.sleepStages).length} sessions from raw data web worker.`)
+          console.debug(`Loaded ${Object.keys(result.sleepStages).length} sessions of stage data from raw data web worker.`)
+          console.debug(`Loaded ${Object.keys(result.sounds).length} sound data points from raw data web worker.`)
           setParsedData(result)
         }).catch(e => {
           console.error('Failed to parse data in web worker', e)

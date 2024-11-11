@@ -8,7 +8,7 @@ describe('Parse Raw Pillow Data', () => {
 
   beforeAll(() => {
     try {
-      const filePath = resolve(__dirname, '../../test/PillowDataRaw.txt')
+      const filePath = resolve(__dirname, '../../test/PillowData-11-11-24.txt')
       pillowData = readFileSync(filePath, 'utf8')
     } catch (e) {
       console.error('Failed to setup useRawSleepData.spec.ts as the data could not be read', e)

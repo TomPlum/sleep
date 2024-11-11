@@ -10,6 +10,7 @@ import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
 export const SleepContextProvider = ({ rawData, children }: PropsWithChildren<SleepContextProps>) => {
   const { i18n } = useTranslation()
   const { sleepData, loading } = useSleepData()
+  console.log('RAW DATA', rawData?.sessionStages)
 
   const {
     currentMetric,

@@ -4,7 +4,7 @@ import { GetPillowDataProps } from 'data/usePillowData/types'
 
 export const usePillowData = ({ type }: GetPillowDataProps) => {
   const readFile = useCallback(async () => {
-    const fileName = type === 'raw' ? 'PillowDataRaw.txt' : 'PillowData-02-11-24.csv'
+    const fileName = type === 'raw' ? 'PillowData-11-11-24.txt' : 'PillowData-02-11-24.csv'
     const response = await fetch(fileName)
 
     if (!response.ok) {
