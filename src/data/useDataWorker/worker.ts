@@ -32,6 +32,8 @@ self.addEventListener('message', async () => {
       }
     })
 
+    const timeStart = new Date()
+
     const fileName = `${self.location.origin}/PillowData-11-11-24.txt`
     const response = await fetch(fileName)
 
@@ -44,11 +46,14 @@ self.addEventListener('message', async () => {
     const fileContents = await response.text()
     const fileSize = response.headers.get('Content-Length')
 
+    const timeEnd = new Date()
+    const timeDelta = timeEnd.getTime() - timeStart.getTime()
+
     postMessage({
       loading: true,
       status: {
         statusCode: DataWorkerStatusCode.READING_FILE,
-        payload: `Successfully read ${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB`
+        payload: `Successfully read ${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${timeDelta}ms.`
       }
     })
 
@@ -159,6 +164,8 @@ self.addEventListener('message', async () => {
   }
 
   const parseTableData = ({ sessions, stages, sounds }: DataWorkerMessageEvent) => {
+    const timeStart = new Date()
+
     /**
      * Converts the raw stage value into an enum value string.
      *
@@ -242,18 +249,23 @@ self.addEventListener('message', async () => {
         loading: true,
         status: {
           statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
-          percent: ((i + 1) / sessionCount) * 100
+          percent: ((i + 1) / sessionCount) * 100,
+          payload: `Processing sleep stage and sound data for session ${i + 1}...`
         }
       })
 
       return acc
     }, { sleepStages: {}, sounds: {} })
 
+    const timeEnd = new Date()
+    const timeDelta = timeEnd.getTime() - timeStart.getTime()
+
     postMessage({
       loading: true,
       status: {
         statusCode: DataWorkerStatusCode.FINISHING,
-        percent: 100
+        percent: 100,
+        payload: `Matched ${Object.keys(sessions).length} in ${timeDelta}ms`
       }
     })
 

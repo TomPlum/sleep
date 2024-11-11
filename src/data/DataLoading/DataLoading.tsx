@@ -3,9 +3,9 @@ import styles from './DataLoading.module.scss'
 import { useSleepContext } from 'context'
 import { useEffect, useState } from 'react'
 import { DataWorkerStatusCode } from 'data/useDataWorker'
-import { Progress } from 'antd'
+import { Progress, Spin } from 'antd'
 import classNames from 'classnames'
-import { CheckCircleOutlined } from '@ant-design/icons'
+import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 
 export const DataLoading = () => {
   const { dataWorkerStatus } = useSleepContext()
@@ -34,10 +34,13 @@ export const DataLoading = () => {
             key={index}
             className={classNames(
               styles.eventItem,
-              { [styles.activeOperation]: currentOperation === event }
+              { [styles.historicalOperation]: currentOperation !== event }
             )}
           >
-            <span className={styles.eventName}>
+            <span className={classNames(
+              styles.eventName,
+              { [styles.activeOperation]: currentOperation === event }
+            )}>
               {t(`status.${event}`)}
 
               {currentOperation === event && (
@@ -50,7 +53,15 @@ export const DataLoading = () => {
                 <CheckCircleOutlined className={styles.done} />
               )}
 
-              {currentOperation !== event && history[event as DataWorkerStatusCode] && (
+              {currentOperation === event && (
+                <Spin
+                  size="small"
+                  className={styles.spinner}
+                  indicator={<LoadingOutlined spin />}
+                />
+              )}
+
+              {history[event as DataWorkerStatusCode] && (
                 <span className={styles.payloadText}>
                   {history[event as DataWorkerStatusCode]}
                 </span>

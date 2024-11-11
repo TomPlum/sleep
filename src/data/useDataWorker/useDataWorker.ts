@@ -15,7 +15,8 @@ export const useDataWorker = (): UseDataWorkerResponse => {
   const [result, setResult] = useState<DataWorkerResponse>()
   const [status, setStatus] = useState<DataWorkerStatus>({
     percent: 0,
-    statusCode: DataWorkerStatusCode.NOT_STARTED
+    statusCode: DataWorkerStatusCode.NOT_STARTED,
+    payload: 'Sent message to startup web worker.'
   })
 
   useEffect(() => {
@@ -35,7 +36,8 @@ export const useDataWorker = (): UseDataWorkerResponse => {
     dataWorker.postMessage('Starting worker')
     setStatus({
       statusCode: DataWorkerStatusCode.STARTING,
-      percent: 0
+      percent: 0,
+      payload: 'Pillow raw data web worker initialised.'
     })
 
     return () => dataWorker.removeEventListener('message', onMessage)
