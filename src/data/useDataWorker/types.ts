@@ -32,6 +32,7 @@ export type DataWorkerResult = {
 
 export interface DataWorkerStatus {
   statusCode: DataWorkerStatusCode
+  payload?: string
   percent: number
 }
 
@@ -40,7 +41,6 @@ export enum DataWorkerStatusCode {
   READING_FILE = 'reading-file',
   STARTING = 'starting',
   SLEEP_STAGE_DATA = 'sleep-stages',
-  SOUND_DATA = 'sound-data',
   FINISHING = 'finishing',
   DONE = 'done',
   ERROR = 'error'

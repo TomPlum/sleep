@@ -42,10 +42,18 @@ self.addEventListener('message', async () => {
     }
 
     const fileContents = await response.text()
+    const fileSize = response.headers.get('Content-Length')
+
+    postMessage({
+      loading: true,
+      status: {
+        statusCode: DataWorkerStatusCode.READING_FILE,
+        payload: `Successfully read ${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB`
+      }
+    })
 
     return {
-      fileContents,
-      fileSize: response.headers.get('Content-Length')
+      fileContents
     }
   }
 
@@ -253,7 +261,7 @@ self.addEventListener('message', async () => {
   }
 
   try {
-    const { fileContents, fileSize } = await readFile()
+    const { fileContents } = await readFile()
     const { sessions, sounds, stages } = scanTables({ fileContents })
     const result = parseTableData({ sessions, sounds, stages })
 
@@ -262,13 +270,16 @@ self.addEventListener('message', async () => {
       loading: false,
       status: {
         statusCode: DataWorkerStatusCode.DONE,
-        percent: 100
+        percent: 100,
       }
     })
   } catch (e) {
     return postMessage({
       error: e,
-      loading: false
+      loading: false,
+      status: {
+        statusCode: DataWorkerStatusCode.ERROR
+      }
     })
   }
 })

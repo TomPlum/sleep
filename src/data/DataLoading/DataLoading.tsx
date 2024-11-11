@@ -10,7 +10,7 @@ import { CheckCircleOutlined } from '@ant-design/icons'
 export const DataLoading = () => {
   const { dataWorkerStatus } = useSleepContext()
 
-  const [history, setHistory] = useState<Set<DataWorkerStatusCode>>(new Set())
+  const [history, setHistory] = useState<Partial<Record<DataWorkerStatusCode, string>>>({})
   const [currentOperation, setCurrentOperation] = useState<DataWorkerStatusCode>()
 
   const  { t } = useTranslation('translation', { keyPrefix: 'loading' })
@@ -18,17 +18,18 @@ export const DataLoading = () => {
   useEffect(() => {
     setCurrentOperation(dataWorkerStatus.statusCode)
 
-    if (![...history].includes(dataWorkerStatus.statusCode)) {
-      setHistory(current => {
-        return new Set([...current, dataWorkerStatus.statusCode])
-      })
-    }
-  }, [history, dataWorkerStatus])
+    setHistory(current => {
+      return {
+        ...current,
+        [dataWorkerStatus.statusCode]: dataWorkerStatus.payload
+      }
+    })
+  }, [dataWorkerStatus])
 
   return (
     <div className={styles.loading}>
       <div className={styles.eventHistory}>
-        {[...history].map((event, index) => (
+        {Object.keys(history).map((event, index) => (
           <div
             key={index}
             className={classNames(
@@ -36,15 +37,25 @@ export const DataLoading = () => {
               { [styles.activeOperation]: currentOperation === event }
             )}
           >
-            {t(`status.${event}`)}
+            <span className={styles.eventName}>
+              {t(`status.${event}`)}
 
-            {currentOperation === event && (
-              '...'
-            )}
+              {currentOperation === event && (
+                '...'
+              )}
+            </span>
 
-            {currentOperation !== event && (
-              <CheckCircleOutlined className={styles.done} />
-            )}
+            <div className={styles.payloadInfo}>
+              {currentOperation !== event && (
+                <CheckCircleOutlined className={styles.done} />
+              )}
+
+              {currentOperation !== event && history[event as DataWorkerStatusCode] && (
+                <span className={styles.payloadText}>
+                  {history[event as DataWorkerStatusCode]}
+                </span>
+              )}
+            </div>
           </div>
         ))}
 
