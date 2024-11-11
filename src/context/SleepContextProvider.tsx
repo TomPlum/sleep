@@ -1,16 +1,18 @@
 import { SleepContext } from 'context/SleepContext'
 import { PropsWithChildren, useEffect, useMemo } from 'react'
-import { SleepContextBag, SleepContextProps } from 'context/types'
+import { SleepContextBag } from 'context/types'
 import { useSleepData } from 'data/useSleepData'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useSleepGraph2DData } from 'modules/graph/hooks/useSleepGraph2DData'
 import { useTranslation } from 'react-i18next'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
-import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
+import { DataWorkerStatusCode } from 'data/useDataWorker'
+import { useRawSleepData } from 'data/useRawSleepData'
 
-export const SleepContextProvider = ({ rawData, children }: PropsWithChildren<SleepContextProps>) => {
+export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
   const { sleepData, loading } = useSleepData()
+  const rawData = useRawSleepData()
 
   const {
     currentMetric,

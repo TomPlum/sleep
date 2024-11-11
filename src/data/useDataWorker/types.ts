@@ -4,7 +4,6 @@ import {
   RawSleepSessionStages, RawSleepSoundPointData,
   RawSleepStageData
 } from 'data/useRawSleepData/types'
-import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
 
 export interface DataWorkerMessageEvent {
   sessions: Record<string, RawSleepSessionData>
@@ -13,7 +12,6 @@ export interface DataWorkerMessageEvent {
 }
 
 export interface UseDataWorkerResponse {
-  startProcessing: (payload: DataWorkerMessageEvent) => void
   running: boolean
   error?: Error
   status: DataWorkerStatus
@@ -35,4 +33,15 @@ export type DataWorkerResult = {
 export interface DataWorkerStatus {
   statusCode: DataWorkerStatusCode
   percent: number
+}
+
+export enum DataWorkerStatusCode {
+  NOT_STARTED = 'not-started',
+  READING_FILE = 'reading-file',
+  STARTING = 'starting',
+  SLEEP_STAGE_DATA = 'sleep-stages',
+  SOUND_DATA = 'sound-data',
+  FINISHING = 'finishing',
+  DONE = 'done',
+  ERROR = 'error'
 }

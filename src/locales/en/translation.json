@@ -74,6 +74,7 @@
     },
     "status": {
       "unknown": "Loading...",
+      "reading-file": "Reading Pillow database export",
       "not-started": "Starting",
       "starting": "Reading database",
       "sleep-stages": "Associating sleep stage data with sessions",

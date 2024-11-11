@@ -1,32 +1,58 @@
 import { useTranslation } from 'react-i18next'
 import styles from './DataLoading.module.scss'
-import { Progress } from 'antd'
 import { useSleepContext } from 'context'
-import { useMemo } from 'react'
+import { useEffect, useState } from 'react'
+import { DataWorkerStatusCode } from 'data/useDataWorker'
+import { Progress } from 'antd'
+import classNames from 'classnames'
 
 export const DataLoading = () => {
   const { dataWorkerStatus } = useSleepContext()
+
+  const [history, setHistory] = useState<Set<DataWorkerStatusCode>>(new Set())
+  const [currentOperation, setCurrentOperation] = useState<DataWorkerStatusCode>()
+
   const  { t } = useTranslation('translation', { keyPrefix: 'loading' })
 
-  const status = useMemo(() => {
-    if (dataWorkerStatus) {
-      return t(`status.${dataWorkerStatus.statusCode}`)
-    }
+  useEffect(() => {
+    setCurrentOperation(dataWorkerStatus.statusCode)
 
-    return t('status.unknown')
-  }, [t, dataWorkerStatus])
+    if (![...history].includes(dataWorkerStatus.statusCode)) {
+      setHistory(current => {
+        return new Set([...current, dataWorkerStatus.statusCode])
+      })
+    }
+  }, [history, dataWorkerStatus])
 
   return (
     <div className={styles.loading}>
-      <p className={styles.status}>
-        {status}
-      </p>
+      <div className={styles.eventHistory}>
+        {[...history].map((event, index) => (
+          <div
+            key={index}
+            className={classNames(
+              styles.eventItem,
+              { [styles.activeOperation]: currentOperation === event }
+            )}
+          >
+            {t(`status.${event}`)}
 
-      <Progress
-        size={[400, 20]}
-        percent={Math.round(dataWorkerStatus.percent)}
-        percentPosition={{ align: 'center', type: 'inner' }}
-      />
+            {currentOperation === event && (
+              '...'
+            )}
+          </div>
+        ))}
+
+        {currentOperation === DataWorkerStatusCode.SLEEP_STAGE_DATA && (
+          <Progress
+            size='small'
+            strokeColor='#FFFFFF'
+            trailColor='#575757'
+            className={styles.progress}
+            percent={Math.round(dataWorkerStatus.percent)}
+          />
+        )}
+      </div>
     </div>
   )
 }

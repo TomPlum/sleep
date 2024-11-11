@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { SleepContextBag } from 'context/types'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { DataWorkerStatusCode } from 'data/useDataWorker/worker'
+import { DataWorkerStatusCode } from 'data/useDataWorker'
 
 export const SleepContext = createContext<SleepContextBag>({
   sleepData: {

@@ -1,34 +1,37 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
-  DataWorkerMessageEvent,
-  DataWorkerResponse, DataWorkerStatus,
+  DataWorkerResponse,
+  DataWorkerStatus,
+  DataWorkerStatusCode,
   UseDataWorkerResponse
 } from 'data/useDataWorker/types'
-import worker, { DataWorkerStatusCode } from './worker'
+import DataWorker from './worker?worker'
+
+const dataWorker = new DataWorker()
 
 export const useDataWorker = (): UseDataWorkerResponse => {
+  const initialised = useRef(false)
+
   const [error, setError] = useState<Error>()
-  const [running, setRunning] = useState(false)
+  const [running, setRunning] = useState(true)
   const [result, setResult] = useState<DataWorkerResponse>()
   const [status, setStatus] = useState<DataWorkerStatus>({
     percent: 0,
     statusCode: DataWorkerStatusCode.NOT_STARTED
   })
 
-  const dataWorker = useMemo(() => {
-    const code = worker.toString()
-    const blob = new Blob(['(' + code + ')()'])
-    return new Worker(URL.createObjectURL(blob))
-  }, [])
-
-  const startProcessing = useCallback((data: DataWorkerMessageEvent) => {
-    setRunning(true)
-    dataWorker.postMessage(data)
-  }, [dataWorker])
-
   useEffect(() => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
-      setRunning(event.data.loading)
+    /*  if (initialised.current) {
+        return
+      }*/
+
+      initialised.current = true
+
+      if (event.data?.status?.statusCode === DataWorkerStatusCode.DONE) {
+        setRunning(false)
+      }
+
       setError(event.data.error)
       setResult(event.data)
       setStatus(event.data.status)
@@ -36,11 +39,13 @@ export const useDataWorker = (): UseDataWorkerResponse => {
 
     dataWorker.addEventListener('message', onMessage)
 
+    console.debug('Starting web worker to read Pillow database export...')
+    dataWorker.postMessage('Starting worker')
+
     return () => dataWorker.removeEventListener('message', onMessage)
-  }, [dataWorker])
+  }, [])
 
   return {
-    startProcessing,
     running,
     error,
     status,

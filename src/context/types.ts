@@ -2,12 +2,9 @@ import { PillowSleepData } from 'data/useSleepData'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData'
 import { Dispatch, SetStateAction } from 'react'
-import { RawSleepData, RawSleepSessionStages } from 'data/useRawSleepData/types'
+import { RawSleepSessionStages } from 'data/useRawSleepData/types'
 import { DataWorkerStatus } from 'data/useDataWorker'
 
-export interface SleepContextProps {
-  rawData?: RawSleepData
-}
 
 export interface SleepContextBag {
   /**
