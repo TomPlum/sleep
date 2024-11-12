@@ -175,7 +175,6 @@ self.addEventListener('message', async () => {
      * @param rawStageValue The raw stage numerical discriminator value.
      */
     const parseSleepStage = (rawStageValue: number): SleepStage => {
-      // TODO: Can we strongly type this inside the worker?
       switch (rawStageValue) {
         case 0.0: {
           return 'deep_sleep' as SleepStage
@@ -207,15 +206,8 @@ self.addEventListener('message', async () => {
      * @param rawTimestamp The raw timestamp from the export.
      */
     const parseRawTimestamp = (rawTimestamp: number): Date => {
-      // For some reason, one (or maybe more) of the timestamps have an ƒ character in them
-      // TODO: Check a fresh export, did I add this f character by accident while trying to crtl + f?
-      const sanitised = Number(rawTimestamp.toString().replace('ƒ', ''))
-
-      // TODO: Can we restore this dayjs logic while in the worker?
-      // dayjs(new Date(sanitised * 1000)).add(31, 'years').toDate()
-      const date = new Date(sanitised * 1000)
+      const date = new Date(rawTimestamp * 1000)
       date.setFullYear(date.getFullYear() + 31)
-
       return date
     }
 
