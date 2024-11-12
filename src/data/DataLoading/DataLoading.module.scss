@@ -5,6 +5,18 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  animation: breathing 4s infinite ease-in-out;
+  background: radial-gradient(circle at center, rgba(89, 0, 255, 0.15), rgba(255, 0, 0, 0)) center;
+  background-size: 100% 100%;
+
+  @keyframes breathing {
+    0%, 100% {
+      background-size: 100% 100%;
+    }
+    50% {
+      background-size: 120% 120%;
+    }
+  }
 
   .eventHistory {
     padding: 25px;
@@ -13,7 +25,8 @@
 
     .activeOperation {
       opacity: 1;
-      color: #646cff;
+      color: #fff;
+      font-weight: 600;
     }
 
     .historicalOperation {
