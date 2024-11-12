@@ -2,34 +2,9 @@ import { CartesianGrid, ResponsiveContainer, Scatter, ScatterChart, XAxis, YAxis
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionStageBreakdownGraphProps } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
-import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
-
-// TODO: Extract and type
-const SleepStageBar = (props: any) => {
-  const { cx, cy, payload, xAxis } = props
-  const barWidth = xAxis.scale(payload.end.valueOf()) - xAxis.scale(payload.start.valueOf())
-  const barHeight = 75
-
-  return (
-    <g>
-      <rect
-        x={cx}
-        rx={4}
-        ry={4}
-        width={barWidth}
-        height={barHeight}
-        y={cy - barHeight / 2}
-        style={{
-          stroke: getMetricColour(payload.stage),
-          strokeWidth: 2
-        }}
-        fill={getMetricColour(payload.stage).replace('rgb', 'rgba').replace(')', ', 0.80)')}
-      />
-    </g>
-  )
-}
+import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
 
 export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreakdownGraphProps) => {
 
@@ -167,7 +142,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
        />
 
        <Scatter
-         shape={<SleepStageBar />}
+         shape={(props) => <SleepStageBar {...props} />}
        />
      </ScatterChart>
    </ResponsiveContainer>
