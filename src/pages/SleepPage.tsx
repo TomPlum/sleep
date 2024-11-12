@@ -34,6 +34,7 @@ export const SleepPage = () => {
       <DataLoading />
     )
   }
+  console.log(selectedSession)
 
   return (
     <div className={styles.container}>
@@ -48,6 +49,7 @@ export const SleepPage = () => {
               metric={metric}
               className={styles.graph}
               key={`sleep-graph-2d-${metric}`}
+              selectedSession={selectedSession}
               onSelectSession={setSelectedSession}
             />
           ))}
@@ -63,20 +65,20 @@ export const SleepPage = () => {
         </div>
       )}
 
-      {sleepStageData && selectedSession && (
-        <div className={styles.breakdownGraph}>
+      <div className={styles.graphContainer}>
+        {!stackedView && (
+          <SleepSessionsGraph2D
+            metric={sleepMetric}
+            className={styles.graph}
+            selectedSession={selectedSession}
+            onSelectSession={setSelectedSession}
+          />
+        )}
+
+        {sleepStageData && selectedSession && (
           <SleepSessionStageBreakdownGraph data={sleepStageData[selectedSession]} />
-        </div>
-      )}
-
-      {!stackedView && (
-        <SleepSessionsGraph2D
-          metric={sleepMetric}
-          className={styles.graph}
-          onSelectSession={setSelectedSession}
-        />
-
-      )}
+        )}
+      </div>
     </div>
   )
 }

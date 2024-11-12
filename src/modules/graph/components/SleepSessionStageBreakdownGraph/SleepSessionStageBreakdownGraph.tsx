@@ -6,7 +6,8 @@ import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
 
-const CustomBar = (props: any) => {
+// TODO: Extract and type
+const SleepStageBar = (props: any) => {
   const { cx, cy, payload, xAxis } = props
   const barWidth = xAxis.scale(payload.end.valueOf()) - xAxis.scale(payload.start.valueOf())
   const barHeight = 75
@@ -31,7 +32,6 @@ const CustomBar = (props: any) => {
 }
 
 export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreakdownGraphProps) => {
-  console.log('Raw breakdown data', data)
 
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
@@ -71,8 +71,6 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
       })
   }, [data, getYValue])
 
-  console.log('barData', barData)
-
   const xDomain = useMemo(() => {
     const min = Math.min(...barData.map(({ start }) => start.getTime()))
     const max = Math.max(...barData.map(({ end }) => end.getTime()))
@@ -104,13 +102,14 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   ], [getYValue])
 
   return (
-   <ResponsiveContainer width='100%' height={400}>
+   <ResponsiveContainer width='100%' height='30%'>
      <ScatterChart data={barData}>
        <XAxis
          type='number'
+         ticks={xTicks}
          dataKey='start'
          domain={xDomain}
-         ticks={xTicks}
+         stroke='rgb(255, 255, 255)'
          tickFormatter={(value: string) => {
            return `${dayjs(value).format('HH')}:00`
          }}
@@ -127,11 +126,12 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
 
        <CartesianGrid
          vertical={false}
-         strokeDasharray={'5 10'}
+         strokeDasharray="3 10"
+         stroke='rgba(255, 255, 255, 0.4)'
        />
 
        <Scatter
-         shape={<CustomBar />}
+         shape={<SleepStageBar />}
        />
      </ScatterChart>
    </ResponsiveContainer>

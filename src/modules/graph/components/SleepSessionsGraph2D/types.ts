@@ -19,6 +19,14 @@ export interface SleepSessionsGraph2DProps {
   onSelectSession: (id: string) => void
 
   /**
+   * The ID of the currently selected
+   * sleep session that is being displayed
+   * in the stage breakdown chart. Is undefined
+   * if one is not currently selected.
+   */
+  selectedSession?: string
+
+  /**
    * An optional class name to pass into
    * the underlying container element.
    */
