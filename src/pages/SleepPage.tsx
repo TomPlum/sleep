@@ -4,7 +4,7 @@ import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
 import {
@@ -12,6 +12,7 @@ import {
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/SleepSessionStageBreakdownGraph'
 
 export const SleepPage = () => {
+  const [selectedSession, setSelectedSession] = useState<string>()
   const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric, sleepStageData } = useSleepContext()
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export const SleepPage = () => {
               metric={metric}
               className={styles.graph}
               key={`sleep-graph-2d-${metric}`}
+              onSelectSession={setSelectedSession}
             />
           ))}
 
@@ -61,9 +63,9 @@ export const SleepPage = () => {
         </div>
       )}
 
-      {sleepStageData && sleepStageData['session-2220'] && (
+      {sleepStageData && selectedSession && (
         <div className={styles.breakdownGraph}>
-          <SleepSessionStageBreakdownGraph data={sleepStageData['session-2220']} />
+          <SleepSessionStageBreakdownGraph data={sleepStageData[selectedSession]} />
         </div>
       )}
 
@@ -71,6 +73,7 @@ export const SleepPage = () => {
         <SleepSessionsGraph2D
           metric={sleepMetric}
           className={styles.graph}
+          onSelectSession={setSelectedSession}
         />
 
       )}

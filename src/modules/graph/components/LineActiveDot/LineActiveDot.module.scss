@@ -1,0 +1,8 @@
+.dot {
+  pointer-events: all;
+
+  &:hover {
+    fill: white;
+    cursor: pointer;
+  }
+}
