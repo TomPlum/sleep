@@ -250,17 +250,40 @@ self.addEventListener('message', async () => {
 
     const timeEnd = new Date()
     const timeDelta = timeEnd.getTime() - timeStart.getTime()
+    const secondsDelta = timeDelta / 1000
 
     postMessage({
-      loading: true,
+      loading: false,
+      status: {
+        statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
+        percent: 100,
+        payload: `Processed ${Object.keys(sessions).length} sleep sessions in ${secondsDelta.toFixed(1)}s`
+      }
+    })
+
+    postMessage({
+      result,
+      loading: false,
       status: {
         statusCode: DataWorkerStatusCode.FINISHING,
+        payload: 'Plotting graphs',
         percent: 100,
-        payload: `Matched ${Object.keys(sessions).length} in ${timeDelta}ms`
       }
     })
 
     return result
+  }
+
+  const finish = (result: DataWorkerResult) => {
+    return postMessage({
+      result,
+      loading: false,
+      status: {
+        statusCode: DataWorkerStatusCode.DONE,
+        payload: 'Ready!',
+        percent: 100,
+      }
+    })
   }
 
   try {
@@ -268,14 +291,7 @@ self.addEventListener('message', async () => {
     const { sessions, sounds, stages } = scanTables({ fileContents })
     const result = parseTableData({ sessions, sounds, stages })
 
-    return postMessage({
-      result,
-      loading: false,
-      status: {
-        statusCode: DataWorkerStatusCode.DONE,
-        percent: 100,
-      }
-    })
+    setTimeout(() => finish(result), 3500)
   } catch (e) {
     return postMessage({
       error: e,
