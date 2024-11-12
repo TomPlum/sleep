@@ -178,16 +178,16 @@ self.addEventListener('message', async () => {
       // TODO: Can we strongly type this inside the worker?
       switch (rawStageValue) {
         case 0.0: {
-          return 'awake_time' as SleepStage
+          return 'deep_sleep' as SleepStage
         }
         case 1.0: {
-          return 'rem_sleep' as SleepStage
-        }
-        case 2.0: {
           return 'light_sleep' as SleepStage
         }
+        case 2.0: {
+          return 'rem_sleep' as SleepStage
+        }
         case 3.0: {
-          return 'deep_sleep' as SleepStage
+          return 'awake_time' as SleepStage
         }
         default: {
           throw new Error(`Invalid Sleep Stage Value [${rawStageValue}]`)
@@ -240,10 +240,9 @@ self.addEventListener('message', async () => {
         duration: stageData.ZDURATION
       }))
 
-      const sessionId = `session-${i}`
-
-      acc.sleepStages[sessionId] = sessionStages
-      acc.sounds[sessionId] = sessionSound
+      acc.sleepStages[sessionPrimaryKey] = sessionStages
+      acc.sounds[sessionPrimaryKey] = sessionSound
+      acc.sessions[sessionPrimaryKey] = sessions[sessionPrimaryKey]
 
       postMessage({
         loading: true,
@@ -255,7 +254,7 @@ self.addEventListener('message', async () => {
       })
 
       return acc
-    }, { sleepStages: {}, sounds: {} })
+    }, { sessions: {}, sleepStages: {}, sounds: {} })
 
     const timeEnd = new Date()
     const timeDelta = timeEnd.getTime() - timeStart.getTime()

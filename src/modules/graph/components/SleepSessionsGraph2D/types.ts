@@ -14,9 +14,9 @@ export interface SleepSessionsGraph2DProps {
    * to be able to view the sleep stage
    * breakdown chart.
    *
-   * @param id The ID of the selected session.
+   * @param id The index of the selected session from the filtered session data.
    */
-  onSelectSession: (id: string) => void
+  onSelectSession: (index: number) => void
 
   /**
    * The ID of the currently selected
@@ -36,6 +36,12 @@ export interface SleepSessionsGraph2DProps {
 export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[]
 
 export interface SleepSessionGraph2DDatum {
+  /**
+   * The unique identifier for the sleep session
+   * on the graph.
+   */
+  id: string
+
   /**
    * The date of the sleep session as
    * the number of milliseconds from the

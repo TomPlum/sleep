@@ -11,7 +11,7 @@ import { useRawSleepData } from 'data/useRawSleepData'
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
-  const { sleepData, loading } = useSleepData()
+  const { loading } = useSleepData()
   const rawData = useRawSleepData()
 
   const {
@@ -28,11 +28,11 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     handleSetStackedMetrics
   } = useDefaultQueryParams({
     loading,
-    sleepData
+    sleepData: rawData.sleepData
   })
 
   const sleepGraphData2d = useSleepGraph2DData({
-    sessions: sleepData?.sessions ?? [],
+    sessions: rawData.sleepData?.sessions ?? [],
     rangeStart: rangeStart ?? new Date(),
     rangeEnd: rangeEnd ?? new Date(),
     isSleepDataLoading: loading,
@@ -50,7 +50,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   }, [i18n, language])
 
   const value = useMemo<SleepContextBag>(() => ({
-    sleepData,
+    sleepData: rawData.sleepData,
     sleepStageData: rawData?.sessionStages ?? {},
     isSleepDataLoading: loading || (rawData?.loading ?? true),
     dataWorkerStatus: rawData?.status ?? { percent: 0, statusCode: DataWorkerStatusCode.NOT_STARTED },
@@ -67,7 +67,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     setStackedView,
     stackedMetrics: stackedMetrics ?? [],
     setStackedMetrics: handleSetStackedMetrics
-  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, rawData?.loading, rawData?.sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
+  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, rawData?.loading, rawData?.sessionStages, rawData.sleepData, rawData?.status, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepGraphData2d, stackedMetrics, stackedView])
 
   return (
     <SleepContext.Provider value={value}>

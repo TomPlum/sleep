@@ -48,6 +48,7 @@ export const useDataWorker = (): UseDataWorkerResponse => {
     error,
     status,
     result: {
+      sessions: result?.result?.sessions ?? {},
       sounds: result?.result?.sounds ?? {},
       sleepStages: result?.result?.sleepStages ?? {}
     }

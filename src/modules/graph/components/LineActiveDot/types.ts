@@ -1,5 +1,5 @@
 export interface LineActiveDotProps {
-  onClick: (id: string) => void
+  onClick: (index: number) => void
   radius: number
   data: {
     x: number

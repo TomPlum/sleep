@@ -94,12 +94,48 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
     return hours
   }, [xDomain])
 
-  const yDomain = useMemo(() => [
-    getYValue(SleepMetric.AWAKE_TIME),
-    getYValue(SleepMetric.REM_SLEEP),
-    getYValue(SleepMetric.LIGHT_SLEEP),
-    getYValue(SleepMetric.DEEP_SLEEP)
-  ], [getYValue])
+  const { yDomain, yTicks } = useMemo<{ yDomain: Array<SleepStage>, yTicks: number[] }>(() => {
+    const stageCounts = barData
+      .map(datum => datum.stage)
+      .reduce<Record<SleepStage, number>>((acc, stage) => {
+        const count = acc[stage]
+        acc[stage] = (count ?? 0) + 1
+        return acc
+      }, {
+        [SleepMetric.AWAKE_TIME]: 0,
+        [SleepMetric.DEEP_SLEEP]: 0,
+        [SleepMetric.LIGHT_SLEEP]: 0,
+        [SleepMetric.REM_SLEEP]: 0
+      })
+
+    const domain: Array<SleepStage> = []
+    const ticks: number[] = []
+
+    if (stageCounts[SleepMetric.AWAKE_TIME] > 0) {
+      domain.push(SleepMetric.AWAKE_TIME)
+      ticks.push(getYValue(SleepMetric.AWAKE_TIME))
+    }
+
+    if (stageCounts[SleepMetric.LIGHT_SLEEP] > 0) {
+      domain.push(SleepMetric.LIGHT_SLEEP)
+      ticks.push(getYValue(SleepMetric.LIGHT_SLEEP))
+    }
+
+    if (stageCounts[SleepMetric.DEEP_SLEEP] > 0) {
+      domain.push(SleepMetric.DEEP_SLEEP)
+      ticks.push(getYValue(SleepMetric.DEEP_SLEEP))
+    }
+
+    if (stageCounts[SleepMetric.REM_SLEEP] > 0) {
+      domain.push(SleepMetric.REM_SLEEP)
+      ticks.push(getYValue(SleepMetric.REM_SLEEP))
+    }
+
+    return {
+      yDomain: domain,
+      yTicks: ticks
+    }
+  }, [barData, getYValue])
 
   return (
    <ResponsiveContainer width='100%' height='30%'>
@@ -119,8 +155,8 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
          hide
          dataKey='y'
          type='number'
+         ticks={yTicks}
          domain={yDomain}
-         ticks={[0, 1, 2, 3]}
          padding={{ bottom: 70, top: 70 }}
        />
 

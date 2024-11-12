@@ -1,16 +1,7 @@
-import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
+import { PillowSleepData, SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 import { DataWorkerStatus } from 'data/useDataWorker'
 
-export interface RawSleepDataLoadEvent {
-  done: boolean
-  line: number
-  percentage: number
-}
-
-export interface RawSleepDataProps {
-  onLoadEvent?: (event: RawSleepDataLoadEvent) => void
-}
-
+export type RawSleepSessions = Record<string, RawSleepSessionData>
 export type RawSleepSessionStages = Record<string, SleepSessionStage[]>
 export type RawSleepSessionSounds = Record<string, SleepSessionSound[]>
 
@@ -19,6 +10,7 @@ export interface RawSleepData {
   status: DataWorkerStatus
   sessionStages: RawSleepSessionStages
   sessionSounds: RawSleepSessionSounds
+  sleepData?: PillowSleepData
 }
 
 export const TABLE_PRIMARY_KEY = 'Z_PK'

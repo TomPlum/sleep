@@ -4,16 +4,24 @@ import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
 import {
   SleepSessionStageBreakdownGraph
-} from 'modules/graph/components/SleepSessionStageBreakdownGraph/SleepSessionStageBreakdownGraph'
+} from 'modules/graph/components/SleepSessionStageBreakdownGraph'
 
 export const SleepPage = () => {
   const [selectedSession, setSelectedSession] = useState<string>()
-  const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric, sleepStageData } = useSleepContext()
+
+  const {
+    graphData2d,
+    stackedView,
+    sleepMetric,
+    stackedMetrics,
+    sleepStageData,
+    isSleepDataLoading
+  } = useSleepContext()
 
   useEffect(() => {
     const existingFavicon = document.querySelector('link[rel=\'icon\']') as HTMLLinkElement
@@ -29,12 +37,16 @@ export const SleepPage = () => {
     }
   }, [sleepMetric])
 
+  const handleSelectSession = useCallback((index: number) => {
+    const session = graphData2d.data[index]
+    setSelectedSession(session.id)
+  }, [graphData2d.data])
+
   if (isSleepDataLoading) {
     return (
       <DataLoading />
     )
   }
-  console.log(selectedSession)
 
   return (
     <div className={styles.container}>
@@ -50,7 +62,7 @@ export const SleepPage = () => {
               className={styles.graph}
               key={`sleep-graph-2d-${metric}`}
               selectedSession={selectedSession}
-              onSelectSession={setSelectedSession}
+              onSelectSession={handleSelectSession}
             />
           ))}
 
@@ -71,7 +83,7 @@ export const SleepPage = () => {
             metric={sleepMetric}
             className={styles.graph}
             selectedSession={selectedSession}
-            onSelectSession={setSelectedSession}
+            onSelectSession={handleSelectSession}
           />
         )}
 

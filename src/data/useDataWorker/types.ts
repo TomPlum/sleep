@@ -1,5 +1,5 @@
 import {
-  RawSleepSessionData,
+  RawSleepSessionData, RawSleepSessions,
   RawSleepSessionSounds,
   RawSleepSessionStages, RawSleepSoundPointData,
   RawSleepStageData
@@ -26,6 +26,7 @@ export interface DataWorkerResponse {
 }
 
 export type DataWorkerResult = {
+  sessions: RawSleepSessions
   sleepStages: RawSleepSessionStages,
   sounds: RawSleepSessionSounds
 }

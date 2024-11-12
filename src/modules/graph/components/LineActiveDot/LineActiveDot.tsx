@@ -6,7 +6,7 @@ export const LineActiveDot = ({ data, radius, onClick }: LineActiveDotProps) => 
   const { x, y, index } = data
 
   const handleClick = useCallback(() => {
-    onClick(`session-${index}`)
+    onClick(index)
   }, [index, onClick])
 
   return (
