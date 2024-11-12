@@ -7,10 +7,11 @@ import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
+import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 
 export const SleepPage = () => {
   const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
@@ -24,23 +25,10 @@ export const SleepPage = () => {
     isSleepDataLoading
   } = useSleepContext()
 
-  useEffect(() => {
-    const existingFavicon = document.querySelector('link[rel=\'icon\']') as HTMLLinkElement
-    const newFaviconUrl = `${import.meta.env.BASE_URL}favicon-${sleepMetric.split('_')[0]}.svg`
-
-    if (existingFavicon) {
-      existingFavicon.href = newFaviconUrl
-    } else {
-      const newFavicon = document.createElement('link')
-      newFavicon.rel = 'icon'
-      newFavicon.href = newFaviconUrl
-      document.head.appendChild(newFavicon)
-    }
-  }, [sleepMetric])
+  useDynamicFavicon()
 
   const handleSelectSession = useCallback((index: number) => {
     const session = graphData2d.data[index]
-    console.log('Selected session', session)
     setSelectedSession(session)
   }, [graphData2d.data])
 
