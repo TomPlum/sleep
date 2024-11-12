@@ -24,6 +24,11 @@ type TableRow = Record<string, string | number>
 self.addEventListener('message', async () => {
   const TABLE_PRIMARY_KEY = 'Z_PK'
 
+  /**
+   * Reads the contents of the raw database export
+   * file. Reports the status and timings back to the
+   * main thread for the loading screen.
+   */
   const readFile = async () => {
     postMessage({
       loading: true,
@@ -214,26 +219,49 @@ self.addEventListener('message', async () => {
     const sessionKeys = Object.keys(sessions)
     const sessionCount = sessionKeys.length
 
-    const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionPrimaryKey, i) => {
-      // TODO: Reduce runtime complexity here by looping less
-      const sessionStages = Object.values(stages).filter(stageData => {
-        return stageData.ZSLEEPSESSION === Number(sessionPrimaryKey)
-      }).map<SleepSessionStage>(stageData => ({
+    // Preprocess stages and sounds into maps keyed by session ID
+    const stagesBySession = new Map<number, SleepSessionStage[]>()
+    const soundsBySession = new Map<number, SleepSessionSound[]>()
+
+    // Populate the stages map
+    Object.values(stages).forEach(stageData => {
+      const sessionId = stageData.ZSLEEPSESSION
+
+      const stageEntry: SleepSessionStage = {
         id: stageData.ZUNIQUEIDENTIFIER,
         stage: parseSleepStage(stageData.ZSLEEPSTAGE),
-        timestamp: parseRawTimestamp(stageData.ZTIMESTAMP)
-      }))
-
-      const sessionSound = Object.values(sounds).filter(soundData => {
-        return soundData.ZSLEEPSESSION === Number(sessionPrimaryKey)
-      }).map<SleepSessionSound>(stageData => ({
-        id: stageData.ZUNIQUEIDENTIFIER,
         timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
-        duration: stageData.ZDURATION
-      }))
+      }
 
-      acc.sleepStages[sessionPrimaryKey] = sessionStages
-      acc.sounds[sessionPrimaryKey] = sessionSound
+      if (!stagesBySession.has(sessionId)) {
+        stagesBySession.set(sessionId, [])
+      }
+
+      stagesBySession.get(sessionId)!.push(stageEntry)
+    })
+
+    // Populate the sounds map
+    Object.values(sounds).forEach(soundData => {
+      const sessionId = soundData.ZSLEEPSESSION
+
+      const soundEntry: SleepSessionSound = {
+        id: soundData.ZUNIQUEIDENTIFIER,
+        timestamp: parseRawTimestamp(soundData.ZTIMESTAMP),
+        duration: soundData.ZDURATION,
+      }
+
+      if (!soundsBySession.has(sessionId)) {
+        soundsBySession.set(sessionId, [])
+      }
+
+      soundsBySession.get(sessionId)!.push(soundEntry)
+    })
+
+    // Now reduce with preprocessed maps
+    const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionPrimaryKey, i) => {
+      const sessionId = Number(sessionPrimaryKey)
+      acc.sleepStages[sessionPrimaryKey] = stagesBySession.get(sessionId) || []
+      acc.sounds[sessionPrimaryKey] = soundsBySession.get(sessionId) || []
       acc.sessions[sessionPrimaryKey] = sessions[sessionPrimaryKey]
 
       postMessage({
@@ -241,7 +269,7 @@ self.addEventListener('message', async () => {
         status: {
           statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
           percent: ((i + 1) / sessionCount) * 100,
-          payload: `Processing sleep stage and sound data for session ${i + 1}...`
+          payload: `Processing sleep stage and sound data for session ${i + 1}...`,
         }
       })
 
@@ -250,26 +278,27 @@ self.addEventListener('message', async () => {
 
     const timeEnd = new Date()
     const timeDelta = timeEnd.getTime() - timeStart.getTime()
-    const secondsDelta = timeDelta / 1000
 
     postMessage({
       loading: false,
       status: {
         statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
         percent: 100,
-        payload: `Processed ${Object.keys(sessions).length} sleep sessions in ${secondsDelta.toFixed(1)}s`
+        payload: `Processed ${sessionCount} sleep sessions in ${timeDelta}ms.`
       }
     })
 
-    postMessage({
-      result,
-      loading: false,
-      status: {
-        statusCode: DataWorkerStatusCode.FINISHING,
-        payload: 'Plotting graphs',
-        percent: 100,
-      }
-    })
+    setTimeout(() => {
+      postMessage({
+        result,
+        loading: false,
+        status: {
+          statusCode: DataWorkerStatusCode.FINISHING,
+          payload: 'Plotting sleep session graphs...',
+          percent: 100,
+        }
+      })
+    }, 1000)
 
     return result
   }
