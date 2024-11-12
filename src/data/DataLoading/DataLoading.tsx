@@ -42,10 +42,6 @@ export const DataLoading = () => {
               { [styles.activeOperation]: currentOperation === event }
             )}>
               {t(`status.${event}`)}
-
-              {currentOperation === event && (
-                '...'
-              )}
             </span>
 
             <div className={styles.payloadInfo}>
@@ -73,8 +69,8 @@ export const DataLoading = () => {
         {currentOperation === DataWorkerStatusCode.SLEEP_STAGE_DATA && (
           <Progress
             size='small'
-            strokeColor='#FFFFFF'
             trailColor='#575757'
+            strokeColor='#FFFFFF'
             className={styles.progress}
             percent={Math.round(dataWorkerStatus.percent)}
           />

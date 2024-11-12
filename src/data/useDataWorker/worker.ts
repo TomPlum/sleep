@@ -53,7 +53,7 @@ self.addEventListener('message', async () => {
       loading: true,
       status: {
         statusCode: DataWorkerStatusCode.READING_FILE,
-        payload: `Successfully read ${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${timeDelta}ms.`
+        payload: `Successfully read ~${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${timeDelta}ms.`
       }
     })
 

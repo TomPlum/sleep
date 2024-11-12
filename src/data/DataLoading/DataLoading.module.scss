@@ -7,8 +7,9 @@
   flex-direction: column;
 
   .eventHistory {
-    position: relative;
-    max-height: 300px;
+    padding: 25px;
+    width: 100%;
+    max-width: 525px;
 
     .activeOperation {
       opacity: 1;
@@ -24,17 +25,26 @@
       width: 100%;
     }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
     .eventItem {
       font-family: 'Nunito', sans-serif;
       font-size: 1.6em;
       padding: 5px;
       color: white;
       margin-bottom: 15px;
-      transition: opacity 0.5s ease-out;
-      animation: fadeIn 0.5s ease-out;
+      animation: fadeIn 1s ease-out;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      transition: all 1s ease-in-out;
 
       .eventName {
         margin-bottom: -8px;
@@ -43,7 +53,7 @@
       .payloadInfo {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
 
         .payloadText {
           color: #c0c0c0;
@@ -53,6 +63,7 @@
         .done {
           font-size: 0.6em;
           color: #3ace3a;
+          margin-top: 1px;
         }
 
         .spinner {
