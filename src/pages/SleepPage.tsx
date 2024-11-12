@@ -64,6 +64,13 @@ export const SleepPage = () => {
               />
             ))
           )}
+
+          {sleepStageData && selectedSession && (
+            <SleepSessionInfo
+              session={selectedSession}
+              data={sleepStageData[selectedSession?.id]}
+            />
+          )}
         </div>
       )}
 

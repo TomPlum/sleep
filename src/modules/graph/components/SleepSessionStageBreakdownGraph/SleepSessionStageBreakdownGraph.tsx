@@ -142,7 +142,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
        />
 
        <Scatter
-         shape={(props) => <SleepStageBar {...props} />}
+         shape={props => <SleepStageBar {...props} />}
        />
      </ScatterChart>
    </ResponsiveContainer>
