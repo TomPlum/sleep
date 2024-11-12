@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import styles from './LineActiveDot.module.scss'
 
 export const LineActiveDot = ({ data, radius, onClick }: LineActiveDotProps) => {
-  const { x, y,index } = data
+  const { x, y, index } = data
 
   const handleClick = useCallback(() => {
     onClick(`session-${index}`)

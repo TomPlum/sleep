@@ -1,4 +1,4 @@
-import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
+import { SleepSessionSound, SleepSessionStage, SleepStage } from 'data/useSleepData'
 import { DataWorkerMessageEvent, DataWorkerResult, DataWorkerStatusCode } from 'data/useDataWorker'
 import {
   RawSleepDataTable,
@@ -174,20 +174,20 @@ self.addEventListener('message', async () => {
      *
      * @param rawStageValue The raw stage numerical discriminator value.
      */
-    const parseSleepStage = (rawStageValue: number): string => {
+    const parseSleepStage = (rawStageValue: number): SleepStage => {
       // TODO: Can we strongly type this inside the worker?
       switch (rawStageValue) {
         case 0.0: {
-          return 'awake_time'
+          return 'awake_time' as SleepStage
         }
         case 1.0: {
-          return 'rem_sleep'
+          return 'rem_sleep' as SleepStage
         }
         case 2.0: {
-          return 'light_sleep'
+          return 'light_sleep' as SleepStage
         }
         case 3.0: {
-          return 'deep_sleep'
+          return 'deep_sleep' as SleepStage
         }
         default: {
           throw new Error(`Invalid Sleep Stage Value [${rawStageValue}]`)
@@ -222,10 +222,10 @@ self.addEventListener('message', async () => {
     const sessionKeys = Object.keys(sessions)
     const sessionCount = sessionKeys.length
 
-    const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionKey, i) => {
+    const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionPrimaryKey, i) => {
       // TODO: Reduce runtime complexity here by looping less
       const sessionStages = Object.values(stages).filter(stageData => {
-        return stageData.ZSLEEPSESSION === Number(sessionKey)
+        return stageData.ZSLEEPSESSION === Number(sessionPrimaryKey)
       }).map<SleepSessionStage>(stageData => ({
         id: stageData.ZUNIQUEIDENTIFIER,
         stage: parseSleepStage(stageData.ZSLEEPSTAGE),
@@ -233,7 +233,7 @@ self.addEventListener('message', async () => {
       }))
 
       const sessionSound = Object.values(sounds).filter(soundData => {
-        return soundData.ZSLEEPSESSION === Number(sessionKey)
+        return soundData.ZSLEEPSESSION === Number(sessionPrimaryKey)
       }).map<SleepSessionSound>(stageData => ({
         id: stageData.ZUNIQUEIDENTIFIER,
         timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
