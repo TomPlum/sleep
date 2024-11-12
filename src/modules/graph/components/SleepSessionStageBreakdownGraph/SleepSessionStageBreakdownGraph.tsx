@@ -111,9 +111,9 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
     const domain: Array<SleepStage> = []
     const ticks: number[] = []
 
-    if (stageCounts[SleepMetric.AWAKE_TIME] > 0) {
-      domain.push(SleepMetric.AWAKE_TIME)
-      ticks.push(getYValue(SleepMetric.AWAKE_TIME))
+    if (stageCounts[SleepMetric.DEEP_SLEEP] > 0) {
+      domain.push(SleepMetric.DEEP_SLEEP)
+      ticks.push(getYValue(SleepMetric.DEEP_SLEEP))
     }
 
     if (stageCounts[SleepMetric.LIGHT_SLEEP] > 0) {
@@ -121,14 +121,14 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
       ticks.push(getYValue(SleepMetric.LIGHT_SLEEP))
     }
 
-    if (stageCounts[SleepMetric.DEEP_SLEEP] > 0) {
-      domain.push(SleepMetric.DEEP_SLEEP)
-      ticks.push(getYValue(SleepMetric.DEEP_SLEEP))
-    }
-
     if (stageCounts[SleepMetric.REM_SLEEP] > 0) {
       domain.push(SleepMetric.REM_SLEEP)
       ticks.push(getYValue(SleepMetric.REM_SLEEP))
+    }
+
+    if (stageCounts[SleepMetric.AWAKE_TIME] > 0) {
+      domain.push(SleepMetric.AWAKE_TIME)
+      ticks.push(getYValue(SleepMetric.AWAKE_TIME))
     }
 
     return {

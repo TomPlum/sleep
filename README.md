@@ -43,3 +43,7 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 - Line chart x ticks wrong?
 - Check session -> stage mapping as they may be offset
 - Check raw sleep stage code mapping as 0-4 may be wrong
+- Updated screenshots in README
+- Add glowing purple effect to loading screen
+- Update data file link to raw data instead of CSV
+- Update session breakdown to include data like the ios app does
