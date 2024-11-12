@@ -1,5 +1,8 @@
 import styles from './SleepPage.module.scss'
-import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
+import {
+  SleepSessionGraph2DDatum,
+  SleepSessionsGraph2D
+} from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
@@ -7,12 +10,10 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useCallback, useEffect, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
-import {
-  SleepSessionStageBreakdownGraph
-} from 'modules/graph/components/SleepSessionStageBreakdownGraph'
+import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
 
 export const SleepPage = () => {
-  const [selectedSession, setSelectedSession] = useState<string>()
+  const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
 
   const {
     graphData2d,
@@ -39,7 +40,8 @@ export const SleepPage = () => {
 
   const handleSelectSession = useCallback((index: number) => {
     const session = graphData2d.data[index]
-    setSelectedSession(session.id)
+    console.log('Selected session', session)
+    setSelectedSession(session)
   }, [graphData2d.data])
 
   if (isSleepDataLoading) {
@@ -61,7 +63,7 @@ export const SleepPage = () => {
               metric={metric}
               className={styles.graph}
               key={`sleep-graph-2d-${metric}`}
-              selectedSession={selectedSession}
+              selectedSession={selectedSession?.id}
               onSelectSession={handleSelectSession}
             />
           ))}
@@ -82,13 +84,16 @@ export const SleepPage = () => {
           <SleepSessionsGraph2D
             metric={sleepMetric}
             className={styles.graph}
-            selectedSession={selectedSession}
+            selectedSession={selectedSession?.id}
             onSelectSession={handleSelectSession}
           />
         )}
 
         {sleepStageData && selectedSession && (
-          <SleepSessionStageBreakdownGraph data={sleepStageData[selectedSession]} />
+          <SleepSessionInfo
+            session={selectedSession}
+            data={sleepStageData[selectedSession?.id]}
+          />
         )}
       </div>
     </div>

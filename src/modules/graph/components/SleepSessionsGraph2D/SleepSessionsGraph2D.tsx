@@ -55,7 +55,7 @@ export const SleepSessionsGraph2D = ({
   const isTopGraph = stackedMetrics.indexOf(metric) === 0
 
   return (
-    <ResponsiveContainer width='100%' height={stackedView ? '50%' : selectedSession ? '70%' : '100%'} className={className}>
+    <ResponsiveContainer width='100%' height={stackedView ? '50%' : selectedSession ? '75%' : '100%'} className={className}>
       <LineChart
         id='sleeps-sessions-graph-2d'
         margin={{ left: -55, bottom: -22 }}

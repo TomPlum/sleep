@@ -22,13 +22,14 @@ export const useRawSleepData = (): RawSleepData => {
       return []
     }
 
-    console.log(Object.values(result.sessions))
     // TODO: Are they any new pieces of data we want to map from the raw file? Like time to sleep?
     return Object.values(result.sessions).map((value) => {
-      const awake = value.ZTIMEAWAKE / 60
-      const deep = value.ZTIMEINDEEPSLEEP / 60
-      const light = value.ZTIMEINLIGHTSLEEP / 60
-      const rem = value.ZTIMEINREMSLEEP / 60
+      const ONE_MINUTE = 60
+
+      const awake = value.ZTIMEAWAKE / ONE_MINUTE
+      const deep = value.ZTIMEINDEEPSLEEP / ONE_MINUTE
+      const light = value.ZTIMEINLIGHTSLEEP / ONE_MINUTE
+      const rem = value.ZTIMEINREMSLEEP / ONE_MINUTE
 
       return ({
         id: value.Z_PK.toString(), // TODO: Z_PK or Z_UNIQUEIDENTIFIER here?
@@ -55,9 +56,6 @@ export const useRawSleepData = (): RawSleepData => {
       return hasValidDuration && !hasInvalidBreakdown && hasValidAwakeTime && !isTooShort && !isAllAwakeTime
     })
   }, [result, getSleepMood])
-
-  console.log('sessions', sessions)
-  console.log('stages', result?.sleepStages)
 
   const { earliestSession, latestSession } = useMemo(() => {
     const earliestSession = new Date(Math.min(...sessions.map(session => session.startTime.getTime())))

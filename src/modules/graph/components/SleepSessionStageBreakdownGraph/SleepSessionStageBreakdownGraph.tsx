@@ -138,7 +138,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   }, [barData, getYValue])
 
   return (
-   <ResponsiveContainer width='100%' height='30%'>
+   <ResponsiveContainer width='100%' height='100%'>
      <ScatterChart data={barData}>
        <XAxis
          type='number'
