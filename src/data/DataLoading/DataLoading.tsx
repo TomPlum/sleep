@@ -17,7 +17,7 @@ export const DataLoading = () => {
 
   useEffect(() => {
     setCurrentOperation(dataWorkerStatus.statusCode)
-
+console.log(dataWorkerStatus)
     setHistory(current => {
       return {
         ...current,
@@ -66,7 +66,7 @@ export const DataLoading = () => {
           </div>
         ))}
 
-        {currentOperation === DataWorkerStatusCode.SLEEP_STAGE_DATA && (
+        {currentOperation === DataWorkerStatusCode.ASSOCIATE_SESSION_DATA && (
           <Progress
             size='small'
             trailColor='#575757'

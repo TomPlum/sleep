@@ -41,7 +41,9 @@ export enum DataWorkerStatusCode {
   NOT_STARTED = 'not-started',
   READING_FILE = 'reading-file',
   STARTING = 'starting',
-  SLEEP_STAGE_DATA = 'sleep-stages',
+  EXTRACT_SOUND_DATA = 'extract-sound-data',
+  EXTRACT_STAGE_DATA = 'extract-stage-data',
+  ASSOCIATE_SESSION_DATA = 'associate-session-data',
   FINISHING = 'finishing',
   DONE = 'done',
   ERROR = 'error'

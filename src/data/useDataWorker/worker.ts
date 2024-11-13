@@ -219,42 +219,97 @@ self.addEventListener('message', async () => {
     const sessionKeys = Object.keys(sessions)
     const sessionCount = sessionKeys.length
 
-    // Preprocess stages and sounds into maps keyed by session ID
-    const stagesBySession = new Map<number, SleepSessionStage[]>()
-    const soundsBySession = new Map<number, SleepSessionSound[]>()
+    const getSoundsBySession = () => {
+      const soundsBySession = new Map<number, SleepSessionSound[]>()
 
-    // Populate the stages map
-    Object.values(stages).forEach(stageData => {
-      const sessionId = stageData.ZSLEEPSESSION
+      postMessage({
+        loading: true,
+        status: {
+          statusCode: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
+          payload: 'Extracting session sound data points...'
+        }
+      })
 
-      const stageEntry: SleepSessionStage = {
-        id: stageData.ZUNIQUEIDENTIFIER,
-        stage: parseSleepStage(stageData.ZSLEEPSTAGE),
-        timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
+      Object.values(sounds).forEach(soundData => {
+        const sessionId = soundData.ZSLEEPSESSION
+
+        const soundEntry: SleepSessionSound = {
+          id: soundData.ZUNIQUEIDENTIFIER,
+          timestamp: parseRawTimestamp(soundData.ZTIMESTAMP),
+          duration: soundData.ZDURATION,
+        }
+
+        if (!soundsBySession.has(sessionId)) {
+          soundsBySession.set(sessionId, [])
+        }
+
+        soundsBySession.get(sessionId)!.push(soundEntry)
+      })
+
+      setTimeout(() => {
+        postMessage({
+          loading: true,
+          status: {
+            statusCode: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
+            payload: `Extracted ${Object.keys(sounds).length} sound data points.`
+          }
+        })
+      }, 10)
+
+      return soundsBySession
+    }
+
+    const getStagesBySession = () => {
+      const stagesBySession = new Map<number, SleepSessionStage[]>()
+
+      postMessage({
+        loading: true,
+        status: {
+          statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
+          payload: 'Extracting session stage data points...'
+        }
+      })
+
+      // Populate the stages map
+      Object.values(stages).forEach(stageData => {
+        const sessionId = stageData.ZSLEEPSESSION
+
+        const stageEntry: SleepSessionStage = {
+          id: stageData.ZUNIQUEIDENTIFIER,
+          stage: parseSleepStage(stageData.ZSLEEPSTAGE),
+          timestamp: parseRawTimestamp(stageData.ZTIMESTAMP),
+        }
+
+        if (!stagesBySession.has(sessionId)) {
+          stagesBySession.set(sessionId, [])
+        }
+
+        stagesBySession.get(sessionId)!.push(stageEntry)
+      })
+
+      setTimeout(() => {
+        postMessage({
+          loading: true,
+          status: {
+            statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
+            payload: `Extracted ${Object.keys(stages).length} session stage instances.`
+          }
+        })
+      }, 10)
+
+      return stagesBySession
+    }
+
+    const stagesBySession = getStagesBySession()
+    const soundsBySession = getSoundsBySession()
+
+    postMessage({
+      loading: true,
+      status: {
+        statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+        percent: 0,
+        payload: 'Processing sleep stage and sound data...',
       }
-
-      if (!stagesBySession.has(sessionId)) {
-        stagesBySession.set(sessionId, [])
-      }
-
-      stagesBySession.get(sessionId)!.push(stageEntry)
-    })
-
-    // Populate the sounds map
-    Object.values(sounds).forEach(soundData => {
-      const sessionId = soundData.ZSLEEPSESSION
-
-      const soundEntry: SleepSessionSound = {
-        id: soundData.ZUNIQUEIDENTIFIER,
-        timestamp: parseRawTimestamp(soundData.ZTIMESTAMP),
-        duration: soundData.ZDURATION,
-      }
-
-      if (!soundsBySession.has(sessionId)) {
-        soundsBySession.set(sessionId, [])
-      }
-
-      soundsBySession.get(sessionId)!.push(soundEntry)
     })
 
     // Now reduce with preprocessed maps
@@ -267,7 +322,7 @@ self.addEventListener('message', async () => {
       postMessage({
         loading: true,
         status: {
-          statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
+          statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
           percent: ((i + 1) / sessionCount) * 100,
           payload: `Processing sleep stage and sound data for session ${i + 1}...`,
         }
@@ -282,7 +337,7 @@ self.addEventListener('message', async () => {
     postMessage({
       loading: false,
       status: {
-        statusCode: DataWorkerStatusCode.SLEEP_STAGE_DATA,
+        statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
         percent: 100,
         payload: `Processed ${sessionCount} sleep sessions in ${timeDelta}ms.`
       }

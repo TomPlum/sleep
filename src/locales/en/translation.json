@@ -77,8 +77,9 @@
       "starting": "Initialising web worker",
       "reading-file": "Reading Pillow database export file",
       "not-started": "Awaiting web worker initialisation",
-      "sleep-stages": "Associating sleep stage data with sessions",
-      "sound-data": "Associating sound recording data with sessions",
+      "extract-sound-data": "Extracting sound data points",
+      "extract-stage-data": "Extracting sleep stage instances",
+      "associate-session-data": "Associating sleep stage data with sessions",
       "finishing": "Finishing up",
       "done": "Done",
       "error": "An error occurred while reading the Pillow database"
