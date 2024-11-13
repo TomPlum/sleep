@@ -6,6 +6,7 @@ import { useSleepContext } from 'context'
 import { ActiveSessionInfoProps } from './types'
 import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
+import { PILLOW_DATABASE_FILE_NAME } from 'data/useDataWorker'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
@@ -87,11 +88,11 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
 
         <a
           title={t('data-source.title')}
-          href='/PillowData-02-11-24.csv'
-          download='PillowData-02-11-24.csv'
+          href={`/${PILLOW_DATABASE_FILE_NAME}`}
+          download={PILLOW_DATABASE_FILE_NAME}
           className={styles.dataExportVersion}
         >
-          {t('data-source.name')}
+          {PILLOW_DATABASE_FILE_NAME}
         </a>
       </div>
     </div>

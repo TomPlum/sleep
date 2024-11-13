@@ -29,6 +29,18 @@ export type DataWorkerResult = {
   sounds: RawSleepSessionSounds
 }
 
+export interface ParsePillowDataProps {
+  fileContents: string
+}
+
+export interface ParsePillowDataResult {
+  sessions: Record<string, RawSleepSessionData>
+  sounds: Record<string, RawSleepSoundPointData>
+  stages: Record<string, RawSleepStageData>
+}
+
+export const TABLE_PRIMARY_KEY = 'Z_PK'
+
 export interface DataWorkerStatus {
   /**
    * The current status code.
@@ -66,3 +78,5 @@ export enum DataWorkerStatusCode {
   DONE = 'done',
   ERROR = 'error'
 }
+
+export const PILLOW_DATABASE_FILE_NAME = 'PillowData-11-11-24.txt'

@@ -16,7 +16,6 @@
         "please-select": "Awaiting metric selection..."
       },
       "data-source": {
-        "name": "PillowData-02-11-24.csv",
         "title": "Download source data"
       },
       "language": {

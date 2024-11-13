@@ -1,28 +1,19 @@
 import { SleepSessionSound, SleepSessionStage, SleepStage } from 'data/useSleepData'
-import { DataWorkerMessageEvent, DataWorkerResult, DataWorkerStatusCode } from 'data/useDataWorker'
 import {
-  RawSleepDataTable,
-  RawSleepSessionData,
-  RawSleepSoundPointData,
-  RawSleepStageData
+  DataWorkerMessageEvent,
+  DataWorkerResult,
+  DataWorkerStatusCode, ParsePillowDataProps, ParsePillowDataResult,
+  PILLOW_DATABASE_FILE_NAME, TABLE_PRIMARY_KEY
+} from 'data/useDataWorker'
+import {
+  RawSleepDataTable
 } from 'data/useRawSleepData/types'
 
-export interface ParsePillowDataProps {
-  fileContents: string
-}
-
-export interface ParsePillowDataResult {
-  sessions: Record<string, RawSleepSessionData>
-  sounds: Record<string, RawSleepSoundPointData>
-  stages: Record<string, RawSleepStageData>
-}
 
 type TableData <T> = Record<string, T>
-
 type TableRow = Record<string, string | number>
 
 self.addEventListener('message', async () => {
-  const TABLE_PRIMARY_KEY = 'Z_PK'
 
   const formatNumber = (value: number) => {
     return value.toLocaleString()
@@ -43,7 +34,7 @@ self.addEventListener('message', async () => {
 
     const timeStart = new Date()
 
-    const fileName = `${self.location.origin}/PillowData-11-11-24.txt`
+    const fileName = `${self.location.origin}/${PILLOW_DATABASE_FILE_NAME}`
     const response = await fetch(fileName)
 
     if (!response.ok) {

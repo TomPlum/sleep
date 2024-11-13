@@ -1,7 +1,8 @@
 import { PillowDataType } from 'data/usePillowData/types'
+import { PILLOW_DATABASE_FILE_NAME } from 'data/useDataWorker'
 
 export const fetchPillowData = async (type: PillowDataType) => {
-  const fileName = type === 'raw' ? 'PillowData-11-11-24.txt' : 'PillowData-02-11-24.csv'
+  const fileName = type === 'raw' ? PILLOW_DATABASE_FILE_NAME : 'PillowData-02-11-24.csv'
   const response = await fetch(fileName)
 
   if (!response.ok) {
