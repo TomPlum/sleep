@@ -24,6 +24,10 @@ type TableRow = Record<string, string | number>
 self.addEventListener('message', async () => {
   const TABLE_PRIMARY_KEY = 'Z_PK'
 
+  const formatNumber = (value: number) => {
+    return value.toLocaleString()
+  }
+
   /**
    * Reads the contents of the raw database export
    * file. Reports the status and timings back to the
@@ -310,7 +314,7 @@ self.addEventListener('message', async () => {
         loading: true,
         status: {
           statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
-          payload: `Extracted ${Object.keys(stages).length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} session stage instances.`
+          payload: `Extracted ${formatNumber(Object.keys(stages).length)} session stage instances.`
         }
       })
 
@@ -360,7 +364,7 @@ self.addEventListener('message', async () => {
             status: {
               statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
               percent: 100,
-              payload: `Processed ${sessionCount} sleep sessions in ${timeDelta}ms.`
+              payload: `Processed ${formatNumber(sessionCount)} sleep sessions in ${timeDelta}ms.`
             }
           })
 
@@ -396,6 +400,7 @@ self.addEventListener('message', async () => {
 
   try {
     const { fileContents } = await readFile()
+
     setTimeout(() => {
       const { sessions, sounds, stages } = scanTables({ fileContents })
 
