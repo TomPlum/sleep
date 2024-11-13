@@ -1,4 +1,4 @@
-import { CartesianGrid, ResponsiveContainer, Scatter, ScatterChart, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionStageBreakdownGraphProps } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
@@ -25,7 +25,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
     }
   }, [])
 
-  const barData = useMemo(() => {
+  const chartData = useMemo(() => {
     const sorted = data.sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime()
     })
@@ -38,8 +38,8 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
         const second = window[1]
 
         return {
-          start: first.timestamp,
-          end: second.timestamp,
+          start: first.timestamp.getTime(),
+          end: second.timestamp.getTime(),
           stage: first.stage,
           y: getYValue(first.stage)
         }
@@ -47,10 +47,10 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   }, [data, getYValue])
 
   const xDomain = useMemo(() => {
-    const min = Math.min(...barData.map(({ start }) => start.getTime()))
-    const max = Math.max(...barData.map(({ end }) => end.getTime()))
+    const min = Math.min(...chartData.map(({ start }) => start))
+    const max = Math.max(...chartData.map(({ end }) => end))
     return [min, max]
-  }, [barData])
+  }, [chartData])
 
   const xTicks = useMemo(() => {
     const [min, max] = xDomain
@@ -70,7 +70,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   }, [xDomain])
 
   const { yDomain, yTicks } = useMemo<{ yDomain: Array<SleepStage>, yTicks: number[] }>(() => {
-    const stageCounts = barData
+    const stageCounts = chartData
       .map(datum => datum.stage)
       .reduce<Record<SleepStage, number>>((acc, stage) => {
         const count = acc[stage]
@@ -110,18 +110,18 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
       yDomain: domain,
       yTicks: ticks
     }
-  }, [barData, getYValue])
+  }, [chartData, getYValue])
 
   return (
    <ResponsiveContainer width='100%' height='100%'>
-     <ScatterChart data={barData}>
+     <ScatterChart data={chartData}>
        <XAxis
          type='number'
          ticks={xTicks}
          dataKey='start'
          domain={xDomain}
          stroke='rgb(255, 255, 255)'
-         tickFormatter={(value: string) => {
+         tickFormatter={(value: number) => {
            return `${dayjs(value).format('HH')}:00`
          }}
        />
@@ -144,6 +144,8 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
        <Scatter
          shape={props => <SleepStageBar {...props} />}
        />
+
+       <Tooltip />
      </ScatterChart>
    </ResponsiveContainer>
   )
