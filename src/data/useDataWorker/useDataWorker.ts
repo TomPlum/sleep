@@ -14,7 +14,7 @@ export const useDataWorker = (): UseDataWorkerResponse => {
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
-      if (event.data?.status?.statusCode === DataWorkerStatusCode.DONE) {
+      if (event.data?.status?.code === DataWorkerStatusCode.DONE) {
         setRunning(false)
       }
 

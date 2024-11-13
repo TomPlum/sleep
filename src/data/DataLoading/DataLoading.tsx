@@ -16,12 +16,12 @@ export const DataLoading = () => {
   const  { t } = useTranslation('translation', { keyPrefix: 'loading' })
 
   useEffect(() => {
-    setCurrentOperation(status.statusCode)
+    setCurrentOperation(status.code)
     
     setHistory(current => {
       return {
         ...current,
-        [status.statusCode]: status.payload
+        [status.code]: status.payload
       }
     })
   }, [status])

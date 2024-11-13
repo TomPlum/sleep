@@ -37,7 +37,7 @@ self.addEventListener('message', async () => {
     postMessage({
       loading: true,
       status: {
-        statusCode: DataWorkerStatusCode.READING_FILE
+        code: DataWorkerStatusCode.READING_FILE
       }
     })
 
@@ -61,7 +61,7 @@ self.addEventListener('message', async () => {
     postMessage({
       loading: true,
       status: {
-        statusCode: DataWorkerStatusCode.READING_FILE,
+        code: DataWorkerStatusCode.READING_FILE,
         payload: `Successfully read ~${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${timeDelta}ms.`
       }
     })
@@ -107,7 +107,7 @@ self.addEventListener('message', async () => {
     postMessage({
       loading: true,
       status: {
-        statusCode: DataWorkerStatusCode.READ_TABLES,
+        code: DataWorkerStatusCode.READ_TABLES,
         payload: 'Reading data tables'
       }
     })
@@ -181,7 +181,7 @@ self.addEventListener('message', async () => {
     postMessage({
       loading: true,
       status: {
-        statusCode: DataWorkerStatusCode.READ_TABLES,
+        code: DataWorkerStatusCode.READ_TABLES,
         payload: `Successfully read ${targetTables.length} tables in ${timeDelta}ms.`
       }
     })
@@ -250,7 +250,7 @@ self.addEventListener('message', async () => {
       postMessage({
         loading: true,
         status: {
-          statusCode: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
+          code: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
           payload: 'Extracting session sound data points...'
         }
       })
@@ -274,7 +274,7 @@ self.addEventListener('message', async () => {
       postMessage({
         loading: true,
         status: {
-          statusCode: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
+          code: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
           payload: `Extracted ${Object.keys(sounds).length} sound data points.`
         }
       })
@@ -288,7 +288,7 @@ self.addEventListener('message', async () => {
       postMessage({
         loading: true,
         status: {
-          statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
+          code: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
           payload: 'Extracting session stage data points...'
         }
       })
@@ -313,7 +313,7 @@ self.addEventListener('message', async () => {
       postMessage({
         loading: true,
         status: {
-          statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
+          code: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
           payload: `Extracted ${formatNumber(Object.keys(stages).length)} session stage instances.`
         }
       })
@@ -331,7 +331,7 @@ self.addEventListener('message', async () => {
           postMessage({
             loading: true,
             status: {
-              statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+              code: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
               percent: 0,
               payload: 'Processing sleep stage and sound data...',
             }
@@ -347,7 +347,7 @@ self.addEventListener('message', async () => {
             postMessage({
               loading: true,
               status: {
-                statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+                code: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
                 percent: ((i + 1) / sessionCount) * 100,
                 payload: `Processing sleep stage and sound data for session ${i + 1}...`,
               }
@@ -362,7 +362,7 @@ self.addEventListener('message', async () => {
           postMessage({
             loading: false,
             status: {
-              statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+              code: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
               percent: 100,
               payload: `Processed ${formatNumber(sessionCount)} sleep sessions in ${timeDelta}ms.`
             }
@@ -373,7 +373,7 @@ self.addEventListener('message', async () => {
               result,
               loading: false,
               status: {
-                statusCode: DataWorkerStatusCode.FINISHING,
+                code: DataWorkerStatusCode.FINISHING,
                 payload: 'Plotting sleep session graphs...',
                 percent: 100,
               }
@@ -391,7 +391,7 @@ self.addEventListener('message', async () => {
       result,
       loading: false,
       status: {
-        statusCode: DataWorkerStatusCode.DONE,
+        code: DataWorkerStatusCode.DONE,
         payload: 'Ready!',
         percent: 100
       }
@@ -414,7 +414,7 @@ self.addEventListener('message', async () => {
       error: e,
       loading: false,
       status: {
-        statusCode: DataWorkerStatusCode.ERROR
+        code: DataWorkerStatusCode.ERROR
       }
     })
   }

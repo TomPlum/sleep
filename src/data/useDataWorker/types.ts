@@ -30,11 +30,30 @@ export type DataWorkerResult = {
 }
 
 export interface DataWorkerStatus {
-  statusCode: DataWorkerStatusCode
+  /**
+   * The current status code.
+   */
+  code: DataWorkerStatusCode
+
+  /**
+   * An optional payload of descriptive
+   * information about the current state
+   * of the worker.
+   */
   payload?: string
+
+  /**
+   * Where applicable, a number between
+   * 0 and 100 which represents the percentage
+   * completion of the current action.
+   */
   percent: number
 }
 
+/**
+ * Represents a distinct step in the
+ * web workers data-processing process.
+ */
 export enum DataWorkerStatusCode {
   NOT_STARTED = 'not-started',
   STARTING = 'starting',

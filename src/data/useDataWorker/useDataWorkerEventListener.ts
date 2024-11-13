@@ -5,7 +5,7 @@ import { dataWorker } from 'data/useDataWorker/useDataWorker'
 export const useDataWorkerEventListener = () => {
   const [status, setStatus] = useState<DataWorkerStatus>({
     percent: 0,
-    statusCode: DataWorkerStatusCode.NOT_STARTED,
+    code: DataWorkerStatusCode.NOT_STARTED,
     payload: 'Sent message to startup web-worker.'
   })
 
@@ -23,7 +23,7 @@ export const useDataWorkerEventListener = () => {
     console.debug('Starting web worker to read Pillow database export...')
 
     setStatus({
-      statusCode: DataWorkerStatusCode.STARTING,
+      code: DataWorkerStatusCode.STARTING,
       percent: 0,
       payload: 'Pillow raw database web-worker initialised.'
     })
