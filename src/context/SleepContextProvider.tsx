@@ -9,7 +9,7 @@ import { useRawSleepData } from 'data/useRawSleepData'
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
-  const { sleepData, status, sessionStages, loading } = useRawSleepData()
+  const { sleepData, sessionStages, loading } = useRawSleepData()
 
   const {
     currentMetric,
@@ -50,7 +50,6 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sleepData,
     sleepStageData: sessionStages,
     isSleepDataLoading: loading,
-    dataWorkerStatus: status,
     rangeStart: rangeStart ?? new Date(),
     setRangeStart,
     rangeEnd: rangeEnd ?? new Date(),
@@ -64,7 +63,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     setStackedView,
     stackedMetrics: stackedMetrics ?? [],
     setStackedMetrics: handleSetStackedMetrics
-  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView, status])
+  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
 
   return (
     <SleepContext.Provider value={value}>

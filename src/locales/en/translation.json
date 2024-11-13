@@ -76,6 +76,7 @@
       "unknown": "Loading...",
       "starting": "Initialising web worker",
       "reading-file": "Reading Pillow database export file",
+      "reading-tables": "Reading relevant database tables",
       "not-started": "Awaiting web worker initialisation",
       "extract-sound-data": "Extracting sound data points",
       "extract-stage-data": "Extracting sleep stage instances",

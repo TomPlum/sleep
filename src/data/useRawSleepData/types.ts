@@ -1,5 +1,4 @@
 import { PillowSleepData, SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
-import { DataWorkerStatus } from 'data/useDataWorker'
 
 export type RawSleepSessions = Record<string, RawSleepSessionData>
 export type RawSleepSessionStages = Record<string, SleepSessionStage[]>
@@ -7,7 +6,6 @@ export type RawSleepSessionSounds = Record<string, SleepSessionSound[]>
 
 export interface RawSleepData {
   loading: boolean
-  status: DataWorkerStatus
   sessionStages: RawSleepSessionStages
   sessionSounds: RawSleepSessionSounds
   sleepData?: PillowSleepData

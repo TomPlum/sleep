@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import styles from './DataLoading.module.scss'
-import { useSleepContext } from 'context'
 import { useEffect, useState } from 'react'
 import { DataWorkerStatusCode } from 'data/useDataWorker'
 import { Progress, Spin } from 'antd'
 import classNames from 'classnames'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
+import { useDataWorkerEventListener } from 'data/useDataWorker/useDataWorkerEventListener'
 
 export const DataLoading = () => {
-  const { dataWorkerStatus } = useSleepContext()
+  const { status } = useDataWorkerEventListener()
 
   const [history, setHistory] = useState<Partial<Record<DataWorkerStatusCode, string>>>({})
   const [currentOperation, setCurrentOperation] = useState<DataWorkerStatusCode>()
@@ -16,15 +16,15 @@ export const DataLoading = () => {
   const  { t } = useTranslation('translation', { keyPrefix: 'loading' })
 
   useEffect(() => {
-    setCurrentOperation(dataWorkerStatus.statusCode)
-console.log(dataWorkerStatus)
+    setCurrentOperation(status.statusCode)
+    
     setHistory(current => {
       return {
         ...current,
-        [dataWorkerStatus.statusCode]: dataWorkerStatus.payload
+        [status.statusCode]: status.payload
       }
     })
-  }, [dataWorkerStatus])
+  }, [status])
 
   return (
     <div className={styles.loading}>
@@ -72,7 +72,7 @@ console.log(dataWorkerStatus)
             trailColor='#575757'
             strokeColor='#FFFFFF'
             className={styles.progress}
-            percent={Math.round(dataWorkerStatus.percent)}
+            percent={Math.round(status.percent)}
           />
         )}
       </div>

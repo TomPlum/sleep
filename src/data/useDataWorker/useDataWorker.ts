@@ -1,23 +1,16 @@
 import { useEffect, useState } from 'react'
 import {
   DataWorkerResponse,
-  DataWorkerStatus,
   DataWorkerStatusCode,
   UseDataWorkerResponse
 } from 'data/useDataWorker/types'
 import DataWorker from './worker?worker'
 
-const dataWorker = new DataWorker()
+export const dataWorker = new DataWorker()
 
 export const useDataWorker = (): UseDataWorkerResponse => {
-  const [error, setError] = useState<Error>()
   const [running, setRunning] = useState(true)
   const [result, setResult] = useState<DataWorkerResponse>()
-  const [status, setStatus] = useState<DataWorkerStatus>({
-    percent: 0,
-    statusCode: DataWorkerStatusCode.NOT_STARTED,
-    payload: 'Sent message to startup web-worker.'
-  })
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
@@ -25,28 +18,19 @@ export const useDataWorker = (): UseDataWorkerResponse => {
         setRunning(false)
       }
 
-      setError(event.data.error)
       setResult(event.data)
-      setStatus(event.data.status)
     }
 
     dataWorker.addEventListener('message', onMessage)
 
     console.debug('Starting web worker to read Pillow database export...')
     dataWorker.postMessage('Starting worker')
-    setStatus({
-      statusCode: DataWorkerStatusCode.STARTING,
-      percent: 0,
-      payload: 'Pillow raw database web-worker initialised.'
-    })
 
     return () => dataWorker.removeEventListener('message', onMessage)
   }, [])
 
   return {
     running,
-    error,
-    status,
     result: {
       sessions: result?.result?.sessions ?? {},
       sounds: result?.result?.sounds ?? {},

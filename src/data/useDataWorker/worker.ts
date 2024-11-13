@@ -317,62 +317,69 @@ self.addEventListener('message', async () => {
       return stagesBySession
     }
 
-    const stagesBySession = getStagesBySession()
-    const soundsBySession = getSoundsBySession()
-
-    postMessage({
-      loading: true,
-      status: {
-        statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
-        percent: 0,
-        payload: 'Processing sleep stage and sound data...',
-      }
-    })
-
-    // Now reduce with preprocessed maps
-    const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionPrimaryKey, i) => {
-      const sessionId = Number(sessionPrimaryKey)
-      acc.sleepStages[sessionPrimaryKey] = stagesBySession.get(sessionId) || []
-      acc.sounds[sessionPrimaryKey] = soundsBySession.get(sessionId) || []
-      acc.sessions[sessionPrimaryKey] = sessions[sessionPrimaryKey]
-
-      postMessage({
-        loading: true,
-        status: {
-          statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
-          percent: ((i + 1) / sessionCount) * 100,
-          payload: `Processing sleep stage and sound data for session ${i + 1}...`,
-        }
-      })
-
-      return acc
-    }, { sessions: {}, sleepStages: {}, sounds: {} })
-
-    const timeEnd = new Date()
-    const timeDelta = timeEnd.getTime() - timeStart.getTime()
-
-    postMessage({
-      loading: false,
-      status: {
-        statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
-        percent: 100,
-        payload: `Processed ${sessionCount} sleep sessions in ${timeDelta}ms.`
-      }
-    })
-
     setTimeout(() => {
-      postMessage({
-        result,
-        loading: false,
-        status: {
-          statusCode: DataWorkerStatusCode.FINISHING,
-          payload: 'Plotting sleep session graphs...',
-          percent: 100,
-        }
-      })
-    }, 1000)
+      const stagesBySession = getStagesBySession()
 
-    return result
+      setTimeout(() => {
+        const soundsBySession = getSoundsBySession()
+
+        setTimeout(() => {
+          postMessage({
+            loading: true,
+            status: {
+              statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+              percent: 0,
+              payload: 'Processing sleep stage and sound data...',
+            }
+          })
+
+          // Now reduce with preprocessed maps
+          const result = sessionKeys.reduce<DataWorkerResult>((acc, sessionPrimaryKey, i) => {
+            const sessionId = Number(sessionPrimaryKey)
+            acc.sleepStages[sessionPrimaryKey] = stagesBySession.get(sessionId) || []
+            acc.sounds[sessionPrimaryKey] = soundsBySession.get(sessionId) || []
+            acc.sessions[sessionPrimaryKey] = sessions[sessionPrimaryKey]
+
+            postMessage({
+              loading: true,
+              status: {
+                statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+                percent: ((i + 1) / sessionCount) * 100,
+                payload: `Processing sleep stage and sound data for session ${i + 1}...`,
+              }
+            })
+
+            return acc
+          }, { sessions: {}, sleepStages: {}, sounds: {} })
+
+          const timeEnd = new Date()
+          const timeDelta = timeEnd.getTime() - timeStart.getTime()
+
+          postMessage({
+            loading: false,
+            status: {
+              statusCode: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
+              percent: 100,
+              payload: `Processed ${sessionCount} sleep sessions in ${timeDelta}ms.`
+            }
+          })
+
+          setTimeout(() => {
+            postMessage({
+              result,
+              loading: false,
+              status: {
+                statusCode: DataWorkerStatusCode.FINISHING,
+                payload: 'Plotting sleep session graphs...',
+                percent: 100,
+              }
+            })
+          }, 1000)
+
+          setTimeout(() => finish(result), 3500)
+        }, 100)
+      }, 100)
+    }, 100)
   }
 
   const finish = (result: DataWorkerResult) => {
@@ -382,17 +389,21 @@ self.addEventListener('message', async () => {
       status: {
         statusCode: DataWorkerStatusCode.DONE,
         payload: 'Ready!',
-        percent: 100,
+        percent: 100
       }
     })
   }
 
   try {
     const { fileContents } = await readFile()
-    const { sessions, sounds, stages } = scanTables({ fileContents })
-    const result = parseTableData({ sessions, sounds, stages })
+    setTimeout(() => {
+      const { sessions, sounds, stages } = scanTables({ fileContents })
 
-    setTimeout(() => finish(result), 3500)
+      setTimeout(() => {
+        parseTableData({ sessions, sounds, stages })
+      }, 100)
+    }, 100)
+
   } catch (e) {
     return postMessage({
       error: e,

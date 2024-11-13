@@ -5,7 +5,7 @@ import { PillowSleepSession, SleepMood } from 'data/useSleepData'
 import dayjs from 'dayjs'
 
 export const useRawSleepData = (): RawSleepData => {
-  const { result, status, running } = useDataWorker()
+  const { result, running } = useDataWorker()
 
   const getSleepMood = useCallback((moodValue: number): SleepMood => {
     switch (moodValue) {
@@ -68,7 +68,6 @@ export const useRawSleepData = (): RawSleepData => {
 
   return {
     loading: running,
-    status,
     sleepData: {
       sessions,
       earliestSession,

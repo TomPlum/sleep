@@ -13,8 +13,6 @@ export interface DataWorkerMessageEvent {
 
 export interface UseDataWorkerResponse {
   running: boolean
-  error?: Error
-  status: DataWorkerStatus
   result?: DataWorkerResult
 }
 
@@ -39,8 +37,9 @@ export interface DataWorkerStatus {
 
 export enum DataWorkerStatusCode {
   NOT_STARTED = 'not-started',
-  READING_FILE = 'reading-file',
   STARTING = 'starting',
+  READING_FILE = 'reading-file',
+  READ_TABLES = 'reading-tables',
   EXTRACT_SOUND_DATA = 'extract-sound-data',
   EXTRACT_STAGE_DATA = 'extract-stage-data',
   ASSOCIATE_SESSION_DATA = 'associate-session-data',
