@@ -98,6 +98,16 @@ self.addEventListener('message', async () => {
    * @param fileContents The whole contents of the export file.
    */
   const scanTables = ({ fileContents }: ParsePillowDataProps): ParsePillowDataResult => {
+    const startTime = new Date()
+
+    postMessage({
+      loading: true,
+      status: {
+        statusCode: DataWorkerStatusCode.READ_TABLES,
+        payload: 'Reading data tables'
+      }
+    })
+
     let readingTable : RawSleepDataTable | undefined = undefined
     let searchingForTable = true
 
@@ -160,6 +170,17 @@ self.addEventListener('message', async () => {
       // Once we're finished with the current line, increment to move onto the next one
       lineIndex++
     }
+
+    const endTime = new Date()
+    const timeDelta = endTime.getTime() - startTime.getTime()
+
+    postMessage({
+      loading: true,
+      status: {
+        statusCode: DataWorkerStatusCode.READ_TABLES,
+        payload: `Successfully read ${targetTables.length} tables in ${timeDelta}ms.`
+      }
+    })
 
     return {
       sessions: result[RawSleepDataTable.SLEEP_SESSION],
@@ -246,15 +267,13 @@ self.addEventListener('message', async () => {
         soundsBySession.get(sessionId)!.push(soundEntry)
       })
 
-      setTimeout(() => {
-        postMessage({
-          loading: true,
-          status: {
-            statusCode: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
-            payload: `Extracted ${Object.keys(sounds).length} sound data points.`
-          }
-        })
-      }, 10)
+      postMessage({
+        loading: true,
+        status: {
+          statusCode: DataWorkerStatusCode.EXTRACT_SOUND_DATA,
+          payload: `Extracted ${Object.keys(sounds).length} sound data points.`
+        }
+      })
 
       return soundsBySession
     }
@@ -287,15 +306,13 @@ self.addEventListener('message', async () => {
         stagesBySession.get(sessionId)!.push(stageEntry)
       })
 
-      setTimeout(() => {
-        postMessage({
-          loading: true,
-          status: {
-            statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
-            payload: `Extracted ${Object.keys(stages).length} session stage instances.`
-          }
-        })
-      }, 10)
+      postMessage({
+        loading: true,
+        status: {
+          statusCode: DataWorkerStatusCode.EXTRACT_STAGE_DATA,
+          payload: `Extracted ${Object.keys(stages).length.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} session stage instances.`
+        }
+      })
 
       return stagesBySession
     }
