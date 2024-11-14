@@ -3,7 +3,7 @@ import {
   DataWorkerResponse,
   DataWorkerStatusCode,
   UseDataWorkerResponse
-} from 'modules/worker/hooks/useDataWorker/types'
+} from './types'
 import { DataWorker } from 'modules/worker'
 
 export const dataWorker = new DataWorker()

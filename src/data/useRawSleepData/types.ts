@@ -11,8 +11,6 @@ export interface RawSleepData {
   sleepData?: PillowSleepData
 }
 
-export const TABLE_PRIMARY_KEY = 'Z_PK'
-
 /**
  * Available table names from the
  * raw database export file. A table

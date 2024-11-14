@@ -39,7 +39,7 @@ export interface ParsePillowDataResult {
   stages: Record<string, RawSleepStageData>
 }
 
-export const TABLE_PRIMARY_KEY = 'Z_PK'
+
 
 export interface DataWorkerStatus {
   /**

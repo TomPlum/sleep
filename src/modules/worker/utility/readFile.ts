@@ -1,4 +1,4 @@
-import { DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker/hooks/useDataWorker/types'
+import { DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
 import { PillowDataType } from 'data/usePillowData/types'
 
 /**

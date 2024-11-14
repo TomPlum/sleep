@@ -6,7 +6,7 @@ import { useSleepContext } from 'context'
 import { ActiveSessionInfoProps } from './types'
 import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
-import { PILLOW_DATABASE_FILE_NAME } from 'modules/worker/hooks/useDataWorker'
+import { PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })

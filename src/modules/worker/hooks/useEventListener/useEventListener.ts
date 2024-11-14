@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { DataWorkerResponse, DataWorkerStatus, DataWorkerStatusCode } from 'modules/worker/hooks/useDataWorker/types'
-import { dataWorker } from 'modules/worker/hooks/useDataWorker/useDataWorker'
+import { DataWorkerResponse, DataWorkerStatus, DataWorkerStatusCode, dataWorker } from 'modules/worker'
 
 export const useEventListener = () => {
   const [status, setStatus] = useState<DataWorkerStatus>({

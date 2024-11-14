@@ -1,5 +1,5 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
-import { DataWorkerMessageEvent, DataWorkerResult, DataWorkerStatusCode } from 'modules/worker/hooks/useDataWorker'
+import { DataWorkerMessageEvent, DataWorkerResult, DataWorkerStatusCode } from 'modules/worker'
 import { formatNumber, readRawDatabaseExport, scanTables, convertSleepStage, convertTimestamp, sendMessage } from 'modules/worker/utility'
 
 self.addEventListener('message', async () => {

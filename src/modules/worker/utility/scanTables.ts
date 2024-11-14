@@ -1,11 +1,12 @@
-import { DataWorkerStatusCode, ParsePillowDataProps, ParsePillowDataResult, TABLE_PRIMARY_KEY } from 'modules/worker/hooks/useDataWorker'
+import { DataWorkerStatusCode, ParsePillowDataProps, ParsePillowDataResult } from 'modules/worker'
 import {
   RawSleepDataTable,
   RawSleepSessionData,
   RawSleepSoundPointData,
   RawSleepStageData
 } from 'data/useRawSleepData/types'
-import { parseDataLine, TableRow } from './parseDataLine.ts'
+import { parseDataLine, TableRow } from './parseDataLine'
+import { TABLE_PRIMARY_KEY } from 'modules/worker'
 
 export type TableData <T> = Record<string, T>
 

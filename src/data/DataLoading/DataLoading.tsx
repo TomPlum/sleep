@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import styles from './DataLoading.module.scss'
 import { useEffect, useState } from 'react'
-import { DataWorkerStatusCode } from 'modules/worker/hooks/useDataWorker'
 import { Progress, Spin } from 'antd'
 import classNames from 'classnames'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
-import { useEventListener } from 'modules/worker/hooks/useEventListener'
+import { useEventListener, DataWorkerStatusCode } from 'modules/worker'
 
 export const DataLoading = () => {
   const { status } = useEventListener()
