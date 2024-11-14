@@ -1,1 +1,2 @@
-export * from './worker'
+import DataWorker from './worker.ts?worker'
+export { DataWorker }
