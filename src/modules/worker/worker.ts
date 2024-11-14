@@ -1,6 +1,6 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 import { DataWorkerMessageEvent, DataWorkerResult, DataWorkerStatusCode } from 'modules/worker/hooks/useDataWorker'
-import { formatNumber, readFile, scanTables, convertSleepStage, convertTimestamp, sendMessage } from 'modules/worker/utility'
+import { formatNumber, readRawDatabaseExport, scanTables, convertSleepStage, convertTimestamp, sendMessage } from 'modules/worker/utility'
 
 self.addEventListener('message', async () => {
 
@@ -165,7 +165,7 @@ self.addEventListener('message', async () => {
   }
 
   try {
-    const { fileContents } = await readFile()
+    const { fileContents } = await readRawDatabaseExport()
 
     setTimeout(() => {
       const { sessions, sounds, stages } = scanTables({ fileContents })
