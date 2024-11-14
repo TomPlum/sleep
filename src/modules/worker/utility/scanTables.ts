@@ -1,12 +1,10 @@
-import { DataWorkerStatusCode, ParsePillowDataProps, ParsePillowDataResult } from 'modules/worker'
+import { Benchmark, DataWorkerStatusCode, ParsePillowDataProps, ParsePillowDataResult, TABLE_PRIMARY_KEY, parseDataLine, TableRow } from 'modules/worker'
 import {
   RawSleepDataTable,
   RawSleepSessionData,
   RawSleepSoundPointData,
   RawSleepStageData
 } from 'data/useRawSleepData/types'
-import { parseDataLine, TableRow } from './parseDataLine'
-import { TABLE_PRIMARY_KEY } from 'modules/worker'
 
 export type TableData <T> = Record<string, T>
 
@@ -17,7 +15,7 @@ export type TableData <T> = Record<string, T>
  * @param fileContents The whole contents of the export file.
  */
 export const scanTables = ({ fileContents }: ParsePillowDataProps): ParsePillowDataResult => {
-  const startTime = new Date()
+  const benchmark = new Benchmark()
 
   postMessage({
     loading: true,
@@ -90,14 +88,13 @@ export const scanTables = ({ fileContents }: ParsePillowDataProps): ParsePillowD
     lineIndex++
   }
 
-  const endTime = new Date()
-  const timeDelta = endTime.getTime() - startTime.getTime()
+  benchmark.stop()
 
   postMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READ_TABLES,
-      payload: `Successfully read ${targetTables.length} tables in ${timeDelta}ms.`
+      payload: `Successfully read ${targetTables.length} tables in ${benchmark.delta}.`
     }
   })
 

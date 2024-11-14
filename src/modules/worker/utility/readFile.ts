@@ -1,4 +1,4 @@
-import { DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
+import { Benchmark, DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
 import { PillowDataType } from 'data/usePillowData/types'
 
 /**
@@ -33,21 +33,21 @@ export const readRawDatabaseExport = async () => {
     }
   })
 
-  const timeStart = new Date()
+  const benchmark = new Benchmark()
+  benchmark.start()
 
   const response = await readFile('raw')
 
   const fileContents = await response.text()
   const fileSize = response.headers.get('Content-Length')
 
-  const timeEnd = new Date()
-  const timeDelta = timeEnd.getTime() - timeStart.getTime()
+  benchmark.stop()
 
   postMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE,
-      payload: `Successfully read ~${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${timeDelta}ms.`
+      payload: `Successfully read ~${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${benchmark.delta}.`
     }
   })
 

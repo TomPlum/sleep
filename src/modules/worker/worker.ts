@@ -1,11 +1,12 @@
 import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 import { DataWorkerMessageEvent, DataWorkerResult, DataWorkerStatusCode } from 'modules/worker'
-import { formatNumber, readRawDatabaseExport, scanTables, convertSleepStage, convertTimestamp, sendMessage } from 'modules/worker/utility'
+import { formatNumber, readRawDatabaseExport, scanTables, convertSleepStage, convertTimestamp, sendMessage, Benchmark } from 'modules/worker'
 
 self.addEventListener('message', async () => {
 
   const parseTableData = ({ sessions, stages, sounds }: DataWorkerMessageEvent) => {
-    const timeStart = new Date()
+    const benchmark = new Benchmark()
+    benchmark.start()
 
     const sessionKeys = Object.keys(sessions)
     const sessionCount = sessionKeys.length
@@ -122,15 +123,14 @@ self.addEventListener('message', async () => {
             return acc
           }, { sessions: {}, sleepStages: {}, sounds: {} })
 
-          const timeEnd = new Date()
-          const timeDelta = timeEnd.getTime() - timeStart.getTime()
+          benchmark.stop()
 
           sendMessage({
             loading: false,
             status: {
               code: DataWorkerStatusCode.ASSOCIATE_SESSION_DATA,
               percent: 100,
-              payload: `Processed ${formatNumber(sessionCount)} sleep sessions in ${timeDelta}ms.`
+              payload: `Processed ${formatNumber(sessionCount)} sleep sessions in ${benchmark.delta}.`
             }
           })
 
