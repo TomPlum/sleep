@@ -17,7 +17,7 @@ export interface UseDataWorkerResponse {
 }
 
 export interface DataWorkerResponse {
-  result: DataWorkerResult
+  result?: DataWorkerResult
   loading: boolean
   error?: Error
   status: DataWorkerStatus
@@ -48,6 +48,13 @@ export interface DataWorkerStatus {
   code: DataWorkerStatusCode
 
   /**
+   * Indicates that the worker is
+   * currently working and in a
+   * loading state.
+   */
+  loading?: boolean
+
+  /**
    * An optional payload of descriptive
    * information about the current state
    * of the worker.
@@ -59,7 +66,7 @@ export interface DataWorkerStatus {
    * 0 and 100 which represents the percentage
    * completion of the current action.
    */
-  percent: number
+  percent?: number
 }
 
 /**

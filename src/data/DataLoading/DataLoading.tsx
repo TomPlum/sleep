@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import styles from './DataLoading.module.scss'
 import { useEffect, useState } from 'react'
-import { DataWorkerStatusCode } from 'data/useDataWorker'
+import { DataWorkerStatusCode } from 'modules/worker/hooks/useDataWorker'
 import { Progress, Spin } from 'antd'
 import classNames from 'classnames'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
-import { useDataWorkerEventListener } from 'data/useDataWorker/useDataWorkerEventListener'
+import { useEventListener } from 'modules/worker/hooks/useEventListener'
 
 export const DataLoading = () => {
-  const { status } = useDataWorkerEventListener()
+  const { status } = useEventListener()
 
   const [history, setHistory] = useState<Partial<Record<DataWorkerStatusCode, string>>>({})
   const [currentOperation, setCurrentOperation] = useState<DataWorkerStatusCode>()
@@ -66,7 +66,7 @@ export const DataLoading = () => {
           </div>
         ))}
 
-        {currentOperation === DataWorkerStatusCode.ASSOCIATE_SESSION_DATA && (
+        {currentOperation === DataWorkerStatusCode.ASSOCIATE_SESSION_DATA && status.percent && (
           <Progress
             size='small'
             trailColor='#575757'

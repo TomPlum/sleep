@@ -142,6 +142,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
        />
 
        <Scatter
+         // @ts-expect-error I think Recharts has bad typing here
          shape={props => <SleepStageBar {...props} />}
        />
 
