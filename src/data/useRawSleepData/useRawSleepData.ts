@@ -3,6 +3,7 @@ import { useDataWorker } from 'modules/worker/hooks/useDataWorker'
 import { useCallback, useMemo } from 'react'
 import { PillowSleepSession, SleepMood } from 'data/useSleepData'
 import dayjs from 'dayjs'
+import { isValidSession } from 'data/isValidSession'
 
 export const useRawSleepData = (): RawSleepData => {
   const { result, running } = useDataWorker()
@@ -48,12 +49,7 @@ export const useRawSleepData = (): RawSleepData => {
         }
       })
     }).filter(({ duration, isNap }) => {
-      const hasValidDuration = duration.total > 0 && duration.total < (60 * 15)
-      const hasInvalidBreakdown = [duration.light, duration.deep, duration.rem, duration.awake].every(v => v <= 0)
-      const isAllAwakeTime = [duration.light, duration.deep, duration.rem].every(v => v === 0) && duration.awake > 0
-      const hasValidAwakeTime = duration.awake <= duration.total
-      const isTooShort = !isNap && duration.total < 90
-      return hasValidDuration && !hasInvalidBreakdown && hasValidAwakeTime && !isTooShort && !isAllAwakeTime
+      return isValidSession({ duration, isNap })
     })
   }, [result, getSleepMood])
 
