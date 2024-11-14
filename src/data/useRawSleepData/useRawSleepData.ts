@@ -1,95 +1,75 @@
-import { usePillowData } from '../usePillowData'
+import { RawSleepData } from './types'
+import { useDataWorker } from 'modules/worker'
 import { useCallback, useMemo } from 'react'
+import { PillowSleepSession, SleepMood } from 'data/useSleepData'
+import dayjs from 'dayjs'
+import { isValidSession } from 'data/isValidSession'
 
-/*const tables = [
-  'ZPILLOWUSER',
-  'ZSLEEPNOTE',
-  'Z_5SLEEPSESSION',
-  'ZSLEEPSESSION',
-  'ZSLEEPSTAGEDATAPOINT',
-  'ZSNOOZELAB',
-  'ZSOUNDDATAPOINT',
-  'Z_PRIMARYKEY',
-  'Z_METADATA',
-  'Z_MODELCACHE',
-  'Y_UBMETA',
-  'Y_UBRANGE',
-  'Y_UBKVS'
-]*/
+export const useRawSleepData = (): RawSleepData => {
+  const { result, running } = useDataWorker()
 
-const tables = [
-  'ZPILLOWUSER',
-  'Z_5SLEEPSESSION',
-  'ZSLEEPSESSION',
-  'ZSLEEPSTAGEDATAPOINT',
-  'ZSOUNDDATAPOINT',
-  'Z_PRIMARYKEY',
-  'Z_METADATA',
-  'Z_MODELCACHE',
-  'Y_UBMETA',
-  'Y_UBRANGE',
-  'Y_UBKVS'
-]
-
-export const useRawSleepData = () => {
-  const { data, isLoading, error } = usePillowData({ type: 'raw' })
-
-  const parseLine = useCallback((line: string) => {
-    const tokens = line.split(' ')
-    const row: Record<string, string> = {}
-
-    while(tokens.length > 0) {
-      let valueParts = [tokens.pop()]
-      let valuePartOrSeparator = tokens.pop()
-
-      while(valuePartOrSeparator && valuePartOrSeparator != '->') {
-        valueParts.push(valuePartOrSeparator)
-        valuePartOrSeparator = tokens.pop()
-      }
-
-      valueParts = valueParts.reverse()
-
-      const key = tokens.pop() ?? 'UNKNOWN'
-      row[key] = valueParts.join(' ')
+  const getSleepMood = useCallback((moodValue: number): SleepMood => {
+    switch (moodValue) {
+      case 4: return SleepMood.GOOD
+      case 3: return SleepMood.OK
+      case 2: return SleepMood.BAD
+      case 0: return SleepMood.UNKNOWN
+      default: return SleepMood.UNKNOWN
     }
-
-    return row
   }, [])
 
-  const sleepData = useMemo(() => {
-    if (!data || isLoading) {
-      return undefined
+  const sessions = useMemo<PillowSleepSession[]>(() => {
+    if (!result) {
+      return []
     }
 
-    const dataFrames: Record<string, Array<Record<string, string>>> = {}
-    let currentTable: string | undefined
-    let rows: Array<Record<string, string>> = []
+    // TODO: Are they any new pieces of data we want to map from the raw file? Like time to sleep?
+    return Object.values(result.sessions).map((value) => {
+      const ONE_MINUTE = 60
 
-    data.split('\n').map(line => {
-      const lineData = line.trim()
+      const awake = value.ZTIMEAWAKE / ONE_MINUTE
+      const deep = value.ZTIMEINDEEPSLEEP / ONE_MINUTE
+      const light = value.ZTIMEINLIGHTSLEEP / ONE_MINUTE
+      const rem = value.ZTIMEINREMSLEEP / ONE_MINUTE
 
-      if (tables.includes(lineData)) {
-        if (currentTable) {
-          dataFrames[currentTable] = rows
+      return ({
+        id: value.Z_PK.toString(), // TODO: Z_PK or Z_UNIQUEIDENTIFIER here?
+        startTime: dayjs(new Date(value.ZSTARTTIME * 1000)).add(31, 'years').toDate(),
+        endTime: dayjs(new Date(value.ZENDTIME * 1000)).add(31, 'years').toDate(),
+        audioRecordings: 0, // TODO: Do we have this from the raw session data? Or does it need linking from another table?
+        isNap: value.ZISNAP === 1,
+        mood: getSleepMood(value.ZWAKEUPMOOD),
+        sleepQuality: Math.round(value.ZSLEEPQUALITY * 100),
+        duration: {
+          total: awake + deep + light + rem,
+          awake,
+          light,
+          deep,
+          rem
         }
-
-        currentTable = lineData
-        rows = []
-      } else {
-        rows.push(parseLine(lineData))
-      }
+      })
+    }).filter(({ duration, isNap }) => {
+      return isValidSession({ duration, isNap })
     })
+  }, [result, getSleepMood])
 
-    dataFrames['ZSLEEPSESSION'].forEach(() => {
-
-    })
-
-    return rows
-  }, [data, isLoading, parseLine])
+  const { earliestSession, latestSession } = useMemo(() => {
+    const earliestSession = new Date(Math.min(...sessions.map(session => session.startTime.getTime())))
+    const latestSession = new Date(Math.max(...sessions.map(session => session.endTime.getTime())))
+    return {
+      earliestSession,
+      latestSession
+    }
+  }, [sessions])
 
   return {
-    error,
-    isLoading,
-    sleepData
+    loading: running,
+    sleepData: {
+      sessions,
+      earliestSession,
+      latestSession
+    },
+    sessionStages: result?.sleepStages ?? {},
+    sessionSounds: result?.sounds ?? {}
   }
 }

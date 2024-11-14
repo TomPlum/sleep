@@ -2,12 +2,14 @@ import { SleepContextProvider } from 'context/SleepContextProvider'
 import styles from './SleepApp.module.scss'
 import { Outlet } from 'react-router-dom'
 
-const SleepApp = () => (
+const SleepApp = () => {
+  return (
     <div className={styles.container}>
       <SleepContextProvider>
-        <Outlet />
+        <Outlet/>
       </SleepContextProvider>
     </div>
-)
+  )
+}
 
 export default SleepApp

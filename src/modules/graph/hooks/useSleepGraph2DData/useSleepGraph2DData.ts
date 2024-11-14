@@ -24,6 +24,7 @@ export const useSleepGraph2DData = ({
       const totalDuration = duration.total
 
       return {
+        id: session.id,
         xDate: session.startTime.getTime(),
         date: session.startTime,
         duration: totalDuration,

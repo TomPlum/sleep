@@ -8,6 +8,7 @@ export const SleepContext = createContext<SleepContextBag>({
     earliestSession: new Date(),
     latestSession: new Date()
   },
+  sleepStageData: {},
   isSleepDataLoading: true,
   rangeStart: new Date(),
   setRangeStart: (start: Date) => {

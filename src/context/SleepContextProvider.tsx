@@ -1,15 +1,15 @@
 import { SleepContext } from 'context/SleepContext'
 import { PropsWithChildren, useEffect, useMemo } from 'react'
 import { SleepContextBag } from 'context/types'
-import { useSleepData } from 'data/useSleepData'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useSleepGraph2DData } from 'modules/graph/hooks/useSleepGraph2DData'
 import { useTranslation } from 'react-i18next'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
+import { useRawSleepData } from 'data/useRawSleepData'
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
-  const { sleepData, loading } = useSleepData()
+  const { sleepData, sessionStages, loading } = useRawSleepData()
 
   const {
     currentMetric,
@@ -48,6 +48,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
 
   const value = useMemo<SleepContextBag>(() => ({
     sleepData,
+    sleepStageData: sessionStages,
     isSleepDataLoading: loading,
     rangeStart: rangeStart ?? new Date(),
     setRangeStart,
@@ -62,7 +63,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     setStackedView,
     stackedMetrics: stackedMetrics ?? [],
     setStackedMetrics: handleSetStackedMetrics
-  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
+  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
 
   return (
     <SleepContext.Provider value={value}>

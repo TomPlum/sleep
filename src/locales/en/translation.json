@@ -16,7 +16,6 @@
         "please-select": "Awaiting metric selection..."
       },
       "data-source": {
-        "name": "PillowData-02-11-24.csv",
         "title": "Download source data"
       },
       "language": {
@@ -65,5 +64,25 @@
     "title": "Oops! This isn't the page you were dreaming of...",
     "message": "It looks like you’ve stumbled into the land of uncharted naps. Unfortunately, we don’t have any sleep data here… just an endless snooze.",
     "home-button": "Home"
+  },
+  "loading": {
+    "title": {
+      "start": "Loading sleep",
+      "apnea": "apnea",
+      "app": "app data"
+    },
+    "status": {
+      "unknown": "Loading...",
+      "starting": "Initialising web worker",
+      "reading-file": "Reading Pillow database export file",
+      "reading-tables": "Reading relevant database tables",
+      "not-started": "Awaiting web worker initialisation",
+      "extract-sound-data": "Extracting sound data points",
+      "extract-stage-data": "Extracting sleep stage instances",
+      "associate-session-data": "Associating sleep stage data with sessions",
+      "finishing": "Finishing up",
+      "done": "Done",
+      "error": "An error occurred while reading the Pillow database"
+    }
   }
 }

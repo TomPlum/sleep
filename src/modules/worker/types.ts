@@ -1,0 +1,1 @@
+export const TABLE_PRIMARY_KEY = 'Z_PK'

@@ -28,6 +28,8 @@ export default defineConfig(({ mode }) => ({
         classNameStrategy: 'non-scoped'
       }
     },
+    setupFiles: ['@vitest/web-worker'],
+    threads: 5,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

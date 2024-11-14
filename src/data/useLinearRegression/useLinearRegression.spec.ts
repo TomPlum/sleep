@@ -12,6 +12,7 @@ vi.mock('context/useSleepContext', () => ({
 
 const validGraphData2D: SleepSessionGraph2DData = [
   {
+    id: '1',
     xDate: 1724454000000,
     date: new Date(2024, 7, 24),
     duration: 520,
@@ -25,6 +26,7 @@ const validGraphData2D: SleepSessionGraph2DData = [
     [SleepMetric.DURATION]: 80
   },
   {
+    id: '2',
     xDate: 1724540400000,
     date: new Date(2024, 7, 25),
     duration: 520,

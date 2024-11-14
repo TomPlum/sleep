@@ -1,39 +1,40 @@
 import styles from './SleepPage.module.scss'
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
-import { SleepSessionsGraph2D } from 'modules/graph/components/SleepSessionsGraph2D'
+import {
+  SleepSessionGraph2DDatum,
+  SleepSessionsGraph2D
+} from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useEffect } from 'react'
+import { useCallback, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
+import { DataLoading } from 'data/DataLoading'
+import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
+import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 
 export const SleepPage = () => {
-  const { isSleepDataLoading, stackedMetrics, stackedView, sleepMetric } = useSleepContext()
+  const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
 
-  useEffect(() => {
-    const existingFavicon = document.querySelector('link[rel=\'icon\']') as HTMLLinkElement
-    const newFaviconUrl = `${import.meta.env.BASE_URL}favicon-${sleepMetric.split('_')[0]}.svg`
+  const {
+    graphData2d,
+    stackedView,
+    sleepMetric,
+    stackedMetrics,
+    sleepStageData,
+    isSleepDataLoading
+  } = useSleepContext()
 
-    if (existingFavicon) {
-      existingFavicon.href = newFaviconUrl
-    } else {
-      const newFavicon = document.createElement('link')
-      newFavicon.rel = 'icon'
-      newFavicon.href = newFaviconUrl
-      document.head.appendChild(newFavicon)
-    }
-  }, [sleepMetric])
+  useDynamicFavicon()
+
+  const handleSelectSession = useCallback((index: number) => {
+    const session = graphData2d.data[index]
+    setSelectedSession(session)
+  }, [graphData2d.data])
 
   if (isSleepDataLoading) {
     return (
-      <div className={styles.loading}>
-        <Spin
-          size="large"
-          indicator={<LoadingOutlined spin />}
-        />
-      </div>
+      <DataLoading />
     )
   }
 
@@ -50,6 +51,8 @@ export const SleepPage = () => {
               metric={metric}
               className={styles.graph}
               key={`sleep-graph-2d-${metric}`}
+              selectedSession={selectedSession?.id}
+              onSelectSession={handleSelectSession}
             />
           ))}
 
@@ -61,15 +64,33 @@ export const SleepPage = () => {
               />
             ))
           )}
+
+          {sleepStageData && selectedSession && (
+            <SleepSessionInfo
+              session={selectedSession}
+              data={sleepStageData[selectedSession?.id]}
+            />
+          )}
         </div>
       )}
 
-      {!stackedView && (
-        <SleepSessionsGraph2D
-          metric={sleepMetric}
-          className={styles.graph}
-        />
-      )}
+      <div className={styles.graphContainer}>
+        {!stackedView && (
+          <SleepSessionsGraph2D
+            metric={sleepMetric}
+            className={styles.graph}
+            selectedSession={selectedSession?.id}
+            onSelectSession={handleSelectSession}
+          />
+        )}
+
+        {sleepStageData && selectedSession && (
+          <SleepSessionInfo
+            session={selectedSession}
+            data={sleepStageData[selectedSession?.id]}
+          />
+        )}
+      </div>
     </div>
   )
 }

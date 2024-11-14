@@ -1,3 +1,5 @@
+export type PillowDataType = 'raw' | 'csv';
+
 export interface GetPillowDataProps {
-  type: 'raw' | 'csv'
+  type: PillowDataType
 }

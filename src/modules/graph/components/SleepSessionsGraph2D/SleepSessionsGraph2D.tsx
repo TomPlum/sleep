@@ -21,15 +21,29 @@ import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLabel'
 import { SleepSessionsGraph2DProps } from './types'
+import { LineActiveDot } from 'modules/graph/components/LineActiveDot'
+import { useMemo } from 'react'
 
 const animationDuration = 500
 
-export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2DProps) => {
-  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
+export const SleepSessionsGraph2D = ({
+   metric,
+   onSelectSession,
+   selectedSession,
+   className
+}: SleepSessionsGraph2DProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
+
+  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
-  const { graphData2d: { data, earliestSession, latestSession }, improvementDate, stackedView, stackedMetrics } = useSleepContext()
+
+  const {
+    stackedView,
+    stackedMetrics,
+    improvementDate,
+    graphData2d: { data, earliestSession, latestSession }
+  } = useSleepContext()
 
   const {
     regressionLineData,
@@ -41,8 +55,16 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
 
   const isTopGraph = stackedMetrics.indexOf(metric) === 0
 
+  const graphHeight = useMemo(() => {
+    if (stackedView) {
+      return selectedSession ? '42.5%' : '50%'
+    }
+
+    return selectedSession ? '75%' : '100%'
+  }, [stackedView, selectedSession])
+
   return (
-    <ResponsiveContainer width='100%' height={stackedView ? '50%' : '100%'} className={className}>
+    <ResponsiveContainer width='100%' height={graphHeight} className={className}>
       <LineChart
         id='sleeps-sessions-graph-2d'
         margin={{ left: -55, bottom: -22 }}
@@ -52,6 +74,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           data={data}
           type='monotone'
           dataKey={metric}
+          activeDot={false}
           id={`${metric}_line`}
           animationDuration={500}
           isAnimationActive={true}
@@ -60,6 +83,13 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
           animationEasing='ease-in-out'
           className={styles.metricLine}
           dot={{ fill: undefined, r: activeDotRadius }}
+          label={data => (
+            <LineActiveDot
+              data={data}
+              onClick={onSelectSession}
+              radius={activeDotRadius - 3}
+            />
+          )}
         />
 
         <Line
@@ -108,6 +138,7 @@ export const SleepSessionsGraph2D = ({ metric, className }: SleepSessionsGraph2D
             {...typicalSleepSession}
             ifOverflow='extendDomain'
             fill={typicalSleepSessionFill}
+            className={styles.typicalSleepSessionArea}
             id={`${metric}_typical_sleep_session_area`}
           >
             <Label
