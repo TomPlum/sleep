@@ -22,7 +22,7 @@ export class Benchmark {
     }
 
     const ms = timeDelta % 1000
-    const s = Math.floor(ms / 1000)
+    const s = Math.floor(timeDelta / 1000)
 
     return `${s}s ${ms}ms`
   }
