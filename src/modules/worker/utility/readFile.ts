@@ -39,7 +39,7 @@ export const readRawDatabaseExport = async () => {
   const response = await readFile('raw')
 
   const fileContents = await response.text()
-  const fileSize = response.headers.get('Content-Length')
+  const fileSize = new Blob([fileContents]).size
 
   benchmark.stop()
 
