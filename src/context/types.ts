@@ -2,7 +2,7 @@ import { PillowSleepData } from 'data/useSleepData'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData'
 import { Dispatch, SetStateAction } from 'react'
-import { RawSleepSessionStages } from 'data/useRawSleepData/types'
+import { RawSleepSessionSounds, RawSleepSessionStages } from 'data/useRawSleepData/types'
 
 
 export interface SleepContextBag {
@@ -19,6 +19,12 @@ export interface SleepContextBag {
    * session ID.
    */
   sleepStageData: RawSleepSessionStages
+
+  /**
+   * A map of sleep sound data for a given sleep
+   * session ID.
+   */
+  sleepSoundData: RawSleepSessionSounds
 
   /**
    * Whether the read IO or conversion process of

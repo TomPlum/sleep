@@ -68,7 +68,6 @@ export const SleepPage = () => {
           {sleepStageData && selectedSession && (
             <SleepSessionInfo
               session={selectedSession}
-              data={sleepStageData[selectedSession?.id]}
             />
           )}
         </div>
@@ -85,10 +84,7 @@ export const SleepPage = () => {
         )}
 
         {sleepStageData && selectedSession && (
-          <SleepSessionInfo
-            session={selectedSession}
-            data={sleepStageData[selectedSession?.id]}
-          />
+          <SleepSessionInfo session={selectedSession} />
         )}
       </div>
     </div>

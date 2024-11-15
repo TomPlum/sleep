@@ -1,5 +1,6 @@
-import { SleepSessionStage } from 'data/useSleepData'
+import { SleepSessionSound, SleepSessionStage } from 'data/useSleepData'
 
 export interface SleepSessionStageBreakdownGraphProps {
-  data: SleepSessionStage[]
+  stages: SleepSessionStage[]
+  sounds: SleepSessionSound[]
 }

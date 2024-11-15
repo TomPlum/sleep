@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
 import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
 
-export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreakdownGraphProps) => {
+export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
 
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
@@ -26,7 +26,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   }, [])
 
   const chartData = useMemo(() => {
-    const sorted = data.sort((a, b) => {
+    const sorted = stages.sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime()
     })
 
@@ -44,7 +44,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
           y: getYValue(first.stage)
         }
       })
-  }, [data, getYValue])
+  }, [stages, getYValue])
 
   const xDomain = useMemo(() => {
     const min = Math.min(...chartData.map(({ start }) => start))

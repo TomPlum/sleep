@@ -2,11 +2,18 @@ import { SleepSessionStageBreakdownGraph } from 'modules/graph/components/SleepS
 import { SleepSessionInfoProps } from './types'
 import styles from './SleepSessionInfo.module.scss'
 import dayjs from 'dayjs'
+import { useSleepContext } from 'context'
 
-export const SleepSessionInfo = ({ data, session }: SleepSessionInfoProps) => {
+export const SleepSessionInfo = ({ session }: SleepSessionInfoProps) => {
+
+  const { sleepStageData, sleepSoundData } = useSleepContext()
+
   return (
     <div className={styles.container}>
-      <SleepSessionStageBreakdownGraph data={data} />
+      <SleepSessionStageBreakdownGraph
+        stages={sleepStageData[session.id]}
+        sounds={sleepSoundData[session.id]}
+      />
 
       <div className={styles.info}>
         {dayjs(session.date).format('ddd Do MMM YYYY - HH:mm')}
