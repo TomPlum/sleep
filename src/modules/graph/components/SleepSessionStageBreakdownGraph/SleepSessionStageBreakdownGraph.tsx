@@ -1,10 +1,11 @@
-import { CartesianGrid, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, ReferenceLine, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionStageBreakdownGraphProps } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
 import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
+import styles from './SleepSessionStageBreakdownGraph.module.scss'
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
 
@@ -145,6 +146,17 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          // @ts-expect-error I think Recharts has bad typing here
          shape={props => <SleepStageBar {...props} />}
        />
+
+       {
+         sounds.map(sound => (
+           <ReferenceLine
+             key={sound.id}
+             x={sound.timestamp.getTime()}
+             className={styles.soundLine}
+             id={`sound_instance_${sound.id}`}
+           />
+         ))
+       }
 
        <Tooltip />
      </ScatterChart>
