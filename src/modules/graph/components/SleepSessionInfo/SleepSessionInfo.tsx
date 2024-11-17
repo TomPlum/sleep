@@ -63,7 +63,7 @@ export const SleepSessionInfo = () => {
 
         <p className={styles.text}>
           {startTime.format('HH:mm')}
-          {' '}
+          {' -> '}
           {endTime.format('HH:mm')}
           {' '}
           ({hoursDifference}{t('hour')} {remainingMinutes}{t('minute')})

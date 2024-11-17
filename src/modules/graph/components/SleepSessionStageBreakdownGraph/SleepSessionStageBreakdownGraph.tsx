@@ -18,6 +18,7 @@ import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
 import { useChartSize } from 'modules/graph/hooks/useChartSize'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
+import { LegendItem } from 'modules/graph/components/LegendItem'
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const { size, chartRef } = useChartSize()
@@ -179,6 +180,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
        <Legend
          height={30}
          verticalAlign='top'
+         formatter={LegendItem}
          id='sleep-stage-breakdown-legend'
          payload={yDomain.map(stage => ({
            id: stage,
@@ -186,11 +188,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            type: 'diamond',
            color: getMetricColour(stage)
          }))}
-         formatter={(value) => (
-           <span style={{ color: getMetricColour(value as SleepMetric), marginRight: 10 }}>
-             {`${value.split('_').map((v: string) => `${v.charAt(0).toUpperCase()}${v.slice(1)}`).join(' ')}`}
-           </span>
-         )}
        />
      </ScatterChart>
    </ResponsiveContainer>

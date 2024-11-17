@@ -1,11 +1,15 @@
 .container {
   height: 25%;
   display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: 'Nunito', sans-serif;
 
   .info {
     width: 15%;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     padding: 15px;
 
