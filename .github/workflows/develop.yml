@@ -1,5 +1,7 @@
 name: Development
 run-name: Compilation & Quality Checks
+env:
+  TZ: UTC
 on:
   push:
     branches:
