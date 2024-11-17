@@ -30,6 +30,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check current timezone
+        run: date
+
       - name: Run Unit Tests
         env:
           TZ: UTC
