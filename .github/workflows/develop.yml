@@ -1,15 +1,17 @@
-name: Deploy Sleep App
-run-name: deploy-sleep-app
+name: Development
+run-name: Compilation & Quality Checks
 on:
   push:
     branches:
-      - release
-permissions:
-  contents: write
-env:
-  TZ: UTC
+      - develop
+  pull_request:
+    types:
+      - opened
+    branches:
+      - '*'
+      - '!develop'
 jobs:
-  build-test-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,13 +21,10 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
       - name: Build
         run: npm run build
       - name: Run Unit Tests
         run: npm run test:ci
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
+
