@@ -14,7 +14,7 @@ const validGraphData2D: SleepSessionGraph2DData = [
   {
     id: '1',
     xDate: 1724454000000,
-    date: new Date(2024, 7, 24),
+    date: new Date(Date.UTC(2024, 7, 24)),
     duration: 520,
     isNap: false,
     mood: SleepMood.GOOD,
@@ -28,7 +28,7 @@ const validGraphData2D: SleepSessionGraph2DData = [
   {
     id: '2',
     xDate: 1724540400000,
-    date: new Date(2024, 7, 25),
+    date: new Date(Date.UTC(2024, 7, 25)),
     duration: 520,
     isNap: false,
     mood: SleepMood.GOOD,
@@ -57,12 +57,12 @@ describe('Linear Regression Hook', () => {
 
     expect(result.current.regressionLineData).toStrictEqual<LinearRegressionPlotPoint[]>([
       {
-        xDate: 1724454000000,
-        y: 59.99999932863284,
+        xDate: 1724457600000,
+        y: 59.999999328516424,
       },
       {
-        xDate: 1724540400000,
-        y: 20.000000671483576,
+        xDate: 1724544000000,
+        y: 20.00000067136716,
       },
     ])
   })
@@ -82,12 +82,12 @@ describe('Linear Regression Hook', () => {
 
     expect(result.current.regressionLineDeltaHorizontal).toStrictEqual([
       {
-        xDate: 1724454000000,
-        y: 59.99999932863284
+        xDate: 1724457600000,
+        y: 59.999999328516424,
       },
       {
-        xDate: 1724540400000,
-        y: 59.99999932863284
+        xDate: 1724544000000,
+        y: 59.999999328516424,
       }
     ])
   })
@@ -107,12 +107,12 @@ describe('Linear Regression Hook', () => {
 
     expect(result.current.regressionLineDeltaVertical).toStrictEqual([
       {
-        xDate: 1724540400000,
-        y: 59.99999932863284
+        xDate: 1724544000000,
+        y: 59.999999328516424,
       },
       {
-        xDate: 1724540400000,
-        y: 19.99999932863284
+        xDate: 1724544000000,
+        y: 19.999999328516424,
       }
     ])
   })

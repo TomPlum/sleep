@@ -22,7 +22,7 @@ import { useAxes2D } from 'modules/graph/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLabel'
 import { SleepSessionsGraph2DProps } from './types'
 import { LineActiveDot } from 'modules/graph/components/LineActiveDot'
-import { useMemo } from 'react'
+import { useGraphHeight } from 'modules/graph/hooks/useGraphHeight'
 
 const animationDuration = 500
 
@@ -34,6 +34,7 @@ export const SleepSessionsGraph2D = ({
 }: SleepSessionsGraph2DProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
+  const { height } = useGraphHeight({ selectedSession })
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
@@ -55,16 +56,8 @@ export const SleepSessionsGraph2D = ({
 
   const isTopGraph = stackedMetrics.indexOf(metric) === 0
 
-  const graphHeight = useMemo(() => {
-    if (stackedView) {
-      return selectedSession ? '42.5%' : '50%'
-    }
-
-    return selectedSession ? '75%' : '100%'
-  }, [stackedView, selectedSession])
-
   return (
-    <ResponsiveContainer width='100%' height={graphHeight} className={className}>
+    <ResponsiveContainer width='100%' height={height} className={className}>
       <LineChart
         id='sleeps-sessions-graph-2d'
         margin={{ left: -55, bottom: -22 }}

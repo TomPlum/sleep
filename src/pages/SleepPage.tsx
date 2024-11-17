@@ -69,6 +69,7 @@ export const SleepPage = () => {
               <StackedGraphPlaceholder
                 id={i}
                 key={`graph-placeholder-${i}`}
+                selectedSession={selectedSession?.toString()}
               />
             ))
           )}

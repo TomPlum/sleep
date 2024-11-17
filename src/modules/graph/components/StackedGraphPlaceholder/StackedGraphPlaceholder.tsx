@@ -7,10 +7,13 @@ import { useCallback, useMemo, useState } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { MetricButton } from 'modules/controls/MetricButton'
 import classNames from 'classnames'
+import { useGraphHeight } from 'modules/graph/hooks/useGraphHeight'
 
-export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) => {
-  const { stackedMetrics } = useSleepContext()
+export const StackedGraphPlaceholder = ({ id, selectedSession }: StackedGraphPlaceholderProps) => {
   const [previewMetric, setPreviewMetric] = useState<SleepMetric>()
+
+  const { stackedMetrics } = useSleepContext()
+  const { height } = useGraphHeight({ selectedSession })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.placeholder' })
 
   const handleMouseOver = useCallback((metric: SleepMetric) => {
@@ -35,7 +38,7 @@ export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) =>
   }, [id, stackedMetrics.length])
 
   return (
-    <div className={styles.placeholder}>
+    <div className={styles.placeholder} style={{ height }}>
       <InfoCircleOutlined className={styles.infoIcon} />
 
       <p className={styles.selectText}>
