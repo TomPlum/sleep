@@ -10,7 +10,8 @@ export default defineConfig(({ mode }) => ({
       test: '/src/test',
       data: '/src/data',
       modules: '/src/modules',
-      locales: '/src/locales'
+      locales: '/src/locales',
+      config: '/src/config'
     }
   },
   server: {

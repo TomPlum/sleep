@@ -1,6 +1,6 @@
 import { beforeEach, describe } from 'vitest'
 import { DataWorkerResponse, DataWorkerStatusCode, readFile, readRawDatabaseExport } from 'modules/worker'
-import * as env from 'env'
+import * as env from 'config/env'
 import * as benchmark from 'modules/worker/utility/benchmark'
 
 describe('Read File Utility', () => {
@@ -96,7 +96,11 @@ describe('Read File Utility', () => {
 
       await readFile('raw')
 
-      expect(postMessage).toHaveBeenCalledWith({
+      expect(postMessage).toHaveBeenCalledWith<DataWorkerResponse[]>({
+        loading: false,
+        status: {
+          code: DataWorkerStatusCode.ERROR
+        },
         error: new Error('Failed to read http://localhost:3000/PillowData-11-11-24.txt')
       })
     })

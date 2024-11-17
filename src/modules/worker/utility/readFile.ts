@@ -1,6 +1,6 @@
 import { Benchmark, DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME, sendMessage } from 'modules/worker'
 import { PillowDataType } from 'data/usePillowData/types'
-import { isProduction } from 'env.ts'
+import { isProduction } from 'config/env'
 
 /**
  * Reads the Pillow export file of the given type.
