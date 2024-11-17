@@ -27,7 +27,7 @@ export const readFile = async (type: PillowDataType) => {
  * main thread for the loading screen.
  */
 export const readRawDatabaseExport = async () => {
-  postMessage({
+  self.postMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE
@@ -44,7 +44,7 @@ export const readRawDatabaseExport = async () => {
 
   benchmark.stop()
 
-  postMessage({
+  self.postMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE,
