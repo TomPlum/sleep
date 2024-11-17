@@ -82,12 +82,12 @@ describe('Linear Regression Hook', () => {
 
     expect(result.current.regressionLineDeltaHorizontal).toStrictEqual([
       {
-        'xDate': 1724454000000,
-        'y': 59.99999932863284
+        xDate: 1724454000000,
+        y: 59.99999932863284
       },
       {
-        'xDate': 1724540400000,
-        'y': 59.99999932863284
+        xDate: 1724540400000,
+        y: 59.99999932863284
       }
     ])
   })
@@ -107,12 +107,12 @@ describe('Linear Regression Hook', () => {
 
     expect(result.current.regressionLineDeltaVertical).toStrictEqual([
       {
-        'xDate': 1724540400000,
-        'y': 59.99999932863284
+        xDate: 1724540400000,
+        y: 59.99999932863284
       },
       {
-        'xDate': 1724540400000,
-        'y': 19.99999932863284
+        xDate: 1724540400000,
+        y: 19.99999932863284
       }
     ])
   })

@@ -7,17 +7,17 @@ describe('Parse Data Line Utility', () => {
     const parsed = parseDataLine(row)
 
     expect(parsed).toStrictEqual<TableRow>({
-      'ZDURATION': 10,
-      'ZFILENAME': '17082018-042837.caf',
-      'ZISSTARRED': 0,
-      'ZRAWCATEGORY': 0,
-      'ZSLEEPSESSION': 10,
-      'ZSLEEPSTAGE': 0,
-      'ZTIMESTAMP': 556169327.556486,
-      'ZUNIQUEIDENTIFIER': 'dc6b965ed8782d34a4e5341fa928d143',
-      'Z_ENT': 15,
-      'Z_OPT': 3,
-      'Z_PK': 1
+      ZDURATION: 10,
+      ZFILENAME: '17082018-042837.caf',
+      ZISSTARRED: 0,
+      ZRAWCATEGORY: 0,
+      ZSLEEPSESSION: 10,
+      ZSLEEPSTAGE: 0,
+      ZTIMESTAMP: 556169327.556486,
+      ZUNIQUEIDENTIFIER: 'dc6b965ed8782d34a4e5341fa928d143',
+      Z_ENT: 15,
+      Z_OPT: 3,
+      Z_PK: 1
     })
   })
 
@@ -27,37 +27,37 @@ describe('Parse Data Line Utility', () => {
     const parsed = parseDataLine(row)
 
     expect(parsed).toStrictEqual<TableRow>({
-      'ZALARMTYPERAW': 0,
-      'ZANALYSISALGORITHMRAW': 0,
-      'ZAUTOMATICSESSION': 0,
-      'ZDURATION': 26384.720703125,
-      'ZENDTIME': 556177002.662489,
-      'ZFATIGUE': 0,
-      'ZGROSSMOTIONSINSESSION': 19,
-      'ZISEDITED': 0,
-      'ZISNAP': 0,
-      'ZNAPTYPERAW': 0,
-      'ZNUMBEROFAWAKENINGS': 3,
-      'ZNUMBEROFSNOOZES': 0,
-      'ZPHYSICALACTIVITYORIGIN': 0,
-      'ZPRODUCEDBYAPPLEWATCH': 0,
-      'ZSLEEPQUALITY': 0.560000002384186,
-      'ZSLEEPTRACKINGMETHODRAW': 0,
-      'ZSMARTWAKEUPDURATION': 0,
-      'ZSTARTTIME': 556150617.942642,
-      'ZSYNCEDTORUNKEEPER': 0,
-      'ZTIMEAWAKE': 5384.92041015625,
-      'ZTIMEAWAKEUNTILSTOPPING': 1784,
-      'ZTIMEINDEEPSLEEP': 7799.98779296875,
-      'ZTIMEINLIGHTSLEEP': 10199.9873046875,
-      'ZTIMEINREMSLEEP': 2999.9951171875,
-      'ZTIMETOSLEEP': 0,
-      'ZUNIQUEIDENTIFIER': 'dd1de105091ae99573cfdc780cf53f5d',
-      'ZUSEDAPPLEWATCH': 1,
-      'ZWAKEUPMOOD': 3,
-      'Z_ENT': 6,
-      'Z_OPT': 7,
-      'Z_PK': 10
+      ZALARMTYPERAW: 0,
+      ZANALYSISALGORITHMRAW: 0,
+      ZAUTOMATICSESSION: 0,
+      ZDURATION: 26384.720703125,
+      ZENDTIME: 556177002.662489,
+      ZFATIGUE: 0,
+      ZGROSSMOTIONSINSESSION: 19,
+      ZISEDITED: 0,
+      ZISNAP: 0,
+      ZNAPTYPERAW: 0,
+      ZNUMBEROFAWAKENINGS: 3,
+      ZNUMBEROFSNOOZES: 0,
+      ZPHYSICALACTIVITYORIGIN: 0,
+      ZPRODUCEDBYAPPLEWATCH: 0,
+      ZSLEEPQUALITY: 0.560000002384186,
+      ZSLEEPTRACKINGMETHODRAW: 0,
+      ZSMARTWAKEUPDURATION: 0,
+      ZSTARTTIME: 556150617.942642,
+      ZSYNCEDTORUNKEEPER: 0,
+      ZTIMEAWAKE: 5384.92041015625,
+      ZTIMEAWAKEUNTILSTOPPING: 1784,
+      ZTIMEINDEEPSLEEP: 7799.98779296875,
+      ZTIMEINLIGHTSLEEP: 10199.9873046875,
+      ZTIMEINREMSLEEP: 2999.9951171875,
+      ZTIMETOSLEEP: 0,
+      ZUNIQUEIDENTIFIER: 'dd1de105091ae99573cfdc780cf53f5d',
+      ZUSEDAPPLEWATCH: 1,
+      ZWAKEUPMOOD: 3,
+      Z_ENT: 6,
+      Z_OPT: 7,
+      Z_PK: 10
     })
   })
 
@@ -67,14 +67,14 @@ describe('Parse Data Line Utility', () => {
     const parsed = parseDataLine(row)
 
     expect(parsed).toStrictEqual<TableRow>({
-      'ZSLEEPSESSION': 10,
-      'ZSLEEPSTAGE': 1,
-      'ZSOUNDLEVEL': 0,
-      'ZTIMESTAMP': 556155417.588076,
-      'ZUNIQUEIDENTIFIER': 'db823519e99ae83fe0e4d1bdc8ebdcde',
-      'Z_ENT': 7,
-      'Z_OPT': 3,
-      'Z_PK': 5
+      ZSLEEPSESSION: 10,
+      ZSLEEPSTAGE: 1,
+      ZSOUNDLEVEL: 0,
+      ZTIMESTAMP: 556155417.588076,
+      ZUNIQUEIDENTIFIER: 'db823519e99ae83fe0e4d1bdc8ebdcde',
+      Z_ENT: 7,
+      Z_OPT: 3,
+      Z_PK: 5
     })
   })
 })
