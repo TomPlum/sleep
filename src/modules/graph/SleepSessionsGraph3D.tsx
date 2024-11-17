@@ -17,7 +17,6 @@ interface LinkConfig {
 export const SleepSessionsGraph3D = () => {
   const graphRef = useRef<ForceGraphMethods>()
   const { sleepData, loading } = useSleepData()
-  console.log(sleepData)
 
   useEffect(() => {
    if (graphRef.current) {
@@ -94,11 +93,9 @@ export const SleepSessionsGraph3D = () => {
       links
     }
   }, [sleepData?.sessions])
-  console.log('Graph Data', graphData)
 
   // @ts-expect-error to fix later if I come back
   const linkColor = useCallback(link => {
-    console.log(link.source)
     switch(link.source.group) {
       case 'sleepQuality': {
         return '#9a30fe'

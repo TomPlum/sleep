@@ -1,12 +1,26 @@
-import { CartesianGrid, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  CartesianGrid,
+  Legend,
+  ReferenceLine,
+  ResponsiveContainer,
+  Scatter,
+  ScatterChart,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionStageBreakdownGraphProps } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
 import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
+import styles from './SleepSessionStageBreakdownGraph.module.scss'
+import { useChartSize } from 'modules/graph/hooks/useChartSize'
+import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 
-export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreakdownGraphProps) => {
+export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
+  const { size, chartRef } = useChartSize()
 
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
@@ -26,7 +40,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   }, [])
 
   const chartData = useMemo(() => {
-    const sorted = data.sort((a, b) => {
+    const sorted = stages.sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime()
     })
 
@@ -44,7 +58,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
           y: getYValue(first.stage)
         }
       })
-  }, [data, getYValue])
+  }, [stages, getYValue])
 
   const xDomain = useMemo(() => {
     const min = Math.min(...chartData.map(({ start }) => start))
@@ -113,7 +127,7 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
   }, [chartData, getYValue])
 
   return (
-   <ResponsiveContainer width='100%' height='100%'>
+   <ResponsiveContainer width='100%' height='100%' ref={chartRef}>
      <ScatterChart data={chartData}>
        <XAxis
          type='number'
@@ -143,10 +157,44 @@ export const SleepSessionStageBreakdownGraph = ({ data }: SleepSessionStageBreak
 
        <Scatter
          // @ts-expect-error I think Recharts has bad typing here
-         shape={props => <SleepStageBar {...props} />}
+         shape={props => (
+           <SleepStageBar
+             {...props}
+             chartHeight={size.height}
+             uniqueMetrics={yDomain.length}
+           />
+         )}
        />
 
+       {
+         sounds.map(sound => (
+           <ReferenceLine
+             key={sound.id}
+             x={sound.timestamp.getTime()}
+             className={styles.soundLine}
+             id={`sound_instance_${sound.id}`}
+           />
+         ))
+       }
+
        <Tooltip />
+
+       <Legend
+         height={30}
+         verticalAlign='top'
+         id='sleep-stage-breakdown-legend'
+         payload={yDomain.map(stage => ({
+           id: stage,
+           value: stage,
+           type: 'diamond',
+           color: getMetricColour(stage)
+         }))}
+         formatter={(value) => (
+           <span style={{ color: getMetricColour(value as SleepMetric) }}>
+             {`${value.split('_').map((v: string) => `${v.charAt(0).toUpperCase()}${v.slice(1)}`).join(' ')}`}
+           </span>
+         )}
+       />
      </ScatterChart>
    </ResponsiveContainer>
   )

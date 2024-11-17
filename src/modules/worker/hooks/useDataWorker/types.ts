@@ -39,8 +39,6 @@ export interface ParsePillowDataResult {
   stages: Record<string, RawSleepStageData>
 }
 
-
-
 export interface DataWorkerStatus {
   /**
    * The current status code.

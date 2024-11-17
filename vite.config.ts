@@ -28,7 +28,10 @@ export default defineConfig(({ mode }) => ({
         classNameStrategy: 'non-scoped'
       }
     },
-    setupFiles: ['@vitest/web-worker'],
+    setupFiles: [
+      '@vitest/web-worker',
+      './src/test/setupTests.ts'
+    ],
     threads: 5,
     coverage: {
       provider: 'v8',

@@ -4,7 +4,7 @@ import {
   DataWorkerStatusCode,
   UseDataWorkerResponse
 } from './types'
-import { DataWorker } from 'modules/worker'
+import DataWorker from 'modules/worker/worker?worker'
 
 export const dataWorker = new DataWorker()
 

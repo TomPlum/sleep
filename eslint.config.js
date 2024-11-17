@@ -27,6 +27,7 @@ export default tseslint.config(
       '@typescript-eslint/semi': 'off',
       'object-curly-spacing': ['error', 'always'],
       'quotes': ['error', 'single'],
+      'quote-props': ['error', 'as-needed'],
       'import/extensions': ['error', 'never', { 'json': 'always' }],
       'react-refresh/only-export-components': [
         'warn',

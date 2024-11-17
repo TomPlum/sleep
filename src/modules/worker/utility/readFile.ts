@@ -1,5 +1,6 @@
-import { DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
+import { Benchmark, DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME, sendMessage } from 'modules/worker'
 import { PillowDataType } from 'data/usePillowData/types'
+import { isProduction } from 'env.ts'
 
 /**
  * Reads the Pillow export file of the given type.
@@ -7,12 +8,16 @@ import { PillowDataType } from 'data/usePillowData/types'
  */
 export const readFile = async (type: PillowDataType) => {
   const fileName = type === 'raw' ? PILLOW_DATABASE_FILE_NAME : 'PillowData-02-11-24.csv'
-  const contextUrl = import.meta.env.MODE === 'production' ? '/sleep' : ''
+  const contextUrl = isProduction() ? '/sleep' : ''
   const filePath = `${self.location.origin}${contextUrl}/${fileName}`
   const response = await fetch(filePath)
 
   if (!response.ok) {
-    postMessage({
+    sendMessage({
+      loading: false,
+      status: {
+        code: DataWorkerStatusCode.ERROR
+      },
       error: new Error(`Failed to read ${filePath}`)
     })
   }
@@ -26,28 +31,28 @@ export const readFile = async (type: PillowDataType) => {
  * main thread for the loading screen.
  */
 export const readRawDatabaseExport = async () => {
-  postMessage({
+  sendMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE
     }
   })
 
-  const timeStart = new Date()
+  const benchmark = new Benchmark()
+  benchmark.start()
 
   const response = await readFile('raw')
 
   const fileContents = await response.text()
-  const fileSize = response.headers.get('Content-Length')
+  const fileSize = new Blob([fileContents]).size
 
-  const timeEnd = new Date()
-  const timeDelta = timeEnd.getTime() - timeStart.getTime()
+  benchmark.stop()
 
-  postMessage({
+  sendMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE,
-      payload: `Successfully read ~${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${timeDelta}ms.`
+      payload: `Successfully read ~${(Number(fileSize) / 1024 / 1024).toFixed(1)} MB in ${benchmark.delta}.`
     }
   })
 

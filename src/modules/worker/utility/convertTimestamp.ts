@@ -4,8 +4,9 @@
  * dates and months but the years are 31 years in
  * the past.
  *
- * This function must be nested in its parent function
- * so it can be accessed in the same scope as the web worker.
+ * For example, the timestamp might be 557367577.554087,
+ * which is Mon Aug 31 1987 01:19:37 GMT+0100 (British Summer Time).
+ * Adding 31 years to this gives you 2018, when the sleep recordings started.
  *
  * @param rawTimestamp The raw timestamp from the export.
  */

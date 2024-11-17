@@ -12,7 +12,6 @@ export const useEventListener = () => {
 
   useEffect(() => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
-      // console.log(event.data.status)
       setState(current => [...current, event.data.status])
       setStatus(event.data.status)
     }

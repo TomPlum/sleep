@@ -3,7 +3,6 @@ import styles from './SleepSessionTooltip.module.scss'
 import { Typography } from 'antd'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { DurationBreakdownPie } from 'modules/graph/components/DurationBreakdownPie'
 import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
 import { useCallback } from 'react'
 import { SleepMood } from 'data/useSleepData'
@@ -73,15 +72,6 @@ export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, st
         <Typography className={styles.value}>
           {data.quality}%
         </Typography>
-
-        <DurationBreakdownPie
-          data={{
-            rem: data.rem_sleep,
-            deep: data.deep_sleep,
-            awake: data.awake_time,
-            light: data.light_sleep
-          }}
-        />
       </div>
     )
   }
