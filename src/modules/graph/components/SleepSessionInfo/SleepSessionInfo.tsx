@@ -1,5 +1,4 @@
 import { SleepSessionStageBreakdownGraph } from 'modules/graph/components/SleepSessionStageBreakdownGraph'
-import { SleepSessionInfoProps } from './types'
 import styles from './SleepSessionInfo.module.scss'
 import dayjs from 'dayjs'
 import { useSleepContext } from 'context'
@@ -9,9 +8,9 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
 
-export const SleepSessionInfo = ({ sessionId }: SleepSessionInfoProps) => {
+export const SleepSessionInfo = () => {
   const { queryParams } = useQueryParams()
-  const { graphData2d, sleepStageData, sleepSoundData } = useSleepContext()
+  const { graphData2d, sleepStageData, sleepSoundData, selectedSession: id } = useSleepContext()
 
   const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
 
@@ -19,10 +18,12 @@ export const SleepSessionInfo = ({ sessionId }: SleepSessionInfoProps) => {
     if (queryParams.selected) {
       const session = graphData2d.data[queryParams.selected]
       setSelectedSession(session)
-    } else {
-      setSelectedSession(graphData2d.data[sessionId])
     }
-  }, [sessionId, graphData2d.data, queryParams.selected])
+
+    if (id) {
+      setSelectedSession(graphData2d.data[id])
+    }
+  }, [id, graphData2d.data, queryParams.selected])
 
   const pieData = useMemo<DurationBreakdownPieData | undefined>(() => {
     if (!selectedSession) {

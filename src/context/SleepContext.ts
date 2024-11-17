@@ -10,6 +10,7 @@ export const SleepContext = createContext<SleepContextBag>({
   },
   sleepStageData: {},
   sleepSoundData: {},
+  selectedSession: undefined,
   isSleepDataLoading: true,
   rangeStart: new Date(),
   setRangeStart: (start: Date) => {

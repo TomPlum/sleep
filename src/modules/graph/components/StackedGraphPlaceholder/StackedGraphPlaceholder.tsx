@@ -9,11 +9,11 @@ import { MetricButton } from 'modules/controls/MetricButton'
 import classNames from 'classnames'
 import { useGraphHeight } from 'modules/graph/hooks/useGraphHeight'
 
-export const StackedGraphPlaceholder = ({ id, selectedSession }: StackedGraphPlaceholderProps) => {
+export const StackedGraphPlaceholder = ({ id }: StackedGraphPlaceholderProps) => {
   const [previewMetric, setPreviewMetric] = useState<SleepMetric>()
 
+  const { height } = useGraphHeight()
   const { stackedMetrics } = useSleepContext()
-  const { height } = useGraphHeight({ selectedSession })
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.placeholder' })
 
   const handleMouseOver = useCallback((metric: SleepMetric) => {

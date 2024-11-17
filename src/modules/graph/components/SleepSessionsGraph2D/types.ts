@@ -9,24 +9,6 @@ export interface SleepSessionsGraph2DProps {
   metric: SleepMetric
 
   /**
-   * A callback function invoked when the
-   * user select a session from the graph
-   * to be able to view the sleep stage
-   * breakdown chart.
-   *
-   * @param id The index of the selected session from the filtered session data.
-   */
-  onSelectSession: (index: number) => void
-
-  /**
-   * The ID of the currently selected
-   * sleep session that is being displayed
-   * in the stage breakdown chart. Is undefined
-   * if one is not currently selected.
-   */
-  selectedSession?: string
-
-  /**
    * An optional class name to pass into
    * the underlying container element.
    */

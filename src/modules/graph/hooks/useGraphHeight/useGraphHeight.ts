@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
-import { GraphHeight, GraphHeightProps } from 'modules/graph/hooks/useGraphHeight/types'
+import { GraphHeight } from 'modules/graph/hooks/useGraphHeight/types'
 import { useSleepContext } from 'context'
 
-export const useGraphHeight = ({ selectedSession }: GraphHeightProps): GraphHeight => {
+export const useGraphHeight = (): GraphHeight => {
+  const { selectedSession } = useSleepContext()
   const { stackedView } = useSleepContext()
 
   const height = useMemo<string>(() => {

@@ -78,8 +78,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
 
     // TODO: Check this. We may need to add min/max only in certain cases
-    hours.unshift(min)
-
     return hours
   }, [xDomain])
 
