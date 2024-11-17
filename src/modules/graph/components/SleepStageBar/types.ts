@@ -3,6 +3,8 @@ import { D3Scale } from 'recharts/types/util/types'
 import { SleepStage } from 'data/useSleepData'
 
 export interface SleepStageBarProps {
+  chartHeight: number
+  uniqueMetrics: number
   cx?: number
   cy?: number
   payload: {

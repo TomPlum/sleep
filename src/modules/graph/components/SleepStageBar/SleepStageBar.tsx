@@ -1,9 +1,9 @@
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { SleepStageBarProps } from './types'
 
-export const SleepStageBar = ({ cx, cy, payload, xAxis }: SleepStageBarProps) => {
+export const SleepStageBar = ({ cx, cy, payload, xAxis, chartHeight, uniqueMetrics }: SleepStageBarProps) => {
   const barWidth = xAxis.scale(payload.end.valueOf()) - xAxis.scale(payload.start.valueOf())
-  const barHeight = 65
+  const barHeight = (chartHeight / uniqueMetrics) - 35
 
   return (
     <g>

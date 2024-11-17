@@ -6,8 +6,10 @@ import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
 import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
+import { useChartSize } from 'modules/graph/hooks/useChartSize'
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
+  const { size, chartRef } = useChartSize()
 
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
@@ -114,7 +116,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
   }, [chartData, getYValue])
 
   return (
-   <ResponsiveContainer width='100%' height='100%'>
+   <ResponsiveContainer width='100%' height='100%' ref={chartRef}>
      <ScatterChart data={chartData}>
        <XAxis
          type='number'
@@ -144,7 +146,13 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
        <Scatter
          // @ts-expect-error I think Recharts has bad typing here
-         shape={props => <SleepStageBar {...props} />}
+         shape={props => (
+           <SleepStageBar
+             {...props}
+             chartHeight={size.height}
+             uniqueMetrics={yDomain.length}
+           />
+         )}
        />
 
        {
