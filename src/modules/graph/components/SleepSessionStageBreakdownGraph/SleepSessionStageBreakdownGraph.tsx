@@ -1,4 +1,14 @@
-import { CartesianGrid, ReferenceLine, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  CartesianGrid,
+  Legend,
+  ReferenceLine,
+  ResponsiveContainer,
+  Scatter,
+  ScatterChart,
+  Tooltip,
+  XAxis,
+  YAxis
+} from 'recharts'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { SleepSessionStageBreakdownGraphProps } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
@@ -7,6 +17,7 @@ import { SleepStage } from 'data/useSleepData'
 import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
 import { useChartSize } from 'modules/graph/hooks/useChartSize'
+import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const { size, chartRef } = useChartSize()
@@ -167,6 +178,23 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
        }
 
        <Tooltip />
+
+       <Legend
+         height={30}
+         verticalAlign='top'
+         id='sleep-stage-breakdown-legend'
+         payload={yDomain.map(stage => ({
+           id: stage,
+           value: stage,
+           type: 'diamond',
+           color: getMetricColour(stage)
+         }))}
+         formatter={(value) => (
+           <span style={{ color: getMetricColour(value as SleepMetric) }}>
+             {`${value.split('_').map((v: string) => `${v.charAt(0).toUpperCase()}${v.slice(1)}`).join(' ')}`}
+           </span>
+         )}
+       />
      </ScatterChart>
    </ResponsiveContainer>
   )

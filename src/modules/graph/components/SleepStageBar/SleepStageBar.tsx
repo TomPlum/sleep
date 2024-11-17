@@ -3,7 +3,7 @@ import { SleepStageBarProps } from './types'
 
 export const SleepStageBar = ({ cx, cy, payload, xAxis, chartHeight, uniqueMetrics }: SleepStageBarProps) => {
   const barWidth = xAxis.scale(payload.end.valueOf()) - xAxis.scale(payload.start.valueOf())
-  const barHeight = (chartHeight / uniqueMetrics) - 35
+  const barHeight = (chartHeight / uniqueMetrics * 0.9) - 40
 
   return (
     <g>
