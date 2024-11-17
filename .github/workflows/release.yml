@@ -6,6 +6,8 @@ on:
       - release
 permissions:
   contents: write
+env:
+  TZ: UTC
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
