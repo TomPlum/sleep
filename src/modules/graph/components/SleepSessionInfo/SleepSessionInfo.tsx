@@ -3,10 +3,19 @@ import { SleepSessionInfoProps } from './types'
 import styles from './SleepSessionInfo.module.scss'
 import dayjs from 'dayjs'
 import { useSleepContext } from 'context'
+import { DurationBreakdownPie, DurationBreakdownPieData } from 'modules/graph/components/DurationBreakdownPie'
+import { useMemo } from 'react'
+import { SleepMetric } from 'modules/controls/MetricConfiguration'
 
 export const SleepSessionInfo = ({ session }: SleepSessionInfoProps) => {
-  console.log('session', session)
   const { sleepStageData, sleepSoundData } = useSleepContext()
+
+  const pieData = useMemo<DurationBreakdownPieData>(() => ({
+    awake: session[SleepMetric.AWAKE_TIME],
+    deep: session[SleepMetric.DEEP_SLEEP],
+    light: session[SleepMetric.LIGHT_SLEEP],
+    rem: session[SleepMetric.REM_SLEEP]
+  }), [session])
 
   return (
     <div className={styles.container}>
@@ -17,6 +26,10 @@ export const SleepSessionInfo = ({ session }: SleepSessionInfoProps) => {
 
       <div className={styles.info}>
         {dayjs(session.date).format('ddd Do MMM YYYY - HH:mm')}
+
+        <div className={styles.pieContainer}>
+          <DurationBreakdownPie data={pieData} />
+        </div>
       </div>
     </div>
   )
