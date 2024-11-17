@@ -1,5 +1,6 @@
 import { Benchmark, DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
 import { PillowDataType } from 'data/usePillowData/types'
+import { isProduction } from 'env.ts'
 
 /**
  * Reads the Pillow export file of the given type.
@@ -7,12 +8,12 @@ import { PillowDataType } from 'data/usePillowData/types'
  */
 export const readFile = async (type: PillowDataType) => {
   const fileName = type === 'raw' ? PILLOW_DATABASE_FILE_NAME : 'PillowData-02-11-24.csv'
-  const contextUrl = import.meta.env.MODE === 'production' ? '/sleep' : ''
+  const contextUrl = isProduction() ? '/sleep' : ''
   const filePath = `${self.location.origin}${contextUrl}/${fileName}`
   const response = await fetch(filePath)
 
   if (!response.ok) {
-    postMessage({
+    self.postMessage({
       error: new Error(`Failed to read ${filePath}`)
     })
   }
