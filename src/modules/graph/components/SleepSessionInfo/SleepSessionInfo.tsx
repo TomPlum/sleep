@@ -38,7 +38,7 @@ export const SleepSessionInfo = () => {
     })
   }, [selectedSession])
 
-  if (!selectedSession) {
+  if (!selectedSession || !sleepStageData || !sleepSoundData) {
     return null
   }
 
@@ -50,7 +50,13 @@ export const SleepSessionInfo = () => {
       />
 
       <div className={styles.info}>
-        {dayjs(selectedSession.date).format('ddd Do MMM YYYY - HH:mm')}
+        <p className={styles.text}>
+          {dayjs(selectedSession.date).format('ddd Do MMM YYYY')}
+        </p>
+
+        <p className={styles.text}>
+          {dayjs(selectedSession.date).format('HH:mm')} - {dayjs(selectedSession.endTime).format('HH:mm')}
+        </p>
 
         {pieData && (
           <div className={styles.pieContainer}>

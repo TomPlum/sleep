@@ -39,6 +39,11 @@ export interface SleepSessionGraph2DDatum {
   date: Date
 
   /**
+   * The datetime the sleep session ended.
+   */
+  endTime: Date
+
+  /**
    * The total duration of the sleep
    * session in minutes.
    * I.e. How long I slept for.
@@ -53,6 +58,10 @@ export interface SleepSessionGraph2DDatum {
    */
   isNap: boolean
 
+  /**
+   * The wake-up mood, decided myself,
+   * for the given session.
+   */
   mood: SleepMood
 
   /**

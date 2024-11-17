@@ -32,7 +32,6 @@ export const SleepContext = createContext<SleepContextBag>({
     isSleepDataLoading: true
   },
   improvementDate: new Date(),
-
   stackedView: false,
   setStackedView: (stackedView: boolean) => {
     console.debug(`Tried to setStackedView(${stackedView}) in the SleepContext before initialisation.`)

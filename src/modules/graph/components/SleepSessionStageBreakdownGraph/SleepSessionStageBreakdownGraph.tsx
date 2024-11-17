@@ -77,7 +77,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
       current = current.add(1, 'hour')
     }
 
-    // TODO: Check this. We may need to add min/max only in certain cases
     return hours
   }, [xDomain])
 
@@ -144,7 +143,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          type='number'
          ticks={yTicks}
          domain={yDomain}
-         padding={{ bottom: 70, top: 70 }}
+         padding={{ bottom: 50, top: 50 }}
        />
 
        <CartesianGrid
@@ -188,7 +187,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            color: getMetricColour(stage)
          }))}
          formatter={(value) => (
-           <span style={{ color: getMetricColour(value as SleepMetric) }}>
+           <span style={{ color: getMetricColour(value as SleepMetric), marginRight: 10 }}>
              {`${value.split('_').map((v: string) => `${v.charAt(0).toUpperCase()}${v.slice(1)}`).join(' ')}`}
            </span>
          )}
