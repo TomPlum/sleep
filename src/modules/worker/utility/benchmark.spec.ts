@@ -25,4 +25,16 @@ describe('Benchmark Utility Class', () => {
 
     expect(benchmark.delta).toBe('12s 564ms')
   })
+
+  it('should return a fallback delta message if the start time is not defined', () => {
+    const benchmark = new Benchmark()
+    benchmark.stop()
+    expect(benchmark.delta).toBe('an unknown time')
+  })
+
+  it('should return a fallback delta message if the stop time is not defined', () => {
+    const benchmark = new Benchmark()
+    benchmark.start()
+    expect(benchmark.delta).toBe('an unknown time')
+  })
 })

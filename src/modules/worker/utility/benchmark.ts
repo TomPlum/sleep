@@ -12,7 +12,7 @@ export class Benchmark {
 
   public get delta() {
     if (!this._start || !this._end) {
-      return 'unknown'
+      return 'an unknown time'
     }
 
     const timeDelta = this._end.getTime() - this._start.getTime()
