@@ -1,13 +1,12 @@
 import styles from './SleepPage.module.scss'
 import {
-  SleepSessionGraph2DDatum,
   SleepSessionsGraph2D
 } from 'modules/graph/components/SleepSessionsGraph2D'
 import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
@@ -17,7 +16,6 @@ import { PageRoutes } from 'routes'
 
 export const SleepPage = () => {
   const {
-    graphData2d,
     stackedView,
     sleepMetric,
     stackedMetrics,
@@ -25,16 +23,9 @@ export const SleepPage = () => {
     isSleepDataLoading
   } = useSleepContext()
 
-  const { queryParams, updateQueryParam } = useQueryParams()
+  const { updateQueryParam } = useQueryParams()
 
-  const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
-
-  useEffect(() => {
-    if (queryParams.selected) {
-      const session = graphData2d.data[queryParams.selected]
-      setSelectedSession(session)
-    }
-  }, [graphData2d.data, queryParams.selected])
+  const [selectedSession, setSelectedSession] = useState<number>()
 
   useDynamicFavicon()
 
@@ -46,9 +37,8 @@ export const SleepPage = () => {
       }
     })
 
-    const session = graphData2d.data[index]
-    setSelectedSession(session)
-  }, [updateQueryParam, graphData2d.data])
+    setSelectedSession(index)
+  }, [updateQueryParam])
 
   if (isSleepDataLoading) {
     return (
@@ -69,8 +59,8 @@ export const SleepPage = () => {
               metric={metric}
               className={styles.graph}
               key={`sleep-graph-2d-${metric}`}
-              selectedSession={selectedSession?.id}
               onSelectSession={handleSelectSession}
+              selectedSession={selectedSession?.toString()}
             />
           ))}
 
@@ -85,7 +75,7 @@ export const SleepPage = () => {
 
           {sleepStageData && selectedSession && (
             <SleepSessionInfo
-              session={selectedSession}
+              sessionId={selectedSession}
             />
           )}
         </div>
@@ -96,13 +86,13 @@ export const SleepPage = () => {
           <SleepSessionsGraph2D
             metric={sleepMetric}
             className={styles.graph}
-            selectedSession={selectedSession?.id}
             onSelectSession={handleSelectSession}
+            selectedSession={selectedSession?.toString()}
           />
         )}
 
-        {sleepStageData && (selectedSession) && (
-          <SleepSessionInfo session={selectedSession} />
+        {selectedSession && (
+          <SleepSessionInfo sessionId={selectedSession} />
         )}
       </div>
     </div>

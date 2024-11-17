@@ -10,7 +10,6 @@ describe('Scan Tables Utility', () => {
   beforeAll(() => {
     try {
       const filePath = resolve(__dirname, '../../../test/SmallPillowDataExport.txt')
-      console.log(filePath)
       fileContents = readFileSync(filePath, 'utf8')
     } catch (e) {
       console.error('Failed to setup useSleepData.spec.ts as the data could not be read', e)
