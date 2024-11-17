@@ -1,6 +1,6 @@
 import { beforeEach, describe } from 'vitest'
 import { DataWorkerResponse, DataWorkerStatusCode, readFile, readRawDatabaseExport } from 'modules/worker'
-import * as env from 'env'
+import * as env from 'config/env'
 import * as benchmark from 'modules/worker/utility/benchmark'
 
 describe('Read File Utility', () => {
