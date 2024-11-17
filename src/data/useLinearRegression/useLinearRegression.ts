@@ -5,14 +5,17 @@ import {
   LinearRegressionResponse
 } from 'data/useLinearRegression/types'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { useSleepContext } from 'context'
+
+dayjs.extend(utc)
 
 export const useLinearRegression = ({ metric }: LinearRegressionProps): LinearRegressionResponse => {
   const { graphData2d } = useSleepContext()
 
   const data = useMemo(() => {
     return graphData2d.data?.map(session => ({
-      x: dayjs(session.date).valueOf(),
+      x: dayjs.utc(session.date).valueOf(),
       y: session[metric]
     })) ?? []
   }, [graphData2d.data, metric])

@@ -1,7 +1,6 @@
 name: Development
 run-name: Compilation & Quality Checks
-env:
-  TZ: UTC
+
 on:
   push:
     branches:
@@ -18,15 +17,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
+
       - name: Install Dependencies
         run: npm install
+
       - name: Build
         run: npm run build
+
       - name: Run Unit Tests
+        env:
+          TZ: UTC
         run: npm run test:ci
 

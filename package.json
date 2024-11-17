@@ -1,7 +1,7 @@
 {
   "name": "sleep",
   "private": true,
-  "version": "1.2.1",
+  "version": "2.0.0",
   "homepage": "https://tomplum.github.io/sleep",
   "description": "A simple graphical visualisation of my sleep data over time from Pillow iOS.",
   "type": "module",
@@ -19,6 +19,7 @@
     "antd": "^5.21.3",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
+    "dayjs-plugin-utc": "^0.1.2",
     "i18next": "^23.15.2",
     "lodash": "^4.17.21",
     "react": "^18.3.1",

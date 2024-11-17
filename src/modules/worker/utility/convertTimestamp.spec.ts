@@ -7,13 +7,13 @@ describe('Convert Timestamp Utility', () => {
     const convertedTimestamp = convertTimestamp(fractionalTimestamp)
 
     // These values should not be affected
-    expect(convertedTimestamp.getMonth()).toBe(7)
-    expect(convertedTimestamp.getDate()).toBe(31)
-    expect(convertedTimestamp.getHours()).toBe(1)
-    expect(convertedTimestamp.getMinutes()).toBe(19)
-    expect(convertedTimestamp.getSeconds()).toBe(37)
+    expect(convertedTimestamp.getUTCMonth()).toBe(7)
+    expect(convertedTimestamp.getUTCDate()).toBe(31)
+    expect(convertedTimestamp.getUTCHours()).toBe(0) // <-- Adjust for UTC
+    expect(convertedTimestamp.getUTCMinutes()).toBe(19)
+    expect(convertedTimestamp.getUTCSeconds()).toBe(37)
 
     // But the year should be 31 years in the future
-    expect(convertedTimestamp.getFullYear()).toBe(2018)
+    expect(convertedTimestamp.getUTCFullYear()).toBe(2018)
   })
 })
