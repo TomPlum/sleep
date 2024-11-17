@@ -1,0 +1,259 @@
+Z_5SLEEPSESSION
+Z_5SLEEPNOTE -> 79Z_6SLEEPSESSION -> 8073
+Z_5SLEEPNOTE -> 80Z_6SLEEPSESSION -> 9286
+Z_METADATA
+Z_VERSION -> 1Z_UUID -> E8DDCAB8-3E1F-42C5-B1FC-CDCB781AAF9D
+Z_MODELCACHE
+
+Y_UBMETA
+Y_PK -> 1YPEERID -> mobile~00C5E1C3-B2F7-45C2-BF63-424227400A56YTRANSACTIONNUMBER -> 472
+Y_UBRANGE
+Y_UBKVS
+ZSNOOZELAB
+Z_PK -> 1Z_ENT -> 8Z_OPT -> 120ZIDOFLASTNEWSITEMDISPLAYED -> 117ZLASTNOTIFICATIONDATE -> 590620402.177965ZUNIQUEIDENTIFIER -> SnoozeLab
+ZSLEEPNOTE
+Z_PK -> 1Z_ENT -> 5Z_OPT -> 6ZORDER -> 1ZQUALITYEFFECT -> 0.0ZCONTENTTEXT -> Ate lateZUNIQUEIDENTIFIER -> f1988b381f50e96c2c3184b59d9af6e8
+Z_PK -> 2Z_ENT -> 5Z_OPT -> 6ZORDER -> 2ZQUALITYEFFECT -> 0.0ZCONTENTTEXT -> Read a bookZUNIQUEIDENTIFIER -> 5183c090453637e74695b3bd70a03acc
+Z_PK -> 79Z_ENT -> 5Z_OPT -> 4ZORDER -> 3ZQUALITYEFFECT -> 0.0ZCONTENTTEXT -> Drank night beforeZUNIQUEIDENTIFIER -> 19E5060C-3F7C-44A3-9393-2BCFBE02D51E
+Z_PK -> 80Z_ENT -> 5Z_OPT -> 1ZORDER -> 4ZQUALITYEFFECT -> 0.0ZCONTENTTEXT -> Slept at HotelZUNIQUEIDENTIFIER -> 537A6F01-D97B-4DEE-B7DA-B69D880CF07D
+ZPILLOWUSER
+Z_PK -> 1Z_ENT -> 2Z_OPT -> 6279ZAVERAGEBEDTIME -> 0ZAVERAGEDAILYPHYSICALACTIVITYINSTEPS -> 0ZAVERAGEMINSTILLFALLINGASLEEP -> 0ZAVERAGETIMESWAKINGTHROUGHTHENIGHT -> 0ZAVERAGEWAKEUPTIME -> 0ZSLEEPDURATIONGOAL -> 0ZSLEEPGOAL -> 0ZWEEKSTARTDAY -> 0ZAVERAGESLEEPDURATION -> 0.0ZAVERAGESLEEPQUALITY -> 0.0ZBESTQUALITYEVER -> 0.0ZWORSTQUALITYEVER -> 1.0ZUNIQUEIDENTIFIER -> PillowUserZIDOFLASTNEWLABTIP -> 0ZOPTIMALBEDTIME -> 749783060ZSLEEPPROFILERAWSTATUS -> 2
+ZSOUNDDATAPOINT
+Z_PK -> 1Z_ENT -> 15Z_OPT -> 3ZDURATION -> 10ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0ZTIMESTAMP -> 556169327.556486ZFILENAME -> 17082018-042837.cafZUNIQUEIDENTIFIER -> dc6b965ed8782d34a4e5341fa928d143ZISSTARRED -> 0ZRAWCATEGORY -> 0
+Z_PK -> 2Z_ENT -> 15Z_OPT -> 2ZDURATION -> 10ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0ZTIMESTAMP -> 556151820.635586ZFILENAME -> 16082018-233650.cafZUNIQUEIDENTIFIER -> d864cee546d9a1f9753565e2d2fb7621ZISSTARRED -> 0ZRAWCATEGORY -> 0
+ACHANGE
+Z_PK -> 837245Z_ENT -> 16001ZCHANGETYPE -> 0ZENTITY -> 7ZENTITYPK -> 1616617ZTRANSACTIONID -> 9653
+Z_PK -> 837246Z_ENT -> 16001ZCHANGETYPE -> 0ZENTITY -> 7ZENTITYPK -> 1616614ZTRANSACTIONID -> 9653
+ATRANSACTION
+Z_PK -> 9653Z_ENT -> 16002ZBUNDLEIDTS -> 3ZPROCESSIDTS -> 1ZTIMESTAMP -> 752928100.47382
+Z_PK -> 9654Z_ENT -> 16002ZBUNDLEIDTS -> 3ZPROCESSIDTS -> 1ZTIMESTAMP -> 752932870.636954
+ATRANSACTIONSTRING
+Z_PK -> 1Z_ENT -> 16003ZNAME -> Pillow
+Z_PK -> 2Z_ENT -> 16003ZNAME -> com.apple.coredata.schemamigrator: lightweight migration from model with digest { +xG4be89+CmFa6wpXvSaa+0DQ0HAEICFBieYI2Ko/UJoGczmyFXxsBiU5S2e76aMDtxXouptVmt3vLdEmrY9/w== }
+Z_PK -> 3Z_ENT -> 16003ZNAME -> com.neybox.Pillow
+ZSLEEPSTAGEDATAPOINT
+Z_PK -> 5Z_ENT -> 7Z_OPT -> 3ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 1.0ZSOUNDLEVEL -> 0.0ZTIMESTAMP -> 556155417.588076ZUNIQUEIDENTIFIER -> db823519e99ae83fe0e4d1bdc8ebdcde
+Z_PK -> 6Z_ENT -> 7Z_OPT -> 3ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0ZSOUNDLEVEL -> 0.0ZTIMESTAMP -> 556163817.588076ZUNIQUEIDENTIFIER -> 3b497ad7a2a78ac7f0f6402926b147ca
+Z_PK -> 7Z_ENT -> 7Z_OPT -> 2ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0ZSOUNDLEVEL -> 0.0ZTIMESTAMP -> 556160817.587076ZUNIQUEIDENTIFIER -> 2197789368a7fa0770fd9059fb11218f
+Z_PK -> 8Z_ENT -> 7Z_OPT -> 2ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0ZSOUNDLEVEL -> 0.0ZTIMESTAMP -> 556175217.587076ZUNIQUEIDENTIFIER -> 2247701032ae39c09f137cf2eba4255d
+Z_PK -> 9Z_ENT -> 7Z_OPT -> 3ZSLEEPSESSION -> 10ZSLEEPSTAGE -> 0.0ZSOUNDLEVEL -> 0.0ZTIMESTAMP -> 556171617.588076ZUNIQUEIDENTIFIER -> a35a2bd9e6a7f696c1a33491f5ba29f2
+ZSLEEPSESSION
+Z_PK -> 10Z_ENT -> 6Z_OPT -> 7ZALARMTYPERAW -> 0ZAUTOMATICSESSION -> 0ZGROSSMOTIONSINSESSION -> 19ZISEDITED -> 0ZISNAP -> 0ZNAPTYPERAW -> 0ZNUMBEROFAWAKENINGS -> 3ZNUMBEROFSNOOZES -> 0ZPHYSICALACTIVITYORIGIN -> 0ZSYNCEDTORUNKEEPER -> 0ZUSEDAPPLEWATCH -> 1ZWAKEUPMOOD -> 3ZDURATION -> 26384.720703125ZENDTIME -> 556177002.662489ZFATIGUE -> 0.0ZSLEEPQUALITY -> 0.560000002384186ZSMARTWAKEUPDURATION -> 0.0ZSTARTTIME -> 556150617.942642ZTIMEAWAKE -> 5384.92041015625ZTIMEAWAKEUNTILSTOPPING -> 1784.0ZTIMEINDEEPSLEEP -> 7799.98779296875ZTIMEINLIGHTSLEEP -> 10199.9873046875ZTIMEINREMSLEEP -> 2999.9951171875ZTIMETOSLEEP -> 0.0ZUNIQUEIDENTIFIER -> dd1de105091ae99573cfdc780cf53f5dZPRODUCEDBYAPPLEWATCH -> 0ZANALYSISALGORITHMRAW -> 0ZSLEEPTRACKINGMETHODRAW -> 0
+Z_PK -> 11Z_ENT -> 6Z_OPT -> 22ZALARMTYPERAW -> 0ZAUTOMATICSESSION -> 0ZGROSSMOTIONSINSESSION -> 170ZISEDITED -> 0ZISNAP -> 0ZNAPTYPERAW -> 0ZNUMBEROFAWAKENINGS -> 8ZNUMBEROFSNOOZES -> 0ZPHYSICALACTIVITYORIGIN -> 0ZSYNCEDTORUNKEEPER -> 0ZUSEDAPPLEWATCH -> 1ZWAKEUPMOOD -> 3ZDURATION -> 30807.994140625ZENDTIME -> 556266687.388252ZFATIGUE -> 0.0ZSLEEPQUALITY -> 0.5ZSMARTWAKEUPDURATION -> 0.0ZSTARTTIME -> 556235879.39428ZTIMEAWAKE -> 53112.625ZTIMEAWAKEUNTILSTOPPING -> 21312.0ZTIMEINDEEPSLEEP -> 19799.98828125ZTIMEINLIGHTSLEEP -> 11399.984375ZTIMEINREMSLEEP -> 5399.9951171875ZTIMETOSLEEP -> 600.0ZUNIQUEIDENTIFIER -> 529f9ec26d4c208d8ae8638ca230bc26ZPRODUCEDBYAPPLEWATCH -> 0ZANALYSISALGORITHMRAW -> 0ZSLEEPTRACKINGMETHODRAW -> 0
+Z_PK -> 12Z_ENT -> 6Z_OPT -> 25ZALARMTYPERAW -> 0ZAUTOMATICSESSION -> 0ZGROSSMOTIONSINSESSION -> 17ZISEDITED -> 0ZISNAP -> 0ZNAPTYPERAW -> 0ZNUMBEROFAWAKENINGS -> 3ZNUMBEROFSNOOZES -> 0ZPHYSICALACTIVITYORIGIN -> 0ZSYNCEDTORUNKEEPER -> 0ZUSEDAPPLEWATCH -> 1ZWAKEUPMOOD -> 4ZDURATION -> 31028.33203125ZENDTIME -> 556356635.946622ZFATIGUE -> 0.0ZSLEEPQUALITY -> 0.720000028610229ZSMARTWAKEUPDURATION -> 0.0ZSTARTTIME -> 556325607.613991ZTIMEAWAKE -> 4025.33251953125ZTIMEAWAKEUNTILSTOPPING -> 1028.33263099194ZTIMEINDEEPSLEEP -> 11385.0ZTIMEINLIGHTSLEEP -> 11384.0ZTIMEINREMSLEEP -> 4195.0ZTIMETOSLEEP -> 1800.0ZUNIQUEIDENTIFIER -> 3e0d7aa2288a0c55d6a7550795c26a0eZPRODUCEDBYAPPLEWATCH -> 0ZANALYSISALGORITHMRAW -> 0ZSLEEPTRACKINGMETHODRAW -> 0
+Z_PK -> 13Z_ENT -> 6Z_OPT -> 12ZALARMTYPERAW -> 0ZAUTOMATICSESSION -> 0ZGROSSMOTIONSINSESSION -> 17ZISEDITED -> 0ZISNAP -> 0ZNAPTYPERAW -> 0ZNUMBEROFAWAKENINGS -> 4ZNUMBEROFSNOOZES -> 0ZPHYSICALACTIVITYORIGIN -> 0ZSYNCEDTORUNKEEPER -> 0ZUSEDAPPLEWATCH -> 1ZWAKEUPMOOD -> 0ZDURATION -> 26517.474609375ZENDTIME -> 556437639.65609ZFATIGUE -> 0.0ZSLEEPQUALITY -> 0.560000002384186ZSMARTWAKEUPDURATION -> 0.0ZSTARTTIME -> 556411122.181976ZTIMEAWAKE -> 6117.39208984375ZTIMEAWAKEUNTILSTOPPING -> 717.0ZTIMEINDEEPSLEEP -> 8999.9892578125ZTIMEINLIGHTSLEEP -> 9599.98828125ZTIMEINREMSLEEP -> 1799.99694824219ZTIMETOSLEEP -> 0.0ZUNIQUEIDENTIFIER -> f60ed53aa96ab2bb2d3ad13279354304ZPRODUCEDBYAPPLEWATCH -> 0ZANALYSISALGORITHMRAW -> 0ZSLEEPTRACKINGMETHODRAW -> 0
+Z_PK -> 14Z_ENT -> 6Z_OPT -> 21ZALARMTYPERAW -> 0ZAUTOMATICSESSION -> 0ZGROSSMOTIONSINSESSION -> 14ZISEDITED -> 0ZISNAP -> 0ZNAPTYPERAW -> 0ZNUMBEROFAWAKENINGS -> 2ZNUMBEROFSNOOZES -> 0ZPHYSICALACTIVITYORIGIN -> 0ZSYNCEDTORUNKEEPER -> 0ZUSEDAPPLEWATCH -> 1ZWAKEUPMOOD -> 4ZDURATION -> 30286.875ZENDTIME -> 556524021.119779ZFATIGUE -> 0.0ZSLEEPQUALITY -> 0.759999990463257ZSMARTWAKEUPDURATION -> 0.0ZSTARTTIME -> 556493734.24448ZTIMEAWAKE -> 2685.81958007813ZTIMEAWAKEUNTILSTOPPING -> 885.0ZTIMEINDEEPSLEEP -> 8999.9873046875ZTIMEINLIGHTSLEEP -> 14399.986328125ZTIMEINREMSLEEP -> 4199.99609375ZTIMETOSLEEP -> 0.0ZUNIQUEIDENTIFIER -> 308462a7876101903f9e331c19083534ZPRODUCEDBYAPPLEWATCH -> 0ZANALYSISALGORITHMRAW -> 0ZSLEEPTRACKINGMETHODRAW -> 0
+ZSNOOZELABITEM
+Z_PK -> 1Z_ENT -> 12Z_OPT -> 5821ZISNEW -> 0ZISSEEN -> 1ZORDER -> 158ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 632534262.097516ZUNIQUEIDENTIFIER -> welcome_cardZBODY -> Good sleep can be life-changing, but the way we sleep and the things we can do to improve our sleep hygiene are different for each one of us. Snooze lab is here to help you discover your sleep profile and learn more about what can affect your sleep quality.
+
+As you record more sleep sessions, Pillow will introduce new insights and tips so that you can try new ideas and learn how sleep works.  Each time Snooze Lab has something new for you, a small orange dot will appear next to its icon at the bottom.
+
+Let's get started!ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> Welcome_tipZITEMTYPE -> HELLO!ZTITLE -> Welcome to Snooze lab
+Z_PK -> 2Z_ENT -> 13Z_OPT -> 11669ZISNEW -> 0ZISSEEN -> 1ZORDER -> 156ZUNIQUEIDENTIFIER -> insightId_1
+Z_PK -> 3Z_ENT -> 13Z_OPT -> 11666ZISNEW -> 0ZISSEEN -> 1ZORDER -> 157ZUNIQUEIDENTIFIER -> insightId_0
+Z_PK -> 4Z_ENT -> 14Z_OPT -> 4ZISNEW -> 1ZISSEEN -> 0ZORDER -> 0ZUNIQUEIDENTIFIER -> lab_locked
+
+Are children affected by the full moon when it comes to sleep? Well, maybe. According to a recent study across 12 countries with almost 6000 participant children between 9-11 years old, sleep duration was 1% shorter (around 5 minutes) at a full moon.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_85ZITEMTYPE -> SLEEP TIPZTITLE -> Full moon and kids
+Z_PK -> 91Z_ENT -> 11Z_OPT -> 11002ZISNEW -> 0ZISSEEN -> 1ZORDER -> 69ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 649923300.756131ZUNIQUEIDENTIFIER -> tipId_86ZBODY -> One of the most peculiar sleeping disorders is the Sleeping beauty syndrome. According to the National Institutes of Health, 70% of those affected are teen boys. The syndrome can last days and at the onset the individual sleeps during extended parts of the day and night, reporting feelings of confusion, apathy, disorientation during the periods of wakefulness.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_86ZITEMTYPE -> SLEEP TIPZTITLE -> Sleeping beauty syndrome
+Z_PK -> 92Z_ENT -> 11Z_OPT -> 10994ZISNEW -> 0ZISSEEN -> 1ZORDER -> 68ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 650097962.449253ZUNIQUEIDENTIFIER -> tipId_87ZBODY -> A recent paper by Matthew Gibson and Jeffrey Shrader has uncovered yet another important relationship between sleep and the labor market: “A one-hour increase in location-average sleep increases wages by 1.3% in the short run and by 5% in the long run“.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_87ZITEMTYPE -> SLEEP TIPZTITLE -> Sleeping wages
+
+If you want to edit your alarm time after starting a sleep session: Tap on the three dots next to the alarm time that appears at the top. Again, this will bring up the alarm picker so that you can add those extra 20 minutes you might need in the morning to wake up refreshed!ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_120ZITEMTYPE -> SLEEP TIPZTITLE -> Quickly adjusting your alarm time
+Z_PK -> 129Z_ENT -> 11Z_OPT -> 6204ZISNEW -> 1ZISSEEN -> 0ZORDER -> 34ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 680770777.251978ZUNIQUEIDENTIFIER -> tipId_121ZBODY -> It’s a well-known fact that drinking alcohol before bedtime is not good for your sleep quality. In fact, both alcohol consumption and sleep deprivation can affect cognitive behavior. However, not everyone has the same sensitivity to alcohol, and this sensitivity may be related to genetics, among other factors.
+
+A recent study published in PNAS demonstrated that alcohol and sleep deprivation are actually more linked than we thought before. Individuals more sensitive to alcohol consumption may also demonstrate increased sensitivity to sleep deprivation and vice versa.
+
+So if you are more sensitive to alcohol, the chances are that missing a night or two of good sleep will probably have a worse impact on your performance, concentration, and response time.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_121ZITEMTYPE -> SLEEP TIPZTITLE -> Alcohol and sleep deprivation
+Z_PK -> 130Z_ENT -> 11Z_OPT -> 6152ZISNEW -> 1ZISSEEN -> 0ZORDER -> 33ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 680950970.166794ZUNIQUEIDENTIFIER -> tipId_122ZBODY -> When it’s hot outside, the last thing you might want is to cover yourself with another piece of fabric. Yet most people worldwide tend to cover themselves with blankets during sleep, which seems counter-intuitive. There might be a couple of good explanations for this.
+
+A few hours after falling asleep, our body usually falls into a state where it no longer regulates our internal temperature as effectively as during wakefulness. So a bed cover like a sheet or a light blanket is more than welcome to help our body maintain its temperature.
+
+But that’s not all. During the periods of REM sleep (one of the sleep stages our body experiences during sleep), our body lowers the production of hormones like serotonin, which is related to feelings of calm and happiness. Various studies have shown that blankets tend to have the opposite effect: They can cause an increase in serotonin levels!
+
+Lastly, some experts believe that our need for blankets during sleep is also due to our upbringing. Growing up for years covered in blankets right before or during sleep, our brains have associated blankets with bedtime—what a Pavlovian explanation.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_122ZITEMTYPE -> SLEEP TIPZTITLE -> Blankets and hot weather
+Z_PK -> 131Z_ENT -> 11Z_OPT -> 6120ZISNEW -> 1ZISSEEN -> 0ZORDER -> 32ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 681118339.499242ZUNIQUEIDENTIFIER -> tipId_123ZBODY -> You’ve had a busy day, it’s getting late, and you are tired. You feel sleepy, but you force yourself to stay awake. It’s finally time to claim at least part of the day and spend it as you want. It could be an episode of that TV series you like, a game, or just catching up on social media.
+
+This is a typical example of what neuroscientists call “Bedtime procrastination.” Also known as “Revenge bedtime procrastination,” it’s a phenomenon where we postpone sleep for no good reason and can lead to chronic sleep deprivation. And chronic sleep deprivation is bad for your health!
+
+A good way to fight this is to gradually establish a bedtime routine that will include some time to yourself before your target bedtime. Keep tracking your sleep to identify the patterns and conditions that can cause bedtime procrastination. Being mindful of your sleep patterns is the first step!ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_123ZITEMTYPE -> SLEEP TIPZTITLE -> What is bedtime procrastination?
+Z_PK -> 132Z_ENT -> 11Z_OPT -> 6100ZISNEW -> 1ZISSEEN -> 0ZORDER -> 31ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 681294880.491717ZUNIQUEIDENTIFIER -> tipId_124ZBODY -> The effects of light on our sleep and our internal body clocks are well known. But how much is too much? A new study published in PNAS discovered that our heart rate could increase during sleep even if the room where we sleep is moderately lit (100 lux of light). Additionally, exposure to light during sleep increases insulin resistance which can indirectly affect our body weight.
+
+This level of light exposure is not always easy to sense, and that’s why many people are easily affected. A few things you can do to avoid that light exposure are to keep the light as dim as possible before sleep, use lamps that emit warmer light in your bedroom, or use an eye mask.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_124ZITEMTYPE -> SLEEP TIPZTITLE -> Lights and sleep
+Z_PK -> 133Z_ENT -> 11Z_OPT -> 6073ZISNEW -> 1ZISSEEN -> 0ZORDER -> 30ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 681471549.297431ZUNIQUEIDENTIFIER -> tipId_125ZBODY -> Do seasonal and weather changes affect our sleep patterns? The available research indicates that they do. Scientists have observed that wake-up times are earlier during spring, and sleep duration decreases. In addition, sleep duration decreases when the length of the day gets longer. Weather temperature seems to play a role as well. Bedtimes and wake times tend to be slightly later as the weather gets colder.
+However, these are general observations, and many other factors can affect bedtime and sleep duration. As you track your sleep, it’s essential to discover what affects your patterns the most.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_125ZITEMTYPE -> SLEEP TIPZTITLE -> Seasons and sleep patterns
+Z_PK -> 134Z_ENT -> 11Z_OPT -> 4225ZISNEW -> 1ZISSEEN -> 0ZORDER -> 29ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 698941386.805742ZUNIQUEIDENTIFIER -> tipId_126ZBODY -> The connection between diabetes, pre-diabetes, and sleep health has been well-known for years. However, it isn't always considered as a lifestyle factor that affects diabetes. The American Diabetes Association updated its screening guidelines that now recommend screening for sleep health in people with diabetes.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_126ZITEMTYPE -> SLEEP TIPZTITLE -> Sleep and diabetes
+Z_PK -> 135Z_ENT -> 11Z_OPT -> 4197ZISNEW -> 1ZISSEEN -> 0ZORDER -> 28ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 699103533.292795ZUNIQUEIDENTIFIER -> tipId_127ZBODY -> Everyone knows that sleep is essential for life. In fact, severe sleep deprivation can be lethal. Yet, the reason why has remained a mystery. Many have hypothesized that sleeplessness causes significant changes in the brain that could cause death. Now the findings of researchers at Harvard Medical School seem to suggest that death by sleep deprivation is caused by damage starting in the gut.
+
+Research in fruit flies and mice revealed that sleep deprivation caused a dangerous buildup of molecules that caused DNA damage. The same molecules would disappear if the flies were allowed to sleep normally again. What’s more interesting is that these molecules would decrease in sleep-deprived flies if they were fed antioxidants.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_127ZITEMTYPE -> SLEEP TIPZTITLE -> Sleep deprivation: Solving a lethal mystery
+Z_PK -> 136Z_ENT -> 11Z_OPT -> 4170ZISNEW -> 1ZISSEEN -> 0ZORDER -> 27ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 699266280.011063ZUNIQUEIDENTIFIER -> tipId_128ZBODY -> Naps can be incredibly beneficial for athletic performance but timing your naps is essential. If you take a nap shortly before a competition, you risk being affected by sleep inertia. That feeling of grogginess that lingers until our body returns to a fully awake state is also linked to reduced motor skills.
+
+Studies have shown that a short post-lunch nap lasting between 20-30 minutes may help avoid sleep inertia and benefit from the restorative effects of napping. Taking a nap later during the day can be beneficial but you risk disturbing your sleep regularity or lowering the quality of your nightly sleep.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_128ZITEMTYPE -> SLEEP TIPZTITLE -> Take the right nap
+Z_PK -> 137Z_ENT -> 11Z_OPT -> 4155ZISNEW -> 1ZISSEEN -> 0ZORDER -> 26ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 699402978.353159ZUNIQUEIDENTIFIER -> tipId_129ZBODY -> Whether you are studying or working on a challenging mental task that requires mental effort on a long-term basis, sleep can be your best ally. Maintaining a regular bedtime schedule can play a crucial role.
+
+Research has indicated that college students with a more consistent bedtime schedule perform better than students who tend to disrupt their sleep schedule and stay awake late into the night before the exam periods.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_129ZITEMTYPE -> SLEEP TIPZTITLE -> Bedtime consistency and mental performance
+Z_PK -> 138Z_ENT -> 11Z_OPT -> 4144ZISNEW -> 1ZISSEEN -> 0ZORDER -> 25ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 699536042.257911ZUNIQUEIDENTIFIER -> tipId_130ZBODY -> Our sleep is regulated by two separate biological processes. One is our homeostatic sleep drive, and the other is our circadian rhythm, our internal body 'clock.'
+
+Normally these two processes have a way of working simultaneously to help us stay awake or asleep. However, these two processes can get out of sync for various reasons. When this happens, we experience circadian disruption, which causes all kinds of sleep disturbances.
+
+Some of the symptoms of circadian disruptions are:
+
+- Having difficulty falling asleep at the end of the weekend
+
+- Having difficulty falling asleep after waking up late at night
+
+- Feeling extremely sleepy during the dayZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_130ZITEMTYPE -> SLEEP TIPZTITLE -> Circadian Disruptions
+Z_PK -> 139Z_ENT -> 11Z_OPT -> 3858ZISNEW -> 1ZISSEEN -> 0ZORDER -> 24ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 701858657.582945ZUNIQUEIDENTIFIER -> tipId_131ZBODY -> Have you ever felt inexplicably alert late at night for a couple of hours even though you’ve been sleep deprived the previous days? It’s very likely that you are in a “wake maintenance zone”. The “Wake Maintenance Zone” lasts for 2-3 hours before our usual bedtime and scientists believe it has evolved as a survival mechanism to help us complete urgent tasks like finding shelter or the way back home before sleep.
+
+Although this is a natural phenomenon, the WMZ can occur earlier or later than expected causing sleep disturbances. Maintaining a regular sleep schedule and following relaxing sleep habits before sleep will help reduce the effect of WMZ and allow it to occur at the right time.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_131ZITEMTYPE -> SLEEP TIPZTITLE -> The wake maintenance zone
+Z_PK -> 140Z_ENT -> 11Z_OPT -> 3845ZISNEW -> 1ZISSEEN -> 0ZORDER -> 23ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 701989093.77079ZUNIQUEIDENTIFIER -> tipId_132ZBODY -> If your feet are cold when you fall asleep, you might find it harder to fall asleep due to the uncomfortable feeling. Studies have revealed that warming your feet before bed and keeping them warm during sleep can help you fall asleep faster and improve overall sleep.
+
+To warm your feet before bed, wear warm socks, give your feet a warm bath, or do a light feet workout for a few minutes. You can also warm your bed locally using a hot water bottle, electric blankets, or heavier comforters.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_132ZITEMTYPE -> SLEEP TIPZTITLE -> Keep your feet warm for better sleep
+Z_PK -> 141Z_ENT -> 11Z_OPT -> 3812ZISNEW -> 1ZISSEEN -> 0ZORDER -> 22ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 702119369.925132ZUNIQUEIDENTIFIER -> tipId_133ZBODY -> Waking up in the middle of the night to go to the bathroom is normal. However, if you wake up too often, you might suffer from nocturia. Nocturia can be caused by drinking too much fluid, swelling of the legs, sleep apnea, or following a diet high in sodium.
+
+Some interventions to prevent nocturia would be to reduce or restrict fluids a few hours before sleep, especially coffee and alcohol, take afternoon naps, elevate your legs, or wear compression socks (to prevent fluid accumulation). If the issues persist, it would be advisable to consult with your doctor.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_133ZITEMTYPE -> SLEEP TIPZTITLE -> Too many visits to the bathroom?
+Z_PK -> 142Z_ENT -> 11Z_OPT -> 3786ZISNEW -> 1ZISSEEN -> 0ZORDER -> 21ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 702324543.336518ZUNIQUEIDENTIFIER -> tipId_134ZBODY -> Drinking coffee or some caffeinated drink as soon as you wake up may do more harm than you think. This is because when we wake up, our body produces cortisol, a natural stress hormone that helps us wake up, be more alert and get ready to face the day.
+
+If you drink coffee at that time, your cortisol levels will further increase, causing caffeine intolerance and making caffeine less effective later in the day. The smartest move is to have your cup of coffee approximately 60-90 minutes after you wake up, while your cortisol levels are declining.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_134ZITEMTYPE -> SLEEP TIPZTITLE -> Drinking coffee too early
+Z_PK -> 143Z_ENT -> 11Z_OPT -> 3757ZISNEW -> 1ZISSEEN -> 0ZORDER -> 20ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 702541337.242863ZUNIQUEIDENTIFIER -> tipId_135ZBODY -> Trying to solve a challenging problem or coming up with a creative idea can often keep us awake. However, the answer is often hidden in our sleep.
+
+There’s a sweet spot between sleep and wakefulness called hypnagogia. During this state, our brain shows distinct creative thinking and problem-solving abilities that don’t seem to occur during other sleep phases. One interesting finding is that hypnagogia occurs closer to the transition between wakefulness and light sleep instead of REM which is more often linked to creativity.
+
+It is more likely to benefit from hypnagogia by resting in a quiet, dimly lit room during periods when you are actively thinking about a specific problem or creative challenge. Naps are great for this.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_135ZITEMTYPE -> SLEEP TIPZTITLE -> Hypnagogia for creativity and problem solving
+Z_PK -> 144Z_ENT -> 11Z_OPT -> 3709ZISNEW -> 1ZISSEEN -> 0ZORDER -> 19ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 702725989.051417ZUNIQUEIDENTIFIER -> tipId_136ZBODY -> Are you struggling with sleepless nights, tossing and turning in bed, unable to drift off into a peaceful slumber? If so, Autonomous Sensory Meridian Response (ASMR) could help. ASMR is a relaxing phenomenon characterized by tingling sensations, often starting at the scalp and moving down the spine, triggered by various audio and visual stimuli. By incorporating ASMR into your nightly routine, you can improve your sleep quality and wake up feeling refreshed.
+
+Choose the right triggers: ASMR triggers are personal and vary from person to person. Common triggers include whispers, tapping, and crinkling sounds, as well as slow hand movements and sounds of objects like scissors, brushes and fabric. Experiment with different triggers to find those that work best for you, and create a calming environment tailored to your preferences.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_136ZITEMTYPE -> SLEEP TIPZTITLE -> ASMR: A Relaxing Sensation
+Z_PK -> 145Z_ENT -> 11Z_OPT -> 3685ZISNEW -> 1ZISSEEN -> 0ZORDER -> 18ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 702889778.224115ZUNIQUEIDENTIFIER -> tipId_137ZBODY -> The caffeine crash, also known as the energy slump, occurs when the stimulating effects of caffeine wear off, causing sudden fatigue and reduced alertness. This can be a frustrating experience, especially when you're counting on caffeine to keep you going throughout the day. Fortunately, there are ways to minimize or avoid this unpleasant aftermath.
+1. Moderate consumption: Limit your caffeine intake to no more than 400 mg per day (approximately 4 cups of coffee), as excessive consumption can exacerbate the crash effect.
+2. Opt for smaller, more frequent doses: Instead of having a large caffeinated drink, consume smaller portions over time to maintain a steadier energy level.
+3. Consider alternative energy sources: Experiment with non-caffeinated energy-boosting options, such as herbal teas, adaptogenic herbs, or B-vitamin supplements to keep your energy levels consistent.
+4. Get adequate sleep: Ensure you're getting 7-9 hours of sleep each night, as relying solely on caffeine to counteract sleep deprivation can exacerbate crashes.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_137ZITEMTYPE -> SLEEP TIPZTITLE -> Avoiding the Energy Slump
+Z_PK -> 146Z_ENT -> 11Z_OPT -> 3664ZISNEW -> 1ZISSEEN -> 0ZORDER -> 17ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 703024030.928055ZUNIQUEIDENTIFIER -> tipId_138ZBODY -> Darkness is essential for quality sleep, as it helps regulate our circadian rhythm and encourages the release of the hormone melatonin, which promotes restfulness. However, even a small amount of light can disrupt this natural process. Studies show that exposure to just 10 lux of light can suppress melatonin production by half, making it harder to fall and stay asleep.
+
+Before electric lighting, humans were primarily exposed to intense (>300 lux) or dim (<30 lux) environmental light, which stimulated the extreme ends of the circadian system's dose-response curve to light. However, in today's world, we spend hours exposed to intermediate light intensities (30–300 lux), particularly in the evening. This exposure can interfere with our body's natural sleep-wake cycle, making it harder to get a restful night's sleep.
+
+To optimize your sleep quality, it's crucial to reduce your exposure to light in the evening. This can be achieved by avoiding screens and bright lights before bed, using blackout curtains or blinds to block out external light sources, and using a sleep mask to create a completely dark sleeping environment. By minimizing exposure to intermediate light intensities and embracing darkness, you can improve your sleep quality and wake up feeling refreshed and energized.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_138ZITEMTYPE -> SLEEP TIPZTITLE -> Embracing Darkness for a Sound Night's Sleep
+Z_PK -> 147Z_ENT -> 11Z_OPT -> 3651ZISNEW -> 1ZISSEEN -> 0ZORDER -> 16ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 703186085.560566ZUNIQUEIDENTIFIER -> tipId_139ZBODY -> Have you ever noticed that your sleep patterns change with the seasons? If so, you're not alone. A recent study has found that seasonal changes affect the sleep patterns of people with sleep disorders, and this could have implications for how we adjust our sleep schedules throughout the year.
+
+Why the Seasonal Changes?
+Longer daylight hours in summer are associated with reduced REM sleep, while shorter daylight hours in winter are related to increased REM sleep. This is because light exposure influences the production of melatonin, a hormone that regulates sleep. The study did not find significant differences in total sleep duration across months but highlighted the seasonal variation in sleep architecture.
+
+It is essential to note that the impact of DST (Daylight Savings Time) on sleep varies among individuals, and some people might find the adjustment to DST challenging, especially when transitioning to and from it. However, the study suggests that, on average, younger people and women may find DST helpful in adapting to seasonal variations in sleep needs.
+
+So, as the seasons change, it may be time to reconsider our bedtime routines to ensure a good night's sleep all year round. ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_139ZITEMTYPE -> SLEEP TIPZTITLE -> Time to Adjust Our Sleep Schedules?
+Z_PK -> 148Z_ENT -> 11Z_OPT -> 3633ZISNEW -> 1ZISSEEN -> 0ZORDER -> 15ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 703330272.228196ZUNIQUEIDENTIFIER -> tipId_140ZBODY -> A recent study has found that older adults with irregular sleep patterns are more likely to have a high burden of atherosclerosis, a condition where plaque builds up inside the arteries, leading to an increased risk of cardiovascular disease (CVD).
+
+The study, conducted with a racially and ethnically diverse group of older adults, discovered that more than one-third of participants had a sleep duration standard deviation of over 90 minutes across a 7-day period. This irregularity is concerning as mounting evidence links sleep irregularity to CVD risk.
+
+Irregular sleep patterns may cause disruptions to circadian rhythms, which can negatively impact cardiovascular functions, leading to chronic inflammation, altered glucose metabolism, and increased arterial pressures, all contributing to atherosclerosis progression.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_140ZITEMTYPE -> SLEEP TIPZTITLE -> Irregular Sleep Patterns Linked to Atherosclerosis
+Z_PK -> 149Z_ENT -> 11Z_OPT -> 3217ZISNEW -> 1ZISSEEN -> 0ZORDER -> 14ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 708634572.557014ZUNIQUEIDENTIFIER -> tipId_141ZBODY -> "Sleep Divorce" is a term that refers to the practice of married or cohabitating partners choosing to sleep in separate beds or rooms. This choice is often made to improve the quality of sleep, especially in cases where one partner snores, has different sleep schedules, or moves around a lot in bed.
+
+Sleep divorce is not necessarily indicative of relationship problems; rather, it's an approach to address sleep compatibility issues that can, in turn, improve overall relationship satisfaction. It underlines the understanding that good sleep is critical for physical health, mental well-being, and productive interpersonal relationships.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_141ZITEMTYPE -> SLEEP TIPZTITLE -> Sleep Divorce
+Z_PK -> 150Z_ENT -> 11Z_OPT -> 3193ZISNEW -> 1ZISSEEN -> 0ZORDER -> 13ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 708766495.078225ZUNIQUEIDENTIFIER -> tipId_142ZBODY -> Chronic sleep deprivation can interfere with your body's ability to regulate stress hormones, leading to high blood pressure. The body uses the time we sleep to lower heart rate and blood pressure. When sleep is inadequate, these processes may not have sufficient time to complete, causing a rise in blood pressure.
+
+It's crucial to prioritize good sleep hygiene to maintain your blood pressure levels. This includes establishing a regular sleep schedule, creating a comfortable sleep environment, and minimizing potential sleep disruptions. If you're struggling with sleep issues, it's advisable to seek professional help, as chronic sleep deprivation is linked not only to high blood pressure but also to a host of other health complications.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_142ZITEMTYPE -> SLEEP TIPZTITLE -> Lack of Sleep and High Blood Pressure
+Z_PK -> 151Z_ENT -> 11Z_OPT -> 3170ZISNEW -> 1ZISSEEN -> 0ZORDER -> 12ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 708960266.334281ZUNIQUEIDENTIFIER -> tipId_143ZBODY -> When your circadian rhythm, or internal body clock, is out of sync, it can disrupt your sleep patterns, mood, and overall health. Resetting your circadian rhythm can promote better sleep, improve mental alertness, and support a healthier lifestyle.
+
+1. Manage Light Exposure:
+Exposure to natural light during the day and darkness at night can help reset your circadian rhythm. Sunlight suppresses the production of melatonin, a hormone that makes you sleepy, so get outside during daylight hours. Limit exposure to artificial light in the evenings, especially blue light from electronic devices.
+
+2. Maintain a Regular Sleep Schedule:
+Go to bed and wake up at the same time every day, even on weekends. Consistency is key to synchronizing your internal clock.
+
+3. Exercise Regularly:
+Regular physical activity can help regulate your circadian rhythm. It's best to avoid vigorous exercise close to bedtime, as it can interfere with sleep.
+
+4. Limit Napping:
+If you're trying to adjust your sleep schedule, avoid long or late-day naps. They can confuse your internal clock and make it harder to fall asleep at night.
+
+5. Be Mindful of Eating Times:
+Eating at consistent times each day can help regulate your internal clock. Also, avoid heavy meals close to bedtime.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_143ZITEMTYPE -> SLEEP TIPZTITLE -> Resetting Your Circadian Rhythm
+Z_PK -> 152Z_ENT -> 11Z_OPT -> 3151ZISNEW -> 1ZISSEEN -> 0ZORDER -> 11ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 709115489.368405ZUNIQUEIDENTIFIER -> tipId_144ZBODY -> The misconception that more deep sleep equals better health or more restful sleep can be misleading. Our bodies naturally spend about 20-25% of the night in deep sleep. Attempting to extend this duration unnaturally could upset the balance of sleep stages, which could, paradoxically, lead to feelings of fatigue and mental fog.
+
+Moreover, the percentage of deep sleep tends to decrease naturally as we age. This isn't necessarily indicative of poor sleep or health. Instead, it might simply be a reflection of changing sleep needs and patterns throughout the lifespan.
+
+Instead of aiming for more deep sleep, it's better to focus on the quality of your sleep as a whole. Sleep isn't just about quantity; it's about a balanced cycle of different stages, each contributing to your overall health and wellbeing in its unique way.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_144ZITEMTYPE -> SLEEP TIPZTITLE -> The Fallacy of More Deep Sleep
+Z_PK -> 153Z_ENT -> 11Z_OPT -> 3145ZISNEW -> 1ZISSEEN -> 0ZORDER -> 10ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 709245160.991114ZUNIQUEIDENTIFIER -> tipId_145ZBODY -> Sleep debt is a term used to describe the cumulative effect of not getting enough sleep, which has led to many misconceptions. One of the most common is that sleep debt can be 'paid off' by simply sleeping longer during weekends or days off.
+
+While extra sleep on such days might help alleviate the symptoms of sleep deprivation, it doesn't completely offset the accumulated lack of rest. This is because our bodies function best with a regular, consistent sleep schedule, and disrupting that cycle can lead to a host of issues such as impaired cognitive function, mood changes, and overall diminished health.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_145ZITEMTYPE -> SLEEP TIPZTITLE -> Sleep Debt Misconceptions: It can’t be paid off
+Z_PK -> 154Z_ENT -> 11Z_OPT -> 2967ZISNEW -> 1ZISSEEN -> 0ZORDER -> 9ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 711440315.088576ZUNIQUEIDENTIFIER -> tipId_146ZBODY -> Having trouble falling asleep? Trying a light, magnesium-rich snack about an hour before sleep could help. Magnesium is known to help relieve insomnia, and it might just be the thing to help you drift off faster. Why not munch on a handful of almonds or cashews, or enjoy a small bowl of spinach salad?
+
+What's more, magnesium is not just good for sleep - it's also great for brain health, memory, and cognitive function. So, not only could this tip help you get those much-needed Zzz’s, but it could also give your brain a bit of a boost. Sweet dreams!ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_146ZITEMTYPE -> SLEEP TIPZTITLE -> Enjoy a Magnesium-Rich Snack Before Bed
+Z_PK -> 155Z_ENT -> 11Z_OPT -> 2941ZISNEW -> 1ZISSEEN -> 0ZORDER -> 8ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 711615570.835523ZUNIQUEIDENTIFIER -> tipId_147ZBODY -> Snoring often becoming a significant problem? It's time to experiment with your sleeping position. Many people don't realize that the position in which they sleep can impact snoring. Specifically, sleeping on your back can cause your tongue and soft palate to rest against your throat, leading to a vibrating sound during sleep - in other words, snoring.
+
+So here's a tip: try sleeping on your side instead. This position can help prevent the collapse of the throat muscles, making it less likely for you to snore. To maintain this position throughout the night, you can use a body pillow or a specialized device designed to prevent turning onto your back.
+
+Even small changes like this could make a significant difference to your sleep quality and overall health.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_147ZITEMTYPE -> SLEEP TIPZTITLE -> Adjust Your Sleep Position
+Z_PK -> 156Z_ENT -> 11Z_OPT -> 2901ZISNEW -> 1ZISSEEN -> 0ZORDER -> 7ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 711798055.21989ZUNIQUEIDENTIFIER -> tipId_148ZBODY -> Hello there! Struggling with restless leg syndrome (RLS)? Try adding a daily leg massage to your evening routine. This can help relax your muscles and improve circulation, which is believed to help alleviate the symptoms of RLS.
+
+Use a firm pressure to stroke your legs from your ankles upwards, aiming to promote blood flow from your feet towards your heart. For an added calming effect, consider using a lotion or oil infused with lavender or chamomile, known for their soothing properties.
+
+This simple self-care routine could bring you some relief and, hopefully, contribute to more peaceful nights.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_148ZITEMTYPE -> SLEEP TIPZTITLE -> Incorporate Daily Leg Massage
+Z_PK -> 157Z_ENT -> 11Z_OPT -> 2867ZISNEW -> 1ZISSEEN -> 0ZORDER -> 6ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 711966840.753694ZUNIQUEIDENTIFIER -> tipId_149ZBODY -> It's easy to let normal routines slide when you're on vacation. However, for the best rest and to enjoy your holiday to the fullest, try to stick as closely as you can to your regular sleep schedule.
+
+Changing your sleeping routine can disrupt your circadian rhythm, the internal body clock that regulates sleep, wakefulness, and a host of biological functions. Even if you're tempted to stay up late and sleep in, these shifts could leave you feeling groggy or jet-lagged, even without changing time zones.
+
+Sure, you can afford some flexibility, but aim to wake up and go to bed within an hour of your regular times. This will keep your internal clock steady, helping you to feel more alert and enjoy your vacation days more fully.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_149ZITEMTYPE -> SLEEP TIPZTITLE -> Stick to Your Normal Sleep Schedule While on Vacation
+Z_PK -> 158Z_ENT -> 11Z_OPT -> 2846ZISNEW -> 1ZISSEEN -> 0ZORDER -> 5ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 712148121.126736ZUNIQUEIDENTIFIER -> tipId_150ZBODY -> When you're on your summer vacation, it's crucial to stay adequately hydrated, especially in warmer climates or when you're more active. While hydration is always important for your health, did you know it can also impact your sleep?
+
+Dehydration can lead to dry mouth and nasal passages, which can increase snoring and discomfort during the night. It can also lead to leg cramps, another disruptor of sound sleep. What's more, staying hydrated helps your body naturally regulate its temperature, a critical factor for good sleep.
+So, make a point to drink plenty of water throughout the day, but avoid guzzling large amounts just before bedtime as it may lead to middle-of-the-night bathroom trips. Staying hydrated could be a simple yet effective way to improve your sleep during the summer vacation.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_150ZITEMTYPE -> SLEEP TIPZTITLE -> Stay Hydrated for Quality Sleep During Summer Vacation
+Z_PK -> 159Z_ENT -> 11Z_OPT -> 1529ZISNEW -> 1ZISSEEN -> 0ZORDER -> 4ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 729469693.348589ZUNIQUEIDENTIFIER -> tipId_151ZBODY -> Research has increasingly shown that different sleep stages play distinct roles in memory consolidation. Slow-wave sleep (SWS), which predominates in the first half of the night, is particularly beneficial for consolidating declarative memories. These are the memories related to facts and events—think of textbook information or historical dates. On the other hand, rapid eye movement (REM) sleep, more abundant in the latter half of the night, is linked to the consolidation of procedural and emotional memories. This includes skills like riding a bike or emotional experiences that might shape future behavior.
+The implications of these findings are noteworthy for both academic and everyday life. Understanding the unique contributions of SWS and REM sleep to memory can help people optimize their sleep schedules for specific learning tasks. For instance, if you're studying for a test that requires memorization of facts, aiming for quality sleep that includes a good amount of slow-wave sleep could be beneficial. This nuanced understanding of sleep's role in memory serves as a reminder that not all sleep is created equal when it comes to cognitive function.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_151ZITEMTYPE -> SLEEP TIPZTITLE -> Sleep Stages and Memory
+Z_PK -> 160Z_ENT -> 11Z_OPT -> 1482ZISNEW -> 1ZISSEEN -> 0ZORDER -> 3ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 729621827.607408ZUNIQUEIDENTIFIER -> tipId_152ZBODY -> We've all heard that exercise is beneficial for a good night's sleep, but timing is everything. For those who find themselves tossing and turning, the problem might not be your mattress or your pre-bedtime routine—it could be the late workout sessions that are keeping you from drifting off into dreamland.
+
+Exercise is a powerful stimulant. When we engage in physical activity, our body's temperature rises, and endorphins (the feel-good hormones) are released, which can lead to increased alertness and energy. A study by the National Sleep Foundation suggests that while exercise at any time of the day can help improve sleep quality, vigorous exercise within one hour of bedtime may be too stimulating for some individuals.
+
+Recommendations for Workout Timing:
+Morning Workouts: Starting your day with exercise can help wake you up and set a positive tone for the day.
+Afternoon Workouts: If possible, afternoon workouts can also be beneficial, as they are far enough from bedtime to not interfere with sleep.
+Early Evening Workouts: If you must exercise in the evening, aim to finish at least three hours before bedtime to allow your body time to wind down.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_152ZITEMTYPE -> SLEEP TIPZTITLE -> Late Workouts May Be Keeping You Awake
+Z_PK -> 161Z_ENT -> 11Z_OPT -> 1458ZISNEW -> 1ZISSEEN -> 0ZORDER -> 2ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 729752608.19615ZUNIQUEIDENTIFIER -> tipId_153ZBODY -> Are you turning and tossing in bed, struggling to silence the day’s worries and drift into slumber? Progressive muscle relaxation (PMR) might be the tranquil ally you need. This simple yet effective technique involves systematically tensing and then relaxing different muscle groups in your body. It’s like sending a wave of tranquility that ebbs away tension and stress, preparing you for a restful night’s sleep.
+
+How to Perform Progressive Muscle Relaxation
+1. Find a Quiet Place: Begin by finding a comfortable spot where you won’t be disturbed.
+2. Start at Your Feet: Focus on the muscles in your feet. Inhale and squeeze these muscles as tightly as you can for about 5 seconds, then exhale and release the tension suddenly.
+3. Work Your Way Up: Move to your calves, thighs, glutes, and so forth, ascending to one muscle group after another until you’ve covered the entire body.
+4. Be Mindful: Pay close attention to the sensation of releasing tension in each muscle group. This not only relaxes the body but also helps to center the mind.
+5. Repeat as Needed: You may repeat the cycle more than once if residual tension remains.
+
+If you need help to get started, Pillow comes with a great selection of progressive  muscle relaxation tracks. Head over to the Sleep Aid section and start using this technique when you are ready.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_153ZITEMTYPE -> SLEEP TIPZTITLE -> Progressive Muscle Relaxation
+Z_PK -> 162Z_ENT -> 11Z_OPT -> 1437ZISNEW -> 1ZISSEEN -> 0ZORDER -> 1ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 729904882.601997ZUNIQUEIDENTIFIER -> tipId_154ZBODY -> Diaphragmatic breathing, or "belly breathing," involves breathing deeply into the lungs by expanding the diaphragm, a muscular and membranous partition between the chest and abdominal cavities. This breathing technique promotes a full oxygen exchange and is a method commonly used to manage stress, reduce anxiety, and improve concentration.
+
+How Diaphragmatic Breathing Promotes Better Sleep:
+Engages the Parasympathetic Nervous System: This breathing technique helps shift the body's balance away from the "fight or flight" responses of the sympathetic nervous system to the "rest and digest" functions of the parasympathetic nervous system
+
+Reduces Stress: The Journal of Korean Academy of Nursing found that diaphragmatic breathing reduces stress and improves quality of life, which can break the cycle of sleeplessness caused by stress
+
+Improves Sleep Onset: Slow breathing helps with the transition from wakefulness to sleep by calming the mind and preparing the body for rest, potentially benefiting individuals with insomnia, as supported by research in the "Journal of Clinical Nursing" ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_154ZITEMTYPE -> SLEEP TIPZTITLE -> Diaphragmatic Breathing
+Z_PK -> 163Z_ENT -> 11Z_OPT -> 1427ZISNEW -> 1ZISSEEN -> 0ZORDER -> 0ZISSTARRED -> 0ZISTHUMBSUP -> 0ZCREATIONDATE -> 730034914.634206ZUNIQUEIDENTIFIER -> tipId_155ZBODY -> For those tossing and turning, trying to catch the train to dreamland, a "Sleep Reset" might just be the ticket. But what is a Sleep Reset, and how can it be scientifically supported to help?
+
+A Sleep Reset involves adopting a series of steps designed to recalibrate your body's internal clock, known as the circadian rhythm. This internal clock is influenced by environmental cues, like light and temperature, and dictates when you feel awake and when you feel sleepy.
+
+To understand how a Sleep Reset can help, let’s look at some scientifically-backed methods:
+1. Controlled Light Exposure: Light is a powerful signal for your circadian rhythm. Research shows that exposure to natural light during the day and limiting exposure to artificial light at night can significantly impact sleep quality.
+2. Regulated Sleep Schedule: Consistency is key in sleep patterns. Studies suggest that going to bed and waking up at the same time every day can improve sleep onset and quality.
+3. Mindfulness and Relaxation Techniques: Techniques such as meditation and controlled breathing can reduce stress and enhance your ability to fall asleep.
+4. Sleep Environment Optimization: Your sleep environment plays a significant role in how easily you can fall asleep. Research underscores the importance of a comfortable mattress and a cool, quiet, and dark room.
+5. Dietary Adjustments: What you eat before bed can affect sleep. For instance, caffeine and alcohol consumption have been proven to disrupt sleep patterns.
+6. Pre-sleep Routine: Engaging in a relaxing pre-sleep routine signals to your body that it's time to wind down. Evidence supports activities like reading or a warm bath can promote faster sleep onset.ZCOVERIMAGEFILEEXTENSION -> jpgZCOVERIMAGENAME -> SleepLab_155ZITEMTYPE -> SLEEP TIPZTITLE -> Do You Need a Sleep Reset?
+ZSLEEPAIDLOG
+ZSLEEPAIDFAVORITETRACK
+ZALARM
+Z_PRIMARYKEY
+Z_ENT -> 1Z_NAME -> AlarmZ_SUPER -> 0Z_MAX -> 0
+Z_ENT -> 2Z_NAME -> PillowUserZ_SUPER -> 0Z_MAX -> 1
+Z_ENT -> 3Z_NAME -> SleepAidFavoriteTrackZ_SUPER -> 0Z_MAX -> 0
+Z_ENT -> 4Z_NAME -> SleepAidLogZ_SUPER -> 0Z_MAX -> 0
+Z_ENT -> 5Z_NAME -> SleepNoteZ_SUPER -> 0Z_MAX -> 80
+Z_ENT -> 6Z_NAME -> SleepSessionZ_SUPER -> 0Z_MAX -> 9329
+Z_ENT -> 7Z_NAME -> SleepStageDataPointZ_SUPER -> 0Z_MAX -> 1616787
+Z_ENT -> 8Z_NAME -> SnoozeLabZ_SUPER -> 0Z_MAX -> 1
+Z_ENT -> 9Z_NAME -> SnoozeLabItemZ_SUPER -> 0Z_MAX -> 163
+Z_ENT -> 10Z_NAME -> SnoozeLabExpandableItemZ_SUPER -> 9Z_MAX -> 0
+Z_ENT -> 11Z_NAME -> SnoozeLabTipZ_SUPER -> 10Z_MAX -> 0
+Z_ENT -> 12Z_NAME -> SnoozeLabWelcomeCardZ_SUPER -> 10Z_MAX -> 0
+Z_ENT -> 13Z_NAME -> SnoozeLabInsightZ_SUPER -> 9Z_MAX -> 0
+Z_ENT -> 14Z_NAME -> SnoozeLabLockedItemZ_SUPER -> 9Z_MAX -> 0
+Z_ENT -> 15Z_NAME -> SoundDataPointZ_SUPER -> 0Z_MAX -> 2849
+Z_ENT -> 16001Z_NAME -> CHANGEZ_SUPER -> 0Z_MAX -> 837542
+Z_ENT -> 16002Z_NAME -> TRANSACTIONZ_SUPER -> 0Z_MAX -> 9659
+Z_ENT -> 16003Z_NAME -> TRANSACTIONSTRINGZ_SUPER -> 0Z_MAX -> 2031
