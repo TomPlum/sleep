@@ -7,9 +7,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
+import { useTranslation } from 'react-i18next'
 
 export const SleepSessionInfo = () => {
   const { queryParams } = useQueryParams()
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-session-info' })
   const { graphData2d, sleepStageData, sleepSoundData, selectedSession: id } = useSleepContext()
 
   const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
@@ -42,6 +44,11 @@ export const SleepSessionInfo = () => {
     return null
   }
 
+  const startTime = dayjs(selectedSession.date)
+  const endTime = dayjs(selectedSession.endTime)
+  const hoursDifference = endTime.diff(startTime, 'hours')
+  const remainingMinutes = endTime.diff(startTime, 'minutes') % hoursDifference
+
   return (
     <div className={styles.container}>
       <SleepSessionStageBreakdownGraph
@@ -51,11 +58,15 @@ export const SleepSessionInfo = () => {
 
       <div className={styles.info}>
         <p className={styles.text}>
-          {dayjs(selectedSession.date).format('ddd Do MMM YYYY')}
+          {startTime.format('ddd Do MMM YYYY')}
         </p>
 
         <p className={styles.text}>
-          {dayjs(selectedSession.date).format('HH:mm')} - {dayjs(selectedSession.endTime).format('HH:mm')}
+          {startTime.format('HH:mm')}
+          {' '}
+          {endTime.format('HH:mm')}
+          {' '}
+          ({hoursDifference}{t('hour')} {remainingMinutes}{t('minute')})
         </p>
 
         {pieData && (
