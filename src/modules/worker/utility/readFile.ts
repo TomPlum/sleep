@@ -1,4 +1,4 @@
-import { Benchmark, DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME } from 'modules/worker'
+import { Benchmark, DataWorkerStatusCode, PILLOW_DATABASE_FILE_NAME, sendMessage } from 'modules/worker'
 import { PillowDataType } from 'data/usePillowData/types'
 import { isProduction } from 'env.ts'
 
@@ -13,7 +13,11 @@ export const readFile = async (type: PillowDataType) => {
   const response = await fetch(filePath)
 
   if (!response.ok) {
-    self.postMessage({
+    sendMessage({
+      loading: false,
+      status: {
+        code: DataWorkerStatusCode.ERROR
+      },
       error: new Error(`Failed to read ${filePath}`)
     })
   }
@@ -27,7 +31,7 @@ export const readFile = async (type: PillowDataType) => {
  * main thread for the loading screen.
  */
 export const readRawDatabaseExport = async () => {
-  self.postMessage({
+  sendMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE
@@ -44,7 +48,7 @@ export const readRawDatabaseExport = async () => {
 
   benchmark.stop()
 
-  self.postMessage({
+  sendMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READING_FILE,

@@ -1,4 +1,13 @@
-import { Benchmark, DataWorkerStatusCode, ParsePillowDataProps, ParsePillowDataResult, TABLE_PRIMARY_KEY, parseDataLine, TableRow } from 'modules/worker'
+import {
+  Benchmark,
+  DataWorkerStatusCode,
+  ParsePillowDataProps,
+  ParsePillowDataResult,
+  TABLE_PRIMARY_KEY,
+  parseDataLine,
+  TableRow,
+  sendMessage
+} from 'modules/worker'
 import {
   RawSleepDataTable,
   RawSleepSessionData,
@@ -16,8 +25,9 @@ export type TableData <T> = Record<string, T>
  */
 export const scanTables = ({ fileContents }: ParsePillowDataProps): ParsePillowDataResult => {
   const benchmark = new Benchmark()
+  benchmark.start()
 
-  postMessage({
+  sendMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READ_TABLES,
@@ -90,7 +100,7 @@ export const scanTables = ({ fileContents }: ParsePillowDataProps): ParsePillowD
 
   benchmark.stop()
 
-  postMessage({
+  sendMessage({
     loading: true,
     status: {
       code: DataWorkerStatusCode.READ_TABLES,

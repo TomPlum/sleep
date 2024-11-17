@@ -6,7 +6,7 @@ import * as benchmark from 'modules/worker/utility/benchmark'
 describe('Read File Utility', () => {
   const fetch =  vi.fn()
   const postMessage = vi.fn()
-  const benchmarker = vi.fn()
+  const benchmarkUtility = vi.fn()
 
   beforeEach(() => {
     vi.stubGlobal('fetch', fetch)
@@ -18,7 +18,7 @@ describe('Read File Utility', () => {
       postMessage
     })
 
-    vi.spyOn(benchmark, 'Benchmark').mockImplementation(benchmarker)
+    vi.spyOn(benchmark, 'Benchmark').mockImplementation(benchmarkUtility)
 
     vi.spyOn(env, 'isProduction').mockReturnValueOnce(false)
   })
@@ -110,7 +110,7 @@ describe('Read File Utility', () => {
         ok: true,
         text: vi.fn().mockReturnValue(contents)
       })
-      benchmarker.mockReturnValueOnce({
+      benchmarkUtility.mockReturnValueOnce({
         delta: '546ms',
         start: vi.fn(),
         stop: vi.fn()
