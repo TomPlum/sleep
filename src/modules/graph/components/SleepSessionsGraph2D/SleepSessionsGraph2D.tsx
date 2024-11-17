@@ -57,7 +57,7 @@ export const SleepSessionsGraph2D = ({
 
   const graphHeight = useMemo(() => {
     if (stackedView) {
-      return selectedSession ? '42.5%' : '50%'
+      return selectedSession ? '35%' : '50%'
     }
 
     return selectedSession ? '75%' : '100%'
