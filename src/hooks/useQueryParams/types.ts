@@ -19,6 +19,7 @@ export interface SleepQueryParams {
   end?: Date
   lng?: string
   stacked?: boolean
+  selected?: number
 }
 
 export interface QueryParamsResponse {

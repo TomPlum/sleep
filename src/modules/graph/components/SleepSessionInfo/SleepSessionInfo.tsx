@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { useSleepContext } from 'context'
 
 export const SleepSessionInfo = ({ session }: SleepSessionInfoProps) => {
-
+  console.log('session', session)
   const { sleepStageData, sleepSoundData } = useSleepContext()
 
   return (

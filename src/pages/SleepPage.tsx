@@ -7,15 +7,15 @@ import { useSleepContext } from 'context'
 import { GraphControls } from 'modules/controls/GraphControls'
 import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
+import { useQueryParams } from 'hooks/useQueryParams'
+import { PageRoutes } from 'routes'
 
 export const SleepPage = () => {
-  const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
-
   const {
     graphData2d,
     stackedView,
@@ -25,12 +25,30 @@ export const SleepPage = () => {
     isSleepDataLoading
   } = useSleepContext()
 
+  const { queryParams, updateQueryParam } = useQueryParams()
+
+  const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
+
+  useEffect(() => {
+    if (queryParams.selected) {
+      const session = graphData2d.data[queryParams.selected]
+      setSelectedSession(session)
+    }
+  }, [graphData2d.data, queryParams.selected])
+
   useDynamicFavicon()
 
   const handleSelectSession = useCallback((index: number) => {
+    updateQueryParam({
+      route: PageRoutes.SLEEP,
+      params: {
+        selected: index.toString()
+      }
+    })
+
     const session = graphData2d.data[index]
     setSelectedSession(session)
-  }, [graphData2d.data])
+  }, [updateQueryParam, graphData2d.data])
 
   if (isSleepDataLoading) {
     return (
@@ -83,7 +101,7 @@ export const SleepPage = () => {
           />
         )}
 
-        {sleepStageData && selectedSession && (
+        {sleepStageData && (selectedSession) && (
           <SleepSessionInfo session={selectedSession} />
         )}
       </div>
