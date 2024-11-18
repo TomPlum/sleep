@@ -39,6 +39,12 @@
       "sleep-session-info": {
         "hour": "h",
         "minute": "m"
+      },
+      "sleep-stage-breakdown": {
+        "tooltip": {
+          "stage": "Stage",
+          "duration": "Duration"
+        }
       }
     },
     "graph-controls" : {

@@ -10,7 +10,10 @@ import {
   YAxis
 } from 'recharts'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { SleepSessionStageBreakdownGraphProps } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
+import {
+  SleepSessionStageBreakdownGraphProps,
+  SleepStageGraphData
+} from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
@@ -19,6 +22,7 @@ import styles from './SleepSessionStageBreakdownGraph.module.scss'
 import { useChartSize } from 'modules/graph/hooks/useChartSize'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { LegendItem } from 'modules/graph/components/LegendItem'
+import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const { size, chartRef } = useChartSize()
@@ -40,7 +44,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
   }, [])
 
-  const chartData = useMemo(() => {
+  const chartData = useMemo<SleepStageGraphData>(() => {
     const sorted = stages.sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime()
     })
@@ -175,7 +179,9 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          ))
        }
 
-       <Tooltip />
+       <Tooltip
+         content={SleepStageTooltip}
+       />
 
        <Legend
          height={30}
