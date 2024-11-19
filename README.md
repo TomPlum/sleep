@@ -35,14 +35,11 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 # To Do
 
 - Select multiple sleep metric at once
-- A split view that renders stacked charts to compare two metric with a brush
-  - Add brush in the middle
 - Split SleepContext into two. Isolate configuration into its own context
 - Chrome performance?
 - Date parsing not working in Safari and breaks graph
 - Line chart x ticks wrong?
-- Updated screenshots in README
-- Add glowing purple effect to loading screen
-- Update data file link to raw data instead of CSV
+- Update screenshots in README
 - Update session breakdown to include data like the ios app does
 - Plot the sound data points on the breakdown graph
+- Can we get heart rate data from the raw database export?

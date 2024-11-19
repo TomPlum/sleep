@@ -1,10 +1,9 @@
 import {
-  CartesianGrid,
-  Legend,
+  CartesianGrid, ComposedChart,
+  Legend, Line,
   ReferenceLine,
   ResponsiveContainer,
   Scatter,
-  ScatterChart,
   Tooltip,
   XAxis,
   YAxis
@@ -44,46 +43,79 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
   }, [])
 
+  const stageStartPoints = useMemo(() => {
+    // Start at the end of the first sleep stage block
+    let i = 1
+    const startPoints = []
+
+    while(i < stages.length - 1) {
+      const left = stages[i]
+      const right = stages[i + 1]
+
+      startPoints.push({
+        time: dayjs(left.timestamp).subtract(30, 'seconds').toDate().getTime(),
+        stage: left.stage,
+        nextStage: right.stage
+      })
+
+      // Skip to the start of the next sleep stage block
+      i += 2
+    }
+
+    return startPoints
+  }, [stages])
+  console.log('stageStartPoints', stageStartPoints)
+  console.log('stages', stages)
+
   const chartData = useMemo<SleepStageGraphData>(() => {
-    const sorted = stages.sort((a, b) => {
-      return a.timestamp.getTime() - b.timestamp.getTime()
-    })
-
     const windowSize = 2
-    return sorted.slice(0, sorted.length - windowSize + 1)
-      .map((_, i) => sorted.slice(i, i + windowSize))
-      .map((window) => {
-        const first = window[0]
-        const second = window[1]
+    return stages.slice(0, stages.length - windowSize + 1)
+      .map((_, i) => stages.slice(i, i + windowSize))
+      .flatMap(([first, second]) => {
+        const startTime = dayjs(first.timestamp).startOf('minute')
+        const endTime = dayjs(second.timestamp).startOf('minute').subtract(1, 'minute')
 
-        return {
-          start: first.timestamp.getTime(),
-          end: second.timestamp.getTime(),
+        const minutes: number[] = []
+        let current = startTime
+
+        while (current.isBefore(endTime) || current.isSame(endTime)) {
+          minutes.push(current.toDate().getTime())
+          current = current.add(1, 'minute')
+        }
+
+        return minutes.map(minute => ({
+          time: minute,
           stage: first.stage,
           y: getYValue(first.stage)
-        }
+        }))
       })
   }, [stages, getYValue])
 
   const xDomain = useMemo(() => {
-    const min = Math.min(...chartData.map(({ start }) => start))
-    const max = Math.max(...chartData.map(({ end }) => end))
+    const min = Math.min(...chartData.map(({ time }) => time))
+    const max = Math.max(...chartData.map(({ time }) => time))
+    console.log('min', dayjs(min).format('YYYY-MM-DD HH:mm:ss'))
+    console.log('max', dayjs(max).format('YYYY-MM-DD HH:mm:ss'))
     return [min, max]
   }, [chartData])
 
   const xTicks = useMemo(() => {
-    const [min, max] = xDomain
+    const [start, end] = xDomain
+
+    const startTime = dayjs(start).startOf('hour')
+    const endTime = dayjs(end).startOf('hour')
 
     const hours: number[] = []
-    let current = dayjs(min)
+    let current = startTime
 
-    while (current.isBefore(dayjs(max)) || current.isSame(dayjs(max))) {
+    while (current.isBefore(endTime) || current.isSame(endTime)) {
       hours.push(current.toDate().getTime())
       current = current.add(1, 'hour')
     }
 
     return hours
   }, [xDomain])
+  console.log('xDomain', xDomain)
 
   const { yDomain, yTicks } = useMemo<{ yDomain: Array<SleepStage>, yTicks: number[] }>(() => {
     const stageCounts = chartData
@@ -130,11 +162,11 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
   return (
    <ResponsiveContainer width='100%' height='100%' ref={chartRef}>
-     <ScatterChart data={chartData}>
+     <ComposedChart data={chartData}>
        <XAxis
          type='number'
          ticks={xTicks}
-         dataKey='start'
+         dataKey='time'
          domain={xDomain}
          stroke='rgb(255, 255, 255)'
          tickFormatter={(value: number) => {
@@ -179,7 +211,53 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          ))
        }
 
+       <defs>
+         {
+           stageStartPoints.map(({ stage, nextStage, time }) => {
+             const y0 = getYValue(stage)
+             const y1 = getYValue(nextStage)
+             const isNextStageBelow = y1 < y0
+             const onValue = 1
+             const gradientY1 = isNextStageBelow ? 0 : onValue
+             const gradientY2 = isNextStageBelow ? onValue : 0
+
+             return (
+               <linearGradient key={time + stage} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2} /*gradientUnits="userSpaceOnUse"*/>
+                 <stop key={time + stage} stopColor={getMetricColour(stage)} offset={'0%'} />
+                 <stop key={time + nextStage} stopColor={getMetricColour(nextStage)} offset={'100%'} />
+               </linearGradient>
+             )
+           })
+         }
+       </defs>
+
+       {
+         stageStartPoints.map(({ stage, nextStage, time }) => {
+           const y0 = getYValue(stage)
+           const y1 = getYValue(nextStage)
+           
+           return (
+             <Line
+               type='monotone'
+               key={`stage-start-${time}`}
+               dataKey='y'
+               data={[
+                 { y: y0, time },
+                 { y: y1, time },
+                 // https://stackoverflow.com/a/21639059 - We need a third point off-center so the line is no longer straight
+                 { y: y1, time: time + 100 }
+               ]}
+               stroke={`url(#${time.toString()})`}
+               id={`stage-start-${time}`}
+               strokeWidth={4}
+               dot={false}
+             />
+           )
+         })
+       }
+
        <Tooltip
+         filterNull
          content={SleepStageTooltip}
        />
 
@@ -195,7 +273,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            color: getMetricColour(stage)
          }))}
        />
-     </ScatterChart>
+     </ComposedChart>
    </ResponsiveContainer>
   )
 }

@@ -11,13 +11,7 @@ export interface SleepStageGraphDatum {
    * The time the instance of the given sleep
    * stage started within the sleep session.
    */
-  start: number
-
-  /**
-   * The time the instance of the given sleep
-   * stage ended within the sleep session.
-   */
-  end: number
+  time: number
 
   /**
    * The stage of sleep.
