@@ -1,7 +1,7 @@
 import {
-  CartesianGrid,
+  CartesianGrid, ComposedChart,
   Legend,
-  Line, LineChart,
+  Line,
   ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
@@ -13,7 +13,7 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import {
   SleepSessionStageBreakdownGraphProps,
   SleepStageGraphData,
-  SleepStageGraphDatum
+  SleepStageGraphDatum, SleepStageTransitionLineData
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
@@ -23,7 +23,7 @@ import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { LegendItem } from 'modules/graph/components/LegendItem'
 import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 
-const yDomainOffset = 0.5
+const yDomainOffset = 0.3
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const sortedStages = useMemo(() => {
@@ -49,7 +49,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
   }, [])
 
-  const stageStartPoints = useMemo(() => {
+  const stageTransitions = useMemo<SleepStageTransitionLineData>(() => {
     // Start at the end of the first sleep stage block
     let i = 1
     const startPoints = []
@@ -59,7 +59,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
       const right = sortedStages[i + 1]
 
       startPoints.push({
-        time: dayjs(left.timestamp).subtract(30, 'seconds').toDate().getTime(),
+        time: left.timestamp.getTime(),
         stage: left.stage,
         nextStage: right.stage
       })
@@ -70,7 +70,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
     return startPoints
   }, [sortedStages])
-  console.log('stageStartPoints', stageStartPoints)
+  console.log('stageTransitions', stageTransitions)
   console.log('sortedStages', sortedStages)
 
   const chartData = useMemo<SleepStageGraphData>(() => {
@@ -163,10 +163,12 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
       yTicks: ticks
     }
   }, [chartData, getYValue])
+  console.log('yDomain', yDomain)
+  console.log('yTicks', yTicks)
 
   return (
    <ResponsiveContainer width='100%' height='100%'>
-     <LineChart data={chartData}>
+     <ComposedChart data={chartData}>
        <XAxis
          type='number'
          ticks={xTicks}
@@ -184,7 +186,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          type='number'
          ticks={yTicks}
          domain={yDomain}
-         padding={{ bottom: 50, top: 50 }}
+         padding={{ bottom: 30, top: 30 }}
        />
 
        <CartesianGrid
@@ -202,6 +204,30 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            type='monotone'
            fillOpacity={1}
            fill={getMetricColour(stage)}
+           shape={({ x, y, width, height, fill }) => {
+             const topLeftRadius = 1
+             const topRightRadius = 1
+             const bottomRightRadius = 1
+             const bottomLeftRadius = 1
+
+             return (
+               <path
+                 d={`
+                  M ${x + topLeftRadius},${y} 
+                  H ${x + width - topRightRadius} 
+                  Q ${x + width},${y} ${x + width},${y + topRightRadius} 
+                  V ${y + height - bottomRightRadius} 
+                  Q ${x + width},${y + height} ${x + width - bottomRightRadius},${y + height} 
+                  H ${x + bottomLeftRadius} 
+                  Q ${x},${y + height} ${x},${y + height - bottomLeftRadius} 
+                  V ${y + topLeftRadius} 
+                  Q ${x},${y} ${x + topLeftRadius},${y} 
+                  Z
+                `}
+                 fill={fill}
+               />
+             )
+           }}
          />
        ))}
 
@@ -215,7 +241,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
        ))}
 
        <defs>
-         {stageStartPoints.map(({ stage, nextStage, time }) => {
+         {stageTransitions.map(({ stage, nextStage, time }) => {
            const y0 = getYValue(stage)
            const y1 = getYValue(nextStage)
            const isNextStageBelow = y1 < y0
@@ -232,7 +258,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          })}
        </defs>
 
-       {stageStartPoints.map(({ stage, nextStage, time }) => {
+       {stageTransitions.map(({ stage, nextStage, time }) => {
          const y0 = getYValue(stage)
          const y1 = getYValue(nextStage)
          const isNextStageBelow = y1 < y0
@@ -258,7 +284,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
        })}
 
        <Tooltip
-         filterNull
          content={SleepStageTooltip}
        />
 
@@ -274,7 +299,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            color: getMetricColour(stage)
          }))}
        />
-     </LineChart>
+     </ComposedChart>
    </ResponsiveContainer>
   )
 }

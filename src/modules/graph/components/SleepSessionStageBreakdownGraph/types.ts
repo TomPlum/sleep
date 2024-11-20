@@ -26,6 +26,29 @@ export interface SleepStageGraphDatum {
   stage: SleepStage
 }
 
+export type SleepStageTransitionLineData = SleepStageTransitionLineDatum[]
+
+export interface SleepStageTransitionLineDatum {
+  /**
+   * The timestamp, in milliseconds from the epoch,
+   * that the transition between the two stage
+   * instances happened.
+   */
+  time: number
+
+  /**
+   * The first stage, which is the one on the left
+   * hand side of the transition point.
+   */
+  stage: SleepStage
+
+  /**
+   * The second stage, which is the one on the right
+   * hand side of the transition point.
+   */
+  nextStage: SleepStage
+}
+
 export interface SleepSessionStageBreakdownGraphProps {
   /**
    * An array of sleep stages that make up

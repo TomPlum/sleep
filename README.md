@@ -43,3 +43,5 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 - Update session breakdown to include data like the ios app does
 - Plot the sound data points on the breakdown graph
 - Can we get heart rate data from the raw database export?
+- There are 58k sleep stage records mapped -> undefined, why?
+- If you change the date-range and the selected session is no longer in that range, what should happen?
