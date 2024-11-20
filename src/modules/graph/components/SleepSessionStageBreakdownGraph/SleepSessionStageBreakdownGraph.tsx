@@ -100,8 +100,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
   const xDomain = useMemo(() => {
     const min = Math.min(...chartData.map(({ time }) => time))
     const max = Math.max(...chartData.map(({ time }) => time))
-    console.log('min', dayjs(min).format('YYYY-MM-DD HH:mm:ss'))
-    console.log('max', dayjs(max).format('YYYY-MM-DD HH:mm:ss'))
     return [min, max]
   }, [chartData])
 
@@ -121,7 +119,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
     return hours
   }, [xDomain])
-  console.log('xDomain', xDomain)
 
   const { yDomain, yTicks } = useMemo<{ yDomain: Array<SleepStage>, yTicks: number[] }>(() => {
     const stageCounts = chartData
@@ -143,21 +140,25 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     if (stageCounts[SleepMetric.DEEP_SLEEP] > 0) {
       domain.push(SleepMetric.DEEP_SLEEP)
       ticks.push(getYValue(SleepMetric.DEEP_SLEEP))
+      ticks.push(getYValue(SleepMetric.DEEP_SLEEP) - 0.5)
     }
 
     if (stageCounts[SleepMetric.LIGHT_SLEEP] > 0) {
       domain.push(SleepMetric.LIGHT_SLEEP)
       ticks.push(getYValue(SleepMetric.LIGHT_SLEEP))
+      ticks.push(getYValue(SleepMetric.LIGHT_SLEEP) - 0.5)
     }
 
     if (stageCounts[SleepMetric.REM_SLEEP] > 0) {
       domain.push(SleepMetric.REM_SLEEP)
       ticks.push(getYValue(SleepMetric.REM_SLEEP))
+      ticks.push(getYValue(SleepMetric.REM_SLEEP) - 0.5)
     }
 
     if (stageCounts[SleepMetric.AWAKE_TIME] > 0) {
       domain.push(SleepMetric.AWAKE_TIME)
       ticks.push(getYValue(SleepMetric.AWAKE_TIME))
+      ticks.push(getYValue(SleepMetric.AWAKE_TIME) - 0.5)
     }
 
     return {
@@ -228,7 +229,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
              const gradientY2 = isNextStageBelow ? onValue : 0
 
              return (
-               <linearGradient key={time + stage} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2} /*gradientUnits="userSpaceOnUse"*/>
+               <linearGradient key={time + stage} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2}>
                  <stop key={time + stage} stopColor={getMetricColour(stage)} offset={'0%'} />
                  <stop key={time + nextStage} stopColor={getMetricColour(nextStage)} offset={'100%'} />
                </linearGradient>
@@ -241,6 +242,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          stageStartPoints.map(({ stage, nextStage, time }) => {
            const y0 = getYValue(stage)
            const y1 = getYValue(nextStage)
+           const isNextStageBelow = y1 < y0
            
            return (
              <Line
@@ -248,14 +250,15 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
                key={`stage-start-${time}`}
                dataKey='y'
                data={[
-                 { y: y0, time },
-                 { y: y1, time },
-                 // https://stackoverflow.com/a/21639059 - We need a third point off-center so the line is no longer straight
+                 { y: y0 + (isNextStageBelow ? 0.4 : -0.4), time },
+                 { y: y1 + (isNextStageBelow ? -0.4 : 0.4), time },
+                 // https://stackoverflow.com/a/21639059
+                 // We need a third point off-center so the line is no longer straight
                  { y: y1, time: time + 100 }
                ]}
                stroke={`url(#${time.toString()})`}
                id={`stage-start-${time}`}
-               strokeWidth={4}
+               strokeWidth={3}
                dot={false}
              />
            )
