@@ -11,7 +11,6 @@ export const SleepStageBar = ({ cx, cy, payload, chartHeight, uniqueMetrics }: S
         width={4}
         height={barHeight}
         y={(cy ?? 0) - barHeight / 2}
-
         fill={getMetricColour(payload.stage).replace('rgb', 'rgba').replace(')', ', 1)')}
       />
     </g>

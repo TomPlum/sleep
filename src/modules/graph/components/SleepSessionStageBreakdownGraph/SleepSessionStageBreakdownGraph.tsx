@@ -1,9 +1,10 @@
 import {
-  CartesianGrid, ComposedChart,
-  Legend, Line,
+  CartesianGrid,
+  Legend,
+  Line, LineChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
-  Scatter,
   Tooltip,
   XAxis,
   YAxis
@@ -11,21 +12,20 @@ import {
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import {
   SleepSessionStageBreakdownGraphProps,
-  SleepStageGraphData
+  SleepStageGraphData,
+  SleepStageGraphDatum
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
-import { SleepStageBar } from 'modules/graph/components/SleepStageBar'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
-import { useChartSize } from 'modules/graph/hooks/useChartSize'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { LegendItem } from 'modules/graph/components/LegendItem'
 import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 
-export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
-  const { size, chartRef } = useChartSize()
+const yDomainOffset = 0.5
 
+export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const sortedStages = useMemo(() => {
     return stages.sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime()
@@ -74,32 +74,29 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
   console.log('sortedStages', sortedStages)
 
   const chartData = useMemo<SleepStageGraphData>(() => {
-    const windowSize = 2
-    return sortedStages.slice(0, sortedStages.length - windowSize + 1)
-      .map((_, i) => sortedStages.slice(i, i + windowSize))
-      .flatMap(([first, second]) => {
-        const startTime = dayjs(first.timestamp).startOf('minute')
-        const endTime = dayjs(second.timestamp).startOf('minute').subtract(1, 'minute')
+    let i = 0
+    const stageInstances: SleepStageGraphDatum[] = []
 
-        const minutes: number[] = []
-        let current = startTime
+    while(i < sortedStages.length - 1) {
+      const left = sortedStages[i]
+      const right = sortedStages[i + 1]
 
-        while (current.isBefore(endTime) || current.isSame(endTime)) {
-          minutes.push(current.toDate().getTime())
-          current = current.add(1, 'minute')
-        }
-
-        return minutes.map(minute => ({
-          time: minute,
-          stage: first.stage,
-          y: getYValue(first.stage)
-        }))
+      stageInstances.push({
+        startTime: left.timestamp.getTime(),
+        endTime: right.timestamp.getTime(),
+        stage: left.stage
       })
-  }, [sortedStages, getYValue])
+
+      // Skip to the start of the next sleep stage block
+      i += 2
+    }
+
+    return stageInstances
+  }, [sortedStages])
 
   const xDomain = useMemo(() => {
-    const min = Math.min(...chartData.map(({ time }) => time))
-    const max = Math.max(...chartData.map(({ time }) => time))
+    const min = Math.min(...chartData.map(({ startTime }) => startTime))
+    const max = Math.max(...chartData.map(({ endTime }) => endTime))
     return [min, max]
   }, [chartData])
 
@@ -140,25 +137,25 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     if (stageCounts[SleepMetric.DEEP_SLEEP] > 0) {
       domain.push(SleepMetric.DEEP_SLEEP)
       ticks.push(getYValue(SleepMetric.DEEP_SLEEP))
-      ticks.push(getYValue(SleepMetric.DEEP_SLEEP) - 0.5)
+      ticks.push(getYValue(SleepMetric.DEEP_SLEEP) - yDomainOffset)
     }
 
     if (stageCounts[SleepMetric.LIGHT_SLEEP] > 0) {
       domain.push(SleepMetric.LIGHT_SLEEP)
       ticks.push(getYValue(SleepMetric.LIGHT_SLEEP))
-      ticks.push(getYValue(SleepMetric.LIGHT_SLEEP) - 0.5)
+      ticks.push(getYValue(SleepMetric.LIGHT_SLEEP) - yDomainOffset)
     }
 
     if (stageCounts[SleepMetric.REM_SLEEP] > 0) {
       domain.push(SleepMetric.REM_SLEEP)
       ticks.push(getYValue(SleepMetric.REM_SLEEP))
-      ticks.push(getYValue(SleepMetric.REM_SLEEP) - 0.5)
+      ticks.push(getYValue(SleepMetric.REM_SLEEP) - yDomainOffset)
     }
 
     if (stageCounts[SleepMetric.AWAKE_TIME] > 0) {
       domain.push(SleepMetric.AWAKE_TIME)
       ticks.push(getYValue(SleepMetric.AWAKE_TIME))
-      ticks.push(getYValue(SleepMetric.AWAKE_TIME) - 0.5)
+      ticks.push(getYValue(SleepMetric.AWAKE_TIME) - yDomainOffset)
     }
 
     return {
@@ -168,8 +165,8 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
   }, [chartData, getYValue])
 
   return (
-   <ResponsiveContainer width='100%' height='100%' ref={chartRef}>
-     <ComposedChart data={chartData}>
+   <ResponsiveContainer width='100%' height='100%'>
+     <LineChart data={chartData}>
        <XAxis
          type='number'
          ticks={xTicks}
@@ -196,74 +193,69 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          stroke='rgba(255, 255, 255, 0.4)'
        />
 
-       <Scatter
-         // @ts-expect-error I think Recharts has bad typing here
-         shape={props => (
-           <SleepStageBar
-             {...props}
-             chartHeight={size.height}
-             uniqueMetrics={yDomain.length}
-           />
-         )}
-       />
+       {chartData.map(({ stage, startTime, endTime }) => (
+         <ReferenceArea
+           x1={startTime}
+           y1={getYValue(stage) - yDomainOffset}
+           x2={endTime}
+           y2={getYValue(stage) + yDomainOffset}
+           type='monotone'
+           fillOpacity={1}
+           fill={getMetricColour(stage)}
+         />
+       ))}
 
-       {
-         sounds.map(sound => (
-           <ReferenceLine
-             key={sound.id}
-             x={sound.timestamp.getTime()}
-             className={styles.soundLine}
-             id={`sound_instance_${sound.id}`}
-           />
-         ))
-       }
+       {sounds.map(sound => (
+         <ReferenceLine
+           key={sound.id}
+           x={sound.timestamp.getTime()}
+           className={styles.soundLine}
+           id={`sound_instance_${sound.id}`}
+         />
+       ))}
 
        <defs>
-         {
-           stageStartPoints.map(({ stage, nextStage, time }) => {
-             const y0 = getYValue(stage)
-             const y1 = getYValue(nextStage)
-             const isNextStageBelow = y1 < y0
-             const onValue = 1
-             const gradientY1 = isNextStageBelow ? 0 : onValue
-             const gradientY2 = isNextStageBelow ? onValue : 0
-
-             return (
-               <linearGradient key={time + stage} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2}>
-                 <stop key={time + stage} stopColor={getMetricColour(stage)} offset={'0%'} />
-                 <stop key={time + nextStage} stopColor={getMetricColour(nextStage)} offset={'100%'} />
-               </linearGradient>
-             )
-           })
-         }
-       </defs>
-
-       {
-         stageStartPoints.map(({ stage, nextStage, time }) => {
+         {stageStartPoints.map(({ stage, nextStage, time }) => {
            const y0 = getYValue(stage)
            const y1 = getYValue(nextStage)
            const isNextStageBelow = y1 < y0
-           
+           const onValue = 1
+           const gradientY1 = isNextStageBelow ? 0 : onValue
+           const gradientY2 = isNextStageBelow ? onValue : 0
+
            return (
-             <Line
-               type='monotone'
-               key={`stage-start-${time}`}
-               dataKey='y'
-               data={[
-                 { y: y0 + (isNextStageBelow ? 0.4 : -0.4), time },
-                 { y: y1 + (isNextStageBelow ? -0.4 : 0.4), time },
-                 // https://stackoverflow.com/a/21639059
-                 // We need a third point off-center so the line is no longer straight
-                 { y: y1, time: time + 100 }
-               ]}
-               stroke={`url(#${time.toString()})`}
-               id={`stage-start-${time}`}
-               strokeWidth={3}
-               dot={false}
-             />
+             <linearGradient key={time + stage} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2}>
+               <stop key={time + stage} stopColor={getMetricColour(stage)} offset={'0%'} />
+               <stop key={time + nextStage} stopColor={getMetricColour(nextStage)} offset={'100%'} />
+             </linearGradient>
            )
-         })
-       }
+         })}
+       </defs>
+
+       {stageStartPoints.map(({ stage, nextStage, time }) => {
+         const y0 = getYValue(stage)
+         const y1 = getYValue(nextStage)
+         const isNextStageBelow = y1 < y0
+
+         return (
+           <Line
+             type='monotone'
+             key={`stage-start-${time}`}
+             dataKey='y'
+             data={[
+               { y: y0 + (isNextStageBelow ? yDomainOffset : -yDomainOffset), time },
+               { y: y1 + (isNextStageBelow ? -yDomainOffset : yDomainOffset), time },
+               // https://stackoverflow.com/a/21639059
+               // We need a third point off-center so the line is no longer straight
+               { y: y1, time: time + 100 }
+             ]}
+             stroke={`url(#${time.toString()})`}
+             id={`stage-start-${time}`}
+             strokeWidth={3}
+             dot={false}
+           />
+         )
+       })}
 
        <Tooltip
          filterNull
@@ -282,7 +274,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            color: getMetricColour(stage)
          }))}
        />
-     </ComposedChart>
+     </LineChart>
    </ResponsiveContainer>
   )
 }
