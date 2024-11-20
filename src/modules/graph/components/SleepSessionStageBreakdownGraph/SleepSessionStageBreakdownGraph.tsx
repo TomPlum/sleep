@@ -26,6 +26,12 @@ import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const { size, chartRef } = useChartSize()
 
+  const sortedStages = useMemo(() => {
+    return stages.sort((a, b) => {
+      return a.timestamp.getTime() - b.timestamp.getTime()
+    })
+  }, [stages])
+
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
       case SleepMetric.AWAKE_TIME: {
@@ -48,9 +54,9 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     let i = 1
     const startPoints = []
 
-    while(i < stages.length - 1) {
-      const left = stages[i]
-      const right = stages[i + 1]
+    while(i < sortedStages.length - 1) {
+      const left = sortedStages[i]
+      const right = sortedStages[i + 1]
 
       startPoints.push({
         time: dayjs(left.timestamp).subtract(30, 'seconds').toDate().getTime(),
@@ -63,14 +69,14 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
 
     return startPoints
-  }, [stages])
+  }, [sortedStages])
   console.log('stageStartPoints', stageStartPoints)
-  console.log('stages', stages)
+  console.log('sortedStages', sortedStages)
 
   const chartData = useMemo<SleepStageGraphData>(() => {
     const windowSize = 2
-    return stages.slice(0, stages.length - windowSize + 1)
-      .map((_, i) => stages.slice(i, i + windowSize))
+    return sortedStages.slice(0, sortedStages.length - windowSize + 1)
+      .map((_, i) => sortedStages.slice(i, i + windowSize))
       .flatMap(([first, second]) => {
         const startTime = dayjs(first.timestamp).startOf('minute')
         const endTime = dayjs(second.timestamp).startOf('minute').subtract(1, 'minute')
@@ -89,7 +95,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
           y: getYValue(first.stage)
         }))
       })
-  }, [stages, getYValue])
+  }, [sortedStages, getYValue])
 
   const xDomain = useMemo(() => {
     const min = Math.min(...chartData.map(({ time }) => time))
