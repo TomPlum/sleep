@@ -8,27 +8,45 @@ export type SleepStageGraphData = SleepStageGraphDatum[]
 
 export interface SleepStageGraphDatum {
   /**
-   * The time the instance of the given sleep
+   * The startTime the instance of the given sleep
    * stage started within the sleep session.
    */
-  start: number
+  startTime: number
 
   /**
-   * The time the instance of the given sleep
+   * The endTime the instance of the given sleep
    * stage ended within the sleep session.
    */
-  end: number
+  endTime: number
 
   /**
-   * The stage of sleep.
+   * The stage of sleep that this instance
+   * represents within the session.
+   */
+  stage: SleepStage
+}
+
+export type SleepStageTransitionLineData = SleepStageTransitionLineDatum[]
+
+export interface SleepStageTransitionLineDatum {
+  /**
+   * The timestamp, in milliseconds from the epoch,
+   * that the transition between the two stage
+   * instances happened.
+   */
+  time: number
+
+  /**
+   * The first stage, which is the one on the left
+   * hand side of the transition point.
    */
   stage: SleepStage
 
   /**
-   * A numerical value representing the stage
-   * as used by the charts y-axis.
+   * The second stage, which is the one on the right
+   * hand side of the transition point.
    */
-  y: number
+  nextStage: SleepStage
 }
 
 export interface SleepSessionStageBreakdownGraphProps {

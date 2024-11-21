@@ -45,7 +45,7 @@ export const SleepSessionInfo = () => {
   }
 
   const startTime = dayjs(selectedSession.date)
-  const endTime = dayjs(selectedSession.endTime)
+  const endTime = dayjs(selectedSession.endTime).add(1, 'hour') // TODO: Check this +1 hour. Its offset GMT+1
   const hoursDifference = endTime.diff(startTime, 'hours')
   const remainingMinutes = endTime.diff(startTime, 'minutes') % hoursDifference
 

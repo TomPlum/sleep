@@ -4,7 +4,7 @@ import { Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { SleepStageGraphDatum } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import dayjs from 'dayjs'
-import { getSleepMetricDisplayName } from 'modules/graph/utils/getSleepMetricDisplayName.ts'
+import { getSleepMetricDisplayName } from 'modules/graph/utils/getSleepMetricDisplayName'
 
 export const SleepStageTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-stage-breakdown.tooltip' })
@@ -28,9 +28,9 @@ export const SleepStageTooltip = ({ active, payload }: TooltipProps<number, stri
           {t('duration')}
         </Typography>
 
-        {data.start && data.end && (
+        {data.startTime && data.endTime && (
           <Typography className={styles.value}>
-            {dayjs(data.start).format('HH:mm')} - {dayjs(data.end).format('HH:mm')}
+            {dayjs(data.startTime).format('HH:mm')} - {dayjs(data.endTime).format('HH:mm')}
           </Typography>
         )}
       </div>
