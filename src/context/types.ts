@@ -27,6 +27,12 @@ export interface SleepContextBag {
   sleepSoundData: RawSleepSessionSounds
 
   /**
+   * The ID of the sleep session that is currently
+   * selected. Is undefined if no session is selected.
+   */
+  selectedSession?: number
+
+  /**
    * Whether the read IO or conversion process of
    * the data is in progress.
    */

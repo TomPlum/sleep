@@ -5,7 +5,7 @@ import { useQueryParams } from 'hooks/useQueryParams'
 import { DefaultQueryParamsProps } from './types'
 
 export const useDefaultQueryParams = ({ loading, sleepData }: DefaultQueryParamsProps) => {
-  const { queryParams: { start, end, metric, lng, stacked, metrics }, updateQueryParam } = useQueryParams()
+  const { queryParams: { start, end, metric, lng, stacked, metrics, selected }, updateQueryParam } = useQueryParams()
 
   const [language, setLanguage] = useState(lng)
   const [rangeEnd, setRangeEnd] = useState(end)
@@ -68,6 +68,7 @@ export const useDefaultQueryParams = ({ loading, sleepData }: DefaultQueryParams
     setRangeEnd,
     setCurrentMetric,
     setStackedView,
-    handleSetStackedMetrics
+    handleSetStackedMetrics,
+    selected
   }
 }

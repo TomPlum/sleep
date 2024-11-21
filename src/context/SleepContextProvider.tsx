@@ -22,7 +22,8 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     setRangeEnd,
     setRangeStart,
     setStackedView,
-    handleSetStackedMetrics
+    handleSetStackedMetrics,
+    selected
   } = useDefaultQueryParams({
     loading,
     sleepData
@@ -51,6 +52,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sleepStageData: sessionStages,
     sleepSoundData: sessionSounds,
     isSleepDataLoading: loading,
+    selectedSession: selected,
     rangeStart: rangeStart ?? new Date(),
     setRangeStart,
     rangeEnd: rangeEnd ?? new Date(),
@@ -64,7 +66,7 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     setStackedView,
     stackedMetrics: stackedMetrics ?? [],
     setStackedMetrics: handleSetStackedMetrics
-  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, sessionSounds, sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
+  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, selected, sessionSounds, sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
 
   return (
     <SleepContext.Provider value={value}>

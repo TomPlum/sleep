@@ -35,6 +35,16 @@
           "awake_time": "The time you spend awake in bed. The most important thing to notice here is the time it took to fall asleep and any time that you spent awake during the sleep session. Periods of increased restlessness where you are half awake may be interpreted as awake time.",
           "duration_percent": "The total time spent in bed during a given sleep session as a percent of 8 hours. So a total of 240 minutes would equal 4 hours which is 50%. Whereas 480 minutes would be 8 hours at 100%."
         }
+      },
+      "sleep-session-info": {
+        "hour": "h",
+        "minute": "m"
+      },
+      "sleep-stage-breakdown": {
+        "tooltip": {
+          "stage": "Stage",
+          "duration": "Duration"
+        }
       }
     },
     "graph-controls" : {

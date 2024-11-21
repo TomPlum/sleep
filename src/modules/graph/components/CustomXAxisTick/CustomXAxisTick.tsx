@@ -6,6 +6,8 @@ import { useMemo } from 'react'
 export const CustomXAxisTick = ({ x, y, payload, earliestSession, latestSession }: CustomXAxisTickProps) => {
   const epochMillis = payload.value
 
+  const daysDelta = dayjs(latestSession).diff(earliestSession, 'days')
+
   const textAnchor = useMemo(() => {
     if (epochMillis === earliestSession.getTime()) {
       return 'start'
@@ -18,7 +20,7 @@ export const CustomXAxisTick = ({ x, y, payload, earliestSession, latestSession 
 
   return (
     <text x={x} y={y - 15} textAnchor={textAnchor} className={styles.tick}>
-      {dayjs(new Date(epochMillis)).format('MMM YY')}
+      {dayjs(new Date(epochMillis)).format(daysDelta < 90 ? 'Do MMM YY' : 'MMM YY')}
     </text>
   )
 }

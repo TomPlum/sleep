@@ -23,18 +23,20 @@ import { RegressionDeltaLabel } from 'modules/graph/components/RegressionDeltaLa
 import { SleepSessionsGraph2DProps } from './types'
 import { LineActiveDot } from 'modules/graph/components/LineActiveDot'
 import { useGraphHeight } from 'modules/graph/hooks/useGraphHeight'
+import { useCallback } from 'react'
+import { PageRoutes } from 'routes'
+import { useQueryParams } from 'hooks/useQueryParams'
 
 const animationDuration = 500
 
 export const SleepSessionsGraph2D = ({
    metric,
-   onSelectSession,
-   selectedSession,
    className
 }: SleepSessionsGraph2DProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
-  const { height } = useGraphHeight({ selectedSession })
+  const { height } = useGraphHeight()
+  const { updateQueryParam } = useQueryParams()
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
@@ -53,6 +55,16 @@ export const SleepSessionsGraph2D = ({
     regressionLineDeltaVertical,
     regressionLineDeltaHorizontal
   } = useLinearRegression({ metric })
+
+  const handleSelectSession = useCallback((index: number) => {
+    updateQueryParam({
+      route: PageRoutes.SLEEP,
+      params: {
+        selected: index.toString()
+      }
+    })
+
+  }, [updateQueryParam])
 
   const isTopGraph = stackedMetrics.indexOf(metric) === 0
 
@@ -79,7 +91,7 @@ export const SleepSessionsGraph2D = ({
           label={data => (
             <LineActiveDot
               data={data}
-              onClick={onSelectSession}
+              onClick={handleSelectSession}
               radius={activeDotRadius - 3}
             />
           )}

@@ -1,5 +1,4 @@
 import { SleepSessionStageBreakdownGraph } from 'modules/graph/components/SleepSessionStageBreakdownGraph'
-import { SleepSessionInfoProps } from './types'
 import styles from './SleepSessionInfo.module.scss'
 import dayjs from 'dayjs'
 import { useSleepContext } from 'context'
@@ -8,10 +7,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
+import { useTranslation } from 'react-i18next'
 
-export const SleepSessionInfo = ({ sessionId }: SleepSessionInfoProps) => {
+export const SleepSessionInfo = () => {
   const { queryParams } = useQueryParams()
-  const { graphData2d, sleepStageData, sleepSoundData } = useSleepContext()
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-session-info' })
+  const { graphData2d, sleepStageData, sleepSoundData, selectedSession: id } = useSleepContext()
 
   const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
 
@@ -19,10 +20,12 @@ export const SleepSessionInfo = ({ sessionId }: SleepSessionInfoProps) => {
     if (queryParams.selected) {
       const session = graphData2d.data[queryParams.selected]
       setSelectedSession(session)
-    } else {
-      setSelectedSession(graphData2d.data[sessionId])
     }
-  }, [sessionId, graphData2d.data, queryParams.selected])
+
+    if (id) {
+      setSelectedSession(graphData2d.data[id])
+    }
+  }, [id, graphData2d.data, queryParams.selected])
 
   const pieData = useMemo<DurationBreakdownPieData | undefined>(() => {
     if (!selectedSession) {
@@ -37,9 +40,14 @@ export const SleepSessionInfo = ({ sessionId }: SleepSessionInfoProps) => {
     })
   }, [selectedSession])
 
-  if (!selectedSession) {
+  if (!selectedSession || !sleepStageData || !sleepSoundData) {
     return null
   }
+
+  const startTime = dayjs(selectedSession.date)
+  const endTime = dayjs(selectedSession.endTime).add(1, 'hour') // TODO: Check this +1 hour. Its offset GMT+1
+  const hoursDifference = endTime.diff(startTime, 'hours')
+  const remainingMinutes = endTime.diff(startTime, 'minutes') % hoursDifference
 
   return (
     <div className={styles.container}>
@@ -49,7 +57,17 @@ export const SleepSessionInfo = ({ sessionId }: SleepSessionInfoProps) => {
       />
 
       <div className={styles.info}>
-        {dayjs(selectedSession.date).format('ddd Do MMM YYYY - HH:mm')}
+        <p className={styles.text}>
+          {startTime.format('ddd Do MMM YYYY')}
+        </p>
+
+        <p className={styles.text}>
+          {startTime.format('HH:mm')}
+          {' -> '}
+          {endTime.format('HH:mm')}
+          {' '}
+          ({hoursDifference}{t('hour')} {remainingMinutes}{t('minute')})
+        </p>
 
         {pieData && (
           <div className={styles.pieContainer}>

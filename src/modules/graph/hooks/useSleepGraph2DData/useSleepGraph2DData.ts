@@ -27,6 +27,7 @@ export const useSleepGraph2DData = ({
         id: session.id,
         xDate: session.startTime.getTime(),
         date: session.startTime,
+        endTime: session.endTime,
         duration: totalDuration,
         isNap: session.isNap,
         mood: session.mood,
