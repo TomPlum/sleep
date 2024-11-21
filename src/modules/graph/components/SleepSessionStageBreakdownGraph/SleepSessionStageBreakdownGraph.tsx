@@ -62,6 +62,27 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     return repairedStages
   }, [sortedStages])
 
+  const stageCounts = useMemo<Record<SleepStage, number>>(() => {
+    return repairedStages
+      .map(datum => datum.stage)
+      .reduce<Record<SleepStage, number>>((counts, stage) => {
+        const count = counts[stage]
+        counts[stage] = (count ?? 0) + 1
+        return counts
+      }, {
+        [SleepMetric.AWAKE_TIME]: 0,
+        [SleepMetric.DEEP_SLEEP]: 0,
+        [SleepMetric.LIGHT_SLEEP]: 0,
+        [SleepMetric.REM_SLEEP]: 0
+      })
+  }, [repairedStages])
+
+  const presentStages = useMemo(() => {
+    return Object.entries(stageCounts).filter(([,count]) => {
+      return count > 0
+    })
+  }, [stageCounts])
+
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
       case SleepMetric.AWAKE_TIME: {
@@ -147,52 +168,20 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     return hours
   }, [xDomain])
 
-  const { yDomain, yTicks } = useMemo<{ yDomain: Array<SleepStage>, yTicks: number[] }>(() => {
-    const stageCounts = chartData
-      .map(datum => datum.stage)
-      .reduce<Record<SleepStage, number>>((acc, stage) => {
-        const count = acc[stage]
-        acc[stage] = (count ?? 0) + 1
-        return acc
-      }, {
-        [SleepMetric.AWAKE_TIME]: 0,
-        [SleepMetric.DEEP_SLEEP]: 0,
-        [SleepMetric.LIGHT_SLEEP]: 0,
-        [SleepMetric.REM_SLEEP]: 0
-      })
+  const { yDomain, yTicks } = useMemo<{ yDomain: number[], yTicks: number[] }>(() => {
+    const presentStageYValues = presentStages.map(([stage]) => {
+      return getYValue(stage as SleepStage)
+    })
 
-    const domain: Array<SleepStage> = []
-    const ticks: number[] = []
-
-    if (stageCounts[SleepMetric.DEEP_SLEEP] > 0) {
-      domain.push(SleepMetric.DEEP_SLEEP)
-      ticks.push(getYValue(SleepMetric.DEEP_SLEEP))
-      ticks.push(getYValue(SleepMetric.DEEP_SLEEP) - yDomainOffset)
-    }
-
-    if (stageCounts[SleepMetric.LIGHT_SLEEP] > 0) {
-      domain.push(SleepMetric.LIGHT_SLEEP)
-      ticks.push(getYValue(SleepMetric.LIGHT_SLEEP))
-      ticks.push(getYValue(SleepMetric.LIGHT_SLEEP) - yDomainOffset)
-    }
-
-    if (stageCounts[SleepMetric.REM_SLEEP] > 0) {
-      domain.push(SleepMetric.REM_SLEEP)
-      ticks.push(getYValue(SleepMetric.REM_SLEEP))
-      ticks.push(getYValue(SleepMetric.REM_SLEEP) - yDomainOffset)
-    }
-
-    if (stageCounts[SleepMetric.AWAKE_TIME] > 0) {
-      domain.push(SleepMetric.AWAKE_TIME)
-      ticks.push(getYValue(SleepMetric.AWAKE_TIME))
-      ticks.push(getYValue(SleepMetric.AWAKE_TIME) - yDomainOffset)
-    }
+    const domainUpperBound = Math.max(...presentStageYValues)
+    const domainLowerBound = Math.min(...presentStageYValues)
 
     return {
-      yDomain: domain,
-      yTicks: ticks
+      yDomain: [domainLowerBound, domainUpperBound],
+      yTicks: presentStageYValues.sort()
     }
-  }, [chartData, getYValue])
+  }, [getYValue, presentStages])
+
   console.log('yDomain', yDomain)
   console.log('yTicks', yTicks)
   console.log('xTicks', xTicks)
@@ -324,11 +313,11 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          verticalAlign='top'
          formatter={LegendItem}
          id='sleep-stage-breakdown-legend'
-         payload={yDomain.map(stage => ({
+         payload={presentStages.map(([stage]) => ({
            id: stage,
            value: stage,
            type: 'diamond',
-           color: getMetricColour(stage)
+           color: getMetricColour(stage as SleepMetric)
          }))}
        />
      </ComposedChart>
