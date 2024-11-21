@@ -155,14 +155,14 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     const [start, end] = xDomain
 
     const startTime = dayjs(start).startOf('hour')
-    const endTime = dayjs(end).startOf('hour')
+    const endTime = dayjs(end).endOf('hour')
 
     const hours: number[] = []
     let current = startTime
 
     while (current.isBefore(endTime) || current.isSame(endTime)) {
       hours.push(current.toDate().getTime())
-      current = current.add(1, 'hour')
+      current = current.add(30, 'minutes')
     }
 
     return hours
@@ -196,7 +196,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          domain={xDomain}
          stroke='rgb(255, 255, 255)'
          tickFormatter={(value: number) => {
-           return `${dayjs(value).format('HH')}:00`
+           return `${dayjs(value).format('HH:mm')}`
          }}
        />
 
