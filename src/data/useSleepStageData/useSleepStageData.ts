@@ -12,7 +12,7 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
     })
   }, [stages])
 
-  const repairedStages = useMemo<SleepSessionStage[]>(() => {
+  const sleepStageData = useMemo<SleepSessionStage[]>(() => {
     let i = 0
     const repairedStages: SleepSessionStage[] = []
 
@@ -42,7 +42,7 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
   }, [sortedStages])
 
   const stageCounts = useMemo<Record<SleepStage, number>>(() => {
-    return repairedStages
+    return sleepStageData
       .map(datum => datum.stage)
       .reduce<Record<SleepStage, number>>((counts, stage) => {
         const count = counts[stage]
@@ -54,7 +54,7 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
         [SleepMetric.LIGHT_SLEEP]: 0,
         [SleepMetric.REM_SLEEP]: 0
       })
-  }, [repairedStages])
+  }, [sleepStageData])
 
   const presentStages = useMemo(() => {
     return Object.entries(stageCounts).filter(([,count]) => {
@@ -63,7 +63,7 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
   }, [stageCounts])
 
   return {
-    sleepStageData: repairedStages,
+    sleepStageData,
     stageCounts,
     presentStages
   }

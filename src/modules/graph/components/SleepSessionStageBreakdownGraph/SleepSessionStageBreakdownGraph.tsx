@@ -1,9 +1,9 @@
 import {
+  Area,
   CartesianGrid,
   ComposedChart,
   Legend,
   Line,
-  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -19,12 +19,13 @@ import {
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
-import { SleepStage } from 'data/useSleepData'
+import { SleepSessionStage, SleepStage } from 'data/useSleepData'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { LegendItem } from 'modules/graph/components/LegendItem'
 import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 import { useSleepStageData } from 'data/useSleepStageData'
+import _ from 'lodash'
 
 const yDomainOffset = 0.3
 
@@ -130,7 +131,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
   return (
    <ResponsiveContainer width='100%' height='100%'>
-     <ComposedChart data={chartData}>
+     <ComposedChart>
        <XAxis
          type='number'
          ticks={xTicks}
@@ -157,42 +158,32 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          stroke='rgba(255, 255, 255, 0.4)'
        />
 
-       {chartData.map(({ stage, startTime, endTime }) => (
-         <ReferenceArea
-           x1={startTime}
-           y1={getYValue(stage) - yDomainOffset}
-           x2={endTime}
-           y2={getYValue(stage) + yDomainOffset}
-           type='monotone'
-           fillOpacity={1}
-           fill={getMetricColour(stage)}
-           shape={({ x, y, width, height, fill }) => {
-             // TODO: Customise corner radii
-             const topLeftRadius = 1
-             const topRightRadius = 1
-             const bottomRightRadius = 1
-             const bottomLeftRadius = 1
+       {_.range(0, sleepStageData.length - 2 + 1, 1)
+         .map((i: number) => sleepStageData.slice(i, i + 2))
+         .map(([left, right]: SleepSessionStage[]) => {
+           const data = [
+             { time: left.timestamp.getTime(), y: getYValue(left.stage) - yDomainOffset },
+             { time: left.timestamp.getTime(), y: getYValue(left.stage) + yDomainOffset },
+             { time: right.timestamp.getTime(), y: getYValue(right.stage) + yDomainOffset },
+             { time: right.timestamp.getTime(), y: getYValue(right.stage) - yDomainOffset },
+           ]
 
-             return (
-               <path
-                 d={`
-                  M ${x + topLeftRadius},${y} 
-                  H ${x + width - topRightRadius} 
-                  Q ${x + width},${y} ${x + width},${y + topRightRadius} 
-                  V ${y + height - bottomRightRadius} 
-                  Q ${x + width},${y + height} ${x + width - bottomRightRadius},${y + height} 
-                  H ${x + bottomLeftRadius} 
-                  Q ${x},${y + height} ${x},${y + height - bottomLeftRadius} 
-                  V ${y + topLeftRadius} 
-                  Q ${x},${y} ${x + topLeftRadius},${y} 
-                  Z
-                `}
-                 fill={fill}
-               />
-             )
-           }}
-         />
-       ))}
+           const id = `sleep-stage-instance-${left.stage}-${left.timestamp.getTime()}-${right.timestamp.getTime()}`
+
+           return (
+             <Area
+               id={id}
+               key={id}
+               dataKey='y'
+               stroke='none'
+               data={data}
+               fillOpacity={1}
+               type='linearClosed'
+               fill={getMetricColour(left.stage)}
+             />
+           )
+         })
+       }
 
        {sounds.map(sound => (
          <ReferenceLine
