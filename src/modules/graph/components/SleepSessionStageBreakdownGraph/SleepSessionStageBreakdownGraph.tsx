@@ -1,5 +1,6 @@
 import {
-  CartesianGrid, ComposedChart,
+  CartesianGrid,
+  ComposedChart,
   Legend,
   Line,
   ReferenceArea,
@@ -13,75 +14,22 @@ import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import {
   SleepSessionStageBreakdownGraphProps,
   SleepStageGraphData,
-  SleepStageGraphDatum, SleepStageTransitionLineData
+  SleepStageGraphDatum,
+  SleepStageTransitionLineData
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
-import { SleepSessionStage, SleepStage } from 'data/useSleepData'
+import { SleepStage } from 'data/useSleepData'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { LegendItem } from 'modules/graph/components/LegendItem'
 import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
-import { v4 as uuid } from 'uuid'
+import { useSleepStageData } from 'data/useSleepStageData'
 
 const yDomainOffset = 0.3
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
-  const sortedStages = useMemo(() => {
-    return stages.sort((a, b) => {
-      return a.timestamp.getTime() - b.timestamp.getTime()
-    })
-  }, [stages])
-
-  const repairedStages = useMemo<SleepSessionStage[]>(() => {
-    let i = 0
-    const repairedStages: SleepSessionStage[] = []
-
-    while(i < sortedStages.length - 1) {
-      const currentStage = sortedStages[i]
-      const nextStage = sortedStages[i + 1]
-
-      if (currentStage.stage === nextStage.stage) {
-        repairedStages.push(sortedStages[i])
-        repairedStages.push(sortedStages[i + 1])
-      } else {
-        // If the next stage instance isn't of the same stage type,
-        // Add the first, but create a matching one that is 1 second before
-        // the next sleep stage block.
-        repairedStages.push(sortedStages[i])
-        repairedStages.push({
-          id: uuid(),
-          stage: currentStage.stage,
-          timestamp: dayjs(nextStage.timestamp).subtract(1, 'second').toDate()
-        })
-      }
-
-      i += 2
-    }
-
-    return repairedStages
-  }, [sortedStages])
-
-  const stageCounts = useMemo<Record<SleepStage, number>>(() => {
-    return repairedStages
-      .map(datum => datum.stage)
-      .reduce<Record<SleepStage, number>>((counts, stage) => {
-        const count = counts[stage]
-        counts[stage] = (count ?? 0) + 1
-        return counts
-      }, {
-        [SleepMetric.AWAKE_TIME]: 0,
-        [SleepMetric.DEEP_SLEEP]: 0,
-        [SleepMetric.LIGHT_SLEEP]: 0,
-        [SleepMetric.REM_SLEEP]: 0
-      })
-  }, [repairedStages])
-
-  const presentStages = useMemo(() => {
-    return Object.entries(stageCounts).filter(([,count]) => {
-      return count > 0
-    })
-  }, [stageCounts])
+  const { sleepStageData, presentStages } = useSleepStageData({ stages })
 
   const getYValue = useCallback((stage: SleepStage) => {
     switch (stage) {
@@ -105,9 +53,9 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     let i = 1
     const startPoints = []
 
-    while(i < repairedStages.length - 1) {
-      const left = repairedStages[i]
-      const right = repairedStages[i + 1]
+    while(i < sleepStageData.length - 1) {
+      const left = sleepStageData[i]
+      const right = sleepStageData[i + 1]
 
       startPoints.push({
         time: left.timestamp.getTime(),
@@ -120,17 +68,15 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
 
     return startPoints
-  }, [repairedStages])
-  console.log('stageTransitions', stageTransitions)
-  console.log('repairedStages', repairedStages)
+  }, [sleepStageData])
 
   const chartData = useMemo<SleepStageGraphData>(() => {
     let i = 0
     const stageInstances: SleepStageGraphDatum[] = []
 
-    while(i < repairedStages.length - 1) {
-      const left = repairedStages[i]
-      const right = repairedStages[i + 1]
+    while(i < sleepStageData.length - 1) {
+      const left = sleepStageData[i]
+      const right = sleepStageData[i + 1]
 
       stageInstances.push({
         startTime: left.timestamp.getTime(),
@@ -143,7 +89,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
 
     return stageInstances
-  }, [repairedStages])
+  }, [sleepStageData])
 
   const xDomain = useMemo(() => {
     const min = Math.min(...chartData.map(({ startTime }) => startTime))
@@ -181,10 +127,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
       yTicks: presentStageYValues.sort()
     }
   }, [getYValue, presentStages])
-
-  console.log('yDomain', yDomain)
-  console.log('yTicks', yTicks)
-  console.log('xTicks', xTicks)
 
   return (
    <ResponsiveContainer width='100%' height='100%'>

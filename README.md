@@ -45,3 +45,5 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 - Can we get heart rate data from the raw database export?
 - There are 58k sleep stage records mapped -> undefined, why?
 - If you change the date-range and the selected session is no longer in that range, what should happen?
+- Breakdown pie chart hover, see time in each stage in tooltip
+- Add close button in session info to close selected session
