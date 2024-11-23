@@ -1,6 +1,6 @@
 import { PillowSleepData } from 'data/useSleepData'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { SleepGraph2DDataResponse } from 'modules/graph/hooks/useSleepGraph2DData'
+import { SleepMetric } from 'modules/ChartControls'
+import { SleepGraph2DDataResponse } from 'modules/MetricLineChart/hooks/useSleepGraph2DData'
 import { Dispatch, SetStateAction } from 'react'
 import { RawSleepSessionSounds, RawSleepSessionStages } from 'data/useRawSleepData/types'
 

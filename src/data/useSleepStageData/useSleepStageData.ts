@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { SleepSessionStage, SleepStage } from 'data/useSleepData'
 import { v4 as uuid } from 'uuid'
 import dayjs from 'dayjs'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { SleepMetric } from 'modules/ChartControls'
 import { SleepStageDataProps, SleepStageDataResponse, SleepStageTransitionLineData } from './types'
 
 export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDataResponse => {

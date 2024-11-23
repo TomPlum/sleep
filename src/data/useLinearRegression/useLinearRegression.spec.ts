@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { useLinearRegression } from 'data/useLinearRegression/useLinearRegression'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { SleepSessionGraph2DData } from 'modules/graph/components/SleepSessionsGraph2D'
+import { SleepMetric } from 'modules/ChartControls'
+import { SleepSessionGraph2DData } from 'modules/MetricLineChart'
 import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types'
 import { SleepMood } from 'data/useSleepData'
 

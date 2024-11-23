@@ -1,5 +1,5 @@
 import { RawSleepData } from './types'
-import { useDataWorker } from 'modules/worker'
+import { useDataWorker } from 'modules/DataWorker'
 import { useCallback, useMemo } from 'react'
 import { PillowSleepSession, SleepMood } from 'data/useSleepData'
 import dayjs from 'dayjs'

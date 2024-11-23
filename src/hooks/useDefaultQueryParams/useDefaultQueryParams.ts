@@ -1,6 +1,6 @@
 import { SetStateAction, useCallback, useEffect, useState } from 'react'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { PageRoutes } from 'routes.ts'
+import { SleepMetric } from 'modules/ChartControls'
+import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { DefaultQueryParamsProps } from './types'
 

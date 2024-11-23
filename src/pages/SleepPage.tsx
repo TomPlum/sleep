@@ -1,14 +1,14 @@
 import styles from './SleepPage.module.scss'
 import {
   SleepSessionsGraph2D
-} from 'modules/graph/components/SleepSessionsGraph2D'
+} from 'modules/MetricLineChart'
 import { useSleepContext } from 'context'
-import { GraphControls } from 'modules/controls/GraphControls'
-import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
+import { GraphControls } from 'modules/ChartControls'
+import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
+import { SleepMetric } from 'modules/ChartControls'
+import { StackedGraphPlaceholder } from 'components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
-import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
+import { SleepSessionInfo } from 'modules/SleepStageBreakdownChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 
 export const SleepPage = () => {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useCallback } from 'react'
 import { GetPillowDataProps } from 'data/usePillowData/types'
-import { readFile } from 'modules/worker/utility'
+import { readFile } from 'modules/DataWorker/utility'
 
 export const usePillowData = ({ type }: GetPillowDataProps) => {
   const read = useCallback(async () => {

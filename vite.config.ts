@@ -30,8 +30,8 @@ export default defineConfig(({ mode }) => ({
       }
     },
     setupFiles: [
-      '@vitest/web-worker',
-      './src/test/setupTests.ts'
+      '@vitest/web-DataWorker',
+      './src/test/setupTests'
     ],
     threads: 5,
     coverage: {

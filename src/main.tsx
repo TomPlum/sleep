@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from './data/queryClient'
 import './i18n'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import SleepApp from 'SleepApp.tsx'
+import SleepApp from 'SleepApp'
 import { SleepPage } from 'pages/SleepPage'
 import { NotFoundPage } from 'pages/NotFoundPage'
 import { ConfigProvider, theme } from 'antd'
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   }
 ])
 
-// TODO: Can we add strict mode back in with the worker?
+// TODO: Can we add strict mode back in with the DataWorker?
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <ConfigProvider
