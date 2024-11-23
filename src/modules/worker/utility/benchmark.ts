@@ -1,3 +1,5 @@
+import { formatTimeElapsed } from 'data/utils/formatTimeElapsed'
+
 export class Benchmark {
   private _start: Date | undefined
   private _end: Date | undefined
@@ -17,13 +19,6 @@ export class Benchmark {
 
     const timeDelta = this._end.getTime() - this._start.getTime()
 
-    if (timeDelta < 1000) {
-      return `${timeDelta}ms`
-    }
-
-    const ms = timeDelta % 1000
-    const s = Math.floor(timeDelta / 1000)
-
-    return `${s}s ${ms}ms`
+    return formatTimeElapsed({ time: timeDelta })
   }
 }

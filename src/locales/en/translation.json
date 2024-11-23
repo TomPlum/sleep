@@ -43,7 +43,8 @@
       "sleep-stage-breakdown": {
         "tooltip": {
           "stage": "Stage",
-          "duration": "Time"
+          "duration": "Duration",
+          "timestamp": "Time"
         }
       }
     },

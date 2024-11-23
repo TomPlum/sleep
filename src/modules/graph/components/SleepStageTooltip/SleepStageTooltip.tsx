@@ -7,12 +7,13 @@ import { getSleepMetricDisplayName } from 'modules/graph/utils/getSleepMetricDis
 import { SleepStageAreaDatum } from 'modules/graph/hooks/useSleepStageAreas'
 import { getSleepStageFromYValue } from 'modules/graph/utils/getSleepStageYValue'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
+import { formatTimeElapsed } from 'data/utils/formatTimeElapsed'
 
 export const SleepStageTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-stage-breakdown.tooltip' })
 
   const data = payload?.[0]?.payload as SleepStageAreaDatum
-
+console.log('data', data)
   if (active && data) {
     const sleepMetric = getSleepStageFromYValue(data.y)
 
@@ -33,6 +34,18 @@ export const SleepStageTooltip = ({ active, payload }: TooltipProps<number, stri
         <div className={styles.section}>
           <Typography className={styles.label}>
             {t('duration')}
+          </Typography>
+
+          {data.duration && (
+            <Typography className={styles.value}>
+              {formatTimeElapsed({ time: data.duration, showMs: false })}
+            </Typography>
+          )}
+        </div>
+
+        <div className={styles.section}>
+          <Typography className={styles.label}>
+            {t('timestamp')}
           </Typography>
 
           {data.time && (

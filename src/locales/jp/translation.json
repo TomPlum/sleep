@@ -43,7 +43,8 @@
       "sleep-stage-breakdown": {
         "tooltip": {
           "stage": "ステージ",
-          "duration": "時間"
+          "duration": "期間",
+          "timestamp": "時間"
         }
       }
     },
