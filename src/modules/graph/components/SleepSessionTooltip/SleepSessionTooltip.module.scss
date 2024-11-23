@@ -45,9 +45,13 @@
 
   .label {
     color: #e0e0e0;
+    margin-bottom: -4px;
+    font-size: 0.8em;
   }
 
   .value {
     color: white;
+    margin: 0;
+    font-weight: bold;
   }
 }
