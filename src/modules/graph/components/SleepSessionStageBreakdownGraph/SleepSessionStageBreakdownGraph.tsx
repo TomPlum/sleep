@@ -12,7 +12,7 @@ import {
 } from 'recharts'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import {
-  SleepSessionStageBreakdownGraphProps,
+  SleepSessionStageBreakdownGraphProps, SleepSessionStageGraphYAxisMeta,
   SleepStageGraphData,
   SleepStageGraphDatum,
   Y_DOMAIN_OFFSET
@@ -74,7 +74,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     })
   }, [xDomain])
 
-  const { yDomain, yTicks } = useMemo<{ yDomain: number[], yTicks: number[] }>(() => {
+  const { yDomain, yTicks } = useMemo<SleepSessionStageGraphYAxisMeta>(() => {
     const presentStageYValues = presentStages.map(([stage]) => {
       return getSleepStageYValue(stage as SleepStage)
     })
