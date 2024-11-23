@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 export const ShowAllButton = () => {
   const { setDateRange } = useDateSelection()
   const { sleepData, graphData2d, rangeStart, rangeEnd } = useSleepContext()
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-ChartControls.show-all' })
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.show-all' })
 
   const isShowingAll = useMemo<boolean>(() => {
     if (graphData2d && sleepData) {

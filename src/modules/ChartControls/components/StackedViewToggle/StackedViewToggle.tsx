@@ -7,7 +7,7 @@ import { PageRoutes } from 'routes'
 
 export const StackedViewToggle = () => {
   const { updateQueryParam, removeQueryParam } = useQueryParams()
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-ChartControls.stacked' })
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.stacked' })
   const { stackedView, setStackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
 
   const handleToggle = useCallback((checked: boolean) => {

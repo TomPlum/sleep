@@ -10,7 +10,7 @@ import { useQueryParams } from 'hooks/useQueryParams'
 export const MetricButton = ({ metric, onMouseOver, onMouseOut, className }: MetricButtonProps) => {
   const { updateQueryParam } = useQueryParams()
   const { setStackedMetrics } = useSleepContext()
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-ChartControls.metric-config.checkbox' })
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
 
   const handleButtonClick = useCallback(() => {
     setStackedMetrics((existing: SleepMetric[]) => {

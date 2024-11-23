@@ -13,7 +13,7 @@ import classNames from 'classnames'
 
 export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-ChartControls.metric-config.checkbox' })
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
   const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
 
   const handleCheckboxChange = useCallback((e: CheckboxChangeEvent) => {
