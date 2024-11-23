@@ -13,7 +13,7 @@ export const SleepStageTooltip = ({ active, payload }: TooltipProps<number, stri
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-stage-breakdown.tooltip' })
 
   const data = payload?.[0]?.payload as SleepStageAreaDatum
-console.log('data', data)
+
   if (active && data) {
     const sleepMetric = getSleepStageFromYValue(data.y)
 

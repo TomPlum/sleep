@@ -130,6 +130,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            data={data}
            stroke='none'
            fillOpacity={1}
+           activeDot={false}
            type='linearClosed'
            isAnimationActive={false}
          />
