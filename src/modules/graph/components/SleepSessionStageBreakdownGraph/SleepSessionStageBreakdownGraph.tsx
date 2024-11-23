@@ -66,9 +66,9 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
     return generateTicks({
       start: dayjs(start).startOf('hour').toDate(),
-      end: dayjs(end).startOf('hour').toDate(),
-      interval: 1,
-      unit: 'hours'
+      end: dayjs(end).endOf('hour').toDate(),
+      interval: 30,
+      unit: 'minutes'
     }).map((date) => {
       return date.getTime()
     })
