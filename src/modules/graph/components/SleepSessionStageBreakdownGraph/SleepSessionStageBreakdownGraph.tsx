@@ -26,6 +26,7 @@ import { LegendItem } from 'modules/graph/components/LegendItem'
 import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 import { useSleepStageData } from 'data/useSleepStageData'
 import _ from 'lodash'
+import { generateTicks } from 'modules/graph/utils/generateTicks'
 
 const yDomainOffset = 0.3
 
@@ -101,18 +102,14 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
   const xTicks = useMemo(() => {
     const [start, end] = xDomain
 
-    const startTime = dayjs(start).startOf('hour')
-    const endTime = dayjs(end).endOf('hour')
-
-    const hours: number[] = []
-    let current = startTime
-
-    while (current.isBefore(endTime) || current.isSame(endTime)) {
-      hours.push(current.toDate().getTime())
-      current = current.add(30, 'minutes')
-    }
-
-    return hours
+    return generateTicks({
+      start: dayjs(start).startOf('hour').toDate(),
+      end: dayjs(end).startOf('hour').toDate(),
+      interval: 1,
+      unit: 'hours'
+    }).map((date) => {
+      return date.getTime()
+    })
   }, [xDomain])
 
   const { yDomain, yTicks } = useMemo<{ yDomain: number[], yTicks: number[] }>(() => {
@@ -161,11 +158,40 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
        {_.range(0, sleepStageData.length - 2 + 1, 1)
          .map((i: number) => sleepStageData.slice(i, i + 2))
          .map(([left, right]: SleepSessionStage[]) => {
+           const horizontalEdge = generateTicks({
+             start: left.timestamp,
+             end: right.timestamp,
+             unit: 'minute',
+             interval: 1
+           })
+
+           const horizontalEdgeInnerPoints = horizontalEdge.slice(0, horizontalEdge.length - 2)
+           const yTopValue = getYValue(left.stage) + yDomainOffset
+           const yBottomValue = getYValue(left.stage) - yDomainOffset
+
+           const topEdge = horizontalEdgeInnerPoints.map((xTime) => ({
+             time: xTime,
+             y: yTopValue
+           }))
+
+           const bottomEdge = horizontalEdgeInnerPoints.map((xTime) => ({
+             time: xTime,
+             y: yBottomValue
+           }))
+
            const data = [
-             { time: left.timestamp.getTime(), y: getYValue(left.stage) - yDomainOffset },
-             { time: left.timestamp.getTime(), y: getYValue(left.stage) + yDomainOffset },
-             { time: right.timestamp.getTime(), y: getYValue(right.stage) + yDomainOffset },
-             { time: right.timestamp.getTime(), y: getYValue(right.stage) - yDomainOffset },
+             // Top left corner
+             { time: left.timestamp.getTime(), y: yTopValue },
+             // Top edge points
+             ...topEdge,
+             // Top right corner
+             { time: right.timestamp.getTime(), y: yTopValue },
+             // Bottom right corner
+             { time: right.timestamp.getTime(), y: yBottomValue },
+             // Bottom edge points
+             ...bottomEdge,
+             // Bottom left corner
+             { time: left.timestamp.getTime(), y: yBottomValue }
            ]
 
            const id = `sleep-stage-instance-${left.stage}-${left.timestamp.getTime()}-${right.timestamp.getTime()}`
