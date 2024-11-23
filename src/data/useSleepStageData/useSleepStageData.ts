@@ -3,7 +3,7 @@ import { SleepSessionStage, SleepStage } from 'data/useSleepData'
 import { v4 as uuid } from 'uuid'
 import dayjs from 'dayjs'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { SleepStageDataProps, SleepStageDataResponse } from './types'
+import { SleepStageDataProps, SleepStageDataResponse, SleepStageTransitionLineData } from './types'
 
 export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDataResponse => {
   const sortedStages = useMemo(() => {
@@ -62,9 +62,32 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
     })
   }, [stageCounts])
 
+  const stageTransitions = useMemo<SleepStageTransitionLineData>(() => {
+    // Start at the end of the first sleep stage block
+    let i = 1
+    const startPoints = []
+
+    while(i < sleepStageData.length - 1) {
+      const left = sleepStageData[i]
+      const right = sleepStageData[i + 1]
+
+      startPoints.push({
+        time: left.timestamp.getTime(),
+        stage: left.stage,
+        nextStage: right.stage
+      })
+
+      // Skip to the start of the next sleep stage block
+      i += 2
+    }
+
+    return startPoints
+  }, [sleepStageData])
+
   return {
     sleepStageData,
     stageCounts,
-    presentStages
+    presentStages,
+    stageTransitions
   }
 }

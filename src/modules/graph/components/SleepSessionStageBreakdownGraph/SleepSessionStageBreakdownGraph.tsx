@@ -15,7 +15,7 @@ import {
   SleepSessionStageBreakdownGraphProps,
   SleepStageGraphData,
   SleepStageGraphDatum,
-  SleepStageTransitionLineData, Y_DOMAIN_OFFSET
+  Y_DOMAIN_OFFSET
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
 import { useMemo } from 'react'
 import dayjs from 'dayjs'
@@ -31,30 +31,8 @@ import { useSleepStagesAreas } from 'modules/graph/hooks/useSleepStageAreas'
 
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
-  const { sleepStageData, presentStages } = useSleepStageData({ stages })
+  const { sleepStageData, presentStages, stageTransitions } = useSleepStageData({ stages })
   const { sleepStageAreaData } = useSleepStagesAreas({ sleepStageData })
-
-  const stageTransitions = useMemo<SleepStageTransitionLineData>(() => {
-    // Start at the end of the first sleep stage block
-    let i = 1
-    const startPoints = []
-
-    while(i < sleepStageData.length - 1) {
-      const left = sleepStageData[i]
-      const right = sleepStageData[i + 1]
-
-      startPoints.push({
-        time: left.timestamp.getTime(),
-        stage: left.stage,
-        nextStage: right.stage
-      })
-
-      // Skip to the start of the next sleep stage block
-      i += 2
-    }
-
-    return startPoints
-  }, [sleepStageData])
 
   const chartData = useMemo<SleepStageGraphData>(() => {
     let i = 0
@@ -110,6 +88,10 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
     }
   }, [presentStages])
 
+  if (sleepStageAreaData.length === 0 || sleepStageData.length === 0 || stageTransitions.length === 0) {
+    return null
+  }
+
   return (
    <ResponsiveContainer width='100%' height='100%'>
      <ComposedChart>
@@ -149,6 +131,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            stroke='none'
            fillOpacity={1}
            type='linearClosed'
+           isAnimationActive={false}
          />
        ))}
 
@@ -190,9 +173,13 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
          return (
            <Line
-             type='monotone'
-             key={`stage-start-${time}`}
+             dot={false}
              dataKey='y'
+             type='monotone'
+             strokeWidth={3}
+             key={`stage-start-${time}`}
+             stroke={`url(#${time.toString()})`}
+             id={`stage-transition-${time}-from-${stage}-to-${nextStage}`}
              data={[
                { y: y0 + (isNextStageBelow ? Y_DOMAIN_OFFSET : -Y_DOMAIN_OFFSET), time },
                { y: y1 + (isNextStageBelow ? -Y_DOMAIN_OFFSET : Y_DOMAIN_OFFSET), time },
@@ -200,10 +187,6 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
                // We need a third point off-center so the line is no longer straight
                { y: y1, time: time + 100 }
              ]}
-             stroke={`url(#${time.toString()})`}
-             id={`stage-start-${time}`}
-             strokeWidth={3}
-             dot={false}
            />
          )
        })}
