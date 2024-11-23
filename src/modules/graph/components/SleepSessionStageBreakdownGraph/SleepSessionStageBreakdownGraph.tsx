@@ -15,40 +15,24 @@ import {
   SleepSessionStageBreakdownGraphProps,
   SleepStageGraphData,
   SleepStageGraphDatum,
-  SleepStageTransitionLineData
+  SleepStageTransitionLineData, Y_DOMAIN_OFFSET
 } from 'modules/graph/components/SleepSessionStageBreakdownGraph/types'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import dayjs from 'dayjs'
-import { SleepSessionStage, SleepStage } from 'data/useSleepData'
+import { SleepStage } from 'data/useSleepData'
 import styles from './SleepSessionStageBreakdownGraph.module.scss'
 import { getMetricColour } from 'modules/graph/hooks/useGraphStyles'
 import { LegendItem } from 'modules/graph/components/LegendItem'
 import { SleepStageTooltip } from 'modules/graph/components/SleepStageTooltip'
 import { useSleepStageData } from 'data/useSleepStageData'
-import _ from 'lodash'
 import { generateTicks } from 'modules/graph/utils/generateTicks'
+import { getSleepStageYValue } from 'modules/graph/utils/getSleepStageYValue'
+import { useSleepStagesAreas } from 'modules/graph/hooks/useSleepStageAreas'
 
-const yDomainOffset = 0.3
 
 export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const { sleepStageData, presentStages } = useSleepStageData({ stages })
-
-  const getYValue = useCallback((stage: SleepStage) => {
-    switch (stage) {
-      case SleepMetric.AWAKE_TIME: {
-        return 3
-      }
-      case SleepMetric.REM_SLEEP: {
-        return 2
-      }
-      case SleepMetric.LIGHT_SLEEP: {
-        return 1
-      }
-      case SleepMetric.DEEP_SLEEP: {
-        return 0
-      }
-    }
-  }, [])
+  const { sleepStageAreaData } = useSleepStagesAreas({ sleepStageData })
 
   const stageTransitions = useMemo<SleepStageTransitionLineData>(() => {
     // Start at the end of the first sleep stage block
@@ -114,7 +98,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
   const { yDomain, yTicks } = useMemo<{ yDomain: number[], yTicks: number[] }>(() => {
     const presentStageYValues = presentStages.map(([stage]) => {
-      return getYValue(stage as SleepStage)
+      return getSleepStageYValue(stage as SleepStage)
     })
 
     const domainUpperBound = Math.max(...presentStageYValues)
@@ -124,7 +108,7 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
       yDomain: [domainLowerBound, domainUpperBound],
       yTicks: presentStageYValues.sort()
     }
-  }, [getYValue, presentStages])
+  }, [presentStages])
 
   return (
    <ResponsiveContainer width='100%' height='100%'>
@@ -155,59 +139,19 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          stroke='rgba(255, 255, 255, 0.4)'
        />
 
-       {_.range(0, sleepStageData.length - 2 + 1, 1)
-         .map((i: number) => sleepStageData.slice(i, i + 2))
-         .map(([left, right]: SleepSessionStage[]) => {
-           const horizontalEdge = generateTicks({
-             start: left.timestamp,
-             end: right.timestamp,
-             unit: 'minute',
-             interval: 1
-           })
-
-           const horizontalEdgeInnerPoints = horizontalEdge.slice(0, horizontalEdge.length - 2)
-           const yTopValue = getYValue(left.stage) + yDomainOffset
-           const yBottomValue = getYValue(left.stage) - yDomainOffset
-
-           const topEdge = horizontalEdgeInnerPoints.map((xTime) => ({
-             time: xTime,
-             y: yTopValue
-           }))
-
-           const bottomEdge = horizontalEdgeInnerPoints.map((xTime) => ({
-             time: xTime,
-             y: yBottomValue
-           }))
-
-           const data = [
-             // Top left corner
-             { time: left.timestamp.getTime(), y: yTopValue },
-             // Top edge points
-             ...topEdge,
-             // Top right corner
-             { time: right.timestamp.getTime(), y: yTopValue },
-             // Bottom right corner
-             { time: right.timestamp.getTime(), y: yBottomValue },
-             // Bottom edge points
-             ...bottomEdge,
-             // Bottom left corner
-             { time: left.timestamp.getTime(), y: yBottomValue }
-           ]
-
-           const id = `sleep-stage-instance-${left.stage}-${left.timestamp.getTime()}-${right.timestamp.getTime()}`
-
-           return (
-             <Area
-               id={id}
-               key={id}
-               dataKey='y'
-               stroke='none'
-               data={data}
-               fillOpacity={1}
-               type='linearClosed'
-               fill={getMetricColour(left.stage)}
-             />
-           )
+       {sleepStageAreaData.map(({ id, data, fill }) => {
+         return (
+           <Area
+             id={id}
+             key={id}
+             dataKey='y'
+             fill={fill}
+             data={data}
+             stroke='none'
+             fillOpacity={1}
+             type='linearClosed'
+           />
+         )
          })
        }
 
@@ -222,8 +166,8 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
 
        <defs>
          {stageTransitions.map(({ stage, nextStage, time }) => {
-           const y0 = getYValue(stage)
-           const y1 = getYValue(nextStage)
+           const y0 = getSleepStageYValue(stage)
+           const y1 = getSleepStageYValue(nextStage)
            const isNextStageBelow = y1 < y0
            const onValue = 1
            const gradientY1 = isNextStageBelow ? 0 : onValue
@@ -239,8 +183,8 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
        </defs>
 
        {stageTransitions.map(({ stage, nextStage, time }) => {
-         const y0 = getYValue(stage)
-         const y1 = getYValue(nextStage)
+         const y0 = getSleepStageYValue(stage)
+         const y1 = getSleepStageYValue(nextStage)
          const isNextStageBelow = y1 < y0
 
          return (
@@ -249,8 +193,8 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
              key={`stage-start-${time}`}
              dataKey='y'
              data={[
-               { y: y0 + (isNextStageBelow ? yDomainOffset : -yDomainOffset), time },
-               { y: y1 + (isNextStageBelow ? -yDomainOffset : yDomainOffset), time },
+               { y: y0 + (isNextStageBelow ? Y_DOMAIN_OFFSET : -Y_DOMAIN_OFFSET), time },
+               { y: y1 + (isNextStageBelow ? -Y_DOMAIN_OFFSET : Y_DOMAIN_OFFSET), time },
                // https://stackoverflow.com/a/21639059
                // We need a third point off-center so the line is no longer straight
                { y: y1, time: time + 100 }

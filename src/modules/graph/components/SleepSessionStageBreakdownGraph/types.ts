@@ -62,3 +62,15 @@ export interface SleepSessionStageBreakdownGraphProps {
    */
   sounds: SleepSessionSound[]
 }
+
+/**
+ * Since the sleep stage breakdown graph has
+ * a y-axis with a domain of [0, 4] and the
+ * stage instances are represented by rectangular
+ * areas, this value provides a consistent offset
+ * both above and below the stage midpoint to give
+ * the area its height.
+ *
+ * For example,
+ */
+export const Y_DOMAIN_OFFSET = 0.3
