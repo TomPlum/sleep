@@ -17,3 +17,23 @@ export const getSleepStageYValue = (stage: SleepStage) => {
     }
   }
 }
+
+export const getSleepStageFromYValue = (value: number): SleepStage => {
+  switch (Math.round(value)) {
+    case 3: {
+      return SleepMetric.AWAKE_TIME
+    }
+    case 2: {
+      return SleepMetric.REM_SLEEP
+    }
+    case 1: {
+      return SleepMetric.LIGHT_SLEEP
+    }
+    case 0: {
+      return SleepMetric.DEEP_SLEEP
+    }
+    default: {
+      throw new Error(`Invalid SleepMetric Y-Value ${value}`)
+    }
+  }
+}

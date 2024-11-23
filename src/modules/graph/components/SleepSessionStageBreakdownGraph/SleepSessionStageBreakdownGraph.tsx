@@ -139,21 +139,18 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
          stroke='rgba(255, 255, 255, 0.4)'
        />
 
-       {sleepStageAreaData.map(({ id, data, fill }) => {
-         return (
-           <Area
-             id={id}
-             key={id}
-             dataKey='y'
-             fill={fill}
-             data={data}
-             stroke='none'
-             fillOpacity={1}
-             type='linearClosed'
-           />
-         )
-         })
-       }
+       {sleepStageAreaData.map(({ id, data, fill }) => (
+         <Area
+           id={id}
+           key={id}
+           dataKey='y'
+           fill={fill}
+           data={data}
+           stroke='none'
+           fillOpacity={1}
+           type='linearClosed'
+         />
+       ))}
 
        {sounds.map(sound => (
          <ReferenceLine
@@ -173,10 +170,14 @@ export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSession
            const gradientY1 = isNextStageBelow ? 0 : onValue
            const gradientY2 = isNextStageBelow ? onValue : 0
 
+           const id = `stage-transition-gradient-${time}-${stage}-to-${nextStage}`
+           const stopId1 = `gradient-stop-${time}-$${stage}-0`
+           const stopId2 = `gradient-stop-${time}-$${nextStage}-100`
+
            return (
-             <linearGradient key={time + stage} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2}>
-               <stop key={time + stage} stopColor={getMetricColour(stage)} offset={'0%'} />
-               <stop key={time + nextStage} stopColor={getMetricColour(nextStage)} offset={'100%'} />
+             <linearGradient key={id} id={time.toString()} x1={0} y1={gradientY1} x2={0} y2={gradientY2}>
+               <stop key={stopId1} stopColor={getMetricColour(stage)} offset={'0%'} />
+               <stop key={stopId2} stopColor={getMetricColour(nextStage)} offset={'100%'} />
              </linearGradient>
            )
          })}
