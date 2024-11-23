@@ -5,8 +5,9 @@ import { useMemo } from 'react'
 import { SleepMetric } from 'modules/controls/MetricConfiguration'
 import { useTranslation } from 'react-i18next'
 import { SleepSessionBreakdownInfoProps } from 'modules/graph/components/SleepSessionBreakdownInfo/types'
+import { CloseOutlined } from '@ant-design/icons'
 
-export const SleepSessionBreakdownInfo = ({ session }: SleepSessionBreakdownInfoProps) => {
+export const SleepSessionBreakdownInfo = ({ session, onClose }: SleepSessionBreakdownInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-session-info' })
 
   const pieData = useMemo<DurationBreakdownPieData | undefined>(() => {
@@ -29,6 +30,11 @@ export const SleepSessionBreakdownInfo = ({ session }: SleepSessionBreakdownInfo
 
   return (
     <div className={styles.info}>
+      <CloseOutlined
+        onClick={onClose}
+        className={styles.close}
+      />
+
       <p className={styles.text}>
         {startTime.format('ddd Do MMM YYYY')}
       </p>

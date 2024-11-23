@@ -2,4 +2,5 @@ import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessions
 
 export interface SleepSessionBreakdownInfoProps {
   session: SleepSessionGraph2DDatum
+  onClose: () => void
 }

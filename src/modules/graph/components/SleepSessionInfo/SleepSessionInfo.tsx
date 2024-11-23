@@ -1,7 +1,7 @@
 import { SleepSessionStageBreakdownGraph } from 'modules/graph/components/SleepSessionStageBreakdownGraph'
 import styles from './SleepSessionInfo.module.scss'
 import { useSleepContext } from 'context'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepSessionGraph2DDatum } from 'modules/graph/components/SleepSessionsGraph2D'
 import { SleepSessionBreakdownInfo } from 'modules/graph/components/SleepSessionBreakdownInfo'
@@ -11,6 +11,10 @@ export const SleepSessionInfo = () => {
   const { graphData2d, sleepStageData, sleepSoundData, selectedSession: id } = useSleepContext()
 
   const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
+
+  const handleClose = useCallback(() => {
+    setSelectedSession(undefined)
+  }, [])
 
   useEffect(() => {
     if (queryParams.selected) {
@@ -34,7 +38,10 @@ export const SleepSessionInfo = () => {
         sounds={sleepSoundData[selectedSession.id]}
       />
 
-     <SleepSessionBreakdownInfo session={selectedSession} />
+     <SleepSessionBreakdownInfo
+       onClose={handleClose}
+       session={selectedSession}
+     />
     </div>
   )
 }
