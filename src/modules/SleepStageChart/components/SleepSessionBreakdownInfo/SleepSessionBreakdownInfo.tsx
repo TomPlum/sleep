@@ -3,9 +3,9 @@ import { SleepStagePieChart } from 'modules/SleepStageChart/components/SleepStag
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
 import { SleepSessionBreakdownInfoProps } from 'modules/SleepStageChart/components/SleepSessionBreakdownInfo/types'
-import { CloseOutlined } from '@ant-design/icons'
+import { CloseOutlined, SoundTwoTone } from '@ant-design/icons'
 
-export const SleepSessionBreakdownInfo = ({ session, onClose }: SleepSessionBreakdownInfoProps) => {
+export const SleepSessionBreakdownInfo = ({ session, sounds, soundsEnabled, onToggleSounds, onClose }: SleepSessionBreakdownInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-session-info' })
   
   const startTime = dayjs(session.date)
@@ -35,6 +35,20 @@ export const SleepSessionBreakdownInfo = ({ session, onClose }: SleepSessionBrea
       {session && (
         <div className={styles.pieContainer}>
           <SleepStagePieChart sessionData={session} />
+
+          {sounds.length > 0 && (
+            <div className={styles.sounds}>
+              <SoundTwoTone
+                className={styles.soundIcon}
+                onClick={() => onToggleSounds(!soundsEnabled)}
+                twoToneColor={soundsEnabled ? '#41c3ec' : 'gray'}
+              />
+
+              <span className={styles.soundQuantity} style={{ opacity: soundsEnabled ? 1 : 0.6 }}>
+              {sounds.length}
+            </span>
+            </div>
+          )}
         </div>
       )}
     </div>

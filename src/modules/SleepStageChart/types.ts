@@ -38,6 +38,13 @@ export interface SleepSessionStageBreakdownGraphProps {
    * recorded during the selected session.
    */
   sounds: SleepSessionSound[]
+
+  /**
+   * Whether the vertical lines showing when
+   * sounds were recorded during the session
+   * should be rendered.
+   */
+  showSounds: boolean
 }
 
 export interface SleepSessionStageGraphYAxisMeta {

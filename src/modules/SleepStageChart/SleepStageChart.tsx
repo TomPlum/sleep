@@ -30,7 +30,7 @@ import { getSleepStageYValue } from 'modules/SleepStageChart/utils/getSleepStage
 import { useSleepStagesAreas } from 'modules/SleepStageChart/hooks/useSleepStageAreas'
 
 
-export const SleepStageChart = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
+export const SleepStageChart = ({ stages, sounds, showSounds }: SleepSessionStageBreakdownGraphProps) => {
   const { sleepStageData, presentStages, stageTransitions } = useSleepStageData({ stages })
   const { sleepStageAreaData } = useSleepStagesAreas({ sleepStageData })
 
@@ -136,7 +136,7 @@ export const SleepStageChart = ({ stages, sounds }: SleepSessionStageBreakdownGr
          />
        ))}
 
-       {sounds.map(sound => (
+       {showSounds && sounds.map(sound => (
          <ReferenceLine
            key={sound.id}
            x={sound.timestamp.getTime()}

@@ -24,4 +24,21 @@
   .text {
     margin: 0;
   }
+
+  .sounds {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .soundIcon {
+      color: #41c3ec;
+      font-size: 2em;
+    }
+
+    .soundQuantity {
+      font-family: "Nunito", sans-serif;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  }
 }

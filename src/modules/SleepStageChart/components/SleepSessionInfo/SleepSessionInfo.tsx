@@ -10,6 +10,7 @@ export const SleepSessionInfo = () => {
   const { queryParams } = useQueryParams()
   const { graphData2d, sleepStageData, sleepSoundData, selectedSession: id } = useSleepContext()
 
+  const [soundsEnabled, setSoundsEnabled] = useState(true)
   const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
 
   const handleClose = useCallback(() => {
@@ -34,6 +35,7 @@ export const SleepSessionInfo = () => {
   return (
     <div className={styles.container}>
       <SleepStageChart
+        showSounds={soundsEnabled}
         stages={sleepStageData[selectedSession.id]}
         sounds={sleepSoundData[selectedSession.id]}
       />
@@ -41,6 +43,9 @@ export const SleepSessionInfo = () => {
      <SleepSessionBreakdownInfo
        onClose={handleClose}
        session={selectedSession}
+       soundsEnabled={soundsEnabled}
+       onToggleSounds={setSoundsEnabled}
+       sounds={sleepSoundData[selectedSession.id]}
      />
     </div>
   )
