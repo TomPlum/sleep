@@ -16,21 +16,21 @@ import {
   SleepStageGraphData,
   SleepStageGraphDatum,
   Y_DOMAIN_OFFSET
-} from 'modules/SleepStageBreakdownChart/types'
+} from 'modules/SleepStageChart/types'
 import { useMemo } from 'react'
 import dayjs from 'dayjs'
 import { SleepStage } from 'data/useSleepData'
-import styles from './SleepSessionStageBreakdownGraph.module.scss'
+import styles from './SleepStageChart.module.scss'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
-import { LegendItem } from 'modules/SleepStageBreakdownChart/components/LegendItem'
-import { SleepStageTooltip } from 'modules/SleepStageBreakdownChart/components/SleepStageTooltip'
+import { LegendItem } from 'modules/SleepStageChart/components/LegendItem'
+import { SleepStageTooltip } from 'modules/SleepStageChart/components/SleepStageTooltip'
 import { useSleepStageData } from 'data/useSleepStageData'
 import { generateTicks } from 'utils/generateTicks'
-import { getSleepStageYValue } from 'modules/SleepStageBreakdownChart/utils/getSleepStageYValue'
-import { useSleepStagesAreas } from 'modules/SleepStageBreakdownChart/hooks/useSleepStageAreas'
+import { getSleepStageYValue } from 'modules/SleepStageChart/utils/getSleepStageYValue'
+import { useSleepStagesAreas } from 'modules/SleepStageChart/hooks/useSleepStageAreas'
 
 
-export const SleepSessionStageBreakdownGraph = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
+export const SleepStageChart = ({ stages, sounds }: SleepSessionStageBreakdownGraphProps) => {
   const { sleepStageData, presentStages, stageTransitions } = useSleepStageData({ stages })
   const { sleepStageAreaData } = useSleepStagesAreas({ sleepStageData })
 

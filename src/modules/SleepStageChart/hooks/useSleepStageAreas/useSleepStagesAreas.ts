@@ -2,11 +2,11 @@ import { useMemo } from 'react'
 import _ from 'lodash'
 import { SleepSessionStage } from 'data/useSleepData'
 import { generateTicks } from 'utils/generateTicks'
-import { getSleepStageYValue } from 'modules/SleepStageBreakdownChart/utils/getSleepStageYValue'
-import { Y_DOMAIN_OFFSET } from 'modules/SleepStageBreakdownChart/types'
+import { getSleepStageYValue } from 'modules/SleepStageChart/utils/getSleepStageYValue'
+import { Y_DOMAIN_OFFSET } from 'modules/SleepStageChart/types'
 import {
   GetSleepStageAreaDataProps, SleepStageAreaInstance, SleepStageAreaInstanceData
-} from 'modules/SleepStageBreakdownChart/hooks/useSleepStageAreas/types'
+} from 'modules/SleepStageChart/hooks/useSleepStageAreas/types'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
 import dayjs from 'dayjs'
 

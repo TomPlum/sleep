@@ -1,10 +1,10 @@
 import styles from './SleepSessionBreakdownInfo.module.scss'
-import { DurationBreakdownPie, DurationBreakdownPieData } from 'modules/SleepStageBreakdownChart/components/DurationBreakdownPie'
+import { SleepStagePieChart, DurationBreakdownPieData } from 'modules/SleepStageChart/components/SleepStagePieChart'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { useTranslation } from 'react-i18next'
-import { SleepSessionBreakdownInfoProps } from 'modules/SleepStageBreakdownChart/components/SleepSessionBreakdownInfo/types'
+import { SleepSessionBreakdownInfoProps } from 'modules/SleepStageChart/components/SleepSessionBreakdownInfo/types'
 import { CloseOutlined } from '@ant-design/icons'
 
 export const SleepSessionBreakdownInfo = ({ session, onClose }: SleepSessionBreakdownInfoProps) => {
@@ -49,7 +49,7 @@ export const SleepSessionBreakdownInfo = ({ session, onClose }: SleepSessionBrea
 
       {pieData && (
         <div className={styles.pieContainer}>
-          <DurationBreakdownPie data={pieData}/>
+          <SleepStagePieChart data={pieData}/>
         </div>
       )}
     </div>

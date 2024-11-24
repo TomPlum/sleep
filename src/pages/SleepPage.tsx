@@ -8,7 +8,7 @@ import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/ChartControls'
 import { StackedGraphPlaceholder } from 'components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
-import { SleepSessionInfo } from 'modules/SleepStageBreakdownChart/components/SleepSessionInfo'
+import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 
 export const SleepPage = () => {

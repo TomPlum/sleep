@@ -1,10 +1,10 @@
-import { SleepSessionStageBreakdownGraph } from 'modules/SleepStageBreakdownChart'
+import { SleepStageChart } from 'modules/SleepStageChart'
 import styles from './SleepSessionInfo.module.scss'
 import { useSleepContext } from 'context'
 import { useCallback, useEffect, useState } from 'react'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'
-import { SleepSessionBreakdownInfo } from 'modules/SleepStageBreakdownChart/components/SleepSessionBreakdownInfo'
+import { SleepSessionBreakdownInfo } from 'modules/SleepStageChart/components/SleepSessionBreakdownInfo'
 
 export const SleepSessionInfo = () => {
   const { queryParams } = useQueryParams()
@@ -33,7 +33,7 @@ export const SleepSessionInfo = () => {
 
   return (
     <div className={styles.container}>
-      <SleepSessionStageBreakdownGraph
+      <SleepStageChart
         stages={sleepStageData[selectedSession.id]}
         sounds={sleepSoundData[selectedSession.id]}
       />

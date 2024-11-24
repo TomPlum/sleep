@@ -3,7 +3,7 @@ import {
   BreakdownPieLabelProps,
   DurationBreakdownPieDataRaw,
   DurationBreakdownPieProps
-} from 'modules/SleepStageBreakdownChart/components/DurationBreakdownPie/types'
+} from 'modules/SleepStageChart/components/SleepStagePieChart/types'
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
@@ -25,7 +25,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
   )
 }
 
-export const DurationBreakdownPie = ({ data }: DurationBreakdownPieProps) => {
+export const SleepStagePieChart = ({ data }: DurationBreakdownPieProps) => {
   const pieData = useMemo<DurationBreakdownPieDataRaw[]>(() => ([
     { name: 'Deep', value: data.deep, metric: SleepMetric.DEEP_SLEEP },
     { name: 'Light', value: data.light, metric: SleepMetric.LIGHT_SLEEP },
