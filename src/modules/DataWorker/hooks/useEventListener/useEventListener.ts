@@ -14,6 +14,10 @@ export const useEventListener = () => {
     const onMessage = (event: MessageEvent<DataWorkerResponse>) => {
       setState(current => [...current, event.data.status])
       setStatus(event.data.status)
+
+      if (event.data.status.code === DataWorkerStatusCode.DONE) {
+        dataWorker.terminate()
+      }
     }
 
     dataWorker.addEventListener('message', onMessage)
