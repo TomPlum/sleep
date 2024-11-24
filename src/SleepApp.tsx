@@ -6,11 +6,11 @@ import { ChartConfigContextProvider } from 'context/ChartConfigContext'
 const SleepApp = () => {
   return (
     <div className={styles.container}>
-      <SleepContextProvider>
-        <ChartConfigContextProvider>
+      <ChartConfigContextProvider>
+        <SleepContextProvider>
           <Outlet/>
-        </ChartConfigContextProvider>
-      </SleepContextProvider>
+        </SleepContextProvider>
+      </ChartConfigContextProvider>
     </div>
   )
 }

@@ -11,7 +11,6 @@ export const SleepStagePieTooltip = ({ active, payload }: TooltipProps<number, s
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.sleep-stage-breakdown.tooltip' })
 
   const data = payload?.[0]?.payload as SleepStagePieDatum
-  console.log(data)
 
   if (active && data) {
     return (

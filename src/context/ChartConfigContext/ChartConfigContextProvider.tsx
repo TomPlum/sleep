@@ -1,17 +1,18 @@
 import { ChartConfigContext } from './ChartConfigContext'
-import { PropsWithChildren, useMemo } from 'react'
+import { PropsWithChildren, useEffect, useMemo } from 'react'
 import { ChartConfigContextBag } from './types'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
 import { SleepMetric } from 'modules/ChartControls'
-import { useSleepContext } from 'context/SleepContext'
+import { useTranslation } from 'react-i18next'
 
 export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
-  const { sleepData, isSleepDataLoading } = useSleepContext()
+  const { i18n } = useTranslation()
 
   const {
     currentMetric,
     rangeStart,
     rangeEnd,
+    language,
     stackedView,
     stackedMetrics,
     setCurrentMetric,
@@ -19,10 +20,13 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     setRangeStart,
     setStackedView,
     handleSetStackedMetrics
-  } = useDefaultQueryParams({
-    loading: isSleepDataLoading,
-    sleepData
-  })
+  } = useDefaultQueryParams()
+
+  useEffect(() => {
+    i18n.changeLanguage(language).then(() => {
+      console.debug(`Set locale [${language}] from query parameters.`)
+    })
+  }, [i18n, language])
 
   const value = useMemo<ChartConfigContextBag>(() => ({
     rangeStart: rangeStart ?? new Date(),
