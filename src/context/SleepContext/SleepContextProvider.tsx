@@ -1,7 +1,6 @@
 import { SleepContext } from 'context/SleepContext/SleepContext'
 import { PropsWithChildren, useEffect, useMemo } from 'react'
 import { SleepContextBag } from 'context/SleepContext/types'
-import { SleepMetric } from 'modules/ChartControls'
 import { useSleepGraph2DData } from 'modules/MetricLineChart/hooks/useSleepGraph2DData'
 import { useTranslation } from 'react-i18next'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
@@ -12,17 +11,9 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { sleepData, sessionStages, sessionSounds, loading } = useRawSleepData()
 
   const {
-    currentMetric,
     rangeStart,
     rangeEnd,
     language,
-    stackedView,
-    stackedMetrics,
-    setCurrentMetric,
-    setRangeEnd,
-    setRangeStart,
-    setStackedView,
-    handleSetStackedMetrics,
     selected
   } = useDefaultQueryParams({
     loading,
@@ -53,20 +44,10 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
     sleepSoundData: sessionSounds,
     isSleepDataLoading: loading,
     selectedSession: selected,
-    rangeStart: rangeStart ?? new Date(),
-    setRangeStart,
-    rangeEnd: rangeEnd ?? new Date(),
-    setRangeEnd,
-    sleepMetric: currentMetric ?? SleepMetric.QUALITY,
-    setSleepMetric: setCurrentMetric,
     graphData2d: sleepGraphData2d ?? { data: [], isSleepDataLoading : true },
     activeSessions: sleepGraphData2d?.data?.length ?? 0,
-    improvementDate,
-    stackedView: stackedView ?? false,
-    setStackedView,
-    stackedMetrics: stackedMetrics ?? [],
-    setStackedMetrics: handleSetStackedMetrics
-  }), [currentMetric, handleSetStackedMetrics, improvementDate, loading, rangeEnd, rangeStart, selected, sessionSounds, sessionStages, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, sleepData, sleepGraphData2d, stackedMetrics, stackedView])
+    improvementDate
+  }), [improvementDate, loading, selected, sessionSounds, sessionStages, sleepData, sleepGraphData2d])
 
   return (
     <SleepContext.Provider value={value}>

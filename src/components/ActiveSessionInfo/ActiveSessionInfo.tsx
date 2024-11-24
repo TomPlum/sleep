@@ -7,10 +7,13 @@ import { ActiveSessionInfoProps } from './types'
 import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
 import { PILLOW_DATABASE_FILE_NAME } from 'modules/DataWorker'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
-  const { activeSessions, sleepData, stackedMetrics, stackedView, sleepMetric } = useSleepContext()
+
+  const { activeSessions, sleepData } = useSleepContext()
+  const { stackedMetrics, stackedView, sleepMetric } = useChartConfigContext()
 
   const { currentMetricColour: firstColour } = useGraphStyles({
     metric: stackedView ? stackedMetrics[0] : sleepMetric

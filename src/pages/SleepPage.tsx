@@ -10,14 +10,11 @@ import { StackedGraphPlaceholder } from 'components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const SleepPage = () => {
-  const {
-    stackedView,
-    sleepMetric,
-    stackedMetrics,
-    isSleepDataLoading
-  } = useSleepContext()
+  const { isSleepDataLoading } = useSleepContext()
+  const { stackedView, sleepMetric, stackedMetrics } = useChartConfigContext()
 
   useDynamicFavicon()
 

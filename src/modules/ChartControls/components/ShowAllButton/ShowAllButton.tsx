@@ -4,10 +4,12 @@ import { useSleepContext } from 'context/SleepContext'
 import { useDateSelection } from 'modules/ChartControls/hooks/useDateSelection'
 import { useCallback, useMemo } from 'react'
 import dayjs from 'dayjs'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const ShowAllButton = () => {
   const { setDateRange } = useDateSelection()
-  const { sleepData, graphData2d, rangeStart, rangeEnd } = useSleepContext()
+  const { sleepData, graphData2d } = useSleepContext()
+  const { rangeStart, rangeEnd } = useChartConfigContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.show-all' })
 
   const isShowingAll = useMemo<boolean>(() => {

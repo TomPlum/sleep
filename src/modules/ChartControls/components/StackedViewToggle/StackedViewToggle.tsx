@@ -1,14 +1,14 @@
 import { Switch } from 'antd'
-import { useSleepContext } from 'context/SleepContext'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { PageRoutes } from 'routes'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const StackedViewToggle = () => {
   const { updateQueryParam, removeQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.stacked' })
-  const { stackedView, setStackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
+  const { stackedView, setStackedView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
 
   const handleToggle = useCallback((checked: boolean) => {
     const newStackedValue = !stackedView

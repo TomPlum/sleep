@@ -26,6 +26,7 @@ import { useGraphHeight } from 'modules/MetricLineChart/hooks/useGraphHeight'
 import { useCallback } from 'react'
 import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const SleepSessionsGraph2D = ({
    metric,
@@ -39,13 +40,9 @@ export const SleepSessionsGraph2D = ({
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
 
-  const {
-    stackedView,
-    stackedMetrics,
-    improvementDate,
-    graphData2d: { data, earliestSession, latestSession }
-  } = useSleepContext()
-
+  const { stackedView, stackedMetrics } = useChartConfigContext()
+  const { improvementDate, graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
+  
   const {
     regressionLineData,
     regressionDataKey,

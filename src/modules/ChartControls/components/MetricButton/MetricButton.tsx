@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next'
-import { useSleepContext } from 'context/SleepContext'
 import { useCallback } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { Button } from 'antd'
 import { MetricButtonProps } from 'modules/ChartControls/components/MetricButton/types'
 import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const MetricButton = ({ metric, onMouseOver, onMouseOut, className }: MetricButtonProps) => {
   const { updateQueryParam } = useQueryParams()
-  const { setStackedMetrics } = useSleepContext()
+  const { setStackedMetrics } = useChartConfigContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
 
   const handleButtonClick = useCallback(() => {

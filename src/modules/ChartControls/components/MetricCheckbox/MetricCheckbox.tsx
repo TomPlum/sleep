@@ -5,16 +5,16 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { MetricCheckboxProps } from 'modules/ChartControls/components/MetricCheckbox/types'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
-import { useSleepContext } from 'context/SleepContext'
 import { PageRoutes } from 'routes'
 import { SleepMetric } from 'modules/ChartControls'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
-  const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useSleepContext()
+  const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
 
   const handleCheckboxChange = useCallback((e: CheckboxChangeEvent) => {
     if (e.target.checked) {

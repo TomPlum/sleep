@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { useSleepContext } from 'context/SleepContext'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const useDynamicFavicon = () => {
-  const { sleepMetric } = useSleepContext()
+  const { sleepMetric } = useChartConfigContext()
 
   useEffect(() => {
     const existingFavicon = document.querySelector('link[rel=\'icon\']') as HTMLLinkElement
