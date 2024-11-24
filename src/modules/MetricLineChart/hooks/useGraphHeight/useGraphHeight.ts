@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { GraphHeight } from 'modules/MetricLineChart/hooks/useGraphHeight/types'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 
 export const useGraphHeight = (): GraphHeight => {
   const { selectedSession } = useSleepContext()

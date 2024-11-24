@@ -1,4 +1,4 @@
-import { SleepContextProvider } from 'context/SleepContextProvider'
+import { SleepContextProvider } from 'context/SleepContext/SleepContextProvider.tsx'
 import styles from './SleepApp.module.scss'
 import { Outlet } from 'react-router-dom'
 

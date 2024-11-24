@@ -1,6 +1,6 @@
-import { SleepContext } from 'context/SleepContext'
+import { SleepContext } from 'context/SleepContext/SleepContext'
 import { PropsWithChildren, useEffect, useMemo } from 'react'
-import { SleepContextBag } from 'context/types'
+import { SleepContextBag } from 'context/SleepContext/types'
 import { SleepMetric } from 'modules/ChartControls'
 import { useSleepGraph2DData } from 'modules/MetricLineChart/hooks/useSleepGraph2DData'
 import { useTranslation } from 'react-i18next'

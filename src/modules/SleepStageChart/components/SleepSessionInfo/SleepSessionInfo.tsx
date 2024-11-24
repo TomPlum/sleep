@@ -1,6 +1,6 @@
 import { SleepStageChart } from 'modules/SleepStageChart'
 import styles from './SleepSessionInfo.module.scss'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import { useCallback, useEffect, useState } from 'react'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'

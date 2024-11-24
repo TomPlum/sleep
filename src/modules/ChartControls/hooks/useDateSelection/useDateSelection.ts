@@ -1,5 +1,5 @@
 import { DateSelectionResponse } from 'modules/ChartControls/hooks/useDateSelection/types'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import { useCallback } from 'react'
 import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'

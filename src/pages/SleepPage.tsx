@@ -2,7 +2,7 @@ import styles from './SleepPage.module.scss'
 import {
   SleepSessionsGraph2D
 } from 'modules/MetricLineChart'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import { GraphControls } from 'modules/ChartControls'
 import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
 import { SleepMetric } from 'modules/ChartControls'

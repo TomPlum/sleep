@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import {
   TypicalSessionArea,
   TypicalSessionProps,

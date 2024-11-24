@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import { useCallback } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { Button } from 'antd'

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { GraphStylesProps, GraphStylesResponse } from 'modules/MetricLineChart/hooks/useGraphStyles/types'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 
 export const getMetricColour = (metric: SleepMetric): string => {
   switch (metric) {

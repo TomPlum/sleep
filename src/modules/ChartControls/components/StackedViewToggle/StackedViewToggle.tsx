@@ -1,5 +1,5 @@
 import { Switch } from 'antd'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryParams } from 'hooks/useQueryParams'

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 
 export const useDynamicFavicon = () => {
   const { sleepMetric } = useSleepContext()

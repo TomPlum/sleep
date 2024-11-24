@@ -14,7 +14,7 @@ import { CustomYAxisTick } from 'modules/MetricLineChart/components/CustomYAxisT
 import { SleepSessionTooltip } from 'modules/MetricLineChart/components/SleepSessionTooltip'
 import { CustomXAxisTick } from 'modules/MetricLineChart/components/CustomXAxisTick'
 import { useGraphStyles } from 'modules/MetricLineChart/hooks/useGraphStyles'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import styles from './SleepSessionGraph2D.module.scss'
 import { useTypicalSession } from 'modules/MetricLineChart/hooks/useTypicalSession/useTypicalSession'
 import { useTranslation } from 'react-i18next'

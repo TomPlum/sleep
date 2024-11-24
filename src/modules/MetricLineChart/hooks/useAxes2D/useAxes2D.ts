@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 import { Axes2D, Axes2DProps } from 'modules/MetricLineChart/hooks/useAxes2D/types'
 
 export const useAxes2D = ({ metric }: Axes2DProps): Axes2D => {
