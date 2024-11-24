@@ -1,12 +1,14 @@
-import { Cell, Pie, PieChart } from 'recharts'
+import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 import {
   BreakdownPieLabelProps,
-  DurationBreakdownPieDataRaw,
-  DurationBreakdownPieProps
+  DurationBreakdownPieProps,
+  SleepStagePieDatum
 } from 'modules/SleepStageChart/components/SleepStagePieChart/types'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
+import { SleepStage } from 'data/useSleepData'
+import { SleepStagePieTooltip } from 'modules/SleepStageChart/components/SleepStagePieTooltip'
 
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }: BreakdownPieLabelProps) => {
@@ -25,16 +27,30 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
   )
 }
 
-export const SleepStagePieChart = ({ data }: DurationBreakdownPieProps) => {
-  const pieData = useMemo<DurationBreakdownPieDataRaw[]>(() => ([
-    { name: 'Deep', value: data.deep, metric: SleepMetric.DEEP_SLEEP },
-    { name: 'Light', value: data.light, metric: SleepMetric.LIGHT_SLEEP },
-    { name: 'REM', value: data.rem, metric: SleepMetric.REM_SLEEP },
-    { name: 'Awake', value: data.awake, metric: SleepMetric.AWAKE_TIME }
-  ]), [data])
+export const SleepStagePieChart = ({ sessionData }: DurationBreakdownPieProps) => {
+  console.log('sessionData', sessionData)
+  const percentageOf = useCallback((stage: SleepStage) => {
+    return (sessionData[stage] / 100) * sessionData.duration
+  }, [sessionData])
+
+  const pieData = useMemo<SleepStagePieDatum[]>(() => {
+    const percentages = {
+      awake: sessionData[SleepMetric.AWAKE_TIME],
+      deep: sessionData[SleepMetric.DEEP_SLEEP],
+      light: sessionData[SleepMetric.LIGHT_SLEEP],
+      rem: sessionData[SleepMetric.REM_SLEEP]
+    }
+
+    return ([
+      { name: 'Deep', value: percentages.deep, metric: SleepMetric.DEEP_SLEEP, duration: percentageOf(SleepMetric.DEEP_SLEEP) },
+      { name: 'Light', value: percentages.light, metric: SleepMetric.LIGHT_SLEEP, duration: percentageOf(SleepMetric.LIGHT_SLEEP) },
+      { name: 'REM', value: percentages.rem, metric: SleepMetric.REM_SLEEP, duration: percentageOf(SleepMetric.REM_SLEEP) },
+      { name: 'Awake', value: percentages.awake, metric: SleepMetric.AWAKE_TIME, duration: percentageOf(SleepMetric.AWAKE_TIME) }
+    ])
+  }, [percentageOf, sessionData])
 
   return (
-    <PieChart width={200} height={200}>
+    <PieChart width={200} height={200} data={pieData}>
       <Pie
         cx='50%'
         cy='50%'
@@ -51,6 +67,8 @@ export const SleepStagePieChart = ({ data }: DurationBreakdownPieProps) => {
           <Cell key={`cell-${index}`} fill={getMetricColour(metric)} />
         ))}
       </Pie>
+
+      <Tooltip content={SleepStagePieTooltip} />
     </PieChart>
   )
 }

@@ -1,36 +1,7 @@
 import { SleepMetric } from 'modules/ChartControls'
+import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'
 
-export interface DurationBreakdownPieData {
-  /**
-   * The number of minutes that I was
-   * deemed to be awake by Pillow
-   * during the session.
-   */
-  awake: number
-
-  /**
-   * The number of minutes that I was
-   * deemed to be in light-sleep by
-   * Pillow during the session.
-   */
-  light: number
-
-  /**
-   * The number of minutes that I was
-   * deemed to be in deep-sleep by
-   * Pillow during the session.
-   */
-  deep: number
-
-  /**
-   * The number of minutes that I was
-   * deemed to be in REM (Rapid Eye Movement)
-   * sleep by Pillow during the session.
-   */
-  rem: number
-}
-
-export interface DurationBreakdownPieDataRaw {
+export interface SleepStagePieDatum {
   /**
    * The sleep metric that the
    * percentage represents.
@@ -48,10 +19,17 @@ export interface DurationBreakdownPieDataRaw {
    * of the session for the metric.
    */
   value: number
+
+  /**
+   * The total time, in minutes,
+   * of all instances of the current
+   * {@link metric} for the session.
+   */
+  duration: number
 }
 
 export interface DurationBreakdownPieProps {
-  data: DurationBreakdownPieData
+  sessionData: SleepSessionGraph2DDatum
 }
 
 export interface BreakdownPieLabelProps {
