@@ -3,7 +3,7 @@ import { ErrorBoundaryFallbackProps } from './types'
 import { useTranslation } from 'react-i18next'
 
 export const ErrorBoundaryFallback = ({ error }: ErrorBoundaryFallbackProps) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'sleep.error' })
+  const { t } = useTranslation('translation', { keyPrefix: 'error' })
 
   return (
     <div className={styles.wrapper}>
