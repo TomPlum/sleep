@@ -1,4 +1,5 @@
 import { SleepMetric } from 'modules/ChartControls'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export type QueryParams = Record<string, string>
 
@@ -18,8 +19,8 @@ export interface SleepQueryParams {
   start?: Date
   end?: Date
   lng?: string
-  stacked?: boolean
   selected?: number
+  view?: ChartView
 }
 
 export interface QueryParamsResponse {

@@ -8,12 +8,14 @@ import { SleepMetric } from 'modules/ChartControls'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
-  const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
+  const { sleepMetric, setSleepMetric, chartView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
 
+  const stackedView = chartView === ChartView.STACKED_METRICS
   const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
 
   const handleCheckboxChange = useCallback(() => {

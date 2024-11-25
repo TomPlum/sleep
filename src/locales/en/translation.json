@@ -53,9 +53,16 @@
         "all": "All",
         "default": "Recent"
       },
-      "stacked": {
-        "active": "Single",
-        "inactive": "Stacked"
+      "view": {
+        "single-metric": {
+          "label": "Single Metric"
+        },
+        "multiple-metrics": {
+          "label": "Compare Metrics"
+        },
+        "stacked-metrics": {
+          "label": "Stacked Metrics"
+        }
       },
       "metric-config": {
         "checkbox": {

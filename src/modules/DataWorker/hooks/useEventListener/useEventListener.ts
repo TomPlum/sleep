@@ -5,7 +5,7 @@ export const useEventListener = () => {
   const [status, setStatus] = useState<DataWorkerStatus>({
     percent: 0,
     code: DataWorkerStatusCode.NOT_STARTED,
-    payload: 'Sent message to startup web-DataWorker.'
+    payload: 'Sent message to startup web-worker.'
   })
 
   const [state, setState] = useState<DataWorkerStatus[]>([])
@@ -22,12 +22,12 @@ export const useEventListener = () => {
 
     dataWorker.addEventListener('message', onMessage)
 
-    console.debug('Starting web DataWorker to read Pillow database export...')
+    console.debug('Starting web worker to read Pillow database export...')
 
     setStatus({
       code: DataWorkerStatusCode.STARTING,
       percent: 0,
-      payload: 'Pillow raw database web-DataWorker initialised.'
+      payload: 'Pillow raw database web-worker initialised.'
     })
 
     return () => dataWorker.removeEventListener('message', onMessage)

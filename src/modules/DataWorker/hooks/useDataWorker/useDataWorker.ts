@@ -23,8 +23,8 @@ export const useDataWorker = (): UseDataWorkerResponse => {
 
     dataWorker.addEventListener('message', onMessage)
 
-    console.debug('Starting web DataWorker to read Pillow database export...')
-    dataWorker.postMessage('Starting DataWorker')
+    console.debug('Starting web worker to read Pillow database export...')
+    dataWorker.postMessage('Starting worker')
 
     return () => dataWorker.removeEventListener('message', onMessage)
   }, [])

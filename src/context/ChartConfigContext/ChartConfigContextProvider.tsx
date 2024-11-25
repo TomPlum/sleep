@@ -4,6 +4,7 @@ import { ChartConfigContextBag } from './types'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
 import { SleepMetric } from 'modules/ChartControls'
 import { useTranslation } from 'react-i18next'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
@@ -13,13 +14,13 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     rangeStart,
     rangeEnd,
     language,
-    stackedView,
     stackedMetrics,
     setCurrentMetric,
     setRangeEnd,
     setRangeStart,
-    setStackedView,
-    handleSetStackedMetrics
+    handleSetStackedMetrics,
+    chartView,
+    setChartView
   } = useDefaultQueryParams()
 
   useEffect(() => {
@@ -35,11 +36,11 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     setRangeEnd,
     sleepMetric: currentMetric ?? SleepMetric.QUALITY,
     setSleepMetric: setCurrentMetric,
-    stackedView: stackedView ?? false,
-    setStackedView,
     stackedMetrics: stackedMetrics ?? [],
-    setStackedMetrics: handleSetStackedMetrics
-  }), [currentMetric, handleSetStackedMetrics, rangeEnd, rangeStart, setCurrentMetric, setRangeEnd, setRangeStart, setStackedView, stackedMetrics, stackedView])
+    setStackedMetrics: handleSetStackedMetrics,
+    chartView: chartView ?? ChartView.SINGLE_METRIC,
+    setChartView
+  }), [chartView, currentMetric, handleSetStackedMetrics, rangeEnd, rangeStart, setChartView, setCurrentMetric, setRangeEnd, setRangeStart, stackedMetrics])
 
   return (
     <ChartConfigContext.Provider value={value}>

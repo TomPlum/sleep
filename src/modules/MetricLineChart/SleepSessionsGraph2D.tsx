@@ -3,7 +3,8 @@ import {
   Label,
   Line,
   LineChart,
-  ReferenceArea, ReferenceLine,
+  ReferenceArea,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -27,6 +28,7 @@ import { useCallback } from 'react'
 import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const SleepSessionsGraph2D = ({
    metric,
@@ -40,7 +42,7 @@ export const SleepSessionsGraph2D = ({
   const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
   const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
 
-  const { stackedView, stackedMetrics } = useChartConfigContext()
+  const { chartView, stackedMetrics } = useChartConfigContext()
   const { improvementDate, graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
   
   const {
@@ -158,7 +160,7 @@ export const SleepSessionsGraph2D = ({
             x={improvementDate?.getTime()}
             id='started_making_improvements_date_line'
           >
-            {(!stackedView || isTopGraph) && (
+            {(chartView === ChartView.SINGLE_METRIC || isTopGraph) && (
               <Label
                 dx={-8}
                 dy={-100}
@@ -187,7 +189,7 @@ export const SleepSessionsGraph2D = ({
           interval={xAxisInterval}
           allowDataOverflow={true}
           stroke='rgb(255, 255, 255)'
-          hide={stackedView && isTopGraph}
+          hide={chartView === ChartView.STACKED_METRICS && isTopGraph}
           domain={[earliestSession.getTime(), latestSession.getTime()]}
         />
 
@@ -200,12 +202,12 @@ export const SleepSessionsGraph2D = ({
           orientation='left'
           tick={CustomYAxisTick}
           stroke='rgb(255, 255, 255)'
-          padding={{ bottom: 40, top: !stackedView ? 80 : stackedView && isTopGraph ? 80 : 0 }} // TODO: Move to graph styles or axes hook
+          padding={{ bottom: 40, top: chartView !== ChartView.STACKED_METRICS ? 80 : chartView === ChartView.STACKED_METRICS && isTopGraph ? 80 : 0 }} // TODO: Move to graph styles or axes hook
           tickFormatter={value => `${value}%`}
         />
 
         <Tooltip
-          content={(!stackedView || !isTopGraph) ? SleepSessionTooltip : <div />}
+          content={(chartView === ChartView.SINGLE_METRIC || !isTopGraph) ? SleepSessionTooltip : <div />}
         />
 
         <CartesianGrid

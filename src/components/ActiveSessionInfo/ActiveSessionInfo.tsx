@@ -8,12 +8,14 @@ import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
 import { PILLOW_DATABASE_FILE_NAME } from 'modules/DataWorker'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { activeSessions, sleepData } = useSleepContext()
-  const { stackedMetrics, stackedView, sleepMetric } = useChartConfigContext()
+  const { stackedMetrics, chartView, sleepMetric } = useChartConfigContext()
+  const stackedView = chartView === ChartView.STACKED_METRICS
 
   const { currentMetricColour: firstColour } = useGraphStyles({
     metric: stackedView ? stackedMetrics[0] : sleepMetric

@@ -2,20 +2,21 @@ import { SetStateAction, useCallback, useEffect, useState } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const useDefaultQueryParams = () => {
-  const { queryParams: { start, end, metric, lng, stacked, metrics, selected }, updateQueryParam } = useQueryParams()
+  const { queryParams: { start, end, metric, lng, metrics, selected, view }, updateQueryParam } = useQueryParams()
 
   const [language, setLanguage] = useState(lng)
   const [rangeEnd, setRangeEnd] = useState(end)
   const [rangeStart, setRangeStart] = useState(start)
   const [currentMetric, setCurrentMetric] = useState(metric)
 
-  const [stackedView, setStackedView] = useState(stacked)
+  const [chartView, setChartView] = useState(view)
   const [stackedMetrics, setStackedMetrics] = useState(metrics)
 
   useEffect(() => {
-    if (!rangeStart || !rangeEnd || !currentMetric || !lng || stackedView === undefined || !stackedMetrics) {
+    if (!rangeStart || !rangeEnd || !currentMetric || !lng || !stackedMetrics || !chartView) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
@@ -28,23 +29,23 @@ export const useDefaultQueryParams = () => {
       const selectedLanguage = language ?? 'en'
       setLanguage(selectedLanguage)
 
-      const selectedStackedView = stackedView !== undefined ? stackedView : false
-      setStackedView(selectedStackedView)
-
       const selectedStackedMetrics = stackedMetrics ?? []
       setStackedMetrics(selectedStackedMetrics)
+
+      const selectedChartView = chartView ?? ChartView.SINGLE_METRIC
+      setChartView(selectedChartView)
 
       const params: Record<string, string> = {
         metric: selectedMetric,
         start: selectedStart.getTime().toString(),
         end: selectedEnd.getTime().toString(),
         lng: selectedLanguage,
-        stacked: String(selectedStackedView)
+        view: selectedChartView
       }
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [currentMetric, language, lng, rangeEnd, rangeStart, stackedMetrics, stackedView, updateQueryParam])
+  }, [chartView, currentMetric, language, lng, rangeEnd, rangeStart, stackedMetrics, updateQueryParam])
 
   const handleSetStackedMetrics = useCallback((setState: SetStateAction<SleepMetric[]>) => {
     setStackedMetrics(existing => {
@@ -61,13 +62,13 @@ export const useDefaultQueryParams = () => {
     rangeStart,
     rangeEnd,
     currentMetric,
-    stackedView,
     stackedMetrics,
     setRangeStart,
     setRangeEnd,
     setCurrentMetric,
-    setStackedView,
     handleSetStackedMetrics,
-    selected
+    selected,
+    chartView,
+    setChartView
   }
 }
