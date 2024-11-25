@@ -80,11 +80,6 @@
     "title": "Something went wrong."
   },
   "loading": {
-    "title": {
-      "start": "Loading sleep",
-      "apnea": "apnea",
-      "app": "app data"
-    },
     "status": {
       "unknown": "Loading...",
       "starting": "Initialising web worker",

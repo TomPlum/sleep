@@ -78,5 +78,20 @@
   },
   "error": {
     "title": "何かが間違っていた"
+  },
+  "loading": {
+    "status": {
+      "unknown": "準備中...",
+      "starting": "ウェブワーカーの初期化",
+      "reading-file": "Pillowデータベースエクスポートファイルの読み込み",
+      "reading-tables": "関連するデータベーステーブルの読み込み",
+      "not-started": "ウェブワーカーの初期化待ち",
+      "extract-sound-data": "音のデータポイントの抽出",
+      "extract-stage-data": "睡眠段階のインスタンスの抽出",
+      "associate-session-data": "睡眠段階データとセッションの関連付け",
+      "finishing": "仕上げ",
+      "done": "完了",
+      "error": "Pillowデータベースの読み込み中にエラーが発生しました。"
+    }
   }
 }
