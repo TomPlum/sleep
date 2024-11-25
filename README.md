@@ -35,13 +35,10 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 # To Do
 
 - Select multiple sleep metric at once
-- Split SleepContext into two. Isolate configuration into its own context
-- Chrome performance?
 - Date parsing not working in Safari and breaks graph
-- Line chart x ticks wrong?
 - Update screenshots in README
 - Update session breakdown to include data like the ios app does
-- Plot the sound data points on the breakdown graph
 - Can we get heart rate data from the raw database export?
 - There are 58k sleep stage records mapped -> undefined, why?
 - If you change the date-range and the selected session is no longer in that range, what should happen?
+- Web worker makes about 800 cached resource requests while its loading

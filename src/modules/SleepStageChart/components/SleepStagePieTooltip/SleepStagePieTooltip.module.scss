@@ -1,0 +1,24 @@
+.tooltip {
+  width: 90px;
+  background-color: #1e1e1e;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  gap: 8px;
+  transition: all ease-in-out 1s;
+
+  .section {
+    .label {
+      color: #e0e0e0;
+      margin-bottom: -4px;
+      font-size: 0.8em;
+    }
+
+    .value {
+      color: white;
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+}

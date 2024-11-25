@@ -1,10 +1,9 @@
 import { SetStateAction, useCallback, useEffect, useState } from 'react'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { PageRoutes } from 'routes.ts'
+import { SleepMetric } from 'modules/ChartControls'
+import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
-import { DefaultQueryParamsProps } from './types'
 
-export const useDefaultQueryParams = ({ loading, sleepData }: DefaultQueryParamsProps) => {
+export const useDefaultQueryParams = () => {
   const { queryParams: { start, end, metric, lng, stacked, metrics, selected }, updateQueryParam } = useQueryParams()
 
   const [language, setLanguage] = useState(lng)
@@ -16,14 +15,14 @@ export const useDefaultQueryParams = ({ loading, sleepData }: DefaultQueryParams
   const [stackedMetrics, setStackedMetrics] = useState(metrics)
 
   useEffect(() => {
-    if (!loading && sleepData && (!rangeStart || !rangeEnd || !currentMetric || !lng || stackedView === undefined || !stackedMetrics)) {
+    if (!rangeStart || !rangeEnd || !currentMetric || !lng || stackedView === undefined || !stackedMetrics) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
-      const selectedStart = rangeStart ?? sleepData.earliestSession
+      const selectedStart = rangeStart ?? new Date()
       setRangeStart(selectedStart)
 
-      const selectedEnd = rangeEnd ?? sleepData.latestSession
+      const selectedEnd = rangeEnd ?? new Date()
       setRangeEnd(selectedEnd)
 
       const selectedLanguage = language ?? 'en'
@@ -45,7 +44,7 @@ export const useDefaultQueryParams = ({ loading, sleepData }: DefaultQueryParams
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [currentMetric, language, lng, loading, rangeEnd, rangeStart, sleepData, stackedMetrics, stackedView, updateQueryParam])
+  }, [currentMetric, language, lng, rangeEnd, rangeStart, stackedMetrics, stackedView, updateQueryParam])
 
   const handleSetStackedMetrics = useCallback((setState: SetStateAction<SleepMetric[]>) => {
     setStackedMetrics(existing => {

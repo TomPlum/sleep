@@ -6,7 +6,7 @@ import {
   SleepQueryParams,
   UpdateQueryParamsArgs
 } from 'hooks/useQueryParams/types'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
+import { SleepMetric } from 'modules/ChartControls'
 
 export const useQueryParams = (): QueryParamsResponse => {
   const navigate = useNavigate()

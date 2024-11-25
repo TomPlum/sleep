@@ -1,23 +1,20 @@
 import styles from './SleepPage.module.scss'
 import {
   SleepSessionsGraph2D
-} from 'modules/graph/components/SleepSessionsGraph2D'
-import { useSleepContext } from 'context'
-import { GraphControls } from 'modules/controls/GraphControls'
-import { ActiveSessionInfo } from 'modules/graph/components/ActiveSessionInfo'
-import { SleepMetric } from 'modules/controls/MetricConfiguration'
-import { StackedGraphPlaceholder } from 'modules/graph/components/StackedGraphPlaceholder'
+} from 'modules/MetricLineChart'
+import { useSleepContext } from 'context/SleepContext'
+import { GraphControls } from 'modules/ChartControls'
+import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
+import { SleepMetric } from 'modules/ChartControls'
+import { StackedGraphPlaceholder } from 'components/StackedGraphPlaceholder'
 import { DataLoading } from 'data/DataLoading'
-import { SleepSessionInfo } from 'modules/graph/components/SleepSessionInfo'
+import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
+import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const SleepPage = () => {
-  const {
-    stackedView,
-    sleepMetric,
-    stackedMetrics,
-    isSleepDataLoading
-  } = useSleepContext()
+  const { isSleepDataLoading } = useSleepContext()
+  const { stackedView, sleepMetric, stackedMetrics } = useChartConfigContext()
 
   useDynamicFavicon()
 

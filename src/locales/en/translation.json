@@ -43,7 +43,8 @@
       "sleep-stage-breakdown": {
         "tooltip": {
           "stage": "Stage",
-          "duration": "Duration"
+          "duration": "Duration",
+          "timestamp": "Time"
         }
       }
     },
@@ -75,12 +76,10 @@
     "message": "It looks like you’ve stumbled into the land of uncharted naps. Unfortunately, we don’t have any sleep data here… just an endless snooze.",
     "home-button": "Home"
   },
+  "error": {
+    "title": "Something went wrong."
+  },
   "loading": {
-    "title": {
-      "start": "Loading sleep",
-      "apnea": "apnea",
-      "app": "app data"
-    },
     "status": {
       "unknown": "Loading...",
       "starting": "Initialising web worker",

@@ -5,7 +5,7 @@ import {
   LinearRegressionResponse
 } from 'data/useLinearRegression/types'
 import dayjs from 'dayjs'
-import { useSleepContext } from 'context'
+import { useSleepContext } from 'context/SleepContext'
 
 export const useLinearRegression = ({ metric }: LinearRegressionProps): LinearRegressionResponse => {
   const { graphData2d } = useSleepContext()

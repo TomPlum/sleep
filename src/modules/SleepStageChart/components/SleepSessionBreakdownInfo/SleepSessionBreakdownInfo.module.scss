@@ -1,0 +1,44 @@
+.info {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px;
+  position: relative;
+  height: 100%;
+
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    color: #dad5d5;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      color: #f15151;
+    }
+  }
+
+  .text {
+    margin: 0;
+  }
+
+  .sounds {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .soundIcon {
+      color: #41c3ec;
+      font-size: 2em;
+    }
+
+    .soundQuantity {
+      font-family: "Nunito", sans-serif;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+  }
+}

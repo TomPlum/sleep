@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Progress, Spin } from 'antd'
 import classNames from 'classnames'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
-import { useEventListener, DataWorkerStatusCode } from 'modules/worker'
+import { useEventListener, DataWorkerStatusCode } from 'modules/DataWorker'
 
 export const DataLoading = () => {
   const { status } = useEventListener()
