@@ -1,8 +1,8 @@
-import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'
+import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 import { SleepSessionSound } from 'data/useSleepData'
 
 export interface SleepSessionBreakdownInfoProps {
-  session: SleepSessionGraph2DDatum
+  session: SleepMetricLineChartDatum
   sounds: SleepSessionSound[]
   soundsEnabled: boolean
   onToggleSounds: (enabled: boolean) => void

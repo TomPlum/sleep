@@ -1,5 +1,5 @@
 import { SleepMetric } from 'modules/ChartControls'
-import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'
+import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 
 export interface SleepStagePieDatum {
   /**
@@ -29,7 +29,7 @@ export interface SleepStagePieDatum {
 }
 
 export interface DurationBreakdownPieProps {
-  sessionData: SleepSessionGraph2DDatum
+  sessionData: SleepMetricLineChartDatum
 }
 
 export interface BreakdownPieLabelProps {

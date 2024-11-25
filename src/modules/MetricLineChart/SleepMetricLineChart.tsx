@@ -16,12 +16,12 @@ import { SleepSessionTooltip } from 'modules/MetricLineChart/components/SleepSes
 import { CustomXAxisTick } from 'modules/MetricLineChart/components/CustomXAxisTick'
 import { useGraphStyles } from 'modules/MetricLineChart/hooks/useGraphStyles'
 import { useSleepContext } from 'context/SleepContext'
-import styles from './SleepSessionGraph2D.module.scss'
+import styles from './SleepMetricLineChart.module.scss'
 import { useTypicalSession } from 'modules/MetricLineChart/hooks/useTypicalSession/useTypicalSession'
 import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/MetricLineChart/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/MetricLineChart/components/RegressionDeltaLabel'
-import { ANIMATION_DURATION, SleepSessionsGraph2DProps } from './types'
+import { ANIMATION_DURATION, SleepMetricLineChartProps } from './types'
 import { LineActiveDot } from 'modules/MetricLineChart/components/LineActiveDot'
 import { useGraphHeight } from 'modules/MetricLineChart/hooks/useGraphHeight'
 import { useCallback } from 'react'
@@ -30,10 +30,10 @@ import { useQueryParams } from 'hooks/useQueryParams'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
-export const SleepSessionsGraph2D = ({
+export const SleepMetricLineChart = ({
    metric,
    className
-}: SleepSessionsGraph2DProps) => {
+}: SleepMetricLineChartProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { height } = useGraphHeight()

@@ -3,7 +3,7 @@ import styles from './SleepSessionInfo.module.scss'
 import { useSleepContext } from 'context/SleepContext'
 import { useCallback, useEffect, useState } from 'react'
 import { useQueryParams } from 'hooks/useQueryParams'
-import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'
+import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 import { SleepSessionBreakdownInfo } from 'modules/SleepStageChart/components/SleepSessionBreakdownInfo'
 
 export const SleepSessionInfo = () => {
@@ -11,7 +11,7 @@ export const SleepSessionInfo = () => {
   const { graphData2d, sleepStageData, sleepSoundData, selectedSession: id } = useSleepContext()
 
   const [soundsEnabled, setSoundsEnabled] = useState(true)
-  const [selectedSession, setSelectedSession] = useState<SleepSessionGraph2DDatum>()
+  const [selectedSession, setSelectedSession] = useState<SleepMetricLineChartDatum>()
 
   const handleClose = useCallback(() => {
     setSelectedSession(undefined)

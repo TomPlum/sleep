@@ -1,1 +1,1 @@
-export * from './ChartViewSelector.tsx'
+export * from './ChartViewSelector'

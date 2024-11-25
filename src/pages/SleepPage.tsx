@@ -1,5 +1,5 @@
 import styles from './SleepPage.module.scss'
-import { SleepSessionsGraph2D } from 'modules/MetricLineChart'
+import { SleepMetricLineChart } from 'modules/MetricLineChart'
 import { useSleepContext } from 'context/SleepContext'
 import { GraphControls, SleepMetric } from 'modules/ChartControls'
 import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
@@ -32,7 +32,7 @@ export const SleepPage = () => {
         {chartView == ChartView.STACKED_METRICS && (
           <>
             {stackedMetrics.map((metric: SleepMetric) => (
-              <SleepSessionsGraph2D
+              <SleepMetricLineChart
                 metric={metric}
                 className={styles.graph}
                 key={`sleep-graph-2d-${metric}`}
@@ -51,7 +51,7 @@ export const SleepPage = () => {
         )}
 
         {chartView == ChartView.SINGLE_METRIC && (
-          <SleepSessionsGraph2D
+          <SleepMetricLineChart
             metric={sleepMetric}
             className={styles.graph}
           />
