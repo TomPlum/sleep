@@ -7,7 +7,17 @@ import { SleepStageDataProps, SleepStageDataResponse, SleepStageTransitionLineDa
 
 export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDataResponse => {
   const sortedStages = useMemo(() => {
-    return stages.sort((a, b) => {
+    const ids = new Set<string>()
+
+    const uniqueById = stages.filter(stage => {
+      if (ids.has(stage.id)) {
+        return false
+      }
+      ids.add(stage.id)
+      return true
+    })
+
+    return uniqueById.sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime()
     })
   }, [stages])
