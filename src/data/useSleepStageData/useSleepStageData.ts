@@ -24,6 +24,11 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
 
   const sleepStageData = useMemo<SleepSessionStage[]>(() => {
     let i = 0
+
+    // Some sleep stage records seem to be missing the ends
+    // of some of the instances. We're detecting any missing
+    // ones here and figuring it out by looking ahead at the
+    // start of the next stage and subtracting 1 second.
     const repairedStages: SleepSessionStage[] = []
 
     while(i < sortedStages.length - 1) {
@@ -31,6 +36,7 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
       const nextStage = sortedStages[i + 1]
 
       if (currentStage.stage === nextStage.stage) {
+        // If the stage matches then we have a valid pair, send it
         repairedStages.push(sortedStages[i])
         repairedStages.push(sortedStages[i + 1])
       } else {
@@ -45,6 +51,8 @@ export const useSleepStageData = ({ stages }: SleepStageDataProps): SleepStageDa
         })
       }
 
+      // The stages instance, once sorted chronologically, should
+      // be in pairs (the start and end of a given sleep stage).
       i += 2
     }
 

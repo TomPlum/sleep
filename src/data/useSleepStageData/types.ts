@@ -9,9 +9,32 @@ export interface SleepStageDataProps {
 }
 
 export interface SleepStageDataResponse {
+  /**
+   * A collection of metadata for all
+   * sleep stage instances in a given session.
+   */
   sleepStageData: SleepSessionStage[]
+
+  /**
+   * The total number of instances of each
+   * sleep stage in a given session.
+   */
   stageCounts: Record<SleepStage, number>
+
+  /**
+   * A collection of tuples for each of
+   * the unique sleep stage types that
+   * appear in a given session. Relevant because
+   * not all sleep sessions see all four stages.
+   */
   presentStages: [string, number][]
+
+  /**
+   * A collection of metadata representing the
+   * transition points between sleep stage instances
+   * in a session. This data is used to draw the
+   * vertical lines between stages.
+   */
   stageTransitions: SleepStageTransitionLineData
 }
 
