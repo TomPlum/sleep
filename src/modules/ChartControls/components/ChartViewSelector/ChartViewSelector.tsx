@@ -30,13 +30,6 @@ export const ChartViewSelector = () => {
         route: PageRoutes.SLEEP,
         key: 'metrics'
       })
-
-      updateQueryParam({
-        route: PageRoutes.SLEEP,
-        params: {
-          stacked: 'false'
-        }
-      })
     }
   }, [removeQueryParam, setChartView, setStackedMetrics, updateQueryParam])
 

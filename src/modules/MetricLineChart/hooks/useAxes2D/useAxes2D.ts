@@ -2,13 +2,13 @@ import { useMemo } from 'react'
 import { useSleepContext } from 'context/SleepContext'
 import { Axes2D, Axes2DProps } from 'modules/MetricLineChart/hooks/useAxes2D/types'
 
-export const useAxes2D = ({ metric }: Axes2DProps): Axes2D => {
+export const useAxes2D = ({ metrics }: Axes2DProps): Axes2D => {
   const { graphData2d: { data }, activeSessions } = useSleepContext()
 
   const { yDomain, yTicks } = useMemo(() => {
     if (data) {
-      const percentages = data.map(datum => {
-        return Number((datum[metric]).toFixed(0))
+      const percentages = data.flatMap(datum => {
+        return metrics.map(metric => Number((datum[metric]).toFixed(0)))
       })
 
       const smallest = Math.min(...percentages)
@@ -36,7 +36,7 @@ export const useAxes2D = ({ metric }: Axes2DProps): Axes2D => {
       yDomain: [],
       yTicks: []
     }
-  }, [data, metric])
+  }, [data, metrics])
 
   const xTicks = useMemo<number[]>(() => {
     if (data) {

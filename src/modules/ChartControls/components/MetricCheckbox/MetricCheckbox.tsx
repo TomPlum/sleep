@@ -16,13 +16,14 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { sleepMetric, setSleepMetric, chartView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
 
   const stackedView = chartView === ChartView.STACKED_METRICS
-  const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
+  const multipleMetrics = chartView === ChartView.MULTIPLE_METRICS
+  const checked = (stackedView || multipleMetrics) ? stackedMetrics.includes(metric) : sleepMetric === metric
 
   const handleCheckboxChange = useCallback(() => {
-    const newChecked = !checked
+    const isBoxNowChecked = !checked
 
-    if (newChecked) {
-      if (stackedView) {
+    if (isBoxNowChecked) {
+      if (stackedView || multipleMetrics) {
         if (stackedMetrics.length < 2) {
           setStackedMetrics((existing: SleepMetric[]) => {
             const newMetrics = [
@@ -51,7 +52,7 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
         })
       }
     } else {
-      if (stackedView) {
+      if (stackedView || multipleMetrics) {
         const newMetrics = stackedMetrics.filter(it => it !== metric)
 
         setStackedMetrics(newMetrics)
@@ -64,7 +65,7 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
         })
       }
     }
-  }, [checked, metric, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
+  }, [checked, metric, multipleMetrics, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
 
   return (
     <label className={styles.label}>

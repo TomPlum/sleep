@@ -50,7 +50,7 @@ export const SleepPage = () => {
           </>
         )}
 
-        {chartView == ChartView.SINGLE_METRIC && (
+        {chartView == ChartView.SINGLE_METRIC || chartView === ChartView.MULTIPLE_METRICS && (
           <SleepMetricLineChart
             metric={sleepMetric}
             className={styles.graph}

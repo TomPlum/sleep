@@ -1,7 +1,7 @@
 import { SleepMetric } from 'modules/ChartControls'
 
 export interface Axes2DProps {
-  metric: SleepMetric
+  metrics: SleepMetric[]
 }
 
 export interface Axes2D {

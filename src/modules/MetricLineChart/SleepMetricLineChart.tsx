@@ -17,18 +17,19 @@ import { CustomXAxisTick } from 'modules/MetricLineChart/components/CustomXAxisT
 import { useGraphStyles } from 'modules/MetricLineChart/hooks/useGraphStyles'
 import { useSleepContext } from 'context/SleepContext'
 import styles from './SleepMetricLineChart.module.scss'
-import { useTypicalSession } from 'modules/MetricLineChart/hooks/useTypicalSession/useTypicalSession'
+import { useTypicalSession } from 'modules/MetricLineChart/hooks/useTypicalSession'
 import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/MetricLineChart/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/MetricLineChart/components/RegressionDeltaLabel'
 import { ANIMATION_DURATION, SleepMetricLineChartProps } from './types'
 import { LineActiveDot } from 'modules/MetricLineChart/components/LineActiveDot'
 import { useGraphHeight } from 'modules/MetricLineChart/hooks/useGraphHeight'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
+import { SleepMetric } from 'modules/ChartControls'
 
 export const SleepMetricLineChart = ({
    metric,
@@ -38,11 +39,20 @@ export const SleepMetricLineChart = ({
 
   const { height } = useGraphHeight()
   const { updateQueryParam } = useQueryParams()
-  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metric })
-  const { typicalSleepSession , typicalSleepSessionFill } = useTypicalSession({ metric })
-  const { currentMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
-
   const { chartView, stackedMetrics } = useChartConfigContext()
+
+  const lineMetrics = useMemo(() => {
+    if (chartView == ChartView.SINGLE_METRIC) {
+      return [metric]
+    }
+
+    return stackedMetrics
+  }, [chartView, metric, stackedMetrics])
+
+  const { typicalSleepSessions } = useTypicalSession({ metrics: lineMetrics })
+  const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metrics: lineMetrics })
+  const { getMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
+
   const { improvementDate, graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
   
   const {
@@ -60,7 +70,6 @@ export const SleepMetricLineChart = ({
         selected: index.toString()
       }
     })
-
   }, [updateQueryParam])
 
   const isTopGraph = stackedMetrics.indexOf(metric) === 0
@@ -72,85 +81,93 @@ export const SleepMetricLineChart = ({
         margin={{ left: -55, bottom: -22 }}
         syncId='sleep_sessions_line_chart_2d'
       >
-        <Line
-          data={data}
-          type='monotone'
-          dataKey={metric}
-          activeDot={false}
-          id={`${metric}_line`}
-          animationDuration={500}
-          isAnimationActive={true}
-          strokeWidth={strokeWidth}
-          stroke={currentMetricColour}
-          animationEasing='ease-in-out'
-          className={styles.metricLine}
-          dot={{ fill: undefined, r: activeDotRadius }}
-          label={data => (
-            <LineActiveDot
-              data={data}
-              onClick={handleSelectSession}
-              radius={activeDotRadius - 3}
+        {lineMetrics.map((lineMetric: SleepMetric) => (
+          <Line
+            data={data}
+            type='monotone'
+            activeDot={false}
+            dataKey={lineMetric}
+            animationDuration={500}
+            isAnimationActive={true}
+            strokeWidth={strokeWidth}
+            id={`${lineMetric}_line`}
+            key={`${lineMetric}_line`}
+            animationEasing='ease-in-out'
+            className={styles.metricLine}
+            stroke={getMetricColour(lineMetric)}
+            dot={{ fill: undefined, r: activeDotRadius }}
+            label={data => (
+              <LineActiveDot
+                data={data}
+                onClick={handleSelectSession}
+                radius={activeDotRadius - 3}
+              />
+            )}
+          />
+        ))}
+
+        {chartView == ChartView.SINGLE_METRIC && (
+          <>
+            <Line
+              dot={false}
+              type='monotone'
+              isAnimationActive={true}
+              strokeWidth={strokeWidth}
+              stroke='rgb(255, 255, 255)'
+              dataKey={regressionDataKey}
+              animationEasing='ease-in-out'
+              id={`${metric}_regression_line`}
+              animationDuration={ANIMATION_DURATION}
+              data={regressionLineData.map(({ y, xDate }) => ({
+                xDate,
+                [metric]: y,
+              }))}
             />
-          )}
-        />
 
-        <Line
-          dot={false}
-          type='monotone'
-          isAnimationActive={true}
-          strokeWidth={strokeWidth}
-          stroke='rgb(255, 255, 255)'
-          dataKey={regressionDataKey}
-          animationEasing='ease-in-out'
-          id={`${metric}_regression_line`}
-          animationDuration={ANIMATION_DURATION}
-          data={regressionLineData.map(({ y, xDate }) => ({
-            xDate,
-            [metric]: y,
-          }))}
-        />
+            <Line
+              dot={false}
+              dataKey='y'
+              type='monotone'
+              strokeWidth={1}
+              strokeDasharray='10 15'
+              stroke='rgb(255, 255, 255)'
+              data={regressionLineDeltaHorizontal}
+              animationDuration={ANIMATION_DURATION}
+              id={`${metric}_regression_line_delta_h`}
+              label={props => <RegressionDeltaLabel {...props} regressionDelta={regressionDelta} />}
+            />
 
-        <Line
-          dot={false}
-          dataKey='y'
-          type='monotone'
-          strokeWidth={1}
-          strokeDasharray='10 15'
-          stroke='rgb(255, 255, 255)'
-          data={regressionLineDeltaHorizontal}
-          animationDuration={ANIMATION_DURATION}
-          id={`${metric}_regression_line_delta_h`}
-          label={props => <RegressionDeltaLabel {...props} regressionDelta={regressionDelta} />}
-        />
+            <Line
+              dot={false}
+              dataKey='y'
+              type='monotone'
+              strokeWidth={2}
+              strokeDasharray='10 15'
+              stroke='rgb(255, 255, 255)'
+              data={regressionLineDeltaVertical}
+              animationDuration={ANIMATION_DURATION}
+              id={`${metric}_regression_line_delta_v`}
+            />
+          </>
+        )}
 
-        <Line
-          dot={false}
-          dataKey='y'
-          type='monotone'
-          strokeWidth={2}
-          strokeDasharray='10 15'
-          stroke='rgb(255, 255, 255)'
-          data={regressionLineDeltaVertical}
-          animationDuration={ANIMATION_DURATION}
-          id={`${metric}_regression_line_delta_v`}
-        />
-
-        {typicalSleepSession && (
+        {typicalSleepSessions.map((area) => (
           <ReferenceArea
-            {...typicalSleepSession}
+            {...area}
             ifOverflow='extendDomain'
-            fill={typicalSleepSessionFill}
             className={styles.typicalSleepSessionArea}
-            id={`${metric}_typical_sleep_session_area`}
+            id={`${area.metric}_typical_sleep_session_area`}
+            key={`${area.metric}_typical_sleep_session_area`}
           >
             <Label
               offset={10}
               position='insideTopLeft'
               value={t('typical-sleep-session')}
               className={styles.healthyRangeLabel}
+              id={`${area.metric}_typical_sleep_session_area_label`}
             />
           </ReferenceArea>
-        )}
+        ))}
 
         {improvementDate && (
           <ReferenceLine

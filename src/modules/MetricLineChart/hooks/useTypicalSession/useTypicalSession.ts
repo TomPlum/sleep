@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { useSleepContext } from 'context/SleepContext'
 import {
@@ -6,66 +6,65 @@ import {
   TypicalSessionProps,
   TypicalSessionResponse
 } from 'modules/MetricLineChart/hooks/useTypicalSession/types'
-import { useGraphStyles } from 'modules/MetricLineChart/hooks/useGraphStyles'
+import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
 
-export const useTypicalSession = ({ metric }: TypicalSessionProps): TypicalSessionResponse => {
+export const useTypicalSession = ({ metrics }: TypicalSessionProps): TypicalSessionResponse => {
   const { graphData2d } = useSleepContext()
-  const { currentMetricColour } = useGraphStyles({ metric })
 
   const data = useMemo(() => {
     return graphData2d.data ?? []
   }, [graphData2d.data])
 
-  const typicalSleepSession = useMemo<TypicalSessionArea>(() => {
-    const firstSession = data[0]?.xDate
-    const lastSession = data[data.length - 1]?.xDate
-
+  const getAreaYOrdinates = useCallback((metric: SleepMetric) => {
     switch (metric) {
       case SleepMetric.AWAKE_TIME: {
         return {
-          x1: firstSession, y1: 0,
-          x2: lastSession, y2: 10
+          y1: 0, y2: 10
         }
       }
       case SleepMetric.DEEP_SLEEP: {
         return {
-          x1: firstSession, y1: 10,
-          x2: lastSession, y2: 25
+          y1: 10, y2: 25
         }
       }
       case SleepMetric.LIGHT_SLEEP: {
         return {
-          x1: firstSession, y1: 40,
-          x2: lastSession, y2: 60
+          y1: 40, y2: 60
         }
       }
       case SleepMetric.REM_SLEEP: {
         return {
-          x1: firstSession, y1: 20,
-          x2: lastSession, y2: 25
+          y1: 20, y2: 25
         }
       }
       case SleepMetric.QUALITY: {
         return {
-          x1: firstSession, y1: 80,
-          x2: lastSession, y2: 100
+          y1: 80, y2: 100
         }
       }
       case SleepMetric.DURATION: {
         return {
-          x1: firstSession, y1: 90,
-          x2: lastSession, y2: 110
+          y1: 90, y2: 110
         }
       }
     }
-  }, [data, metric])
+  }, [])
 
-  const typicalSleepSessionFill = useMemo<string>(() => {
-    return currentMetricColour.replace('rgb', 'rgba').replace(')', ', 0.25)')
-  }, [currentMetricColour])
+  const typicalSleepSessions = useMemo<TypicalSessionArea[]>(() => {
+    const firstSession = data[0]?.xDate
+    const lastSession = data[data.length - 1]?.xDate
+
+    return metrics.map((metric: SleepMetric) => ({
+      metric,
+      x1: firstSession,
+      x2: lastSession,
+      ...getAreaYOrdinates(metric),
+      fill: getMetricColour(metric).replace('rgb', 'rgba').replace(')', ', 0.25)')
+    }))
+
+  }, [data, getAreaYOrdinates, metrics])
 
   return {
-    typicalSleepSession,
-    typicalSleepSessionFill
+    typicalSleepSessions
   }
 }
