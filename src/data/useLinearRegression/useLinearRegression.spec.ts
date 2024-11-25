@@ -6,7 +6,7 @@ import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types'
 import { SleepMood } from 'data/useSleepData'
 
 const mockSleepContext = vi.fn()
-vi.mock('context/useSleepContext', () => ({
+vi.mock('context/SleepContext/useSleepContext', () => ({
   useSleepContext: () => mockSleepContext()
 }))
 
