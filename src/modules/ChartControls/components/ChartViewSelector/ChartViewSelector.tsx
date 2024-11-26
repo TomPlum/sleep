@@ -1,5 +1,5 @@
 import { Button, Dropdown, MenuProps } from 'antd'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { PageRoutes } from 'routes'
@@ -22,8 +22,10 @@ export const ChartViewSelector = () => {
         view: newChartView
       }
     })
+  }, [setChartView, updateQueryParam])
 
-    if (newChartView == ChartView.SINGLE_METRIC) {
+  useEffect(() => {
+    if (chartView == ChartView.SINGLE_METRIC) {
       setStackedMetrics([])
 
       removeQueryParam({
@@ -31,7 +33,7 @@ export const ChartViewSelector = () => {
         key: 'metrics'
       })
     }
-  }, [removeQueryParam, setChartView, setStackedMetrics, updateQueryParam])
+  }, [chartView, removeQueryParam, setStackedMetrics])
 
   const items = useMemo<MenuProps['items']>(() => ([
     {
