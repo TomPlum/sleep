@@ -3,7 +3,7 @@ import { SleepMetricLineChart } from 'modules/MetricLineChart'
 import { useSleepContext } from 'context/SleepContext'
 import { GraphControls, SleepMetric } from 'modules/ChartControls'
 import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
-import { StackedGraphPlaceholder } from 'components/StackedGraphPlaceholder'
+import { ChartMetricSelection } from 'components/ChartMetricSelection'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
@@ -37,7 +37,7 @@ export const SleepPage = () => {
             />
 
             {!sleepMetric && (
-              <StackedGraphPlaceholder
+              <ChartMetricSelection
                 id={1}
                 key='single-metric-line-chart-metric-selector'
               />
@@ -57,7 +57,7 @@ export const SleepPage = () => {
 
             {stackedMetrics.length < 2 && (
               [...Array(2 - stackedMetrics.length).keys()].map(i => (
-                <StackedGraphPlaceholder
+                <ChartMetricSelection
                   id={i}
                   key={`graph-placeholder-${i}`}
                 />
@@ -75,7 +75,7 @@ export const SleepPage = () => {
 
             {stackedMetrics.length < 2 && (
               [...Array(2 - stackedMetrics.length).keys()].map(i => (
-                <StackedGraphPlaceholder
+                <ChartMetricSelection
                   id={i}
                   key={`graph-placeholder-${i}`}
                 />
