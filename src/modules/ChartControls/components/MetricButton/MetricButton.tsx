@@ -7,30 +7,32 @@ import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 
-export const MetricButton = ({ metric, onMouseOver, onMouseOut, className }: MetricButtonProps) => {
+export const MetricButton = ({ metric, onMouseOver, onMouseOut, className, onClick }: MetricButtonProps) => {
   const { updateQueryParam } = useQueryParams()
-  const { setStackedMetrics } = useChartConfigContext()
+  const { setActiveMetrics } = useChartConfigContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
 
   const handleButtonClick = useCallback(() => {
-    setStackedMetrics((existing: SleepMetric[]) => {
-      const newMetrics = [
-        ...existing,
-        metric
-      ]
+    if (onClick) {
+      onClick(metric)
+    } else {
+      setActiveMetrics((existing: SleepMetric[]) => {
+        const newMetrics = [
+          ...existing,
+          metric
+        ]
 
-      updateQueryParam({
-        route: PageRoutes.SLEEP,
-        params: {
-          metrics: newMetrics.join(',')
-        }
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            metrics: newMetrics.join(',')
+          }
+        })
+
+        return newMetrics
       })
-
-      return newMetrics
-    })
-
-
-  }, [metric, setStackedMetrics, updateQueryParam])
+    }
+  }, [metric, onClick, setActiveMetrics, updateQueryParam])
 
   return (
     <Button

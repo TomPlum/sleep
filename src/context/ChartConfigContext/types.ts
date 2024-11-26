@@ -1,5 +1,6 @@
 import { SleepMetric } from 'modules/ChartControls'
 import { Dispatch, SetStateAction } from 'react'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export interface ChartConfigContextBag {
   /**
@@ -43,23 +44,26 @@ export interface ChartConfigContextBag {
   setSleepMetric: (metric: SleepMetric) => void
 
   /**
-   * Whether the user has toggled the option
-   * to view multiple stacked graphs together.
+   * The currently selected view type for
+   * the main sleep chart.
    */
-  stackedView: boolean
+  chartView: ChartView
 
   /**
-   * A function that overrides the current
-   * value of the stacked view toggle.
+   * Changes the current view type for the
+   * main sleep chart.
+   *
+   * @param chartView The new view to switch to.
    */
-  setStackedView: (stackedView: boolean) => void
+  setChartView: (chartView: ChartView) => void
 
   /**
    * An array of sleep metrics in which to
-   * render graphs for if {@link stackedView}
-   * is toggled on.
+   * render graphs for if teh selected
+   * {@link chartView} requires multiple
+   * metrics to be selected.
    */
-  stackedMetrics: SleepMetric[]
+  activeMetrics: SleepMetric[]
 
   /**
    * Sets the array of sleep metrics to be
@@ -67,5 +71,5 @@ export interface ChartConfigContextBag {
    * view.
    * @param metrics A list of new metrics.
    */
-  setStackedMetrics: Dispatch<SetStateAction<SleepMetric[]>>
+  setActiveMetrics: Dispatch<SetStateAction<SleepMetric[]>>
 }

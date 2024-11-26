@@ -34,7 +34,6 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 
 # To Do
 
-- Select multiple sleep metric at once
 - Date parsing not working in Safari and breaks graph
 - Update screenshots in README
 - Update session breakdown to include data like the ios app does
@@ -42,3 +41,4 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 - There are 58k sleep stage records mapped -> undefined, why?
 - If you change the date-range and the selected session is no longer in that range, what should happen?
 - Web worker makes about 800 cached resource requests while its loading
+- Looks like the line chart redraws from new each time now instead of tweening. Is it the <Line /> loop?

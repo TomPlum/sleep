@@ -7,6 +7,7 @@ import {
   UpdateQueryParamsArgs
 } from 'hooks/useQueryParams/types'
 import { SleepMetric } from 'modules/ChartControls'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const useQueryParams = (): QueryParamsResponse => {
   const navigate = useNavigate()
@@ -33,9 +34,9 @@ export const useQueryParams = (): QueryParamsResponse => {
       start: searchParams.has('start') ? new Date(Number(searchParams.get('start'))) : undefined,
       end: searchParams.has('end') ? new Date(Number(searchParams.get('end'))) : undefined,
       lng: searchParams.get('lng') ?? 'en',
-      stacked: searchParams.has('stacked') ? searchParams.get('stacked') === 'true' : undefined,
       metrics: searchParams.has('metrics') ? searchParams.get('metrics')?.split(',') as SleepMetric[] : undefined,
       selected: searchParams.get('selected') ? Number(searchParams.get('selected')) : undefined,
+      view: searchParams.has('view') ? searchParams.get('view') as ChartView : undefined,
     }
   }, [searchParams])
 

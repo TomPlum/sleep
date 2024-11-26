@@ -8,21 +8,24 @@ import { SleepMetric } from 'modules/ChartControls'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
-  const { sleepMetric, setSleepMetric, stackedView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
+  const { sleepMetric, setSleepMetric, chartView, activeMetrics, setActiveMetrics } = useChartConfigContext()
 
-  const checked = stackedView ? stackedMetrics.includes(metric) : sleepMetric === metric
+  const stackedView = chartView === ChartView.STACKED_METRICS
+  const multipleMetrics = chartView === ChartView.MULTIPLE_METRICS
+  const checked = (stackedView || multipleMetrics) ? activeMetrics.includes(metric) : sleepMetric === metric
 
   const handleCheckboxChange = useCallback(() => {
-    const newChecked = !checked
+    const isBoxNowChecked = !checked
 
-    if (newChecked) {
-      if (stackedView) {
-        if (stackedMetrics.length < 2) {
-          setStackedMetrics((existing: SleepMetric[]) => {
+    if (isBoxNowChecked) {
+      if (stackedView || multipleMetrics) {
+        if (activeMetrics.length < 2) {
+          setActiveMetrics((existing: SleepMetric[]) => {
             const newMetrics = [
               ...existing,
               metric
@@ -49,10 +52,10 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
         })
       }
     } else {
-      if (stackedView) {
-        const newMetrics = stackedMetrics.filter(it => it !== metric)
+      if (stackedView || multipleMetrics) {
+        const newMetrics = activeMetrics.filter(it => it !== metric)
 
-        setStackedMetrics(newMetrics)
+        setActiveMetrics(newMetrics)
 
         updateQueryParam({
           route: PageRoutes.SLEEP,
@@ -62,7 +65,7 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
         })
       }
     }
-  }, [checked, metric, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
+  }, [checked, metric, multipleMetrics, setSleepMetric, setActiveMetrics, activeMetrics, stackedView, updateQueryParam])
 
   return (
     <label className={styles.label}>

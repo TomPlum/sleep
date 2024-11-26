@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { useLinearRegression } from 'data/useLinearRegression/useLinearRegression'
 import { SleepMetric } from 'modules/ChartControls'
-import { SleepSessionGraph2DData } from 'modules/MetricLineChart'
+import { SleepMetricLineChartData } from 'modules/MetricLineChart'
 import { LinearRegressionPlotPoint } from 'data/useLinearRegression/types'
 import { SleepMood } from 'data/useSleepData'
 
@@ -10,7 +10,7 @@ vi.mock('context/SleepContext/useSleepContext', () => ({
   useSleepContext: () => mockSleepContext()
 }))
 
-const validGraphData2D: SleepSessionGraph2DData = [
+const validGraphData2D: SleepMetricLineChartData = [
   {
     id: '1',
     xDate: 1724454000000,

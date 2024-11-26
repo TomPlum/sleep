@@ -1,20 +1,18 @@
 import styles from './SleepPage.module.scss'
-import {
-  SleepSessionsGraph2D
-} from 'modules/MetricLineChart'
+import { SleepMetricLineChart } from 'modules/MetricLineChart'
 import { useSleepContext } from 'context/SleepContext'
-import { GraphControls } from 'modules/ChartControls'
+import { GraphControls, SleepMetric } from 'modules/ChartControls'
 import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
-import { SleepMetric } from 'modules/ChartControls'
-import { StackedGraphPlaceholder } from 'components/StackedGraphPlaceholder'
+import { ChartMetricSelection } from 'components/ChartMetricSelection'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
-  const { stackedView, sleepMetric, stackedMetrics } = useChartConfigContext()
+  const { chartView, sleepMetric, activeMetrics } = useChartConfigContext()
 
   useDynamicFavicon()
 
@@ -31,19 +29,34 @@ export const SleepPage = () => {
       <GraphControls className={styles.controls} />
 
       <div className={styles.content}>
-        {stackedView && (
+        {chartView == ChartView.SINGLE_METRIC && (
           <>
-            {stackedMetrics.map((metric: SleepMetric) => (
-              <SleepSessionsGraph2D
+            <SleepMetricLineChart
+              metric={sleepMetric}
+              className={styles.graph}
+            />
+
+            {!sleepMetric && (
+              <ChartMetricSelection
+                id='single-metric-view-metric-selection'
+              />
+            )}
+          </>
+        )}
+
+        {chartView == ChartView.STACKED_METRICS && (
+          <>
+            {activeMetrics.map((metric: SleepMetric) => (
+              <SleepMetricLineChart
                 metric={metric}
                 className={styles.graph}
                 key={`sleep-graph-2d-${metric}`}
               />
             ))}
 
-            {stackedMetrics.length < 2 && (
-              [...Array(2 - stackedMetrics.length).keys()].map(i => (
-                <StackedGraphPlaceholder
+            {activeMetrics.length < 2 && (
+              [...Array(2 - activeMetrics.length).keys()].map(i => (
+                <ChartMetricSelection
                   id={i}
                   key={`graph-placeholder-${i}`}
                 />
@@ -52,11 +65,22 @@ export const SleepPage = () => {
           </>
         )}
 
-        {!stackedView && (
-          <SleepSessionsGraph2D
-            metric={sleepMetric}
-            className={styles.graph}
-          />
+        {chartView === ChartView.MULTIPLE_METRICS && (
+          <>
+            {activeMetrics.length === 2 && (
+              <SleepMetricLineChart
+                metric={sleepMetric}
+                className={styles.graph}
+              />
+            )}
+
+            {activeMetrics.length < 2 && (
+              <ChartMetricSelection
+                allowDualSelection
+                id='multiple-metrics-view-metric-selection'
+              />
+            )}
+          </>
         )}
 
         <SleepSessionInfo />

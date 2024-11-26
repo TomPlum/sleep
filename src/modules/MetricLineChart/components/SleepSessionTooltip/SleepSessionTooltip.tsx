@@ -3,7 +3,7 @@ import styles from './SleepSessionTooltip.module.scss'
 import { Typography } from 'antd'
 import dayjs from 'dayjs'
 import { useTranslation } from 'react-i18next'
-import { SleepSessionGraph2DDatum } from 'modules/MetricLineChart'
+import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 import { useCallback } from 'react'
 import { SleepMood } from 'data/useSleepData'
 import { FrownOutlined, MehOutlined, QuestionCircleOutlined, SmileOutlined } from '@ant-design/icons'
@@ -11,7 +11,7 @@ import { FrownOutlined, MehOutlined, QuestionCircleOutlined, SmileOutlined } fro
 export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.tooltip' })
 
-  const data = payload?.[0]?.payload as SleepSessionGraph2DDatum
+  const data = payload?.[0]?.payload as SleepMetricLineChartDatum
 
   const getMoodIcon = useCallback(() => {
     if (data) {

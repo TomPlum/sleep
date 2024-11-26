@@ -1,7 +1,7 @@
 import { SleepMetric } from 'modules/ChartControls'
 import { SleepMood } from 'data/useSleepData'
 
-export interface SleepSessionsGraph2DProps {
+export interface SleepMetricLineChartProps {
   /**
    * The sleep metric to render on
    * the graph.
@@ -15,9 +15,9 @@ export interface SleepSessionsGraph2DProps {
   className?: string
 }
 
-export type SleepSessionGraph2DData = SleepSessionGraph2DDatum[]
+export type SleepMetricLineChartData = SleepMetricLineChartDatum[]
 
-export interface SleepSessionGraph2DDatum {
+export interface SleepMetricLineChartDatum {
   /**
    * The unique identifier for the sleep session
    * on the graph.

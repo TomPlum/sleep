@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import type { SleepSessionGraph2DData } from 'modules/MetricLineChart'
+import type { SleepMetricLineChartData } from 'modules/MetricLineChart'
 import dayjs from 'dayjs'
 import { SleepMetric } from 'modules/ChartControls'
 import { SleepGraph2DDataProps, SleepGraph2DDataResponse } from 'modules/MetricLineChart/hooks/useSleepGraph2DData/types'
@@ -18,7 +18,7 @@ export const useSleepGraph2DData = ({
     return (duration / total) * 100
   }, [])
 
-  const data = useMemo<SleepSessionGraph2DData>(() => {
+  const data = useMemo<SleepMetricLineChartData>(() => {
     return sessions.map(session => {
       const duration = session.duration
       const totalDuration = duration.total

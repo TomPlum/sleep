@@ -53,9 +53,16 @@
         "all": "すべて",
         "default": "最近"
       },
-      "stacked": {
-        "active": "ひとつ",
-        "inactive": "複数"
+      "view": {
+        "single-metric": {
+          "label": "1つの指標のみ"
+        },
+        "multiple-metrics": {
+          "label": "複数の指標"
+        },
+        "stacked-metrics": {
+          "label": "積み重ねられた指標"
+        }
       },
       "metric-config": {
         "checkbox": {

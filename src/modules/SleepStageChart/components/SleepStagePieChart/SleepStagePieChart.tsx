@@ -28,7 +28,6 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, val
 }
 
 export const SleepStagePieChart = ({ sessionData }: DurationBreakdownPieProps) => {
-  console.log('sessionData', sessionData)
   const percentageOf = useCallback((stage: SleepStage) => {
     return (sessionData[stage] / 100) * sessionData.duration
   }, [sessionData])

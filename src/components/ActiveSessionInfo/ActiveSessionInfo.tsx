@@ -8,23 +8,25 @@ import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
 import { PILLOW_DATABASE_FILE_NAME } from 'modules/DataWorker'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { activeSessions, sleepData } = useSleepContext()
-  const { stackedMetrics, stackedView, sleepMetric } = useChartConfigContext()
+  const { activeMetrics, chartView, sleepMetric } = useChartConfigContext()
+  const showingMultipleMetrics = chartView !== ChartView.SINGLE_METRIC
 
   const { currentMetricColour: firstColour } = useGraphStyles({
-    metric: stackedView ? stackedMetrics[0] : sleepMetric
+    metric: showingMultipleMetrics ? activeMetrics[0] : sleepMetric
   })
 
   const { currentMetricColour: secondColour } = useGraphStyles({
-    metric: stackedView ? stackedMetrics[ stackedMetrics.length > 1 ? 1 : 0] : sleepMetric
+    metric: showingMultipleMetrics ? activeMetrics[activeMetrics.length > 1 ? 1 : 0] : sleepMetric
   })
 
   const linearGradient = useMemo<CSSProperties| undefined>(() => {
-    if (!stackedView || stackedMetrics.length <= 1) {
+    if (!showingMultipleMetrics || activeMetrics.length <= 1) {
       return {
         color: firstColour
       }
@@ -35,7 +37,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
       WebkitBackgroundClip: 'text',
       color: 'transparent'
     }
-  }, [firstColour, secondColour, stackedMetrics.length, stackedView])
+  }, [firstColour, secondColour, activeMetrics.length, showingMultipleMetrics])
 
   return (
     <div className={classNames(styles.container, className)}>
@@ -46,7 +48,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           />
         </a>
 
-        {(!stackedView || stackedMetrics.length > 0) && (
+        {(!showingMultipleMetrics || activeMetrics.length > 0) && (
           <p className={styles.sessions}>
             <span style={{ color: firstColour }}>
               {activeSessions}
@@ -72,7 +74,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           </p>
         )}
 
-        {stackedView && stackedMetrics.length === 0 && (
+        {showingMultipleMetrics && activeMetrics.length === 0 && (
           <p className={styles.sessions}>
             {t('sessions.please-select')}
           </p>

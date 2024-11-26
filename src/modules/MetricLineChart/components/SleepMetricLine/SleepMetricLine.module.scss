@@ -1,0 +1,7 @@
+.line {
+  pointer-events: all;
+
+  >path {
+    transition: stroke 1s ease-in-out;
+  }
+}

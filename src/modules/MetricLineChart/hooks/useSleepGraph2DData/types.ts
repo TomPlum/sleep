@@ -1,4 +1,4 @@
-import type { SleepSessionGraph2DData } from 'modules/MetricLineChart'
+import type { SleepMetricLineChartData } from 'modules/MetricLineChart'
 import { PillowSleepSession } from 'data/useSleepData'
 
 export interface SleepGraph2DDataProps {
@@ -39,7 +39,7 @@ export interface SleepGraph2DDataResponse {
    * The sleep session data structured for
    * rendering a 2D graph.
    */
-  data: SleepSessionGraph2DData
+  data: SleepMetricLineChartData
 
   /**
    * Whether the sleep data is still
