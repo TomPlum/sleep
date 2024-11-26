@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next'
 import { useAxes2D } from 'modules/MetricLineChart/hooks/useAxes2D'
 import { RegressionDeltaLabel } from 'modules/MetricLineChart/components/RegressionDeltaLabel'
 import { ANIMATION_DURATION, SleepMetricLineChartProps } from './types'
-import { LineActiveDot } from 'modules/MetricLineChart/components/LineActiveDot'
 import { useGraphHeight } from 'modules/MetricLineChart/hooks/useGraphHeight'
 import { useCallback, useMemo } from 'react'
 import { PageRoutes } from 'routes'
@@ -30,11 +29,9 @@ import { useQueryParams } from 'hooks/useQueryParams'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 import { SleepMetric } from 'modules/ChartControls'
+import { LineActiveDot } from 'modules/MetricLineChart/components/LineActiveDot'
 
-export const SleepMetricLineChart = ({
-   metric,
-   className
-}: SleepMetricLineChartProps) => {
+export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChartProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { height } = useGraphHeight()
@@ -51,7 +48,7 @@ export const SleepMetricLineChart = ({
 
   const { typicalSleepSessions } = useTypicalSession({ metrics: lineMetrics })
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metrics: lineMetrics })
-  const { getMetricColour, strokeWidth, activeDotRadius } = useGraphStyles({ metric })
+  const { strokeWidth, currentMetricColour, getMetricColour, activeDotRadius } = useGraphStyles({ metric })
 
   const { improvementDate, graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
   
@@ -81,7 +78,31 @@ export const SleepMetricLineChart = ({
         margin={{ left: -55, bottom: -22 }}
         syncId='sleep_sessions_line_chart_2d'
       >
-        {lineMetrics.map((lineMetric: SleepMetric) => (
+        {chartView === ChartView.SINGLE_METRIC && (
+          <Line
+            data={data}
+            type='monotone'
+            dataKey={metric}
+            activeDot={false}
+            id={`${metric}_line`}
+            className={styles.line}
+            animationDuration={500}
+            isAnimationActive={true}
+            strokeWidth={strokeWidth}
+            animationEasing='ease-in-out'
+            stroke={currentMetricColour}
+            dot={{ fill: undefined, r: activeDotRadius }}
+            label={data => (
+              <LineActiveDot
+                data={data}
+                onClick={handleSelectSession}
+                radius={activeDotRadius - 3}
+              />
+            )}
+          />
+        )}
+
+        {chartView !== ChartView.SINGLE_METRIC && lineMetrics.map((lineMetric: SleepMetric) => (
           <Line
             data={data}
             type='monotone'
