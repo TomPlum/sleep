@@ -20,8 +20,8 @@ export const ChartConfigContext = createContext<ChartConfigContextBag>({
   setChartView: (view: ChartView) => {
     console.debug(`Tried to setChartView(${view}) in the ChartConfigContext before initialisation.`)
   },
-  stackedMetrics: [SleepMetric.QUALITY],
-  setStackedMetrics: () => {
+  activeMetrics: [SleepMetric.QUALITY],
+  setActiveMetrics: () => {
     console.debug('Tried to setStackedMetrics() in the ChartConfigContext before initialisation.')
   }
 })

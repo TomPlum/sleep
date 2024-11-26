@@ -13,19 +13,19 @@ import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/ty
 export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
   const { updateQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
-  const { sleepMetric, setSleepMetric, chartView, stackedMetrics, setStackedMetrics } = useChartConfigContext()
+  const { sleepMetric, setSleepMetric, chartView, activeMetrics, setActiveMetrics } = useChartConfigContext()
 
   const stackedView = chartView === ChartView.STACKED_METRICS
   const multipleMetrics = chartView === ChartView.MULTIPLE_METRICS
-  const checked = (stackedView || multipleMetrics) ? stackedMetrics.includes(metric) : sleepMetric === metric
+  const checked = (stackedView || multipleMetrics) ? activeMetrics.includes(metric) : sleepMetric === metric
 
   const handleCheckboxChange = useCallback(() => {
     const isBoxNowChecked = !checked
 
     if (isBoxNowChecked) {
       if (stackedView || multipleMetrics) {
-        if (stackedMetrics.length < 2) {
-          setStackedMetrics((existing: SleepMetric[]) => {
+        if (activeMetrics.length < 2) {
+          setActiveMetrics((existing: SleepMetric[]) => {
             const newMetrics = [
               ...existing,
               metric
@@ -53,9 +53,9 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
       }
     } else {
       if (stackedView || multipleMetrics) {
-        const newMetrics = stackedMetrics.filter(it => it !== metric)
+        const newMetrics = activeMetrics.filter(it => it !== metric)
 
-        setStackedMetrics(newMetrics)
+        setActiveMetrics(newMetrics)
 
         updateQueryParam({
           route: PageRoutes.SLEEP,
@@ -65,7 +65,7 @@ export const MetricCheckbox = ({ metric, className }: MetricCheckboxProps) => {
         })
       }
     }
-  }, [checked, metric, multipleMetrics, setSleepMetric, setStackedMetrics, stackedMetrics, stackedView, updateQueryParam])
+  }, [checked, metric, multipleMetrics, setSleepMetric, setActiveMetrics, activeMetrics, stackedView, updateQueryParam])
 
   return (
     <label className={styles.label}>

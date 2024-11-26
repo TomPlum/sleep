@@ -12,7 +12,7 @@ import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/ty
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
-  const { chartView, sleepMetric, stackedMetrics } = useChartConfigContext()
+  const { chartView, sleepMetric, activeMetrics } = useChartConfigContext()
 
   useDynamicFavicon()
 
@@ -46,7 +46,7 @@ export const SleepPage = () => {
 
         {chartView == ChartView.STACKED_METRICS && (
           <>
-            {stackedMetrics.map((metric: SleepMetric) => (
+            {activeMetrics.map((metric: SleepMetric) => (
               <SleepMetricLineChart
                 metric={metric}
                 className={styles.graph}
@@ -54,8 +54,8 @@ export const SleepPage = () => {
               />
             ))}
 
-            {stackedMetrics.length < 2 && (
-              [...Array(2 - stackedMetrics.length).keys()].map(i => (
+            {activeMetrics.length < 2 && (
+              [...Array(2 - activeMetrics.length).keys()].map(i => (
                 <ChartMetricSelection
                   id={i}
                   key={`graph-placeholder-${i}`}
@@ -67,14 +67,14 @@ export const SleepPage = () => {
 
         {chartView === ChartView.MULTIPLE_METRICS && (
           <>
-            {stackedMetrics.length === 2 && (
+            {activeMetrics.length === 2 && (
               <SleepMetricLineChart
                 metric={sleepMetric}
                 className={styles.graph}
               />
             )}
 
-            {stackedMetrics.length < 2 && (
+            {activeMetrics.length < 2 && (
               <ChartMetricSelection
                 allowDualSelection
                 id='multiple-metrics-view-metric-selection'

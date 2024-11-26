@@ -14,19 +14,19 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { activeSessions, sleepData } = useSleepContext()
-  const { stackedMetrics, chartView, sleepMetric } = useChartConfigContext()
+  const { activeMetrics, chartView, sleepMetric } = useChartConfigContext()
   const stackedView = chartView === ChartView.STACKED_METRICS
 
   const { currentMetricColour: firstColour } = useGraphStyles({
-    metric: stackedView ? stackedMetrics[0] : sleepMetric
+    metric: stackedView ? activeMetrics[0] : sleepMetric
   })
 
   const { currentMetricColour: secondColour } = useGraphStyles({
-    metric: stackedView ? stackedMetrics[ stackedMetrics.length > 1 ? 1 : 0] : sleepMetric
+    metric: stackedView ? activeMetrics[ activeMetrics.length > 1 ? 1 : 0] : sleepMetric
   })
 
   const linearGradient = useMemo<CSSProperties| undefined>(() => {
-    if (!stackedView || stackedMetrics.length <= 1) {
+    if (!stackedView || activeMetrics.length <= 1) {
       return {
         color: firstColour
       }
@@ -37,7 +37,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
       WebkitBackgroundClip: 'text',
       color: 'transparent'
     }
-  }, [firstColour, secondColour, stackedMetrics.length, stackedView])
+  }, [firstColour, secondColour, activeMetrics.length, stackedView])
 
   return (
     <div className={classNames(styles.container, className)}>
@@ -48,7 +48,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           />
         </a>
 
-        {(!stackedView || stackedMetrics.length > 0) && (
+        {(!stackedView || activeMetrics.length > 0) && (
           <p className={styles.sessions}>
             <span style={{ color: firstColour }}>
               {activeSessions}
@@ -74,7 +74,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           </p>
         )}
 
-        {stackedView && stackedMetrics.length === 0 && (
+        {stackedView && activeMetrics.length === 0 && (
           <p className={styles.sessions}>
             {t('sessions.please-select')}
           </p>

@@ -36,15 +36,15 @@ export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChart
 
   const { height } = useGraphHeight()
   const { updateQueryParam } = useQueryParams()
-  const { chartView, stackedMetrics } = useChartConfigContext()
+  const { chartView, activeMetrics } = useChartConfigContext()
 
   const lineMetrics = useMemo(() => {
     if (chartView == ChartView.SINGLE_METRIC || chartView === ChartView.STACKED_METRICS) {
       return [metric]
     }
 
-    return stackedMetrics
-  }, [chartView, metric, stackedMetrics])
+    return activeMetrics
+  }, [chartView, metric, activeMetrics])
 
   const { typicalSleepSessions } = useTypicalSession({ metrics: lineMetrics })
   const { xTicks, yTicks, xAxisInterval, yDomain } = useAxes2D({ metrics: lineMetrics })
@@ -69,7 +69,7 @@ export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChart
     })
   }, [updateQueryParam])
 
-  const isTopGraph = stackedMetrics.indexOf(metric) === 0
+  const isTopGraph = activeMetrics.indexOf(metric) === 0
 
   return (
     <ResponsiveContainer width='100%' height={height} className={className}>

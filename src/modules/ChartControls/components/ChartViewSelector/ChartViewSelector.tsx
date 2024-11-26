@@ -8,7 +8,7 @@ import { MenuInfo } from 'rc-menu/lib/interface'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
 export const ChartViewSelector = () => {
-  const { chartView, setChartView, setStackedMetrics } = useChartConfigContext()
+  const { chartView, setChartView, setActiveMetrics } = useChartConfigContext()
   const { updateQueryParam, removeQueryParam } = useQueryParams()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.view' })
 
@@ -26,14 +26,14 @@ export const ChartViewSelector = () => {
 
   useEffect(() => {
     if (chartView == ChartView.SINGLE_METRIC) {
-      setStackedMetrics([])
+      setActiveMetrics([])
 
       removeQueryParam({
         route: PageRoutes.SLEEP,
         key: 'metrics'
       })
     }
-  }, [chartView, removeQueryParam, setStackedMetrics])
+  }, [chartView, removeQueryParam, setActiveMetrics])
 
   const items = useMemo<MenuProps['items']>(() => ([
     {

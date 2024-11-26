@@ -14,7 +14,7 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     rangeStart,
     rangeEnd,
     language,
-    stackedMetrics,
+    activeMetrics,
     setCurrentMetric,
     setRangeEnd,
     setRangeStart,
@@ -36,11 +36,11 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     setRangeEnd,
     sleepMetric: currentMetric ?? SleepMetric.QUALITY,
     setSleepMetric: setCurrentMetric,
-    stackedMetrics: stackedMetrics ?? [],
-    setStackedMetrics: handleSetStackedMetrics,
+    activeMetrics: activeMetrics ?? [],
+    setActiveMetrics: handleSetStackedMetrics,
     chartView: chartView ?? ChartView.SINGLE_METRIC,
     setChartView
-  }), [chartView, currentMetric, handleSetStackedMetrics, rangeEnd, rangeStart, setChartView, setCurrentMetric, setRangeEnd, setRangeStart, stackedMetrics])
+  }), [chartView, currentMetric, handleSetStackedMetrics, rangeEnd, rangeStart, setChartView, setCurrentMetric, setRangeEnd, setRangeStart, activeMetrics])
 
   return (
     <ChartConfigContext.Provider value={value}>

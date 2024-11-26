@@ -34,7 +34,6 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 
 # To Do
 
-- Select multiple sleep metric at once
 - Date parsing not working in Safari and breaks graph
 - Update screenshots in README
 - Update session breakdown to include data like the ios app does

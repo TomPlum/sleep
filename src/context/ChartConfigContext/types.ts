@@ -59,10 +59,11 @@ export interface ChartConfigContextBag {
 
   /**
    * An array of sleep metrics in which to
-   * render graphs for if {@link stackedView}
-   * is toggled on.
+   * render graphs for if teh selected
+   * {@link chartView} requires multiple
+   * metrics to be selected.
    */
-  stackedMetrics: SleepMetric[]
+  activeMetrics: SleepMetric[]
 
   /**
    * Sets the array of sleep metrics to be
@@ -70,5 +71,5 @@ export interface ChartConfigContextBag {
    * view.
    * @param metrics A list of new metrics.
    */
-  setStackedMetrics: Dispatch<SetStateAction<SleepMetric[]>>
+  setActiveMetrics: Dispatch<SetStateAction<SleepMetric[]>>
 }

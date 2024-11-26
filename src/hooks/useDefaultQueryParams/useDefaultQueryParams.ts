@@ -13,10 +13,10 @@ export const useDefaultQueryParams = () => {
   const [currentMetric, setCurrentMetric] = useState(metric)
 
   const [chartView, setChartView] = useState(view)
-  const [stackedMetrics, setStackedMetrics] = useState(metrics)
+  const [activeMetrics, setActiveMetrics] = useState(metrics)
 
   useEffect(() => {
-    if (!rangeStart || !rangeEnd || !currentMetric || !lng || !stackedMetrics || !chartView) {
+    if (!rangeStart || !rangeEnd || !currentMetric || !lng || !activeMetrics || !chartView) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
@@ -29,8 +29,8 @@ export const useDefaultQueryParams = () => {
       const selectedLanguage = language ?? 'en'
       setLanguage(selectedLanguage)
 
-      const selectedStackedMetrics = stackedMetrics ?? []
-      setStackedMetrics(selectedStackedMetrics)
+      const selectedStackedMetrics = activeMetrics ?? []
+      setActiveMetrics(selectedStackedMetrics)
 
       const selectedChartView = chartView ?? ChartView.SINGLE_METRIC
       setChartView(selectedChartView)
@@ -45,10 +45,10 @@ export const useDefaultQueryParams = () => {
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [chartView, currentMetric, language, lng, rangeEnd, rangeStart, stackedMetrics, updateQueryParam])
+  }, [chartView, currentMetric, language, lng, rangeEnd, rangeStart, activeMetrics, updateQueryParam])
 
   const handleSetStackedMetrics = useCallback((setState: SetStateAction<SleepMetric[]>) => {
-    setStackedMetrics(existing => {
+    setActiveMetrics(existing => {
       if (typeof setState === 'function') {
         return (setState as (existing: SleepMetric[] | undefined) => SleepMetric[])(existing)
       }
@@ -62,7 +62,7 @@ export const useDefaultQueryParams = () => {
     rangeStart,
     rangeEnd,
     currentMetric,
-    stackedMetrics,
+    activeMetrics,
     setRangeStart,
     setRangeEnd,
     setCurrentMetric,

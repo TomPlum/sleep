@@ -9,14 +9,14 @@ import { useChartConfigContext } from 'context/ChartConfigContext'
 
 export const MetricButton = ({ metric, onMouseOver, onMouseOut, className, onClick }: MetricButtonProps) => {
   const { updateQueryParam } = useQueryParams()
-  const { setStackedMetrics } = useChartConfigContext()
+  const { setActiveMetrics } = useChartConfigContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.metric-config.checkbox' })
 
   const handleButtonClick = useCallback(() => {
     if (onClick) {
       onClick(metric)
     } else {
-      setStackedMetrics((existing: SleepMetric[]) => {
+      setActiveMetrics((existing: SleepMetric[]) => {
         const newMetrics = [
           ...existing,
           metric
@@ -32,7 +32,7 @@ export const MetricButton = ({ metric, onMouseOver, onMouseOut, className, onCli
         return newMetrics
       })
     }
-  }, [metric, onClick, setStackedMetrics, updateQueryParam])
+  }, [metric, onClick, setActiveMetrics, updateQueryParam])
 
   return (
     <Button
