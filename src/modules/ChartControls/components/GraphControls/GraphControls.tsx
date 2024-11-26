@@ -1,6 +1,5 @@
 import { MetricConfiguration } from 'modules/ChartControls'
 import styles from './GraphControls.module.scss'
-import { LocaleToggle } from 'modules/ChartControls'
 import { DateRangePicker } from 'modules/ChartControls'
 import classNames from 'classnames'
 import { GraphControlsProps } from './types'
@@ -15,7 +14,7 @@ export const GraphControls = ({ className }: GraphControlsProps) => {
       />
 
       <div className={styles.bottom}>
-        <LocaleToggle className={styles.localeToggle} />
+        {/*<LocaleToggle className={styles.localeToggle} />*/}
         <ChartViewSelector />
         <DateRangePicker className={styles.dateRangePicker} />
         <ShowAllButton />
