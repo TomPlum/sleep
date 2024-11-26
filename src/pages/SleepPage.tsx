@@ -51,10 +51,21 @@ export const SleepPage = () => {
         )}
 
         {chartView == ChartView.SINGLE_METRIC || chartView === ChartView.MULTIPLE_METRICS && (
-          <SleepMetricLineChart
-            metric={sleepMetric}
-            className={styles.graph}
-          />
+          <>
+            <SleepMetricLineChart
+              metric={sleepMetric}
+              className={styles.graph}
+            />
+
+            {stackedMetrics.length < 2 && (
+              [...Array(2 - stackedMetrics.length).keys()].map(i => (
+                <StackedGraphPlaceholder
+                  id={i}
+                  key={`graph-placeholder-${i}`}
+                />
+              ))
+            )}
+          </>
         )}
 
         <SleepSessionInfo />
