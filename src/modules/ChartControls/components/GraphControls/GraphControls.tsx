@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { GraphControlsProps } from './types'
 import { ShowAllButton } from 'modules/ChartControls'
 import { ChartViewSelector } from 'modules/ChartControls'
+import { ThreeDimensionsToggle } from 'modules/ChartControls/components/ThreeDimensionsToggle'
 
 export const GraphControls = ({ className }: GraphControlsProps) => {
   return (
@@ -13,11 +14,15 @@ export const GraphControls = ({ className }: GraphControlsProps) => {
         className={styles.configPanel}
       />
 
-      <div className={styles.bottom}>
+      <div className={styles.middle}>
         {/*<LocaleToggle className={styles.localeToggle} />*/}
         <ChartViewSelector />
         <DateRangePicker className={styles.dateRangePicker} />
         <ShowAllButton />
+      </div>
+
+      <div className={styles.bottom}>
+        <ThreeDimensionsToggle />
       </div>
     </div>
   )

@@ -1,0 +1,34 @@
+.checkbox {
+  display: none;
+}
+
+.label {
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  align-items: center;
+
+  .box {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .openBracket, .closeBracket {
+      font-size: 0.8rem;
+    }
+
+    .xCheckMark {
+      width: 8px;
+      padding: 0 2px;
+      font-size: 0.9rem;
+      color: #42fc60;
+    }
+  }
+
+  .labelText {
+    font-size: 0.7rem;
+    margin-left: 3px;
+  }
+}

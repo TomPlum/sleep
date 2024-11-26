@@ -64,6 +64,9 @@
           "label": "Stacked Metrics"
         }
       },
+      "three-dimensions-toggle": {
+        "label": "3D (Experimental)"
+      },
       "metric-config": {
         "checkbox": {
           "quality": "Quality",

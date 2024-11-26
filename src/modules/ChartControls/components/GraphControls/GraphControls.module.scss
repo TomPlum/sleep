@@ -14,19 +14,24 @@
   }
 
   .configPanel {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
   }
 
-  .bottom {
+  .middle {
     width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 8px;
 
     .dateRangePicker {
       flex: 1;
     }
+  }
+
+  .bottom {
+
   }
 }

@@ -37,6 +37,7 @@ export const useQueryParams = (): QueryParamsResponse => {
       metrics: searchParams.has('metrics') ? searchParams.get('metrics')?.split(',') as SleepMetric[] : undefined,
       selected: searchParams.get('selected') ? Number(searchParams.get('selected')) : undefined,
       view: searchParams.has('view') ? searchParams.get('view') as ChartView : undefined,
+      is3D: searchParams.has('is3D') ? Boolean(searchParams.get('is3D')) : undefined
     }
   }, [searchParams])
 
