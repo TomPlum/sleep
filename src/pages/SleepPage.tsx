@@ -38,8 +38,7 @@ export const SleepPage = () => {
 
             {!sleepMetric && (
               <ChartMetricSelection
-                id={1}
-                key='single-metric-line-chart-metric-selector'
+                id='single-metric-view-metric-selection'
               />
             )}
           </>
@@ -68,18 +67,18 @@ export const SleepPage = () => {
 
         {chartView === ChartView.MULTIPLE_METRICS && (
           <>
-            <SleepMetricLineChart
-              metric={sleepMetric}
-              className={styles.graph}
-            />
+            {stackedMetrics.length === 2 && (
+              <SleepMetricLineChart
+                metric={sleepMetric}
+                className={styles.graph}
+              />
+            )}
 
             {stackedMetrics.length < 2 && (
-              [...Array(2 - stackedMetrics.length).keys()].map(i => (
-                <ChartMetricSelection
-                  id={i}
-                  key={`graph-placeholder-${i}`}
-                />
-              ))
+              <ChartMetricSelection
+                allowDualSelection
+                id='multiple-metrics-view-metric-selection'
+              />
             )}
           </>
         )}

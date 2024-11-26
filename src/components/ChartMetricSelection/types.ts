@@ -1,3 +1,4 @@
 export interface ChartMetricSelectionProps {
-  id: number
+  id: number | string
+  allowDualSelection?: boolean
 }

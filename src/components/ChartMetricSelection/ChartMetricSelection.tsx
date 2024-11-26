@@ -8,13 +8,19 @@ import { MetricButton } from 'modules/ChartControls'
 import classNames from 'classnames'
 import { useGraphHeight } from 'modules/MetricLineChart/hooks/useGraphHeight'
 import { useChartConfigContext } from 'context/ChartConfigContext'
+import { useQueryParams } from 'hooks/useQueryParams'
+import { PageRoutes } from 'routes'
 
-export const ChartMetricSelection = ({ id }: ChartMetricSelectionProps) => {
-  const [previewMetric, setPreviewMetric] = useState<SleepMetric>()
+export const ChartMetricSelection = ({ id, allowDualSelection }: ChartMetricSelectionProps) => {
+  const { updateQueryParam } = useQueryParams()
+  const { setStackedMetrics } = useChartConfigContext()
 
   const { height } = useGraphHeight()
   const { stackedMetrics } = useChartConfigContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.placeholder' })
+
+  const [selected, setSelected] = useState<SleepMetric | undefined>(stackedMetrics.length === 1 ? stackedMetrics[0] : undefined)
+  const [previewMetric, setPreviewMetric] = useState<SleepMetric>()
 
   const handleMouseOver = useCallback((metric: SleepMetric) => {
     setPreviewMetric(metric)
@@ -26,16 +32,46 @@ export const ChartMetricSelection = ({ id }: ChartMetricSelectionProps) => {
 
   const availableMetrics = useMemo<SleepMetric[]>(() => {
     const allMetrics = Object.values(SleepMetric)
+
+    if (allowDualSelection) {
+      return allMetrics
+    }
+
     return allMetrics.filter(metric => !stackedMetrics.includes(metric))
-  }, [stackedMetrics])
+  }, [allowDualSelection, stackedMetrics])
+
+  const handleSelect = useCallback((metric: SleepMetric) => {
+    if (selected === metric) {
+      setSelected(undefined)
+    } else if (selected) {
+      setStackedMetrics(() => {
+        const newMetrics = [selected, metric]
+
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            metrics: newMetrics.join(',')
+          }
+        })
+
+        return newMetrics
+      })
+    } else {
+      setSelected(metric)
+    }
+  }, [selected, setStackedMetrics, updateQueryParam])
 
   const messageKey = useMemo<'first' | 'second'>(() => {
+    if (allowDualSelection) {
+      return !selected ? 'first' : 'second'
+    }
+
     if (stackedMetrics.length === 0) {
       return id === 0 ? 'first' : 'second'
     }
 
     return 'second'
-  }, [id, stackedMetrics.length])
+  }, [allowDualSelection, id, selected, stackedMetrics.length])
 
   return (
     <div className={styles.placeholder} style={{ height }}>
@@ -52,7 +88,12 @@ export const ChartMetricSelection = ({ id }: ChartMetricSelectionProps) => {
             onMouseOut={handleMouseOut}
             key={`placeholder-metric-button-${metric}`}
             onMouseOver={() => handleMouseOver(metric)}
-            className={classNames(styles.button, styles[metric])}
+            onClick={allowDualSelection ? handleSelect : undefined}
+            className={classNames(
+              styles.button,
+              styles[metric],
+              { [styles[`${metric}--selected`]]: metric === selected }
+            )}
           />
         ))}
       </div>

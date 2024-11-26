@@ -26,4 +26,11 @@ export interface MetricButtonProps {
    * out of the button.
    */
   onMouseOut?: () => void
+
+  /**
+   * When passed, the default handleClick
+   * implementation will be ignored in
+   * favour of this handler.
+   */
+  onClick?: (metric: SleepMetric) => void
 }

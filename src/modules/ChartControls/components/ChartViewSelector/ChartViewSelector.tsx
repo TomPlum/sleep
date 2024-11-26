@@ -26,10 +26,10 @@ export const ChartViewSelector = () => {
     if (newChartView == ChartView.SINGLE_METRIC) {
       setStackedMetrics([])
 
- /*     removeQueryParam({
+      removeQueryParam({
         route: PageRoutes.SLEEP,
         key: 'metrics'
-      })*/
+      })
     }
   }, [removeQueryParam, setChartView, setStackedMetrics, updateQueryParam])
 
