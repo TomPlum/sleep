@@ -29,6 +29,22 @@ export const SleepPage = () => {
       <GraphControls className={styles.controls} />
 
       <div className={styles.content}>
+        {chartView == ChartView.SINGLE_METRIC && (
+          <>
+            <SleepMetricLineChart
+              metric={sleepMetric}
+              className={styles.graph}
+            />
+
+            {!sleepMetric && (
+              <StackedGraphPlaceholder
+                id={1}
+                key='single-metric-line-chart-metric-selector'
+              />
+            )}
+          </>
+        )}
+
         {chartView == ChartView.STACKED_METRICS && (
           <>
             {stackedMetrics.map((metric: SleepMetric) => (
@@ -50,7 +66,7 @@ export const SleepPage = () => {
           </>
         )}
 
-        {chartView == ChartView.SINGLE_METRIC || chartView === ChartView.MULTIPLE_METRICS && (
+        {chartView === ChartView.MULTIPLE_METRICS && (
           <>
             <SleepMetricLineChart
               metric={sleepMetric}

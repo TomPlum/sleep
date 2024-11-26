@@ -42,7 +42,7 @@ export const SleepMetricLineChart = ({
   const { chartView, stackedMetrics } = useChartConfigContext()
 
   const lineMetrics = useMemo(() => {
-    if (chartView == ChartView.SINGLE_METRIC) {
+    if (chartView == ChartView.SINGLE_METRIC || chartView === ChartView.STACKED_METRICS) {
       return [metric]
     }
 
