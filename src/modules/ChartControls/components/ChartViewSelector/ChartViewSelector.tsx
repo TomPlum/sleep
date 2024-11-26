@@ -60,7 +60,7 @@ export const ChartViewSelector = () => {
       }}
       placement='bottom'
     >
-      <Button>
+      <Button size='small'>
         {t(`${chartView}.label`)}
       </Button>
     </Dropdown>
