@@ -15,18 +15,18 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
 
   const { activeSessions, sleepData } = useSleepContext()
   const { activeMetrics, chartView, sleepMetric } = useChartConfigContext()
-  const stackedView = chartView === ChartView.STACKED_METRICS
+  const showingMultipleMetrics = chartView !== ChartView.SINGLE_METRIC
 
   const { currentMetricColour: firstColour } = useGraphStyles({
-    metric: stackedView ? activeMetrics[0] : sleepMetric
+    metric: showingMultipleMetrics ? activeMetrics[0] : sleepMetric
   })
 
   const { currentMetricColour: secondColour } = useGraphStyles({
-    metric: stackedView ? activeMetrics[ activeMetrics.length > 1 ? 1 : 0] : sleepMetric
+    metric: showingMultipleMetrics ? activeMetrics[activeMetrics.length > 1 ? 1 : 0] : sleepMetric
   })
 
   const linearGradient = useMemo<CSSProperties| undefined>(() => {
-    if (!stackedView || activeMetrics.length <= 1) {
+    if (!showingMultipleMetrics || activeMetrics.length <= 1) {
       return {
         color: firstColour
       }
@@ -37,7 +37,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
       WebkitBackgroundClip: 'text',
       color: 'transparent'
     }
-  }, [firstColour, secondColour, activeMetrics.length, stackedView])
+  }, [firstColour, secondColour, activeMetrics.length, showingMultipleMetrics])
 
   return (
     <div className={classNames(styles.container, className)}>
@@ -48,7 +48,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           />
         </a>
 
-        {(!stackedView || activeMetrics.length > 0) && (
+        {(!showingMultipleMetrics || activeMetrics.length > 0) && (
           <p className={styles.sessions}>
             <span style={{ color: firstColour }}>
               {activeSessions}
@@ -74,7 +74,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           </p>
         )}
 
-        {stackedView && activeMetrics.length === 0 && (
+        {showingMultipleMetrics && activeMetrics.length === 0 && (
           <p className={styles.sessions}>
             {t('sessions.please-select')}
           </p>
