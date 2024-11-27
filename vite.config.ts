@@ -19,6 +19,13 @@ export default defineConfig(({ mode }) => ({
       ignored: ['!/public/**']
     }
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   test: {
     environment: 'jsdom',
     include: ['**/*.spec.{ts,tsx}'],
