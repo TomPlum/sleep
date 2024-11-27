@@ -10,9 +10,9 @@ export const AsciiCheckbox = ({ label, checked, onToggle }: AsciiCheckboxProps) 
           [
         </span>
 
-        <span className={classNames(styles.xCheckMark, { [styles.checked]: checked })}>
-          {checked ? 'x' : '-'}
-        </span>
+        <pre className={classNames(styles.xCheckMark, { [styles.checked]: checked })}>
+          {checked ? 'o' : '-'}
+        </pre>
 
         <span className={styles.closeBracket}>
           ]
