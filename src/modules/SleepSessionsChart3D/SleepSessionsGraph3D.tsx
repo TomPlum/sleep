@@ -1,7 +1,8 @@
 import { ForceGraph3D } from 'react-force-graph'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { useSleepData } from 'data/useSleepData'
 import { AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial } from 'three'
+import { useSleepContext } from 'context/SleepContext'
+import { SleepMetric } from 'modules/ChartControls'
 
 // TODO: Move to types file
 interface ForceGraphMethods {
@@ -16,7 +17,7 @@ interface LinkConfig {
 
 export const SleepSessionsGraph3D = () => {
   const graphRef = useRef<ForceGraphMethods>()
-  const { sleepData, loading } = useSleepData()
+  const { graphData2d } = useSleepContext()
 
   useEffect(() => {
    if (graphRef.current) {
@@ -49,37 +50,30 @@ export const SleepSessionsGraph3D = () => {
   }, [])
 
   const graphData = useMemo(() => {
-    const nodes = sleepData?.sessions.flatMap((session, i) => [
+    const nodes = graphData2d?.data.flatMap((session, i) => [
       {
         id: session.id,
         group: 'sleepQuality',
         x: (i + 1) * 50,
-        y: session.sleepQuality * 50,
+        y: session[SleepMetric.QUALITY] * 50,
         z: 0
-      },
-      {
-        id: session.id + 'awake',
-        group: 'awake',
-        x: (i + 1) * 50,
-        y: session.duration.awake * 50,
-        z: 50
       }
     ])
 
-    const links = sleepData?.sessions.reduce((acc: Array<LinkConfig>, aSession, i) => {
-      if (i < sleepData?.sessions.length - 1) {
-        const bSession = sleepData?.sessions[i + 1]
+    const links = graphData2d?.data.reduce((acc: Array<LinkConfig>, aSession, i) => {
+      if (i < graphData2d?.data.length - 1) {
+        const bSession = graphData2d?.data[i + 1]
 
         acc.push({
           source: aSession.id,
           target: bSession.id,
-          value: bSession.sleepQuality
+          value: bSession[SleepMetric.QUALITY],
         })
 
         acc.push({
           source: aSession.id + 'awake',
           target: bSession.id + 'awake',
-          value: bSession.duration.awake
+          value: bSession[SleepMetric.AWAKE_TIME]
         })
 
         return acc
@@ -92,7 +86,7 @@ export const SleepSessionsGraph3D = () => {
       nodes,
       links
     }
-  }, [sleepData?.sessions])
+  }, [graphData2d?.data])
 
   // @ts-expect-error to fix later if I come back
   const linkColor = useCallback(link => {
@@ -109,10 +103,6 @@ export const SleepSessionsGraph3D = () => {
     }
   }, [])
 
-  if (loading) {
-    return 'Loading...'
-  }
-
   return (
       <ForceGraph3D
         // @ts-expect-error to fix later if I come back
@@ -123,7 +113,6 @@ export const SleepSessionsGraph3D = () => {
         d3VelocityDecay={0.9}
         linkColor={linkColor}
         nodeColor='#9a30fe'
-        // @ts-expect-error to fix later if I come back
         graphData={graphData}
         backgroundColor='#171717'
       />

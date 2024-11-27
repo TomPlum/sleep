@@ -1,5 +1,6 @@
 import { AsciiCheckboxProps } from 'modules/ChartControls/components/AsciiCheckbox/types'
 import styles from './AsciiCheckbox.module.scss'
+import classNames from 'classnames'
 
 export const AsciiCheckbox = ({ label, checked, onToggle }: AsciiCheckboxProps) => {
   return (
@@ -9,8 +10,8 @@ export const AsciiCheckbox = ({ label, checked, onToggle }: AsciiCheckboxProps) 
           [
         </span>
 
-        <span className={styles.xCheckMark}>
-          {checked ? 'x' : ''}
+        <span className={classNames(styles.xCheckMark, { [styles.checked]: checked })}>
+          {checked ? 'x' : '-'}
         </span>
 
         <span className={styles.closeBracket}>
@@ -21,7 +22,7 @@ export const AsciiCheckbox = ({ label, checked, onToggle }: AsciiCheckboxProps) 
       <input
         type='checkbox'
         checked={checked}
-        onClick={onToggle}
+        onChange={onToggle}
         className={styles.checkbox}
       />
 

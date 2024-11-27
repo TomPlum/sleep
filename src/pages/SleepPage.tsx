@@ -8,7 +8,7 @@ import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessio
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
-import { SleepSessionsGraph3D } from 'modules/SleepSessionsChart3D/SleepSessionsGraph3D'
+import { SleepSessionsGraph3D } from 'modules/SleepSessionsChart3D'
 import { SleepPageChrome } from 'components/SleepPageChrome'
 
 export const SleepPage = () => {

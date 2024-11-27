@@ -16,19 +16,26 @@
     }
 
     .openBracket, .closeBracket {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
 
     .xCheckMark {
-      width: 8px;
+      width: 7px;
       padding: 0 2px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
+      opacity: 0.5;
+      color: #ffffff;
+    }
+
+    .checked {
       color: #42fc60;
+      opacity: 1;
     }
   }
 
   .labelText {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     margin-left: 3px;
+    margin-top: 2px;
   }
 }
