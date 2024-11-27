@@ -10,6 +10,7 @@ import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 import { SleepSessionsGraph3D } from 'modules/SleepSessionsChart3D'
 import { SleepPageChrome } from 'components/SleepPageChrome'
+import { ThreeConfigContextProvider } from 'context/ThreeConfigContext'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
@@ -26,7 +27,9 @@ export const SleepPage = () => {
   if (is3DActive) {
     return (
       <SleepPageChrome>
-        <SleepSessionsGraph3D />
+        <ThreeConfigContextProvider>
+          <SleepSessionsGraph3D />
+        </ThreeConfigContextProvider>
       </SleepPageChrome>
     )
   }

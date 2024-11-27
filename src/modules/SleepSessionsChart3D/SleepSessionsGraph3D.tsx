@@ -1,6 +1,6 @@
 import { ForceGraph3D } from 'react-force-graph'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { AxesHelper, CanvasTexture, Sprite, SpriteMaterial } from 'three'
+import { CanvasTexture, Sprite, SpriteMaterial } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
 import { ForceGraphMethods, LinkConfig, NodeConfig } from './types'
@@ -10,14 +10,17 @@ import dayjs from 'dayjs'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
 import { ThreeControls } from 'modules/SleepSessionsChart3D/components/ThreeControls'
 import styles from './SleepSessionsChart3D.module.scss'
+import { useThreeAxis } from 'modules/SleepSessionsChart3D/hooks/useThreeAxis'
 
 export const SleepSessionsGraph3D = () => {
-  const graphRef = useRef<ForceGraphMethods>()
   const { graphData2d } = useSleepContext()
+
+  const graphRef = useRef<ForceGraphMethods>()
 
   const [chartData, setChartData] = useState(graphData2d.data.slice(graphData2d.data.length - 50, graphData2d.data.length - 1))
 
   useStats()
+  useThreeAxis({ graphRef })
 
   useEffect(() => {
    if (graphRef.current) {
@@ -30,8 +33,6 @@ export const SleepSessionsGraph3D = () => {
      graph.postProcessingComposer().addPass(bloomPass)
 
      const scene = graph.scene()
-     const axesHelper = new AxesHelper(5000)
-     scene.add(axesHelper)
 
      // Add axis labels as Sprites
      const addLabel = (text: string, position: [number, number, number]) => {
