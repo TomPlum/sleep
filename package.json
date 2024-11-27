@@ -29,7 +29,7 @@
     "react-router-dom": "^6.27.0",
     "recharts": "^2.12.7",
     "stats.js": "^0.17.0",
-    "three": "^0.170.0",
+    "three": "^0.155.0",
     "uuid": "^11.0.3"
   },
   "devDependencies": {

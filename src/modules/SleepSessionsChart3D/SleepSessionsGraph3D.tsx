@@ -1,21 +1,33 @@
 import { ForceGraph3D } from 'react-force-graph'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AxesHelper, CanvasTexture, Sprite, SpriteMaterial } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
-import { ForceGraphMethods, LinkConfig } from './types'
+import { ForceGraphMethods, LinkConfig, NodeConfig } from './types'
 import { useStats } from 'modules/SleepSessionsChart3D/hooks/useStats'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+import dayjs from 'dayjs'
+import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
 
 export const SleepSessionsGraph3D = () => {
   const graphRef = useRef<ForceGraphMethods>()
   const { graphData2d } = useSleepContext()
 
+  const [chartData, setChartData] = useState(graphData2d.data.slice(graphData2d.data.length - 50, graphData2d.data.length - 1))
+
   useStats()
 
   useEffect(() => {
    if (graphRef.current) {
-     const scene = graphRef.current.scene()
+     const graph = graphRef.current
 
+     const bloomPass = new UnrealBloomPass()
+     bloomPass.strength = 4
+     bloomPass.radius = 1
+     bloomPass.threshold = 0
+     graph.postProcessingComposer().addPass(bloomPass)
+
+     const scene = graph.scene()
      const axesHelper = new AxesHelper(5000)
      scene.add(axesHelper)
 
@@ -43,75 +55,128 @@ export const SleepSessionsGraph3D = () => {
   }, [])
 
   const graphData = useMemo(() => {
-    const nodes = graphData2d?.data.flatMap((session, i) => [
-      {
-        id: session.id,
-        group: 'sleepQuality',
-        x: (i + 1) * 50,
-        y: session[SleepMetric.QUALITY] * 50,
-        z: 0
+    const nodes: NodeConfig[] = []
+    const links: LinkConfig[] = []
+    const rootIds: Record<number, string> = {}
+
+    chartData.forEach((session, i) => {
+      const x = i * 50
+      const y = 0
+
+      const sessionRootNode = {
+        id: `${session.id}-session-root`,
+        x,
+        y,
+        z: 0,
+        date: dayjs(session.date).format('YYYY-MM-DD'),
+        quality: session[SleepMetric.QUALITY]
       }
-    ])
 
-    const links = graphData2d?.data.reduce((acc: Array<LinkConfig>, aSession, i) => {
-      if (i < graphData2d?.data.length - 1) {
-        const bSession = graphData2d?.data[i + 1]
+      rootIds[i] = sessionRootNode.id
 
-        acc.push({
-          source: aSession.id,
-          target: bSession.id,
-          value: bSession[SleepMetric.QUALITY],
+      nodes.push(sessionRootNode)
+
+      const metricNodes = [
+        {
+          id: `${session.id}-quality`,
+          metric: SleepMetric.QUALITY,
+          x,
+          y,
+          z: 10,
+          date: dayjs(session.date).format('YYYY-MM-DD'),
+          quality: session[SleepMetric.QUALITY]
+        },
+        {
+          id: `${session.id}-duration`,
+          metric: SleepMetric.DURATION,
+          x: x + 10,
+          y,
+          z: -10,
+          date: dayjs(session.date).format('YYYY-MM-DD'),
+          quality: session[SleepMetric.QUALITY]
+        },
+        {
+          id: `${session.id}-awake`,
+          metric: SleepMetric.AWAKE_TIME,
+          x: x - 10,
+          y,
+          z: -5,
+          date: dayjs(session.date).format('YYYY-MM-DD'),
+          quality: session[SleepMetric.AWAKE_TIME]
+        },
+        {
+          id: `${session.id}-rem`,
+          metric: SleepMetric.REM_SLEEP,
+          x: x - 10,
+          y: y + 5,
+          z: -5,
+          date: dayjs(session.date).format('YYYY-MM-DD'),
+          quality: session[SleepMetric.REM_SLEEP]
+        },
+        {
+          id: `${session.id}-light`,
+          metric: SleepMetric.LIGHT_SLEEP,
+          x: x + 10,
+          y: y - 5,
+          z: 5,
+          date: dayjs(session.date).format('YYYY-MM-DD'),
+          quality: session[SleepMetric.LIGHT_SLEEP]
+        },
+        {
+          id: `${session.id}-deep`,
+          metric: SleepMetric.DEEP_SLEEP,
+          x: x + 10,
+          y: y - 5,
+          z: 5,
+          date: dayjs(session.date).format('YYYY-MM-DD'),
+          quality: session[SleepMetric.LIGHT_SLEEP]
+        }
+      ]
+
+      metricNodes.forEach(metricNode => {
+        nodes.push(metricNode)
+
+        links.push({
+          source: sessionRootNode.id,
+          target: metricNode.id,
+          value: session[SleepMetric.QUALITY]
         })
+      })
 
-     /*   acc.push({
-          source: aSession.id + '_awake',
-          target: bSession.id + '_awake',
-          value: bSession[SleepMetric.AWAKE_TIME]
-        })*/
-
-        return acc
+      if (i > 0 && i < chartData.length) {
+        links.push({
+          source: rootIds[i - 1],
+          target: sessionRootNode.id,
+          value: session[SleepMetric.QUALITY]
+        })
       }
-
-      return acc
-    }, [])
+    })
 
     return {
       nodes,
       links
     }
-  }, [graphData2d?.data])
+  }, [chartData])
 
-  const linkColor = useCallback((link: { source: string } ) => {
-    const node = graphData.nodes.find(node => node.id == link.source)
+  console.log('graphData', graphData)
 
-    if (!node) {
-      return 'red'
+  const nodeColour = useCallback((node: NodeConfig ) => {
+    if (!node.metric) {
+      return 'white'
     }
 
-    switch(node.group) {
-      case 'sleepQuality': {
-        return '#9a30fe'
-      }
-      case 'awake': {
-        return '#f89128'
-      }
-      default: {
-        return 'yellow'
-      }
-    }
-  }, [graphData.nodes])
+    return getMetricColour(node.metric)
+  }, [])
 
   return (
     <ForceGraph3D
       // @ts-expect-error to fix later if I come back
       ref={graphRef}
-      nodeAutoColorBy='group'
-      d3AlphaMin={0.1}
-      d3VelocityDecay={0.9}
-      linkColor={linkColor}
-      nodeColor='#9a30fe'
+      nodeLabel={data => `${data.date} (${data.quality}%)`}
+      linkColor='white'
+      nodeColor={nodeColour}
       graphData={graphData}
-      backgroundColor='#171717'
+      backgroundColor='#010101'
     />
   )
 }
