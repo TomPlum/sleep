@@ -48,6 +48,11 @@
         }
       }
     },
+    "graph3d": {
+      "controls": {
+        "showAxes": "軸を表示"
+      }
+    },
     "graph-controls": {
       "show-all": {
         "all": "すべて",

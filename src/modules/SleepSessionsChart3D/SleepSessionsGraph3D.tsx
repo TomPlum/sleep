@@ -8,6 +8,8 @@ import { useStats } from 'modules/SleepSessionsChart3D/hooks/useStats'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import dayjs from 'dayjs'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
+import { ThreeControls } from 'modules/SleepSessionsChart3D/components/ThreeControls'
+import styles from './SleepSessionsChart3D.module.scss'
 
 export const SleepSessionsGraph3D = () => {
   const graphRef = useRef<ForceGraphMethods>()
@@ -169,14 +171,18 @@ export const SleepSessionsGraph3D = () => {
   }, [])
 
   return (
-    <ForceGraph3D
-      // @ts-expect-error to fix later if I come back
-      ref={graphRef}
-      nodeLabel={data => `${data.date} (${data.quality}%)`}
-      linkColor='white'
-      nodeColor={nodeColour}
-      graphData={graphData}
-      backgroundColor='#010101'
-    />
+    <div className={styles.container}>
+      <ThreeControls />
+      
+      <ForceGraph3D
+        // @ts-expect-error to fix later if I come back
+        ref={graphRef}
+        nodeLabel={data => `${data.date} (${data.quality}%)`}
+        linkColor='white'
+        nodeColor={nodeColour}
+        graphData={graphData}
+        backgroundColor='#010101'
+      />
+    </div>
   )
 }

@@ -48,6 +48,11 @@
         }
       }
     },
+    "graph3d": {
+      "controls": {
+        "showAxes": "Show Axes"
+      }
+    },
     "graph-controls" : {
       "show-all": {
         "all": "All",
