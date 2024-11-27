@@ -7,6 +7,7 @@ export interface ForceGraphMethods {
   camera: () => Camera
   renderer: () => Renderer
   postProcessingComposer: () => PostProcessing
+  refresh: () => void
 }
 
 export interface LinkConfig {
@@ -29,5 +30,5 @@ export interface NodeConfig {
   metric?: SleepMetric
   date?: string
   source?: string
-  quality?: number
+  quality: number
 }

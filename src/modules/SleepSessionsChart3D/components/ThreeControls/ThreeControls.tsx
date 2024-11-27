@@ -4,8 +4,8 @@ import styles from './ThreeControls.module.scss'
 import { useThreeConfigContext } from 'context/ThreeConfigContext'
 
 export const ThreeControls = () => {
-  const { showAxes, setShowAxes } = useThreeConfigContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph3d.controls' })
+  const { showAxes, setShowAxes, draggableNodes, setDraggableNodes } = useThreeConfigContext()
 
   return (
     <div className={styles.threeControls}>
@@ -13,6 +13,12 @@ export const ThreeControls = () => {
         checked={showAxes}
         label={t('showAxes')}
         onToggle={() => setShowAxes(!showAxes)}
+      />
+
+      <AsciiCheckbox
+        checked={draggableNodes}
+        label={t('draggableNodes')}
+        onToggle={() => setDraggableNodes(!draggableNodes)}
       />
     </div>
   )

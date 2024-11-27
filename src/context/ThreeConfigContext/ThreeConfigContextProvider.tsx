@@ -4,11 +4,14 @@ import { ThreeConfigContext } from './ThreeConfigContext'
 
 export const ThreeConfigContextProvider = ({ children }: PropsWithChildren) => {
   const [showAxes, setShowAxes] = useState(false)
+  const [draggableNodes, setDraggableNodes] = useState(false)
 
   const values = useMemo<ThreeConfigContextBag>(() => ({
     showAxes,
-    setShowAxes
-  }), [showAxes])
+    setShowAxes,
+    draggableNodes,
+    setDraggableNodes
+  }), [showAxes, draggableNodes])
 
   return (
     <ThreeConfigContext.Provider value={values}>

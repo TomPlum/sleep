@@ -50,7 +50,8 @@
     },
     "graph3d": {
       "controls": {
-        "showAxes": "Show Axes"
+        "showAxes": "Show Axes",
+        "draggableNodes": "Draggable Nodes"
       }
     },
     "graph-controls" : {
