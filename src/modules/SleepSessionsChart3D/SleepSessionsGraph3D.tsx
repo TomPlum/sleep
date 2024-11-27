@@ -1,23 +1,16 @@
 import { ForceGraph3D } from 'react-force-graph'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { AxesHelper, CanvasTexture, Scene, Sprite, SpriteMaterial } from 'three'
+import { AxesHelper, CanvasTexture, Sprite, SpriteMaterial } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
-
-// TODO: Move to types file
-interface ForceGraphMethods {
-  scene: () => Scene
-}
-
-interface LinkConfig {
-  source: string
-  target: string
-  value: number
-}
+import { ForceGraphMethods, LinkConfig } from './types'
+import { useStats } from 'modules/SleepSessionsChart3D/hooks/useStats'
 
 export const SleepSessionsGraph3D = () => {
   const graphRef = useRef<ForceGraphMethods>()
   const { graphData2d } = useSleepContext()
+
+  useStats()
 
   useEffect(() => {
    if (graphRef.current) {
@@ -70,11 +63,11 @@ export const SleepSessionsGraph3D = () => {
           value: bSession[SleepMetric.QUALITY],
         })
 
-        acc.push({
-          source: aSession.id + 'awake',
-          target: bSession.id + 'awake',
+     /*   acc.push({
+          source: aSession.id + '_awake',
+          target: bSession.id + '_awake',
           value: bSession[SleepMetric.AWAKE_TIME]
-        })
+        })*/
 
         return acc
       }
@@ -88,9 +81,14 @@ export const SleepSessionsGraph3D = () => {
     }
   }, [graphData2d?.data])
 
-  // @ts-expect-error to fix later if I come back
-  const linkColor = useCallback(link => {
-    switch(link.source.group) {
+  const linkColor = useCallback((link: { source: string } ) => {
+    const node = graphData.nodes.find(node => node.id == link.source)
+
+    if (!node) {
+      return 'red'
+    }
+
+    switch(node.group) {
       case 'sleepQuality': {
         return '#9a30fe'
       }
@@ -98,23 +96,22 @@ export const SleepSessionsGraph3D = () => {
         return '#f89128'
       }
       default: {
-        return 'red'
+        return 'yellow'
       }
     }
-  }, [])
+  }, [graphData.nodes])
 
   return (
-      <ForceGraph3D
-        // @ts-expect-error to fix later if I come back
-        ref={graphRef}
-        nodeLabel='id'
-        nodeAutoColorBy='group'
-        d3AlphaMin={0.1}
-        d3VelocityDecay={0.9}
-        linkColor={linkColor}
-        nodeColor='#9a30fe'
-        graphData={graphData}
-        backgroundColor='#171717'
-      />
+    <ForceGraph3D
+      // @ts-expect-error to fix later if I come back
+      ref={graphRef}
+      nodeAutoColorBy='group'
+      d3AlphaMin={0.1}
+      d3VelocityDecay={0.9}
+      linkColor={linkColor}
+      nodeColor='#9a30fe'
+      graphData={graphData}
+      backgroundColor='#171717'
+    />
   )
 }
