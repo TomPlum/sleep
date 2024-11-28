@@ -1,3 +1,12 @@
+export interface ThreeConfigContextProviderProps {
+  /**
+   * Invoked when the camera has successfully
+   * been reset to its default orientation and
+   * position within the scene.
+   */
+  onResetCamera: () => void
+}
+
 export interface ThreeConfigContextBag {
   /**
    * Indicates whether the 3D axes
@@ -28,4 +37,11 @@ export interface ThreeConfigContextBag {
    * @param draggableNodes The new value.
    */
   setDraggableNodes: (draggableNodes: boolean) => void
+
+  /**
+   * Invoked when the camera has successfully
+   * been reset to its default orientation and
+   * position within the scene.
+   */
+  onResetCamera: () => void
 }

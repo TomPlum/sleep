@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react'
-import { ForceGraphMethods } from 'modules/SleepSessionsChart3D/types'
+import { ForceGraph3DInstance } from '3d-force-graph'
 
 export interface ThreeAxisProps {
-  graphRef: MutableRefObject<ForceGraphMethods | undefined>
+  graphRef: MutableRefObject<ForceGraph3DInstance | undefined>
 }

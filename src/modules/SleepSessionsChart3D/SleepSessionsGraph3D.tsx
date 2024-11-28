@@ -1,28 +1,29 @@
 import { ForceGraph3D } from 'react-force-graph'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
-import { ForceGraphMethods, LinkConfig, NodeConfig } from './types'
+import { LinkConfig, NodeConfig } from './types'
 import { useStats } from 'modules/SleepSessionsChart3D/hooks/useStats'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import dayjs from 'dayjs'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
-import { ThreeControls } from 'modules/SleepSessionsChart3D/components/ThreeControls'
-import styles from './SleepSessionsChart3D.module.scss'
 import { useThreeAxis } from 'modules/SleepSessionsChart3D/hooks/useThreeAxis'
 import { useThreeConfigContext } from 'context/ThreeConfigContext'
+import { ForceGraph3DInstance } from '3d-force-graph'
 
-export const SleepSessionsGraph3D = () => {
-  const { graphData2d } = useSleepContext()
+export const SleepSessionsGraph3D = forwardRef<ForceGraph3DInstance>((_props, ref) => {
+  const { graphData2d: { data }  } = useSleepContext()
   const { draggableNodes } = useThreeConfigContext()
 
-  const graphRef = useRef<ForceGraphMethods>()
+  const graphRef = useRef<ForceGraph3DInstance>()
 
-  const [chartData, setChartData] = useState(graphData2d.data.slice(graphData2d.data.length - 50, graphData2d.data.length - 1))
+  useImperativeHandle(ref, () => {
+    return graphRef.current as ForceGraph3DInstance
+  })
 
   useEffect(() => {
-    graphRef.current?.refresh()
+    graphRef?.current?.refresh()
   }, [draggableNodes])
 
   useStats()
@@ -45,7 +46,7 @@ export const SleepSessionsGraph3D = () => {
     const links: LinkConfig[] = []
     const rootIds: Record<number, string> = {}
 
-    chartData.forEach((session, i) => {
+    data.forEach((session, i) => {
       const x = i * 50
       const y = 0
 
@@ -129,7 +130,7 @@ export const SleepSessionsGraph3D = () => {
         })
       })
 
-      if (i > 0 && i < chartData.length) {
+      if (i > 0 && i < data.length) {
         links.push({
           source: rootIds[i - 1],
           target: sessionRootNode.id,
@@ -142,7 +143,7 @@ export const SleepSessionsGraph3D = () => {
       nodes,
       links
     }
-  }, [chartData])
+  }, [data])
 
   console.log('graphData', graphData)
 
@@ -155,26 +156,24 @@ export const SleepSessionsGraph3D = () => {
   }, [])
 
   return (
-    <div className={styles.container}>
-      <ThreeControls />
-      
-      <ForceGraph3D
-        // @ts-expect-error to fix later if I come back
-        ref={graphRef}
-        nodeLabel={data => `${data.date} (${data.quality}%)`}
-        linkColor='white'
-        nodeColor={nodeColour}
-        graphData={graphData}
-        backgroundColor='#010101'
-        enableNodeDrag={draggableNodes}
-        nodeThreeObject={(node: NodeConfig) => {
-          const radius = !node.metric ? 5 : Math.sqrt(node.quality)
-          return new Mesh(
-            new SphereGeometry(radius),
-            new MeshStandardMaterial({ color: nodeColour(node) })
-          )
-        }}
-      />
-    </div>
+    <ForceGraph3D
+      // @ts-expect-error to fix later if I come back
+      ref={graphRef}
+      nodeLabel={data => `${data.date} (${data.quality}%)`}
+      linkColor='white'
+      nodeColor={nodeColour}
+      graphData={graphData}
+      backgroundColor='#010101'
+      enableNodeDrag={draggableNodes}
+      nodeThreeObject={(node: NodeConfig) => {
+        const radius = !node.metric ? 5 : Math.sqrt(node.quality)
+        return new Mesh(
+          new SphereGeometry(radius),
+          new MeshStandardMaterial({ color: nodeColour(node) })
+        )
+      }}
+    />
   )
-}
+})
+
+SleepSessionsGraph3D.displayName = 'SleepSessionsGraph3D'

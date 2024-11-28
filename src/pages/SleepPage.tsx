@@ -8,9 +8,8 @@ import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessio
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
-import { SleepSessionsGraph3D } from 'modules/SleepSessionsChart3D'
 import { SleepPageChrome } from 'components/SleepPageChrome'
-import { ThreeConfigContextProvider } from 'context/ThreeConfigContext'
+import { ThreeScene } from 'modules/SleepSessionsChart3D/ThreeScene.tsx'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
@@ -27,9 +26,7 @@ export const SleepPage = () => {
   if (is3DActive) {
     return (
       <SleepPageChrome>
-        <ThreeConfigContextProvider>
-          <SleepSessionsGraph3D />
-        </ThreeConfigContextProvider>
+        <ThreeScene />
       </SleepPageChrome>
     )
   }

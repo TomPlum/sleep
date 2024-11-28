@@ -51,7 +51,8 @@
     "graph3d": {
       "controls": {
         "showAxes": "Show Axes",
-        "draggableNodes": "Draggable Nodes"
+        "draggableNodes": "Draggable Nodes",
+        "resetCamera": "Reset Camera"
       }
     },
     "graph-controls" : {

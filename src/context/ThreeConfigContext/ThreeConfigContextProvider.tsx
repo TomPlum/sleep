@@ -1,8 +1,8 @@
 import { PropsWithChildren, useMemo, useState } from 'react'
-import { ThreeConfigContextBag } from './types'
+import { ThreeConfigContextBag, ThreeConfigContextProviderProps } from './types'
 import { ThreeConfigContext } from './ThreeConfigContext'
 
-export const ThreeConfigContextProvider = ({ children }: PropsWithChildren) => {
+export const ThreeConfigContextProvider = ({ children, onResetCamera }: PropsWithChildren<ThreeConfigContextProviderProps>) => {
   const [showAxes, setShowAxes] = useState(false)
   const [draggableNodes, setDraggableNodes] = useState(false)
 
@@ -10,8 +10,9 @@ export const ThreeConfigContextProvider = ({ children }: PropsWithChildren) => {
     showAxes,
     setShowAxes,
     draggableNodes,
-    setDraggableNodes
-  }), [showAxes, draggableNodes])
+    setDraggableNodes,
+    onResetCamera
+  }), [showAxes, draggableNodes, onResetCamera])
 
   return (
     <ThreeConfigContext.Provider value={values}>

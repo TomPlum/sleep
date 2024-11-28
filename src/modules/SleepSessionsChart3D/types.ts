@@ -1,14 +1,4 @@
-import { Camera, Renderer, Scene } from 'three'
-import PostProcessing from 'three/src/renderers/common/PostProcessing'
 import { SleepMetric } from 'modules/ChartControls'
-
-export interface ForceGraphMethods {
-  scene: () => Scene
-  camera: () => Camera
-  renderer: () => Renderer
-  postProcessingComposer: () => PostProcessing
-  refresh: () => void
-}
 
 export interface LinkConfig {
   source: string
