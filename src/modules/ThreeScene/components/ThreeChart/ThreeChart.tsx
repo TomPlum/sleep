@@ -19,8 +19,6 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
 
   const graphRef = useRef<ForceGraph3DInstance>()
 
-  console.log('position', graphRef.current?.camera().position)
-
   useImperativeHandle(ref, () => ({
     ...graphRef.current,
     resetCamera: () => {
@@ -132,11 +130,11 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
           y: y - 5,
           z: 5,
           date: dayjs(session.date).format('YYYY-MM-DD'),
-          quality: session[SleepMetric.LIGHT_SLEEP]
+          quality: session[SleepMetric.DEEP_SLEEP]
         }
       ]
 
-      metricNodes.forEach(metricNode => {
+      metricNodes.filter(node => node.quality > 0).forEach(metricNode => {
         nodes.push(metricNode)
 
         links.push({
