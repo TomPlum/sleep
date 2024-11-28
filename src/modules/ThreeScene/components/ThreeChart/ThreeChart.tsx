@@ -4,11 +4,11 @@ import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
 import { LinkConfig, NodeConfig } from '../../types.ts'
-import { useStats } from 'modules/SleepSessionsChart3D/hooks/useStats'
+import { useStats } from 'modules/ThreeScene/hooks/useStats'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import dayjs from 'dayjs'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
-import { useThreeAxis } from 'modules/SleepSessionsChart3D/hooks/useThreeAxis'
+import { useThreeAxis } from 'modules/ThreeScene/hooks/useThreeAxis'
 import { useThreeConfigContext } from 'context/ThreeConfigContext'
 import { ThreeChartRef } from './types'
 import { ForceGraph3DInstance } from '3d-force-graph'
@@ -158,8 +158,6 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
       links
     }
   }, [data])
-
-  console.log('graphData', graphData)
 
   const nodeColour = useCallback((node: NodeConfig ) => {
     if (!node.metric) {
