@@ -1,11 +1,11 @@
-import { ForceGraph3D } from 'react-force-graph'
+import ForceGraph3D from 'react-force-graph-3d'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react'
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
 import { LinkConfig, NodeConfig } from '../../types'
 import { useStats } from 'modules/ThreeScene/hooks/useStats'
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
+// import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import dayjs from 'dayjs'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
 import { useThreeAxis } from 'modules/ThreeScene/hooks/useThreeAxis'
@@ -19,6 +19,8 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
 
   const graphRef = useRef<ForceGraph3DInstance>()
 
+  console.log('position', graphRef.current?.camera().position)
+
   useImperativeHandle(ref, () => ({
     ...graphRef.current,
     resetCamera: () => {
@@ -27,6 +29,8 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
         undefined,
         1000
       )
+
+      console.log(graphRef.current?.controls())
 
       setTimeout(() => {
         setResettingCamera(false)
@@ -41,7 +45,7 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
   useStats()
   useThreeAxis({ graphRef })
 
-  useEffect(() => {
+/*  useEffect(() => {
    if (graphRef.current) {
      const graph = graphRef.current
 
@@ -51,7 +55,7 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
      bloomPass.threshold = 0
      graph.postProcessingComposer().addPass(bloomPass)
    }
-  }, [])
+  }, [])*/
 
   const graphData = useMemo(() => {
     const nodes: NodeConfig[] = []
@@ -169,6 +173,7 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
 
   return (
     <ForceGraph3D
+      linkWidth={1}
       // @ts-expect-error to fix later if I come back
       ref={graphRef}
       linkColor='white'
