@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRe
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
-import { LinkConfig, NodeConfig } from '../../types.ts'
+import { LinkConfig, NodeConfig } from '../../types'
 import { useStats } from 'modules/ThreeScene/hooks/useStats'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import dayjs from 'dayjs'

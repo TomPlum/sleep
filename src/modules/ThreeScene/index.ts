@@ -1,1 +1,1 @@
-export * from './components/ThreeChart/ThreeChart.tsx'
+export * from './components/ThreeChart/ThreeChart'

@@ -9,7 +9,7 @@ import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 import { SleepPageChrome } from 'components/SleepPageChrome'
-import { ThreeScene } from 'modules/ThreeScene/ThreeScene.tsx'
+import { ThreeScene } from 'modules/ThreeScene/ThreeScene'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()

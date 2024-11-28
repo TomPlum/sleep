@@ -2,7 +2,7 @@ import { AsciiCheckbox } from 'modules/ChartControls/components/AsciiCheckbox'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { useCallback } from 'react'
-import { PageRoutes } from 'routes.ts'
+import { PageRoutes } from 'routes'
 import { useTranslation } from 'react-i18next'
 
 export const ThreeDimensionsToggle = () => {
