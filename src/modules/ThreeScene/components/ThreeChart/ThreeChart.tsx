@@ -179,6 +179,7 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
       linkColor='white'
       graphData={graphData}
       nodeColor={nodeColour}
+      cooldownTime={1500}
       linkCurvature={0.25}
       backgroundColor='#010101'
       linkDirectionalArrowRelPos={1}
