@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRe
 import { Mesh, MeshStandardMaterial, SphereGeometry } from 'three'
 import { useSleepContext } from 'context/SleepContext'
 import { SleepMetric } from 'modules/ChartControls'
-import { LinkConfig, NodeConfig } from './types'
+import { LinkConfig, NodeConfig } from '../../types.ts'
 import { useStats } from 'modules/SleepSessionsChart3D/hooks/useStats'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import dayjs from 'dayjs'
@@ -12,7 +12,7 @@ import { useThreeAxis } from 'modules/SleepSessionsChart3D/hooks/useThreeAxis'
 import { useThreeConfigContext } from 'context/ThreeConfigContext'
 import { ForceGraph3DInstance } from '3d-force-graph'
 
-export const SleepSessionsGraph3D = forwardRef<ForceGraph3DInstance>((_props, ref) => {
+export const ThreeChart = forwardRef<ForceGraph3DInstance>((_props, ref) => {
   const { graphData2d: { data }  } = useSleepContext()
   const { draggableNodes } = useThreeConfigContext()
 
@@ -176,4 +176,4 @@ export const SleepSessionsGraph3D = forwardRef<ForceGraph3DInstance>((_props, re
   )
 })
 
-SleepSessionsGraph3D.displayName = 'SleepSessionsGraph3D'
+ThreeChart.displayName = 'SleepSessionsGraph3D'

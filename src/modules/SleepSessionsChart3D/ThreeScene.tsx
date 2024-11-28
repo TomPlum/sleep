@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react'
 import { ThreeControls } from 'modules/SleepSessionsChart3D/components/ThreeControls'
 import styles from './ThreeScene.module.scss'
 import { ThreeConfigContextProvider } from 'context/ThreeConfigContext'
-import { SleepSessionsGraph3D } from 'modules/SleepSessionsChart3D/SleepSessionsGraph3D'
+import { ThreeChart } from 'modules/SleepSessionsChart3D/components/ThreeChart'
 import { ForceGraph3DInstance } from '3d-force-graph'
 
 export const ThreeScene = () => {
@@ -21,7 +21,7 @@ export const ThreeScene = () => {
     <ThreeConfigContextProvider onResetCamera={handleResetCamera}>
       <div className={styles.container}>
         <ThreeControls resetCamera={handleResetCamera}/>
-        <SleepSessionsGraph3D ref={graphRef} />
+        <ThreeChart ref={graphRef} />
       </div>
     </ThreeConfigContextProvider>
   )

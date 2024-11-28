@@ -1,1 +1,1 @@
-export * from './SleepSessionsGraph3D'
+export * from './components/ThreeChart/ThreeChart.tsx'
