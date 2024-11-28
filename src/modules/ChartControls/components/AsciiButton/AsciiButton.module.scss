@@ -3,13 +3,13 @@
 }
 
 .label {
-  font-family: "Nunito", sans-serif;
   display: flex;
   align-items: center;
 
   .box {
     display: flex;
     align-items: center;
+    width: 20px;
 
     &:hover {
       cursor: pointer;
@@ -25,27 +25,29 @@
     }
 
     .loader {
-      width: 7px;
+      width: 8px;
       padding: 0 2px;
       font-size: 0.8rem;
       opacity: 0.7;
-      color: #35fdd8;
+      color: #15fdcb;
       user-select: none;
       margin: 0;
       animation: spin 2s infinite linear;
     }
 
     .placeholder {
-      width: 7px;
-      padding: 0 2px;
+      width: 8px;
+      padding: 0 3px 0 2px;
       font-size: 0.7rem;
       user-select: none;
       margin: 0;
+      font-family: monospace;
     }
 
     .openBracket, .closeBracket {
       font-size: 0.7rem;
       user-select: none;
+      width: 6px;
     }
   }
 
@@ -54,5 +56,6 @@
     margin-left: 3px;
     margin-top: 2px;
     user-select: none;
+    font-family: "Nunito", sans-serif;
   }
 }
