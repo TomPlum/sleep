@@ -10,17 +10,29 @@ import dayjs from 'dayjs'
 import { getMetricColour } from 'modules/MetricLineChart/hooks/useGraphStyles'
 import { useThreeAxis } from 'modules/SleepSessionsChart3D/hooks/useThreeAxis'
 import { useThreeConfigContext } from 'context/ThreeConfigContext'
+import { ThreeChartRef } from './types'
 import { ForceGraph3DInstance } from '3d-force-graph'
 
-export const ThreeChart = forwardRef<ForceGraph3DInstance>((_props, ref) => {
+export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
   const { graphData2d: { data }  } = useSleepContext()
-  const { draggableNodes } = useThreeConfigContext()
+  const { draggableNodes, setResettingCamera } = useThreeConfigContext()
 
   const graphRef = useRef<ForceGraph3DInstance>()
 
-  useImperativeHandle(ref, () => {
-    return graphRef.current as ForceGraph3DInstance
-  })
+  useImperativeHandle(ref, () => ({
+    ...graphRef.current,
+    resetCamera: () => {
+      graphRef.current?.cameraPosition(
+        { x: 0, y: 0, z: 0 },
+        undefined,
+        1000
+      )
+
+      setTimeout(() => {
+        setResettingCamera(false)
+      }, 1000)
+    }
+  }))
 
   useEffect(() => {
     graphRef?.current?.refresh()

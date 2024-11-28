@@ -10,7 +10,11 @@ export const ThreeConfigContext = createContext<ThreeConfigContextBag>({
   setDraggableNodes: (draggableNodes: boolean) => {
     console.error(`Tried to invoke setDraggableNodes(${draggableNodes}) before ThreeConfigContext was initialised.`)
   },
-  onResetCamera: () => {
-    console.error('Tried to invoke onResetCamera() before ThreeConfigContext was initialised.')
+  resetCamera: () => {
+    console.error('Tried to invoke resetCamera() before ThreeConfigContext was initialised.')
+  },
+  resettingCamera: false,
+  setResettingCamera: (resettingCamera: boolean) => {
+    console.error(`Tried to invoke setResettingCamera(${resettingCamera}) before ThreeConfigContext was initialised.`)
   }
 })

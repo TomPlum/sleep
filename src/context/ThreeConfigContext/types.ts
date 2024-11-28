@@ -1,10 +1,9 @@
 export interface ThreeConfigContextProviderProps {
   /**
-   * Invoked when the camera has successfully
-   * been reset to its default orientation and
-   * position within the scene.
+   * Resets the camera to its default
+   * orientation within the scene.
    */
-  onResetCamera: () => void
+  resetCamera: () => void
 }
 
 export interface ThreeConfigContextBag {
@@ -39,9 +38,23 @@ export interface ThreeConfigContextBag {
   setDraggableNodes: (draggableNodes: boolean) => void
 
   /**
-   * Invoked when the camera has successfully
-   * been reset to its default orientation and
-   * position within the scene.
+   * Resets the camera to its default
+   * orientation within the scene.
    */
-  onResetCamera: () => void
+  resetCamera: () => void
+
+  /**
+   * Indicates that the camera
+   * is currently being reset to its
+   * original position.
+   */
+  resettingCamera: boolean
+
+  /**
+   * Sets a new value for resetting
+   * the camera.
+   *
+   * @param resettingCamera The new boolean value.
+   */
+  setResettingCamera: (resettingCamera: boolean) => void
 }

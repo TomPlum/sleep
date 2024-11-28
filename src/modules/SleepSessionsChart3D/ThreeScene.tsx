@@ -3,24 +3,19 @@ import { ThreeControls } from 'modules/SleepSessionsChart3D/components/ThreeCont
 import styles from './ThreeScene.module.scss'
 import { ThreeConfigContextProvider } from 'context/ThreeConfigContext'
 import { ThreeChart } from 'modules/SleepSessionsChart3D/components/ThreeChart'
-import { ForceGraph3DInstance } from '3d-force-graph'
+import { ThreeChartRef } from 'modules/SleepSessionsChart3D/components/ThreeChart/types'
 
 export const ThreeScene = () => {
-  const graphRef = useRef<ForceGraph3DInstance>(null)
+  const graphRef = useRef<ThreeChartRef>(null)
 
   const handleResetCamera = useCallback(() => {
-    if (graphRef.current) {
-      graphRef.current.cameraPosition(
-        { x: 0, y: 0, z: 0 },
-        undefined, 1000
-      )
-    }
+    graphRef.current?.resetCamera()
   }, [])
 
   return (
-    <ThreeConfigContextProvider onResetCamera={handleResetCamera}>
+    <ThreeConfigContextProvider resetCamera={handleResetCamera}>
       <div className={styles.container}>
-        <ThreeControls resetCamera={handleResetCamera}/>
+        <ThreeControls />
         <ThreeChart ref={graphRef} />
       </div>
     </ThreeConfigContextProvider>

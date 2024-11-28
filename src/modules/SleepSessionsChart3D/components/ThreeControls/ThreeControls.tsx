@@ -3,19 +3,25 @@ import { useTranslation } from 'react-i18next'
 import styles from './ThreeControls.module.scss'
 import { useThreeConfigContext } from 'context/ThreeConfigContext'
 import { AsciiButton } from 'modules/ChartControls/components/AsciiButton'
-import { ThreeControlProps } from 'modules/SleepSessionsChart3D/components/ThreeControls/types'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
-export const ThreeControls = ({ resetCamera }: ThreeControlProps) => {
+export const ThreeControls = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph3d.controls' })
-  const { showAxes, setShowAxes, draggableNodes, setDraggableNodes } = useThreeConfigContext()
 
-  const [resettingCamera, setResettingCamera] = useState(false)
+  const {
+    showAxes,
+    setShowAxes,
+    draggableNodes,
+    setDraggableNodes,
+    resetCamera,
+    resettingCamera,
+    setResettingCamera
+  } = useThreeConfigContext()
 
   const handleResetCamera = useCallback(() => {
     setResettingCamera(true)
     resetCamera()
-  }, [resetCamera])
+  }, [resetCamera, setResettingCamera])
 
   return (
     <div className={styles.threeControls}>
