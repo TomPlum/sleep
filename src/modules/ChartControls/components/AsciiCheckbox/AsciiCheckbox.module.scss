@@ -3,7 +3,6 @@
 }
 
 .label {
-  font-family: "Nunito", sans-serif;
   display: flex;
   align-items: center;
 
@@ -21,6 +20,7 @@
     }
 
     .xCheckMark {
+      font-family: monospace;
       width: 7px;
       padding: 0 2px;
       font-size: 0.8rem;
@@ -31,12 +31,14 @@
     }
 
     .checked {
+      font-family: monospace;
       color: #42fc60;
       opacity: 1;
     }
   }
 
   .labelText {
+    font-family: "Nunito", sans-serif;
     font-size: 0.6rem;
     margin-left: 3px;
     margin-top: 2px;

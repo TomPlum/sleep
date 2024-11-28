@@ -6,9 +6,9 @@ export const useStats = () => {
     const stats = new Stats()
     stats.showPanel(0)
     stats.dom.style.top = ''
-    stats.dom.style.right = ''
+    stats.dom.style.right = '0'
     stats.dom.style.bottom = '0'
-    stats.dom.style.left = '0'
+    stats.dom.style.left = ''
     document.body.appendChild(stats.dom)
 
     const animate = () => {
