@@ -138,15 +138,17 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
         links.push({
           source: sessionRootNode.id,
           target: metricNode.id,
-          value: session[SleepMetric.QUALITY]
+          value: 0
         })
       })
 
       if (i > 0 && i < data.length) {
+        // Link the last root node to this sessions root node
         links.push({
           source: rootIds[i - 1],
           target: sessionRootNode.id,
-          value: session[SleepMetric.QUALITY]
+          value: 1,
+          showDirectionalArrow: true
         })
       }
     })
@@ -171,12 +173,18 @@ export const ThreeChart = forwardRef<ThreeChartRef>((_props, ref) => {
     <ForceGraph3D
       // @ts-expect-error to fix later if I come back
       ref={graphRef}
-      nodeLabel={data => `${data.date} (${data.quality}%)`}
       linkColor='white'
-      nodeColor={nodeColour}
       graphData={graphData}
+      nodeColor={nodeColour}
+      linkCurvature={0.25}
       backgroundColor='#010101'
+      linkDirectionalArrowRelPos={1}
       enableNodeDrag={draggableNodes}
+      linkDirectionalParticles='value'
+      linkDirectionalParticleWidth={3}
+      linkDirectionalParticleSpeed={d => d.value * 0.010}
+      nodeLabel={data => `${data.date} (${data.quality}%)`}
+      linkDirectionalArrowLength={link => link.showDirectionalArrow ? 8 : 0}
       nodeThreeObject={(node: NodeConfig) => {
         const radius = !node.metric ? 5 : Math.sqrt(node.quality)
         return new Mesh(
