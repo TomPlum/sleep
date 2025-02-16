@@ -22,6 +22,14 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 # Examples
 - [Recent sleep quality vs awake time stacked charts](https://tomplum.github.io/sleep?metric=quality&start=1720652400000&end=1731283200000&lng=en&stacked=true&metrics=quality%2Cawake_time)
 - [Sleep quality over time across all recorded sessions](https://tomplum.github.io/sleep?metric=quality&start=1534457817000&end=1728199961000&lng=en&stacked=false&metrics=quality%2Cdeep_sleep)
+- [Light sleep vs deep sleep comparison (2024)](https://tomplum.github.io/sleep?metric=quality&start=1705363200000&end=1734307200000&lng=en&view=multiple-metrics&is3D=false&metrics=light_sleep%2Cdeep_sleep)
+- [3D experimental mode](https://tomplum.github.io/sleep?metric=quality&start=1734312974860&end=1739669774860&lng=en&view=single-metric&is3D=true)
+
+# Data Source
+Data is exported from the [Pillow iOS](https://pillow.app/) application on my iPhone via the `Export Database` option in the settings.
+It's a fairly large (~40MB) text file committed to the codebase and served from the `public` directory. It's offloaded to a web-worker when the site is loaded and processed before messages are posted back to the main thread with updates and the parsed data.
+
+![web-worker-loading.png](docs/images/web-worker-loading.png)
 
 # 2D Graph Views
 2-Dimensional line charts to visual the change in specific sleep metrics over time. Clicking a sleep session node will render a gantt-style chart at the bottom with a breakdown of the sleep stages.
