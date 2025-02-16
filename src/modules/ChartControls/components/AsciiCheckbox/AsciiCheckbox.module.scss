@@ -1,0 +1,48 @@
+.checkbox {
+  display: none;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+
+  .box {
+    display: flex;
+    align-items: center;
+    width: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .openBracket, .closeBracket {
+      font-size: 0.7rem;
+      user-select: none;
+      width: 6px;
+    }
+
+    .xCheckMark {
+      font-family: monospace;
+      width: 8px;
+      padding: 0 2px;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      color: #ff8484;
+      user-select: none;
+      margin: 0;
+    }
+
+    .checked {
+      color: #42fc60;
+      opacity: 1;
+    }
+  }
+
+  .labelText {
+    font-family: "Nunito", sans-serif;
+    font-size: 0.6rem;
+    margin-left: 3px;
+    margin-top: 2px;
+    user-select: none;
+  }
+}

@@ -1,18 +1,19 @@
 import styles from './SleepPage.module.scss'
 import { SleepMetricLineChart } from 'modules/MetricLineChart'
 import { useSleepContext } from 'context/SleepContext'
-import { GraphControls, SleepMetric } from 'modules/ChartControls'
-import { ActiveSessionInfo } from 'components/ActiveSessionInfo'
+import { SleepMetric } from 'modules/ChartControls'
 import { ChartMetricSelection } from 'components/ChartMetricSelection'
 import { DataLoading } from 'data/DataLoading'
 import { SleepSessionInfo } from 'modules/SleepStageChart/components/SleepSessionInfo'
 import { useDynamicFavicon } from 'hooks/useDynamicFavicon'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
+import { SleepPageChrome } from 'components/SleepPageChrome'
+import { ThreeScene } from 'modules/ThreeScene/ThreeScene'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
-  const { chartView, sleepMetric, activeMetrics } = useChartConfigContext()
+  const { chartView, sleepMetric, activeMetrics, is3DActive } = useChartConfigContext()
 
   useDynamicFavicon()
 
@@ -22,69 +23,71 @@ export const SleepPage = () => {
     )
   }
 
+  if (is3DActive) {
+    return (
+      <SleepPageChrome>
+        <ThreeScene />
+      </SleepPageChrome>
+    )
+  }
+
   return (
-    <div className={styles.container}>
-      <ActiveSessionInfo className={styles.sessionInfo} />
+    <SleepPageChrome>
+      {chartView == ChartView.SINGLE_METRIC && (
+        <>
+          <SleepMetricLineChart
+            metric={sleepMetric}
+            className={styles.graph}
+          />
 
-      <GraphControls className={styles.controls} />
+          {!sleepMetric && (
+            <ChartMetricSelection
+              id='single-metric-view-metric-selection'
+            />
+          )}
+        </>
+      )}
 
-      <div className={styles.content}>
-        {chartView == ChartView.SINGLE_METRIC && (
-          <>
+      {chartView == ChartView.STACKED_METRICS && (
+        <>
+          {activeMetrics.map((metric: SleepMetric) => (
+            <SleepMetricLineChart
+              metric={metric}
+              className={styles.graph}
+              key={`sleep-graph-2d-${metric}`}
+            />
+          ))}
+
+          {activeMetrics.length < 2 && (
+            [...Array(2 - activeMetrics.length).keys()].map(i => (
+              <ChartMetricSelection
+                id={i}
+                key={`graph-placeholder-${i}`}
+              />
+            ))
+          )}
+        </>
+      )}
+
+      {chartView === ChartView.MULTIPLE_METRICS && (
+        <>
+          {activeMetrics.length === 2 && (
             <SleepMetricLineChart
               metric={sleepMetric}
               className={styles.graph}
             />
+          )}
 
-            {!sleepMetric && (
-              <ChartMetricSelection
-                id='single-metric-view-metric-selection'
-              />
-            )}
-          </>
-        )}
+          {activeMetrics.length < 2 && (
+            <ChartMetricSelection
+              allowDualSelection
+              id='multiple-metrics-view-metric-selection'
+            />
+          )}
+        </>
+      )}
 
-        {chartView == ChartView.STACKED_METRICS && (
-          <>
-            {activeMetrics.map((metric: SleepMetric) => (
-              <SleepMetricLineChart
-                metric={metric}
-                className={styles.graph}
-                key={`sleep-graph-2d-${metric}`}
-              />
-            ))}
-
-            {activeMetrics.length < 2 && (
-              [...Array(2 - activeMetrics.length).keys()].map(i => (
-                <ChartMetricSelection
-                  id={i}
-                  key={`graph-placeholder-${i}`}
-                />
-              ))
-            )}
-          </>
-        )}
-
-        {chartView === ChartView.MULTIPLE_METRICS && (
-          <>
-            {activeMetrics.length === 2 && (
-              <SleepMetricLineChart
-                metric={sleepMetric}
-                className={styles.graph}
-              />
-            )}
-
-            {activeMetrics.length < 2 && (
-              <ChartMetricSelection
-                allowDualSelection
-                id='multiple-metrics-view-metric-selection'
-              />
-            )}
-          </>
-        )}
-
-        <SleepSessionInfo />
-      </div>
-    </div>
+      <SleepSessionInfo />
+    </SleepPageChrome>
   )
 }

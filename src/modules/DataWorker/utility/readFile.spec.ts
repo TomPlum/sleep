@@ -34,7 +34,7 @@ describe('Read File Utility', () => {
 
       const file = await readFile('raw')
 
-      expect(fetch).toHaveBeenCalledWith('http://localhost:3000/PillowData-11-11-24.txt')
+      expect(fetch).toHaveBeenCalledWith('http://localhost:3000/PillowData-16-02-25.txt')
       expect(file.text()).toBe(fileContents)
     })
 
@@ -66,7 +66,7 @@ describe('Read File Utility', () => {
 
       await readFile('raw')
 
-      expect(fetch).toHaveBeenCalledWith('https://localhost:5173/custom-web-worker-origin/PillowData-11-11-24.txt')
+      expect(fetch).toHaveBeenCalledWith('https://localhost:5173/custom-web-worker-origin/PillowData-16-02-25.txt')
     })
 
     it('should append the context URL if the mode is production', async () => {
@@ -85,7 +85,7 @@ describe('Read File Utility', () => {
 
       await readFile('raw')
 
-      expect(fetch).toHaveBeenCalledWith('https://localhost:5173/custom-web-worker-origin/sleep/PillowData-11-11-24.txt')
+      expect(fetch).toHaveBeenCalledWith('https://localhost:5173/custom-web-worker-origin/sleep/PillowData-16-02-25.txt')
     })
 
     it('should postMessage with an error if the response is not ok', async () => {
@@ -101,7 +101,7 @@ describe('Read File Utility', () => {
         status: {
           code: DataWorkerStatusCode.ERROR
         },
-        error: new Error('Failed to read http://localhost:3000/PillowData-11-11-24.txt')
+        error: new Error('Failed to read http://localhost:3000/PillowData-16-02-25.txt')
       })
     })
   })
@@ -122,7 +122,7 @@ describe('Read File Utility', () => {
 
       const { fileContents } = await readRawDatabaseExport()
 
-      expect(fetch).toHaveBeenCalledWith('http://localhost:3000/PillowData-11-11-24.txt')
+      expect(fetch).toHaveBeenCalledWith('http://localhost:3000/PillowData-16-02-25.txt')
       expect(fileContents).toBe(contents)
 
       expect(postMessage).toHaveBeenCalledTimes(2)

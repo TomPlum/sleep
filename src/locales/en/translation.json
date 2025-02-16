@@ -48,6 +48,13 @@
         }
       }
     },
+    "graph3d": {
+      "controls": {
+        "showAxes": "Show Axes",
+        "draggableNodes": "Draggable Nodes",
+        "resetCamera": "Reset Camera"
+      }
+    },
     "graph-controls" : {
       "show-all": {
         "all": "All",
@@ -63,6 +70,9 @@
         "stacked-metrics": {
           "label": "Stacked Metrics"
         }
+      },
+      "three-dimensions-toggle": {
+        "label": "3D (Experimental)"
       },
       "metric-config": {
         "checkbox": {

@@ -20,7 +20,9 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     setRangeStart,
     handleSetStackedMetrics,
     chartView,
-    setChartView
+    setChartView,
+    is3dActive,
+    setIs3DActive
   } = useDefaultQueryParams()
 
   useEffect(() => {
@@ -39,8 +41,10 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     activeMetrics: activeMetrics ?? [],
     setActiveMetrics: handleSetStackedMetrics,
     chartView: chartView ?? ChartView.SINGLE_METRIC,
-    setChartView
-  }), [chartView, currentMetric, handleSetStackedMetrics, rangeEnd, rangeStart, setChartView, setCurrentMetric, setRangeEnd, setRangeStart, activeMetrics])
+    setChartView,
+    is3DActive: is3dActive ?? false,
+    setIs3DActive
+  }), [rangeStart, setRangeStart, rangeEnd, setRangeEnd, currentMetric, setCurrentMetric, activeMetrics, handleSetStackedMetrics, chartView, setChartView, is3dActive, setIs3DActive])
 
   return (
     <ChartConfigContext.Provider value={value}>

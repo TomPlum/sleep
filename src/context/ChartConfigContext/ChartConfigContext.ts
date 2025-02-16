@@ -23,5 +23,9 @@ export const ChartConfigContext = createContext<ChartConfigContextBag>({
   activeMetrics: [SleepMetric.QUALITY],
   setActiveMetrics: () => {
     console.debug('Tried to setStackedMetrics() in the ChartConfigContext before initialisation.')
+  },
+  is3DActive: false,
+  setIs3DActive: (is3D: boolean) => {
+    console.debug(`Tried to setIs3DActive(${is3D}) in the ChartConfigContext before initialisation.`)
   }
 })

@@ -1,0 +1,61 @@
+.button {
+  display: none;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+
+  .box {
+    display: flex;
+    align-items: center;
+    width: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loader {
+      width: 8px;
+      padding: 0 2px;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      color: #15fdcb;
+      user-select: none;
+      margin: 0;
+      animation: spin 2s infinite linear;
+    }
+
+    .placeholder {
+      width: 8px;
+      padding: 0 3px 0 2px;
+      font-size: 0.7rem;
+      user-select: none;
+      margin: 0;
+      font-family: monospace;
+    }
+
+    .openBracket, .closeBracket {
+      font-size: 0.7rem;
+      user-select: none;
+      width: 6px;
+    }
+  }
+
+  .labelText {
+    font-size: 0.6rem;
+    margin-left: 3px;
+    margin-top: 2px;
+    user-select: none;
+    font-family: "Nunito", sans-serif;
+  }
+}

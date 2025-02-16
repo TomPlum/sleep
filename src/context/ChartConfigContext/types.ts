@@ -72,4 +72,18 @@ export interface ChartConfigContextBag {
    * @param metrics A list of new metrics.
    */
   setActiveMetrics: Dispatch<SetStateAction<SleepMetric[]>>
+
+  /**
+   * Denotes whether the 3D
+   * mode is active.
+   */
+  is3DActive: boolean
+
+  /**
+   * Sets a new value for the 3D
+   * experimental mode.
+   *
+   * @param is3D The new value for is3D.
+   */
+  setIs3DActive: (is3D: boolean) => void
 }

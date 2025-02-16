@@ -1,0 +1,23 @@
+import { useCallback, useRef } from 'react'
+import { ThreeControls } from 'modules/ThreeScene/components/ThreeControls'
+import styles from './ThreeScene.module.scss'
+import { ThreeConfigContextProvider } from 'context/ThreeConfigContext'
+import { ThreeChart } from 'modules/ThreeScene/components/ThreeChart'
+import { ThreeChartRef } from 'modules/ThreeScene/components/ThreeChart/types'
+
+export const ThreeScene = () => {
+  const graphRef = useRef<ThreeChartRef>(null)
+
+  const handleResetCamera = useCallback(() => {
+    graphRef.current?.resetCamera()
+  }, [])
+
+  return (
+    <ThreeConfigContextProvider resetCamera={handleResetCamera}>
+      <div className={styles.container}>
+        <ThreeControls />
+        <ThreeChart ref={graphRef} />
+      </div>
+    </ThreeConfigContextProvider>
+  )
+}

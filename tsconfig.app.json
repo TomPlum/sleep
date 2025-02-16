@@ -9,7 +9,9 @@
     "paths": {
       "*": ["./src/*"]
     },
-    "types": ["vitest/globals", "vite/client"],
+    "types": ["vitest/globals", "vite/client", "three"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",

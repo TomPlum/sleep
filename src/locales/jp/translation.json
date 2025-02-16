@@ -48,6 +48,12 @@
         }
       }
     },
+    "graph3d": {
+      "controls": {
+        "showAxes": "軸を表示",
+        "draggableNodes": "可動ノード"
+      }
+    },
     "graph-controls": {
       "show-all": {
         "all": "すべて",
