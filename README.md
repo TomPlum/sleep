@@ -5,6 +5,7 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
 <!-- TOC -->
 * [:zzz: Sleep Health Data Visualisation](#zzz-sleep-health-data-visualisation)
 * [Examples](#examples)
+* [Data Source](#data-source)
 * [2D Graph Views](#2d-graph-views)
   * [Stacked Metrics](#stacked-metrics)
   * [Compare Metrics](#compare-metrics)
