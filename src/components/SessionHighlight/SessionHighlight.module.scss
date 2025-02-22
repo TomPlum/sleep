@@ -26,6 +26,15 @@
         transition: stroke-dashoffset 0.5s ease-in-out;
         transform-origin: center;
       }
+
+      .innerTrack {
+        opacity: 0.2;
+      }
+
+      .innerProgress {
+        transition: stroke-dashoffset 0.5s ease-in-out;
+        transform-origin: center;
+      }
     }
 
     .percentage {
