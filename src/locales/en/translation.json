@@ -15,6 +15,9 @@
         "naps": " (0 / {{ naps }} naps)",
         "please-select": "Awaiting metric selection..."
       },
+      "session-highlight": {
+        "title": "Best session"
+      },
       "data-source": {
         "title": "Download source data"
       },

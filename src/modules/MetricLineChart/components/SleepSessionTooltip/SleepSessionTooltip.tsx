@@ -7,6 +7,7 @@ import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 import { useCallback } from 'react'
 import { SleepMood } from 'data/useSleepData'
 import { FrownOutlined, MehOutlined, QuestionCircleOutlined, SmileOutlined } from '@ant-design/icons'
+import { formatDuration } from 'utils/formatDuration'
 
 export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.tooltip' })
@@ -62,7 +63,7 @@ export const SleepSessionTooltip = ({ active, payload }: TooltipProps<number, st
         </Typography>
 
         <Typography className={styles.value}>
-          {Math.floor(data.duration / 60)}h {Math.round(data.duration % 60)}m
+          {formatDuration(data.duration)}
         </Typography>
 
         <Typography className={styles.label}>

@@ -4,12 +4,15 @@ import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 import colours from '_colours.module.scss'
+import { useTranslation } from 'react-i18next'
+import { formatDuration } from 'utils/formatDuration'
 
 const size = 100
-const strokeWidth = 8
-const innerStrokeWidth = 5
+const strokeWidth = 10
+const innerStrokeWidth = 8
 
 export const SessionHighlight = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.session-highlight' })
   const { graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
 
   const bestSession = useMemo<SleepMetricLineChartDatum>(() => {
@@ -25,7 +28,7 @@ export const SessionHighlight = () => {
   console.log(bestSession)
 
   const radius = (size - strokeWidth) / 2
-  const innerRadius = ((size - innerStrokeWidth * 2) / 2) - 10
+  const innerRadius = ((size - innerStrokeWidth * 2) / 2) - 11
   const circumference = 2 * Math.PI * radius
   const innerCircumference = 2 * Math.PI * innerRadius
 
@@ -39,10 +42,6 @@ export const SessionHighlight = () => {
   return (
     <div className={styles.container}>
       <div className={styles.chart}>
-        <div className={styles.percentage}>
-          {sleepQualityPercentage}%
-        </div>
-
         <svg className={styles.percentageCircle} width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
           <circle
             className={styles.track}
@@ -90,6 +89,20 @@ export const SessionHighlight = () => {
             strokeLinecap="round"
           />
         </svg>
+      </div>
+
+      <div className={styles.right}>
+        <p className={styles.title}>
+          {t('title')}
+        </p>
+
+        <p className={styles.sleepQuality}>
+          {sleepQualityPercentage}%
+        </p>
+
+        <p className={styles.duration}>
+          {formatDuration(bestSession.duration)}
+        </p>
       </div>
     </div>
   )

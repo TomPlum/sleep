@@ -6,6 +6,9 @@
   border-radius: 30px;
   z-index: 100;
   padding: 20px;
+  display: flex;
+  font-family: "Nunito", sans-serif;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
 
   left: 500px;
   top: 500px;
@@ -36,16 +39,22 @@
         transform-origin: center;
       }
     }
+  }
 
-    .percentage {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18px;
+  .right {
+    margin-left: 15px;
+    height: 100%;
+
+    .title {
+      margin-top: 0;
+      margin-bottom: 3px;
       font-weight: bold;
-      font-family: "Nunito", sans-serif;
-      color: white;
+    }
+
+    .sleepQuality {
+      color: #52ea69;
+      font-weight: bold;
+      margin-top: 0;
     }
   }
 }
