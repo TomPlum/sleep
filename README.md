@@ -17,6 +17,7 @@ A simple 2D line chart visualisation of my sleep data as recorded by my Apple Wa
     * [Awake Time (% of session duration)](#awake-time--of-session-duration)
     * [Session Duration (% of 8 hours)](#session-duration--of-8-hours)
 * [3D Experimental View](#3d-experimental-view)
+* [Thanks to](#thanks-to)
 * [To Do](#to-do)
 <!-- TOC -->
 
@@ -69,6 +70,9 @@ Renders a single line chart for the selected metric.
 # 3D Experimental View
 
 ![3d-experimental.png](docs/images/3d-experimental.png)
+
+# Thanks to
+- User [Vinicius Ferreira](https://codepen.io/Suburbanno) for his open-source [Star animation CSS](https://codepen.io/Suburbanno/pen/OXeMvw) used in the loading screen.
 
 # To Do
 
