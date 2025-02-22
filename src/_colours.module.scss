@@ -1,0 +1,16 @@
+// Sleep Metrics
+$quality: rgb(145, 71, 255);
+$duration_percent: rgb(248, 242, 32);
+$awake_time: rgb(255, 188, 21);
+$light_sleep: rgb(84, 234, 153);
+$deep_sleep: rgb(21, 150, 255);
+$rem_sleep: rgb(255, 71, 231);
+
+:export {
+  quality: $quality;
+  durationPercent: $duration_percent;
+  awakeTime: $awake_time;
+  lightSleep: $light_sleep;
+  deepSleep: $deep_sleep;
+  remSleep: $rem_sleep;
+}
