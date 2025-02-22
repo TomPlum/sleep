@@ -10,14 +10,15 @@ export const ShowAllButton = () => {
   const { setDateRange } = useDateSelection()
   const { sleepData, graphData2d } = useSleepContext()
   const { rangeStart, rangeEnd } = useChartConfigContext()
+
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph-controls.show-all' })
 
   const isShowingAll = useMemo<boolean>(() => {
     if (graphData2d && sleepData) {
       const earliestRecordedSession = sleepData.earliestSession
       const latestRecordedSession = sleepData.latestSession
-      const isShowingLowerBound = rangeStart.getTime() === earliestRecordedSession.getTime()
-      const isShowingUpperBound = rangeEnd.getTime() === latestRecordedSession.getTime()
+      const isShowingLowerBound = rangeStart?.getTime() === earliestRecordedSession.getTime()
+      const isShowingUpperBound = rangeEnd?.getTime() === latestRecordedSession.getTime()
       return isShowingLowerBound && isShowingUpperBound
     }
 

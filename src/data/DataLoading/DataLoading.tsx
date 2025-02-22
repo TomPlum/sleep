@@ -5,6 +5,7 @@ import { Progress, Spin } from 'antd'
 import classNames from 'classnames'
 import { CheckCircleOutlined, LoadingOutlined } from '@ant-design/icons'
 import { useEventListener, DataWorkerStatusCode } from 'modules/DataWorker'
+import { StarryBackground } from 'data/StarryBackground'
 
 export const DataLoading = () => {
   const { status } = useEventListener()
@@ -26,7 +27,7 @@ export const DataLoading = () => {
   }, [status])
 
   return (
-    <div className={styles.loading}>
+    <StarryBackground className={styles.loading}>
       <div className={styles.eventHistory}>
         {Object.keys(history).map((event, index) => (
           <div
@@ -75,6 +76,6 @@ export const DataLoading = () => {
           />
         )}
       </div>
-    </div>
+    </StarryBackground>
   )
 }

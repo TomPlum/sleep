@@ -9,6 +9,7 @@ import { SleepPage } from 'pages/SleepPage'
 import { NotFoundPage } from 'pages/NotFoundPage'
 import { ConfigProvider, theme } from 'antd'
 import { PageRoutes } from 'routes'
+import { ImprovementsPage } from 'pages/ImprovementsPage'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: PageRoutes.SLEEP,
         element: <SleepPage />
+      },
+      {
+        path: PageRoutes.IMPROVEMENTS,
+        element: <ImprovementsPage />
       },
       {
         path: '*',

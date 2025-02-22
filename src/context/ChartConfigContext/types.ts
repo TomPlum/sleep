@@ -6,10 +6,16 @@ export interface ChartConfigContextBag {
   /**
    * The start date from which to filter the sleep
    * session data from when rendering the graph.
+   *
    * Is present as a query parameter and driven
    * by the date range picker.
+   *
+   * May be undefined in some renders if, for example,
+   * the page is loaded with no date range query parameters.
+   * It will then be calculated once data is loaded
+   * and set using {@link setRangeStart}.
    */
-  rangeStart: Date
+  rangeStart?: Date
 
   /**
    * Sets a new start date for the range filter.
@@ -20,10 +26,16 @@ export interface ChartConfigContextBag {
   /**
    * The end date from which to filter the sleep
    * session data from when rendering the graph.
+   *
    * Is present as a query parameter and driven
    * by the date range picker.
+   *
+   * May be undefined in some renders if, for example,
+   * the page is loaded with no date range query parameters.
+   * It will then be calculated once data is loaded
+   * and set using {@link setRangeEnd}.
    */
-  rangeEnd: Date
+  rangeEnd?: Date
 
   /**
    * Sets a new end date for the range filter.

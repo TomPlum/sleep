@@ -56,6 +56,7 @@ export const useRawSleepData = (): RawSleepData => {
   const { earliestSession, latestSession } = useMemo(() => {
     const earliestSession = new Date(Math.min(...sessions.map(session => session.startTime.getTime())))
     const latestSession = new Date(Math.max(...sessions.map(session => session.endTime.getTime())))
+
     return {
       earliestSession,
       latestSession

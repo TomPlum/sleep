@@ -1,0 +1,29 @@
+.page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 50px;
+  font-family: "Nunito", sans-serif;
+
+  .container {
+    max-width: 800px;
+    height: auto;
+  }
+
+  .chart {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .section {
+    .icon {
+
+    }
+
+    .title {
+      display: inline;
+      margin-left: 10px;
+    }
+  }
+}
