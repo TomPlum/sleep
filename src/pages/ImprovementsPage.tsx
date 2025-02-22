@@ -2,9 +2,17 @@ import styles from './ImprovementsPage.module.scss'
 import { useTranslation } from 'react-i18next'
 import { SleepMetricLineChart } from 'modules/MetricLineChart'
 import { SleepMetric } from 'modules/ChartControls'
-import { CalendarOutlined, ClockCircleOutlined, CoffeeOutlined, MehOutlined, RobotOutlined } from '@ant-design/icons'
+import {
+  ArrowLeftOutlined,
+  CalendarOutlined,
+  ClockCircleOutlined,
+  CoffeeOutlined,
+  MehOutlined,
+  RobotOutlined
+} from '@ant-design/icons'
 import { ForwardRefExoticComponent, RefAttributes } from 'react'
 import { AntdIconProps } from '@ant-design/icons/es/components/AntdIcon'
+import { PageRoutes } from 'routes.ts'
 
 interface SectionProps {
   id: number
@@ -66,6 +74,10 @@ export const ImprovementsPage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
+        <a href={PageRoutes.SLEEP}>
+          <ArrowLeftOutlined/> Back to sleep charts
+        </a>
+        
         <h1>{t('heading')}</h1>
 
         <div className={styles.chart}>
