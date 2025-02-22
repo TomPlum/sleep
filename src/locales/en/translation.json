@@ -86,6 +86,65 @@
       }
     }
   },
+  "improvements": {
+    "heading": "Improving my sleep",
+    "issues": {
+      "heading": "Issues I was having",
+      "1": {
+        "title": "Long time to sleep",
+        "desc": "It was regularly taking me several hours to get to fall asleep, resulting in significantly shorted sleep sessions. My year average was 5h 21m."
+      },
+      "2": {
+        "title": "Can fall asleep quickly any other time of day",
+        "desc": "Ironically I could fall into a real, deep sleep anywhere, any time of day, except at night when I'm supposed to. This sleep felt real. At night-time the sleep felt \"fake\", almost like it was an act. Sure, I was lay there, lights off, eyes closed, but that was it... the only real difference from being awake in the day is that I'm now horizontal."
+      },
+      "3": {
+        "title": "Waking up feeling exhausted",
+        "desc": "I'd wake up and feel shattered. A deep, heavy fatigue and weariness. Headaches. Eye strain. Only got worse throughout the day during work where I'd always be yawning."
+      },
+      "4": {
+        "title": "Psychological warfare with my own brain",
+        "desc": "I'd had many instances where \"I\" (Whatever conscious me is) felt ready to sleep but my brain (Not me, the sub-conscious part) would not let me sleep, almost as if it was against me. I'd find that if I got into bed at the right time with everything done, then my brain would perk up and do whatever it could to stop me from sleeping. Where as, if I'd forgotten to do something, like brush my teeth or set the alarm, then my brain would \"let\" me sleep since it knew that I'd have to get up and correct those things. I then found that I could trick my brain and say \"so what\", and ignore those chores and fall asleep."
+      }
+    },
+    "solutions": {
+      "heading": "Things I did to improve it",
+      "1": {
+        "title": "Taking time off work",
+        "desc": "I started these improvements off the back of a week off work which helped me with energy etc due to the lack of work. So its possible that riding that inertia into the established changes when back at work helped."
+      },
+      "2": {
+        "title": "Drinking more water",
+        "desc": "Yeah, yeah, I know, we've heard it all before... but it does help, unfortunately. I've always struggled to drink enough water consistently, and still do. But slowly ramping this up can help."
+      },
+      "3": {
+        "title": "Manual to automatic sleep tracking",
+        "desc": "Turning off the manual sleep tracking mode in my sleep app and using the automatic mode. No explicit or conscious “I’m going to sleep now” as I press the button in bed that might have been causing issues psychologically."
+      },
+      "4": {
+        "title": "Reading in bed",
+        "desc": "Years ago I stared reading in another room before bed to disassociate everything from my bedroom other than sleep. But actually, tiring my eyes out and keeping my brain occupied in the fantasy world and riding that sleepy inertia into bedtime seems to help."
+      },
+      "5": {
+        "title": "Sunlight expose in the morning",
+        "desc": "Going for a walk in the morning. Light exercise, fresh air and sunlight helps to keep my circadian rhythms in sync."
+      },
+      "6": {
+        "title": "Strict bedtimes",
+        "desc": "My bedtime routine wasn't too out of whack, but tightening this up helped."
+      },
+      "7": {
+        "title": "Keeping a dream journal",
+        "desc": "I’d usually remember having dreamt, plus bits of the details, maybe 10 times a year at most. Now I dream almost everyday and have vivid memories of what happened. May indicate deeper sleep which can be better for you."
+      }
+    },
+    "consequences": {
+      "heading": "What changed afterwards",
+      "1": {
+        "title": ""
+      }
+    }
+  },
   "not-found": {
     "status": "404",
     "heading": "You've wandered off into dreamland!",

@@ -30,12 +30,14 @@ import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 import { SleepMetric } from 'modules/ChartControls'
 import { LineActiveDot } from 'modules/MetricLineChart/components/LineActiveDot'
+import { useNavigate } from 'react-router-dom'
 
 export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChartProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { height } = useGraphHeight()
   const { updateQueryParam } = useQueryParams()
+  const navigate = useNavigate()
   const { chartView, activeMetrics } = useChartConfigContext()
 
   const lineMetrics = useMemo(() => {
@@ -196,6 +198,9 @@ export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChart
             strokeDasharray='5 10'
             stroke='rgb(255, 255, 255)'
             x={improvementDate?.getTime()}
+            onClick={() => {
+              navigate(PageRoutes.IMPROVEMENTS)
+            }}
             id='started_making_improvements_date_line'
           >
             {(chartView === ChartView.SINGLE_METRIC || isTopGraph) && (
