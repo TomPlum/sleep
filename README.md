@@ -77,7 +77,6 @@ Renders a single line chart for the selected metric.
 # To Do
 
 - Date parsing not working in Safari and breaks graph
-- Update screenshots in README
 - Update session breakdown to include data like the ios app does
 - Can we get heart rate data from the raw database export?
 - There are 58k sleep stage records mapped -> undefined, why?

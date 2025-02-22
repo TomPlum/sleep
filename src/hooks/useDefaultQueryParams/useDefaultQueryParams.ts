@@ -16,15 +16,16 @@ export const useDefaultQueryParams = () => {
   const [activeMetrics, setActiveMetrics] = useState(metrics)
 
   useEffect(() => {
+    // If any of the query parameters are undefined in their respective state hooks,
+    // it means the query parameter was missing from the URL when the page was loaded.
+    // Here we set them to sensible defaults if possible.
+
     if (!rangeStart || !rangeEnd || !currentMetric || !lng || !activeMetrics || !chartView || is3dActive === undefined) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
 
-      const selectedStart = rangeStart ?? new Date()
-      setRangeStart(selectedStart)
-
-      const selectedEnd = rangeEnd ?? new Date()
-      setRangeEnd(selectedEnd)
+      setRangeStart(rangeStart)
+      setRangeEnd(rangeEnd)
 
       const selectedLanguage = language ?? 'en'
       setLanguage(selectedLanguage)
@@ -40,11 +41,20 @@ export const useDefaultQueryParams = () => {
 
       const params: Record<string, string> = {
         metric: selectedMetric,
-        start: selectedStart.getTime().toString(),
-        end: selectedEnd.getTime().toString(),
         lng: selectedLanguage,
         view: selectedChartView,
         is3D: String(selectedIs3DActive)
+      }
+
+      // If there's no date range query params, then we can't default to anything
+      // since we don't know what the date range of the available data is. If it's
+      // not passed, it'll be updated once the data is loaded.
+      if (rangeStart) {
+        params.start = rangeStart.getTime().toString()
+      }
+
+      if (rangeEnd) {
+        params.end = rangeEnd.getTime().toString()
       }
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })

@@ -32,9 +32,9 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
   }, [i18n, language])
 
   const value = useMemo<ChartConfigContextBag>(() => ({
-    rangeStart: rangeStart ?? new Date(),
+    rangeStart,
     setRangeStart,
-    rangeEnd: rangeEnd ?? new Date(),
+    rangeEnd,
     setRangeEnd,
     sleepMetric: currentMetric ?? SleepMetric.QUALITY,
     setSleepMetric: setCurrentMetric,
