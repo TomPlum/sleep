@@ -7,8 +7,9 @@ import { Carousel, ConfigProvider, theme } from 'antd'
 import { HighlightCarouselItem } from 'modules/Highlights/components/HighlightCarouselItem'
 import { SessionHighlightCardProps } from './types'
 import { CloseOutlined } from '@ant-design/icons'
+import classNames from 'classnames'
 
-export const SessionHighlightCard = ({ onClose }: SessionHighlightCardProps) => {
+export const SessionHighlightCard = ({ className, onClose }: SessionHighlightCardProps) => {
   const { graphData2d: { data, latestSession } } = useSleepContext()
 
   const bestSession = useMemo<SleepMetricLineChartDatum>(() => {
@@ -36,7 +37,7 @@ export const SessionHighlightCard = ({ onClose }: SessionHighlightCardProps) => 
   }, [data, latestSession])
 
   return (
-    <div className={styles.container}>
+    <div className={classNames(styles.container, className)}>
       <div className={styles.content}>
         <CloseOutlined
           onClick={onClose}

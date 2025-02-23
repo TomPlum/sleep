@@ -36,6 +36,7 @@ export const SleepPage = () => {
     <SleepPageChrome>
       {showHighlightsCard && (
         <SessionHighlightCard
+          className={styles.highlightCard}
           onClose={() => setShowHighlightsCard(false)}
         />
       )}
