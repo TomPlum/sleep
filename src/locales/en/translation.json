@@ -159,6 +159,15 @@
       }
     }
   },
+  "highlights": {
+    "showcases": {
+      "best": {
+        "heading": "Your best session was on the {{ date }}.",
+        "duration": "You slept for {{ duration }}...",
+        "quality": "...with {{ quality }} sleep quality!"
+      }
+    }
+  },
   "not-found": {
     "status": "404",
     "heading": "You've wandered off into dreamland!",
