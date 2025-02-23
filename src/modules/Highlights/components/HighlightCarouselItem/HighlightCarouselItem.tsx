@@ -19,7 +19,9 @@ export const HighlightCarouselItem = ({ session, translationKey }: HighlightCaro
         size={100}
         strokeWidth={10}
         innerColor='white'
+        innerStrokeWidth={8}
         outerColor={colours.quality}
+        className={styles.progressCircles}
         outerPercent={sleepQualityPercentage}
         innerPercent={session[SleepMetric.DURATION]}
       />

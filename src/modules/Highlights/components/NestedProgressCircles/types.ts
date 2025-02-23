@@ -7,9 +7,17 @@ export interface NestedProgressCirclesProps {
 
   /**
    * The width, in pixels, of the progress
-   * stroke that moves along the circular track.
+   * stroke that moves along the circular track
+   * for the outer circle.
    */
   strokeWidth: number
+
+  /**
+   * The width, in pixels, of the progress
+   * stroke that moves along the circular track
+   * for the inner circle.
+   */
+  innerStrokeWidth: number
 
   /**
    * The percentage value of the outer circle.
