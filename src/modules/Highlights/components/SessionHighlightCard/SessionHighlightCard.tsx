@@ -3,7 +3,7 @@ import { useSleepContext } from 'context/SleepContext'
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
 import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
-import { Carousel } from 'antd'
+import { Carousel, ConfigProvider, theme } from 'antd'
 import { HighlightCarouselItem } from 'modules/Highlights/components/HighlightCarouselItem'
 
 
@@ -36,24 +36,42 @@ export const SessionHighlightCard = () => {
 
   return (
     <div className={styles.container}>
-      <Carousel className={styles.carousel} dotPosition='right'>
-        <HighlightCarouselItem
-          translationKey='best'
-          session={bestSession}
-        />
-
-        <HighlightCarouselItem
-          translationKey='worst'
-          session={worstSession}
-        />
-
-        {mostRecentSession && (
+      <ConfigProvider
+        theme={{
+          algorithm: theme.defaultAlgorithm,
+          components: {
+            Carousel: {
+              dotGap: 10,
+              dotOffset: 6
+            }
+          }
+        }}
+      >
+        <Carousel
+          dotPosition='right'
+          autoplaySpeed={3000}
+          className={styles.carousel}
+          autoplay={{ dotDuration: true }}
+          dots={{ className: styles.dots }}
+        >
           <HighlightCarouselItem
-            translationKey='recent'
-            session={mostRecentSession}
+            translationKey='best'
+            session={bestSession}
           />
-        )}
-      </Carousel>
+
+          <HighlightCarouselItem
+            translationKey='worst'
+            session={worstSession}
+          />
+
+          {mostRecentSession && (
+            <HighlightCarouselItem
+              translationKey='recent'
+              session={mostRecentSession}
+            />
+          )}
+        </Carousel>
+      </ConfigProvider>
     </div>
   )
 }
