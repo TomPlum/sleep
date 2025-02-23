@@ -1,6 +1,6 @@
 .container {
   position: absolute;
-  width: 250px;
+  width: 275px;
   height: 100px;
   background-color: #2d2d2d;
   border-radius: 30px;
@@ -13,35 +13,14 @@
   left: 500px;
   top: 500px;
 
-  .chart {
-    position: relative;
-    width: 100px;
-    height: 100px;
-
-    .percentageCircle {
-      transform: rotate(-90deg);
-
-      .track {
-        opacity: 0.2;
-      }
-
-      .progress {
-        transition: stroke-dashoffset 0.5s ease-in-out;
-        transform-origin: center;
-      }
-
-      .innerTrack {
-        opacity: 0.2;
-      }
-
-      .innerProgress {
-        transition: stroke-dashoffset 0.5s ease-in-out;
-        transform-origin: center;
-      }
+  .carousel {
+    .carouselItem {
+      height: 100px;
+      display: flex !important;
     }
   }
 
-  .right {
+  .content {
     margin-left: 15px;
     height: 100%;
 
@@ -51,10 +30,23 @@
       font-weight: bold;
     }
 
-    .sleepQuality {
-      color: #52ea69;
+    .duration {
+      font-size: 1.2em;
+      margin: 0;
+    }
+
+    .percentage {
       font-weight: bold;
-      margin-top: 0;
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .good {
+      color: #52ea69;
+    }
+
+    .bad {
+      color: #ef3970;
     }
   }
 }

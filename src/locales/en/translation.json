@@ -16,7 +16,15 @@
         "please-select": "Awaiting metric selection..."
       },
       "session-highlight": {
-        "title": "Best session"
+        "best": {
+          "title": "Best session"
+        },
+        "worst": {
+          "title": "Worst session"
+        },
+        "recent": {
+          "title": "Most recent session"
+        }
       },
       "data-source": {
         "title": "Download source data"

@@ -6,14 +6,16 @@ import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
 import colours from '_colours.module.scss'
 import { useTranslation } from 'react-i18next'
 import { formatDuration } from 'utils/formatDuration'
+import { Carousel } from 'antd'
+import { NestedProgressCircles } from 'modules/Highlights/components/NestedProgressCircles'
+import classNames from 'classnames'
 
 const size = 100
 const strokeWidth = 10
-const innerStrokeWidth = 8
 
 export const SessionHighlight = () => {
+  const { graphData2d: { data, latestSession } } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.session-highlight' })
-  const { graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
 
   const bestSession = useMemo<SleepMetricLineChartDatum>(() => {
     return data.reduce<SleepMetricLineChartDatum>((bestSessionSoFar, session) => {
@@ -25,85 +27,100 @@ export const SessionHighlight = () => {
     }, data[0])
   }, [data])
 
-  console.log(bestSession)
+  const worstSession = useMemo<SleepMetricLineChartDatum>(() => {
+    return data.reduce<SleepMetricLineChartDatum>((worstSessionSoFar, session) => {
+      if (session[SleepMetric.QUALITY] < worstSessionSoFar[SleepMetric.QUALITY]) {
+        return session
+      }
 
-  const radius = (size - strokeWidth) / 2
-  const innerRadius = ((size - innerStrokeWidth * 2) / 2) - 11
-  const circumference = 2 * Math.PI * radius
-  const innerCircumference = 2 * Math.PI * innerRadius
+      return worstSessionSoFar
+    }, data[0])
+  }, [data])
 
-  const sleepQualityPercentage = bestSession[SleepMetric.QUALITY]
-  const sleepOffset = circumference - (sleepQualityPercentage / 100) * circumference
-
-  const durationPercentage = bestSession[SleepMetric.DURATION]
-  const durationPercentageTrimmed = durationPercentage > 100 ? 100 : durationPercentage
-  const durationOffset = circumference - (durationPercentageTrimmed / 100) * innerCircumference
+  const mostRecentSession = useMemo<SleepMetricLineChartDatum | undefined>(() => {
+    return data.find(session => session.date.getTime() === latestSession.getTime())
+  }, [data, latestSession])
 
   return (
     <div className={styles.container}>
-      <div className={styles.chart}>
-        <svg className={styles.percentageCircle} width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-          <circle
-            className={styles.track}
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke='gray'
+      <Carousel className={styles.carousel} dotPosition='right'>
+        <div className={styles.carouselItem}>
+          <NestedProgressCircles
+            size={size}
+            innerColor='white'
             strokeWidth={strokeWidth}
-            fill="none"
+            outerColor={colours.quality}
+            outerPercent={bestSession[SleepMetric.QUALITY]}
+            innerPercent={bestSession[SleepMetric.DURATION]}
           />
 
-          <circle
-            className={styles.progress}
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            stroke={colours.quality}
+          <div className={styles.content}>
+            <p className={styles.title}>
+              {t('best.title')}
+            </p>
+
+            <p className={classNames(styles.percentage, styles.good)}>
+              {bestSession[SleepMetric.QUALITY]}%
+            </p>
+
+            <p className={styles.duration}>
+              {formatDuration(bestSession.duration)}
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.carouselItem}>
+          <NestedProgressCircles
+            size={size}
+            innerColor='white'
             strokeWidth={strokeWidth}
-            fill="none"
-            strokeDasharray={circumference}
-            strokeDashoffset={sleepOffset}
-            strokeLinecap="round"
+            outerColor={colours.quality}
+            outerPercent={worstSession[SleepMetric.QUALITY]}
+            innerPercent={worstSession[SleepMetric.DURATION]}
           />
 
-          <circle
-            className={styles.innerTrack}
-            cx={size / 2}
-            cy={size / 2}
-            r={innerRadius}
-            stroke='gray'
-            strokeWidth={innerStrokeWidth}
-            fill="none"
-          />
+          <div className={styles.content}>
+            <p className={styles.title}>
+              {t('worst.title')}
+            </p>
 
-          <circle
-            className={styles.innerProgress}
-            cx={size / 2}
-            cy={size / 2}
-            r={innerRadius}
-            stroke='white'
-            strokeWidth={innerStrokeWidth}
-            fill="none"
-            strokeDasharray={innerCircumference}
-            strokeDashoffset={durationOffset}
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
+            <p className={classNames(styles.percentage, styles.bad)}>
+              {worstSession[SleepMetric.QUALITY]}%
+            </p>
 
-      <div className={styles.right}>
-        <p className={styles.title}>
-          {t('title')}
-        </p>
+            <p className={styles.duration}>
+              {formatDuration(worstSession.duration)}
+            </p>
+          </div>
+        </div>
 
-        <p className={styles.sleepQuality}>
-          {sleepQualityPercentage}%
-        </p>
+        {mostRecentSession && (
+          <div className={styles.carouselItem}>
+            <NestedProgressCircles
+              size={size}
+              innerColor='white'
+              strokeWidth={strokeWidth}
+              outerColor={colours.quality}
+              outerPercent={mostRecentSession[SleepMetric.QUALITY]}
+              innerPercent={mostRecentSession[SleepMetric.DURATION]}
+            />
 
-        <p className={styles.duration}>
-          {formatDuration(bestSession.duration)}
-        </p>
-      </div>
+            <div className={styles.content}>
+              <p className={styles.title}>
+                {t('recent.title')}
+              </p>
+
+              <p className={classNames(styles.percentage, styles.good)}>
+                {mostRecentSession[SleepMetric.QUALITY]}%
+              </p>
+
+              <p className={styles.duration}>
+                {formatDuration(mostRecentSession.duration)}
+              </p>
+            </div>
+          </div>
+        )}
+      </Carousel>
     </div>
   )
 }
