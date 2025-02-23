@@ -10,7 +10,7 @@ import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 import { SleepPageChrome } from 'components/SleepPageChrome'
 import { ThreeScene } from 'modules/ThreeScene/ThreeScene'
-import { SessionHighlight } from 'components/SessionHighlight'
+import { SessionHighlightCard } from 'modules/Highlights/components/SessionHighlightCard'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
@@ -34,7 +34,7 @@ export const SleepPage = () => {
 
   return (
     <SleepPageChrome>
-      <SessionHighlight />
+      <SessionHighlightCard />
       {chartView == ChartView.SINGLE_METRIC && (
         <>
           <SleepMetricLineChart

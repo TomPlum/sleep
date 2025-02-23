@@ -1,4 +1,4 @@
-import styles from './SessionHighlight.module.scss'
+import styles from './SessionHighlightCard.module.scss'
 import { useSleepContext } from 'context/SleepContext'
 import { useMemo } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
@@ -13,7 +13,7 @@ import classNames from 'classnames'
 const size = 100
 const strokeWidth = 10
 
-export const SessionHighlight = () => {
+export const SessionHighlightCard = () => {
   const { graphData2d: { data, latestSession } } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d.session-highlight' })
 
