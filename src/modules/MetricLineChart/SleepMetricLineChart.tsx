@@ -33,11 +33,11 @@ import { LineActiveDot } from 'modules/MetricLineChart/components/LineActiveDot'
 import { useNavigate } from 'react-router-dom'
 
 export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChartProps) => {
+  const navigate = useNavigate()
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
 
   const { height } = useGraphHeight()
   const { updateQueryParam } = useQueryParams()
-  const navigate = useNavigate()
   const { chartView, activeMetrics } = useChartConfigContext()
 
   const lineMetrics = useMemo(() => {
@@ -53,7 +53,7 @@ export const SleepMetricLineChart = ({ metric, className }: SleepMetricLineChart
   const { strokeWidth, currentMetricColour, getMetricColour, activeDotRadius } = useGraphStyles({ metric })
 
   const { improvementDate, graphData2d: { data, earliestSession, latestSession } } = useSleepContext()
-  
+
   const {
     regressionLineData,
     regressionDataKey,

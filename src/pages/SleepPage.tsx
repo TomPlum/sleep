@@ -10,10 +10,11 @@ import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 import { SleepPageChrome } from 'components/SleepPageChrome'
 import { ThreeScene } from 'modules/ThreeScene/ThreeScene'
+import { SessionHighlightCard } from 'modules/Highlights/components/SessionHighlightCard'
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
-  const { chartView, sleepMetric, activeMetrics, is3DActive } = useChartConfigContext()
+  const { chartView, sleepMetric, activeMetrics, is3DActive, showHighlightsCard, setShowHighlightsCard } = useChartConfigContext()
 
   useDynamicFavicon()
 
@@ -33,6 +34,13 @@ export const SleepPage = () => {
 
   return (
     <SleepPageChrome>
+      {showHighlightsCard && (
+        <SessionHighlightCard
+          className={styles.highlightCard}
+          onClose={() => setShowHighlightsCard(false)}
+        />
+      )}
+
       {chartView == ChartView.SINGLE_METRIC && (
         <>
           <SleepMetricLineChart

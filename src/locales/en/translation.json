@@ -15,6 +15,17 @@
         "naps": " (0 / {{ naps }} naps)",
         "please-select": "Awaiting metric selection..."
       },
+      "session-highlight": {
+        "best": {
+          "title": "Best session"
+        },
+        "worst": {
+          "title": "Worst session"
+        },
+        "recent": {
+          "title": "Most recent session"
+        }
+      },
       "data-source": {
         "title": "Download source data"
       },
@@ -73,6 +84,9 @@
       },
       "three-dimensions-toggle": {
         "label": "3D (Experimental)"
+      },
+      "show-highlights-toggle": {
+        "label": "Show Session Highlights"
       },
       "metric-config": {
         "checkbox": {

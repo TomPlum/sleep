@@ -27,5 +27,9 @@ export const ChartConfigContext = createContext<ChartConfigContextBag>({
   is3DActive: false,
   setIs3DActive: (is3D: boolean) => {
     console.debug(`Tried to setIs3DActive(${is3D}) in the ChartConfigContext before initialisation.`)
+  },
+  showHighlightsCard: false,
+  setShowHighlightsCard: (showHighlightsCard: boolean) => {
+    console.debug(`Tried to setShowHighlightsCard(${showHighlightsCard}) in the ChartConfigContext before initialisation.`)
   }
 })

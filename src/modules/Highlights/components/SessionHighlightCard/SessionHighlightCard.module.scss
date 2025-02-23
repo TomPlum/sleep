@@ -1,0 +1,31 @@
+.container {
+  position: absolute;
+  width: 275px;
+  height: 100px;
+  background-color: #2d2d2d;
+  border-radius: 25px;
+  z-index: 100;
+  display: flex;
+  padding: 20px;
+  font-family: "Nunito", sans-serif;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+
+  .content {
+    position: relative;
+  }
+}
+
+.close {
+  color: #bdbdbd;
+  transition: all ease-in-out 0.4s;
+  top: -6px;
+  left: -6px;
+  position: absolute;
+  font-size: 0.8rem;
+  z-index: 101;
+
+  &:hover {
+    cursor: pointer;
+    color: #e75e5e;
+  }
+}

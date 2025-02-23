@@ -1,18 +1,15 @@
-import { Switch } from 'antd'
 import { useCallback } from 'react'
-import styles from './LocaleToggle.module.scss'
 import { useTranslation } from 'react-i18next'
-import { LocaleToggleProps } from './types'
-import classNames from 'classnames'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { PageRoutes } from 'routes'
+import { AsciiCheckbox } from 'modules/ChartControls/components/AsciiCheckbox'
 
-export const LocaleToggle = ({ className }: LocaleToggleProps) => {
+export const LocaleToggle = () => {
   const { updateQueryParam } = useQueryParams()
   const { t, i18n } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
+  const isEnglish = i18n.language === 'en'
 
   const handleChangeLanguage = useCallback(async () => {
-    const isEnglish = i18n.language === 'en'
     const newLanguage = isEnglish ? 'jp' : 'en'
 
     await i18n.changeLanguage(newLanguage)
@@ -23,16 +20,13 @@ export const LocaleToggle = ({ className }: LocaleToggleProps) => {
         lng: newLanguage
       }
     })
-  }, [i18n, updateQueryParam])
+  }, [i18n, isEnglish, updateQueryParam])
 
   return (
-    <Switch
-      size='default'
-      defaultChecked
-      onChange={handleChangeLanguage}
-      checkedChildren={t('language.checked')}
-      unCheckedChildren={t('language.unchecked')}
-      className={classNames(styles.languageSwitch, className)}
+    <AsciiCheckbox
+      checked={!isEnglish}
+      onToggle={handleChangeLanguage}
+      label={t(`language.${isEnglish ? 'checked': 'unchecked'}`)}
     />
   )
 }
