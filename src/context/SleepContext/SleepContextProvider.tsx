@@ -8,10 +8,12 @@ import { useChartConfigContext } from 'context/ChartConfigContext'
 import { useQueryParams } from 'hooks/useQueryParams'
 import dayjs from 'dayjs'
 import { PageRoutes } from 'routes.ts'
+import { useCurrentRoute } from 'hooks/useCurrentRoute'
 
 export const SleepContextProvider = ({ children }: PropsWithChildren) => {
   const { sleepData, sessionStages, sessionSounds, loading } = useRawSleepData()
 
+  const { currentRoute } = useCurrentRoute()
   const { selected } = useDefaultQueryParams()
   const { updateQueryParam } = useQueryParams()
   const { rangeStart, rangeEnd, setRangeStart, setRangeEnd } = useChartConfigContext()
@@ -24,15 +26,17 @@ export const SleepContextProvider = ({ children }: PropsWithChildren) => {
       setRangeStart(twoMonthsBeforeLatestSession)
       setRangeEnd(latestSession)
 
-      updateQueryParam({
-        route: PageRoutes.SLEEP,
-        params: {
-          start: twoMonthsBeforeLatestSession.getTime().toString(),
-          end: latestSession?.getTime().toString()
-        }
-      })
+      if (currentRoute === PageRoutes.SLEEP) {
+        updateQueryParam({
+          route: PageRoutes.SLEEP,
+          params: {
+            start: twoMonthsBeforeLatestSession.getTime().toString(),
+            end: latestSession?.getTime().toString()
+          }
+        })
+      }
     }
-  }, [loading, rangeEnd, rangeStart, setRangeEnd, setRangeStart, sleepData?.latestSession, updateQueryParam])
+  }, [currentRoute, loading, rangeEnd, rangeStart, setRangeEnd, setRangeStart, sleepData?.latestSession, updateQueryParam])
 
   const sleepGraphData2d = useSleepGraph2DData({
     sessions: sleepData?.sessions ?? [],

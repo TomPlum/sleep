@@ -10,6 +10,7 @@ import { NotFoundPage } from 'pages/NotFoundPage'
 import { ConfigProvider, theme } from 'antd'
 import { PageRoutes } from 'routes'
 import { ImprovementsPage } from 'pages/ImprovementsPage'
+import { HighlightsPage } from 'pages/HighlightsPage'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: PageRoutes.IMPROVEMENTS,
         element: <ImprovementsPage />
+      },
+      {
+        path: PageRoutes.HIGHLIGHTS,
+        element: <HighlightsPage />
       },
       {
         path: '*',
