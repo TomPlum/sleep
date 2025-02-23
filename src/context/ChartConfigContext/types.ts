@@ -98,4 +98,8 @@ export interface ChartConfigContextBag {
    * @param is3D The new value for is3D.
    */
   setIs3DActive: (is3D: boolean) => void
+
+  showHighlightsCard: boolean
+
+  setShowHighlightsCard: (showHighlightsCard: boolean) => void
 }

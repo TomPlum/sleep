@@ -85,6 +85,9 @@
       "three-dimensions-toggle": {
         "label": "3D (Experimental)"
       },
+      "show-highlights-toggle": {
+        "label": "Show Session Highlights"
+      },
       "metric-config": {
         "checkbox": {
           "quality": "Quality",

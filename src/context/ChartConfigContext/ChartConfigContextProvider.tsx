@@ -1,5 +1,5 @@
 import { ChartConfigContext } from './ChartConfigContext'
-import { PropsWithChildren, useEffect, useMemo } from 'react'
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
 import { ChartConfigContextBag } from './types'
 import { useDefaultQueryParams } from 'hooks/useDefaultQueryParams'
 import { SleepMetric } from 'modules/ChartControls'
@@ -8,6 +8,8 @@ import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/ty
 
 export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
   const { i18n } = useTranslation()
+
+  const [showHighlightsCard, setShowHighlightsCard] = useState(false)
 
   const {
     currentMetric,
@@ -43,8 +45,10 @@ export const ChartConfigContextProvider = ({ children }: PropsWithChildren) => {
     chartView: chartView ?? ChartView.SINGLE_METRIC,
     setChartView,
     is3DActive: is3dActive ?? false,
-    setIs3DActive
-  }), [rangeStart, setRangeStart, rangeEnd, setRangeEnd, currentMetric, setCurrentMetric, activeMetrics, handleSetStackedMetrics, chartView, setChartView, is3dActive, setIs3DActive])
+    setIs3DActive,
+    showHighlightsCard,
+    setShowHighlightsCard
+  }), [rangeStart, setRangeStart, rangeEnd, setRangeEnd, currentMetric, setCurrentMetric, activeMetrics, handleSetStackedMetrics, chartView, setChartView, is3dActive, setIs3DActive, showHighlightsCard])
 
   return (
     <ChartConfigContext.Provider value={value}>

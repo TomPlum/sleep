@@ -6,6 +6,7 @@ import { GraphControlsProps } from './types'
 import { ShowAllButton } from 'modules/ChartControls'
 import { ChartViewSelector } from 'modules/ChartControls'
 import { ThreeDimensionsToggle } from 'modules/ChartControls/components/ThreeDimensionsToggle'
+import { ShowHighlightsCardToggle } from 'modules/ChartControls/components/ShowHighlightsCardToggle'
 
 export const GraphControls = ({ className }: GraphControlsProps) => {
   return (
@@ -22,6 +23,7 @@ export const GraphControls = ({ className }: GraphControlsProps) => {
       </div>
 
       <div className={styles.bottom}>
+        <ShowHighlightsCardToggle />
         <ThreeDimensionsToggle />
       </div>
     </div>
