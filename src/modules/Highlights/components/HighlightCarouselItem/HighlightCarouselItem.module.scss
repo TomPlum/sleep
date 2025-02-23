@@ -1,0 +1,34 @@
+.carouselItem {
+  height: 100px;
+  display: flex !important;
+}
+
+.content {
+  margin-left: 15px;
+  height: 100%;
+
+  .title {
+    margin-top: 0;
+    margin-bottom: 3px;
+    font-weight: bold;
+  }
+
+  .duration {
+    font-size: 1.2em;
+    margin: 0;
+  }
+
+  .percentage {
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.5em;
+  }
+
+  .good {
+    color: #52ea69;
+  }
+
+  .bad {
+    color: #ef3970;
+  }
+}
