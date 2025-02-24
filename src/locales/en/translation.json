@@ -160,11 +160,20 @@
     }
   },
   "highlights": {
+    "landing": {
+      "heading": "Sleep Highlights",
+      "sub-heading": "Data sourced from ",
+      "start-button": "Start"
+    },
     "showcases": {
       "best": {
         "heading": "Your best session was on the {{ date }}.",
         "duration": "You slept for {{ duration }}...",
         "quality": "...with {{ quality }} sleep quality!"
+      },
+      "overview": {
+        "total-sessions": "You recorded a total of {{ total }} sessions",
+        "total-time-slept": "Slept for a total time of {{ time }}."
       }
     }
   },

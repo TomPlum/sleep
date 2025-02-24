@@ -1,6 +1,5 @@
 import { NestedProgressCircles } from 'modules/Highlights/components/NestedProgressCircles'
 import colours from '_colours.module.scss'
-import { SleepMetric } from 'modules/ChartControls'
 import { SleepStatistic } from 'modules/Highlights/components/SleepStatistic'
 import { useHighlightedSessions } from 'modules/Highlights/hooks/useHighlightedSessions'
 import styles from './BestSessionShowcase.module.scss'
@@ -21,25 +20,25 @@ export const BestSessionShowcase = () => {
         innerColor='white'
         innerStrokeWidth={16}
         outerColor={colours.quality}
-        outerPercent={bestSession[SleepMetric.QUALITY]}
-        innerPercent={bestSession[SleepMetric.DURATION]}
+        outerPercent={bestSession.sleepQuality}
+        innerPercent={bestSession.duration.total}
       />
 
       <Typography>
-        {t('heading', { date: dayjs(bestSession.date).format('dddd Do YYYY') })}
+        {t('heading', { date: dayjs(bestSession.startTime).format('dddd Do YYYY') })}
       </Typography>
 
       <Typography>
-        {t('duration', { duration: formatDuration(bestSession.duration) })}
+        {t('duration', { duration: formatDuration(bestSession.duration.total) })}
       </Typography>
 
       <Typography>
-        {t('quality', { quality: bestSession[SleepMetric.QUALITY] })}
+        {t('quality', { quality: bestSession.sleepQuality })}
       </Typography>
 
       <SleepStatistic
         suffix='%'
-        value={bestSession[SleepMetric.QUALITY]}
+        value={bestSession.sleepQuality}
       />
     </div>
   )

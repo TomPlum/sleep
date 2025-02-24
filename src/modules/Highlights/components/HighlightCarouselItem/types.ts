@@ -1,6 +1,6 @@
-import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
+import { PillowSleepSession } from 'data/useSleepData'
 
 export interface HighlightCarouselItemProps {
-  session: SleepMetricLineChartDatum
+  session: PillowSleepSession
   translationKey: string
 }

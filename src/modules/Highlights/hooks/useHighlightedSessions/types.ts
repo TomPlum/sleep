@@ -1,7 +1,7 @@
-import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
+import { PillowSleepSession } from 'data/useSleepData'
 
-export interface HighligthedSessions {
-  bestSession: SleepMetricLineChartDatum
-  worstSession: SleepMetricLineChartDatum
-  mostRecentSession?: SleepMetricLineChartDatum
+export interface HighlightedSessions {
+  bestSession: PillowSleepSession
+  worstSession: PillowSleepSession
+  mostRecentSession?: PillowSleepSession
 }

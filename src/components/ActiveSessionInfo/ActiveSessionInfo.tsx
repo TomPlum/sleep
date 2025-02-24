@@ -6,9 +6,9 @@ import { useSleepContext } from 'context/SleepContext'
 import { ActiveSessionInfoProps } from './types'
 import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
-import { PILLOW_DATABASE_FILE_NAME } from 'modules/DataWorker'
 import { useChartConfigContext } from 'context/ChartConfigContext'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
+import { PillowDataFileLink } from 'components/PillowDataFileLink'
 
 export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
   const { t } = useTranslation('translation', { keyPrefix: 'sleep.graph2d' })
@@ -91,14 +91,7 @@ export const ActiveSessionInfo = ({ className }: ActiveSessionInfoProps) => {
           <img src={`${import.meta.env.BASE_URL}Pillow.png`} alt='Pillow Logo' />
         </a>
 
-        <a
-          title={t('data-source.title')}
-          href={`/${PILLOW_DATABASE_FILE_NAME}`}
-          download={PILLOW_DATABASE_FILE_NAME}
-          className={styles.dataExportVersion}
-        >
-          {PILLOW_DATABASE_FILE_NAME}
-        </a>
+        <PillowDataFileLink className={styles.dataExportVersion} />
       </div>
     </div>
   )

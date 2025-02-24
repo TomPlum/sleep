@@ -9,12 +9,25 @@ export const formatDuration = (duration: number) => {
     return `${duration}m`
   }
 
-  const remainingMinutes = duration % 60
-  const hours = duration / 60
+  const minutes = duration % 60
+  const totalHours = Math.floor(duration / 60)
+  const hours = totalHours % 24
+  const days = Math.floor(totalHours / 24)
 
-  if (remainingMinutes === 0) {
-    return `${hours}h`
+  if (days > 0) {
+    if (hours === 0 && minutes === 0) {
+      return `${days}d`
+    } else if (hours === 0) {
+      return `${days}d ${minutes}m`
+    } else if (minutes === 0) {
+      return `${days}d ${hours}h`
+    }
+    return `${days}d ${hours}h ${minutes}m`
   }
 
-  return `${Math.floor(hours)}h ${Math.round(remainingMinutes)}m`
+  if (minutes === 0) {
+    return `${totalHours}h`
+  }
+
+  return `${totalHours}h ${minutes}m`
 }

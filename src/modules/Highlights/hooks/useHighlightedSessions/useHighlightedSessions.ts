@@ -1,35 +1,41 @@
 import { useSleepContext } from 'context/SleepContext'
 import { useMemo } from 'react'
-import { SleepMetricLineChartDatum } from 'modules/MetricLineChart'
-import { SleepMetric } from 'modules/ChartControls'
-import { HighligthedSessions } from './types'
+import { HighlightedSessions } from './types'
+import { PillowSleepSession } from 'data/useSleepData'
 
-export const useHighlightedSessions = (): HighligthedSessions => {
-  const { graphData2d: { data, latestSession } } = useSleepContext()
+export const useHighlightedSessions = (): HighlightedSessions => {
+  const { sleepData } = useSleepContext()
 
-  const bestSession = useMemo<SleepMetricLineChartDatum>(() => {
-    return data.reduce<SleepMetricLineChartDatum>((bestSessionSoFar, session) => {
-      if (session[SleepMetric.QUALITY] > bestSessionSoFar[SleepMetric.QUALITY]) {
+  const { sessions, latestSession } = useMemo(() => {
+    return {
+      sessions: sleepData?.sessions ?? [],
+      latestSession: sleepData?.latestSession
+    }
+  }, [sleepData])
+
+  const bestSession = useMemo<PillowSleepSession>(() => {
+    return sessions.reduce<PillowSleepSession>((bestSessionSoFar, session) => {
+      if (session.sleepQuality > bestSessionSoFar.sleepQuality) {
         return session
       }
 
       return bestSessionSoFar
-    }, data[0])
-  }, [data])
+    }, sessions[0])
+  }, [sessions])
 
-  const worstSession = useMemo<SleepMetricLineChartDatum>(() => {
-    return data.reduce<SleepMetricLineChartDatum>((worstSessionSoFar, session) => {
-      if (session[SleepMetric.QUALITY] < worstSessionSoFar[SleepMetric.QUALITY]) {
+  const worstSession = useMemo<PillowSleepSession>(() => {
+    return sessions.reduce<PillowSleepSession>((worstSessionSoFar, session) => {
+      if (session.sleepQuality < worstSessionSoFar.sleepQuality) {
         return session
       }
 
       return worstSessionSoFar
-    }, data[0])
-  }, [data])
+    }, sessions[0])
+  }, [sessions])
 
-  const mostRecentSession = useMemo<SleepMetricLineChartDatum | undefined>(() => {
-    return data.find(session => session.date.getTime() === latestSession.getTime())
-  }, [data, latestSession])
+  const mostRecentSession = useMemo<PillowSleepSession | undefined>(() => {
+    return sessions.find(session => session.endTime.getTime() === latestSession?.getTime())
+  }, [sessions, latestSession])
 
   return {
     bestSession,
