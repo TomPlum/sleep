@@ -1,6 +1,6 @@
 import styles from './HighlightCarouselItem.module.scss'
 import { NestedProgressCircles } from 'modules/Highlights/components/NestedProgressCircles'
-import colours from '_colours.module.scss'
+import colours from 'styles/_colours.module.scss'
 import classNames from 'classnames'
 import { formatDuration } from 'utils/formatDuration'
 import { HighlightCarouselItemProps } from './types'

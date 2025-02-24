@@ -1,5 +1,5 @@
 import { NestedProgressCircles } from 'modules/Highlights/components/NestedProgressCircles'
-import colours from '_colours.module.scss'
+import colours from 'styles/_colours.module.scss'
 import { SleepStatistic } from 'modules/Highlights/components/SleepStatistic'
 import { useHighlightedSessions } from 'modules/Highlights/hooks/useHighlightedSessions'
 import styles from './BestSessionShowcase.module.scss'

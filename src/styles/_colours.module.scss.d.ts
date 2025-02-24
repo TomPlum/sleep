@@ -1,4 +1,4 @@
-declare module '_colours.module.scss' {
+declare module 'styles/_colours.module.scss' {
   interface Colors {
     quality: string;
     durationPercent: string;

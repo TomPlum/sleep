@@ -8,6 +8,7 @@ import { OverviewShowcase } from 'modules/Highlights/components/OverviewShowcase
 import { useState } from 'react'
 import { PillowDataFileLink } from 'components/PillowDataFileLink'
 import { useTranslation } from 'react-i18next'
+import { SleepingAnimation } from 'modules/Highlights/components/SleepingAnimation'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
@@ -39,19 +40,26 @@ export const HighlightsPage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
-        <Typography className={styles.heading}>
-          {t('heading')}
-        </Typography>
+        <div className={styles.header}>
+          <Typography className={styles.heading}>
+            {t('heading')}
+          </Typography>
 
-        <Typography className={styles.subheading}>
-          {t('sub-heading')}
-          <PillowDataFileLink className={styles.dataSourceLink} />
-        </Typography>
+          <div className={styles.headerBottom}>
+            <Typography className={styles.subheading}>
+              {t('sub-heading')}
+              <PillowDataFileLink className={styles.dataSourceLink} />
+            </Typography>
+
+            <SleepingAnimation className={styles.sleepingAnimation} />
+          </div>
+        </div>
 
         <Button
           type='primary'
           color='green'
           variant='filled'
+          className={styles.startButton}
           onClick={() => setStarted(true)}
         >
           {t('start-button')}

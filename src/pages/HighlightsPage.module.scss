@@ -1,3 +1,5 @@
+@import 'styles/colours';
+
 .page {
   height: 100%;
   padding: 6em 0;
@@ -10,16 +12,45 @@
     max-width: 1000px;
     width: 100%;
 
-    .heading {
-      font-size: 5em;
-      font-weight: bold;
-      margin-left: -5px;
+    .header {
+      display: flex;
+      flex-direction: column;
+
+      .heading {
+        font-size: 5em;
+        line-height: 1.4em;
+        font-weight: bold;
+        margin-left: -5px;
+        margin-bottom: 0;
+      }
+
+      .headerBottom {
+        display: flex;
+
+        .subheading {
+          font-size: 1.4em;
+          margin-top: 0;
+
+          .dataSourceLink {
+            color: #4ab0f8
+          }
+        }
+
+        .sleepingAnimation {
+          font-family: "Nunito", sans-serif;
+          height: 100%;
+
+          >span {
+            color: $quality;
+          }
+        }
+      }
     }
 
-    .subheading {
-      .dataSourceLink {
-        color: #4ab0f8
-      }
+    .startButton {
+      font-weight: bold;
+      font-size: 2em;
+      padding: 25px;
     }
   }
 }
