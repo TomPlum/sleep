@@ -73,6 +73,7 @@ Renders a single line chart for the selected metric.
 
 # Thanks to
 - User [Vinicius Ferreira](https://codepen.io/Suburbanno) for his open-source [Star animation CSS](https://codepen.io/Suburbanno/pen/OXeMvw) used in the loading screen.
+- User [Michael van Engelshoven](https://codepen.io/micha149) for his [CSS Sleep Animation](https://codepen.io/micha149/pen/MWgbNB) used in the [highlights](https://tomplum.github.io/sleep/highights) page.
 
 # To Do
 
