@@ -129,17 +129,19 @@ export const HighlightsPage = () => {
         <div className={styles.mountains} style={path} />
 
         <div className={styles.land} />
+
         <div className={styles.windmill}>
           <div className={styles.light}></div>
           <div className={styles.door}></div>
           <div className={styles.top}></div>
           <div className={styles.blades}>
-            <div className={classNames(styles.bl, styles.bl1)}></div>
-            <div className={classNames(styles.bl, styles.bl2)}></div>
-            <div className={classNames(styles.bl, styles.bl3)}></div>
-            <div className={classNames(styles.bl, styles.bl4)}></div>
+            <div className={classNames(styles.bl, styles.blade1)}></div>
+            <div className={classNames(styles.bl, styles.blade2)}></div>
+            <div className={classNames(styles.bl, styles.blade3)}></div>
+            <div className={classNames(styles.bl, styles.blade4)}></div>
           </div>
         </div>
+
         <div className={styles.tree}></div>
       </div>
 

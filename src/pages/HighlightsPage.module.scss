@@ -37,16 +37,16 @@
     }
   }
 
-  .moon {
-    $size: 6em;
+  $moonSize: 8em;
 
-    height: $size;
-    width: $size;
+  .moon {
+    height: $moonSize;
+    width: $moonSize;
     background-color: #ffffff;
     border-radius: 50%;
     position: absolute;
-    right: 30%;
-    top: 20%;
+    right: 20%;
+    top: 15%;
     box-shadow: 0 0 1px 15px rgba(32, 105, 149,0.6),
     0 0 1px 35px rgba(32, 105, 149,0.5),
     0 0 1px 50px rgba(32, 105, 149,0.3),
@@ -57,25 +57,27 @@
     position: absolute;
     content: "";
     background-color: #EBEFE7;
-    height: 10px;
-    width: 10px;
     border-radius: 50%;
-    top: 1em;
-    left: 1.5em;
+    $size: $moonSize / 6;
+    height: $size;
+    width: $size;
+    top: $moonSize / 4;
+    left: $moonSize / 5;
   }
 
   .moon:after {
     position: absolute;
     content: "";
     background-color: #EBEFE7;
-    height: 7px;
-    width: 7px;
     border-radius: 50%;
-    top: 2em;
-    left: 0.8em;
+    $size: $moonSize / 8;
+    height: $size;
+    width: $size;
+    top: $moonSize / 2.2;
+    left: $moonSize / 3;
   }
 
-  .land{
+  .land {
     height: 30%;
     width: 100%;
     background-color: #041524;
@@ -174,13 +176,13 @@
     left: #{0.3 * $windmillSize}em;
   }
 
-  .bl1 {
+  .blade1 {
     margin: auto;
     left: 0;
     right: 0;
   }
 
-  .bl2 {
+  .blade2 {
     margin: auto;
     top: 0;
     bottom: 0;
@@ -188,7 +190,7 @@
     left: #{0.8 * $windmillSize}em;
   }
 
-  .bl3 {
+  .blade3 {
     margin: auto;
     left: 0;
     right: 0;
@@ -196,7 +198,7 @@
     transform: rotate(180deg);
   }
 
-  .bl4 {
+  .blade4 {
     margin: auto;
     top: 0;
     bottom: 0;
