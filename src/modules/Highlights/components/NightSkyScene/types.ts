@@ -11,5 +11,5 @@ export interface NightSkySceneProps {
    * with the scene and so the scene should
    * enter its exiting state before being unmounted.
    */
-  exit: boolean
+  exiting: boolean
 }

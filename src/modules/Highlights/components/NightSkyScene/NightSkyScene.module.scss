@@ -27,7 +27,7 @@
   }
 }
 
-$size: 3rem;
+$size: 5rem;
 $border-thickness: 0.3rem;
 $color: #82c5fc;
 
@@ -58,6 +58,17 @@ $color: #82c5fc;
   border-top-color: $color;
   border-left-color: $color;
   animation: spinner 1s infinite;
+}
+
+@keyframes moonExiting {
+  to {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+}
+
+.moonExiting {
+  animation: moonExiting 2s linear;
 }
 
 $moonSize: 8em;
@@ -98,6 +109,17 @@ $moonSize: 8em;
   width: $size;
   top: $moonSize / 2.2;
   left: $moonSize / 3;
+}
+
+@keyframes landExiting {
+  to {
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+}
+
+.landExiting {
+  animation: landExiting 2s linear;
 }
 
 .land {

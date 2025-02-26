@@ -33,7 +33,7 @@ export const HighlightsPage = () => {
   return (
     <div className={styles.page}>
       <NightSkyScene
-        exit={starting}
+        exiting={starting}
         loading={isSleepDataLoading}
       />
 

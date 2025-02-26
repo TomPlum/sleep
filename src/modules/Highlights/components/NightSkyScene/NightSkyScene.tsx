@@ -55,7 +55,7 @@ const generateBackgroundStars = () => {
   })
 }
 
-export const NightSkyScene = ({ loading, exit }: NightSkySceneProps) => {
+export const NightSkyScene = ({ loading, exiting }: NightSkySceneProps) => {
   const { width } = useWindowSize()
 
   const path = useMemo(() => {
@@ -91,16 +91,38 @@ export const NightSkyScene = ({ loading, exit }: NightSkySceneProps) => {
         {backgroundStars}
       </div>
 
-      <div className={classNames(styles.moon, { [styles.loading]: loading })} />
+      <div
+        className={classNames(
+          styles.moon,
+          { [styles.loading]: loading },
+          { [styles.moonExiting]: exiting }
+        )}
+      />
 
       <div className={styles.shootingStar1} />
       <div className={styles.shootingStar2} />
 
-      <div className={styles.mountains} style={path} />
+      <div
+        style={path}
+        className={classNames(
+          styles.mountains,
+          { [styles.landExiting]: exiting }
+        )}
+      />
 
-      <div className={styles.land} />
+      <div
+        className={classNames(
+          styles.land,
+          { [styles.landExiting]: exiting }
+        )}
+      />
 
-      <div className={styles.windmill}>
+      <div
+        className={classNames(
+          styles.windmill,
+          { [styles.landExiting]: exiting }
+        )}
+      >
         <div className={styles.light} />
         <div className={styles.door} />
         <div className={styles.top} />
@@ -112,7 +134,12 @@ export const NightSkyScene = ({ loading, exit }: NightSkySceneProps) => {
         </div>
       </div>
 
-      <div className={styles.tree} />
+      <div
+        className={classNames(
+          styles.tree,
+          { [styles.landExiting]: exiting }
+        )}
+      />
     </div>
   )
 }
