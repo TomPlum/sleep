@@ -122,27 +122,28 @@ export const HighlightsPage = () => {
           {generateBackgroundStars()}
         </div>
 
-        <div className={styles.moon1}></div>
-        <div className={styles.moon}></div>
-        <div className={styles.shooting}></div>
+        <div className={styles.moon} />
+
+        <div className={styles.shootingStar1} />
+        <div className={styles.shootingStar2} />
 
         <div className={styles.mountains} style={path} />
 
         <div className={styles.land} />
 
         <div className={styles.windmill}>
-          <div className={styles.light}></div>
-          <div className={styles.door}></div>
-          <div className={styles.top}></div>
+          <div className={styles.light} />
+          <div className={styles.door} />
+          <div className={styles.top} />
           <div className={styles.blades}>
-            <div className={classNames(styles.bl, styles.blade1)}></div>
-            <div className={classNames(styles.bl, styles.blade2)}></div>
-            <div className={classNames(styles.bl, styles.blade3)}></div>
-            <div className={classNames(styles.bl, styles.blade4)}></div>
+            <div className={classNames(styles.bl, styles.blade1)} />
+            <div className={classNames(styles.bl, styles.blade2)} />
+            <div className={classNames(styles.bl, styles.blade3)} />
+            <div className={classNames(styles.bl, styles.blade4)} />
           </div>
         </div>
 
-        <div className={styles.tree}></div>
+        <div className={styles.tree} />
       </div>
 
       <div className={styles.content}>

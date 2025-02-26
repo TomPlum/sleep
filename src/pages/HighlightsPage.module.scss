@@ -243,7 +243,7 @@
   $star-top-boundary: 10%;
   $start-left-boundary: 15%;
 
-  .shooting{
+  .shootingStar1 {
     height: 3px;
     width: 40px;
     background-color: white;
@@ -254,6 +254,19 @@
     opacity: 0.2;
     animation: shoot 15s infinite linear;
     -webkit-animation: shoot 15s infinite linear;
+  }
+
+  .shootingStar2 {
+    height: 3px;
+    width: 40px;
+    background-color: white;
+    transform: rotate(-30deg);
+    -webkit-transform: rotate(-30deg);
+    position: absolute;
+    right: -100px;
+    opacity: 0.2;
+    animation: shoot 25s infinite linear;
+    -webkit-animation: shoot 25s infinite linear;
   }
 
   @keyframes shoot{
