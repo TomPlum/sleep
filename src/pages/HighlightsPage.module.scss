@@ -9,7 +9,7 @@
   font-family: "Nunito", sans-serif;
 
   .scene {
-    background-color:#113755;
+    background: linear-gradient(#081b2a, #113755);
     position: absolute;
     margin: auto;
     left: 0;
@@ -84,14 +84,14 @@
     clip-path: polygon(0 53%, 100% 78%, 100% 100%, 0% 100%);
   }
 
-  $size: 4;
+  $windmillSize: 4;
 
   .windmill {
     height: 0;
-    width: #{2 * $size}em;
-    border-bottom: #{3.8 * $size}em solid #041524;
-    border-left: #{0.25 * $size}em solid transparent;
-    border-right: #{0.25 * $size}em solid transparent;
+    width: #{2 * $windmillSize}em;
+    border-bottom: #{3.8 * $windmillSize}em solid #041524;
+    border-left: #{0.25 * $windmillSize}em solid transparent;
+    border-right: #{0.25 * $windmillSize}em solid transparent;
     position: absolute;
     bottom: 5%;
     right: 20%;
@@ -101,54 +101,53 @@
     position: absolute;
     content: "";
     background-color: #041524;
-    height: #{1 * $size}em;
-    width: #{2 * $size}em;
-    bottom: #{-0.1 * $size}em;
-    left: #{0.02 * $size}em;
-    border-radius: #{2 * $size}em #{2 * $size}em 0 0;
+    height: #{1 * $windmillSize}em;
+    width: #{2 * $windmillSize}em;
+    bottom: #{-0.1 * $windmillSize}em;
+    left: #{0.02 * $windmillSize}em;
+    border-radius: #{2 * $windmillSize}em #{2 * $windmillSize}em 0 0;
   }
 
   .top {
     position: absolute;
     content: "";
-    width: #{2.4 * $size}em;
+    width: #{2.4 * $windmillSize}em;
     height: 0;
-    border-bottom: #{0.6 * $size}em solid #0B2231;
-    border-left: #{0.1 * $size}em solid transparent;
-    border-right: #{0.1 * $size}em solid transparent;
-    position: absolute;
-    right: #{-0.32 * $size}em;
-    top: #{0.1 * $size}em;
+    border-bottom: #{0.6 * $windmillSize}em solid #0B2231;
+    border-left: #{0.1 * $windmillSize}em solid transparent;
+    border-right: #{0.1 * $windmillSize}em solid transparent;
+    right: #{-0.32 * $windmillSize}em;
+    top: #{0.1 * $windmillSize}em;
   }
 
   .light {
-    height: #{0.4 * $size}em;
-    width: #{0.4 * $size}em;
+    height: #{0.4 * $windmillSize}em;
+    width: #{0.4 * $windmillSize}em;
     background-color: #8DAF76;
     position: absolute;
-    top: #{1.2 * $size}em;
-    left: #{0.8 * $size}em;
+    top: #{1.2 * $windmillSize}em;
+    left: #{0.8 * $windmillSize}em;
     border-radius: 50%;
-    box-shadow: 0 0 #{0.1 * $size}em #{0.2 * $size}em rgba(141, 175, 118, 0.3),
-    0 0 #{0.1 * $size}em #{0.4 * $size}em rgba(141, 175, 118, 0.2);
+    box-shadow: 0 0 #{0.1 * $windmillSize}em #{0.2 * $windmillSize}em rgba(141, 175, 118, 0.3),
+    0 0 #{0.1 * $windmillSize}em #{0.4 * $windmillSize}em rgba(141, 175, 118, 0.2);
   }
 
   .door {
     background-color: #0f304f;
-    height: #{0.8 * $size}em;
-    width: #{0.8 * $size}em;
+    height: #{0.8 * $windmillSize}em;
+    width: #{0.8 * $windmillSize}em;
     position: absolute;
-    bottom: #{-3.6 * $size}em;
-    left: #{0.55 * $size}em;
-    border-radius: #{1 * $size}em #{1 * $size}em 0 0;
+    bottom: #{-3.6 * $windmillSize}em;
+    left: #{0.55 * $windmillSize}em;
+    border-radius: #{1 * $windmillSize}em #{1 * $windmillSize}em 0 0;
   }
 
   .blades {
-    height: #{6 * $size}em;
-    width: #{6 * $size}em;
+    height: #{6 * $windmillSize}em;
+    width: #{6 * $windmillSize}em;
     position: absolute;
-    bottom: #{-3 * $size}em;
-    left: #{-2 * $size}em;
+    bottom: #{-3 * $windmillSize}em;
+    left: #{-2 * $windmillSize}em;
     animation: rotate 5s infinite linear;
   }
 
@@ -159,8 +158,8 @@
   }
 
   .bl {
-    height: #{2.5 * $size}em;
-    width: #{0.8 * $size}em;
+    height: #{2.5 * $windmillSize}em;
+    width: #{0.8 * $windmillSize}em;
     background-color: #041524;
     position: absolute;
   }
@@ -169,10 +168,10 @@
     position: absolute;
     content: "";
     background-color: #041524;
-    height: #{0.6 * $size}em;
-    width: #{0.15 * $size}em;
-    top: #{2.5 * $size}em;
-    left: #{0.3 * $size}em;
+    height: #{0.6 * $windmillSize}em;
+    width: #{0.15 * $windmillSize}em;
+    top: #{2.5 * $windmillSize}em;
+    left: #{0.3 * $windmillSize}em;
   }
 
   .bl1 {
@@ -186,7 +185,7 @@
     top: 0;
     bottom: 0;
     transform: rotate(-90deg);
-    left: #{0.8 * $size}em;
+    left: #{0.8 * $windmillSize}em;
   }
 
   .bl3 {
@@ -202,28 +201,37 @@
     top: 0;
     bottom: 0;
     transform: rotate(90deg);
-    right: #{0.8 * $size}em;
+    right: #{0.8 * $windmillSize}em;
   }
 
-  .star {
+  .foregroundStar {
     height: 3px;
     width: 3px;
     background-color: white;
     position: absolute;
     border-radius: 50%;
-    opacity: 0.2;
+    opacity: 0.4;
     animation: twinkle 2s infinite;
     -webkit-animation: twinkle 2s infinite;
   }
 
-  @keyframes twinkle{
+  .backgroundStar {
+    height: 2px;
+    width: 2px;
+    background-color: white;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.2;
+  }
+
+  @keyframes twinkle {
     50%{
       opacity: 1;
       transform: scale(1.2);
     }
   }
 
-  @-webkit-keyframes twinkle{
+  @-webkit-keyframes twinkle {
     50%{
       opacity: 1;
       -webkit-transform: scale(1.2);
@@ -232,48 +240,6 @@
 
   $star-top-boundary: 10%;
   $start-left-boundary: 15%;
-
-  .s1 {
-    top: $star-top-boundary;
-    left: $start-left-boundary;
-  }
-
-  .s2{
-    top: $star-top-boundary + 5%;
-    left: $start-left-boundary + 5%;
-    animation-delay: 0.5s;
-    -webkit-animation-delay: 0.5s;
-  }
-  .s3{
-    top: $star-top-boundary + 10%;
-    left: $start-left-boundary + 10%;
-    animation-delay: 0.8s;
-    -webkit-animation-delay: 0.8s;
-  }
-  .s4{
-    top: $star-top-boundary + 15%;
-    left: $start-left-boundary + 15%;
-    animation-delay: 0.2s;
-    -webkit-animation-delay: 0.2s;
-  }
-  .s5{
-    top: $star-top-boundary + 20%;
-    left: $start-left-boundary + 20%;
-    animation-delay: 0.9s;
-    -webkit-animation-delay: 0.9s;
-  }
-  .s6{
-    top: $star-top-boundary + 20%;
-    left: $start-left-boundary + 50%;
-    animation-delay: 0.35s;
-    -webkit-animation-delay: 0.35s;
-  }
-  .s7{
-    top: $star-top-boundary + 16%;
-    left: $start-left-boundary + 26%;
-    animation-delay: 0.1s;
-    -webkit-animation-delay: 0.1s;
-  }
 
   .shooting{
     height: 3px;
@@ -306,57 +272,27 @@
     }
 
   }
-  .tree{
+
+  .tree {
     height: 0;
     width: 0;
-    border-bottom: 32px solid #041524;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
+    border-bottom: 50px solid #041524;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
     position: absolute;
-    bottom: 40%;
-    left: 50px;
+    bottom: calc(14% - 50px);
+    left: 25%;
     z-index: 1;
   }
-  .tree:before{
+
+  .tree:before {
     position: absolute;
     content: "";
-    border-bottom: 25px solid #041524;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    position: absolute;
+    border-bottom: 100px solid #041524;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
     bottom: -35px;
     left: 3px;
-  }
-
-  $day: linear-gradient(#3f006c, #750050, #b10042, #da4837, #f7bb38);
-  $night: linear-gradient(#14045f, #331a99, #272bce, #1555ec, #1e84f7);
-
-  .sky {
-    background: $day;
-    animation: colours 12s infinite forwards;
-    width: 50%;
-    height: 50%;
-    max-width: 500px;
-    max-height: 500px;
-    border-radius: 50%;
-  }
-
-  @keyframes colours {
-    10% {
-      background: $day;
-    }
-    53% {
-      background: $night;
-    }
-    55% {
-      background: $night;
-    }
-    98% {
-      background: $day;
-    }
-    100% {
-      background: $day;
-    }
   }
 
   .content {

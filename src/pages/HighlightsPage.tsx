@@ -49,8 +49,54 @@ export const HighlightsPage = () => {
       '--path': values.join(',')
     }
   }, [width]) as CSSProperties
-  console.log(path)
-  
+
+  const generateForegroundStars = () => {
+    return Array(18).fill(0).map((_, i) => {
+      // Between 0.1 and 1
+      const animationDelay = Math.random() * 0.9 + 0.1
+
+      // Between 10 and 50
+      const top = Math.random() * (50 - 10) + 10
+
+      // Between 15 and 80
+      const left = Math.random() * (80 - 15) + 15
+
+      return (
+        <div
+          key={i}
+          className={styles.foregroundStar}
+          style={{
+            top: `${top}%`,
+            left: `${left}%`,
+            animationDelay: `${animationDelay}s`,
+            WebkitAnimationDelay: `${animationDelay}s`,
+          }}
+        />
+      )
+    })
+  }
+
+  const generateBackgroundStars = () => {
+    return Array(50).fill(0).map((_, i) => {
+      // Between 5 and 55
+      const top = Math.random() * (55 - 10) + 5
+
+      // Between 5 and 95
+      const left = Math.random() * (95 - 15) + 5
+
+      return (
+        <div
+          key={i}
+          className={styles.backgroundStar}
+          style={{
+            top: `${top}%`,
+            left: `${left}%`
+          }}
+        />
+      )
+    })
+  }
+
   if (isSleepDataLoading) {
     return (
       <DataLoading />
@@ -68,13 +114,13 @@ export const HighlightsPage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.scene}>
-        <div className={classNames(styles.star, styles.s1)}></div>
-        <div className={classNames(styles.star, styles.s2)}></div>
-        <div className={classNames(styles.star, styles.s3)}></div>
-        <div className={classNames(styles.star, styles.s4)}></div>
-        <div className={classNames(styles.star, styles.s5)}></div>
-        <div className={classNames(styles.star, styles.s6)}></div>
-        <div className={classNames(styles.star, styles.s7)}></div>
+        <div className={styles.foregroundStars}>
+          {generateForegroundStars()}
+        </div>
+
+        <div className={styles.backgroundStars}>
+          {generateBackgroundStars()}
+        </div>
 
         <div className={styles.moon1}></div>
         <div className={styles.moon}></div>
