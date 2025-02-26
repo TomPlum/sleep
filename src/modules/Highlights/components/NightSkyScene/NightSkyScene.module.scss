@@ -27,6 +27,39 @@
   }
 }
 
+$size: 3rem;
+$border-thickness: 0.3rem;
+$color: #82c5fc;
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); // Speeds up
+  }
+  50% {
+    transform: rotate(180deg);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1); // Slows down
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  position: absolute;
+  right: 20%;
+  top: 15%;
+  content: "";
+  z-index: 10;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: $border-thickness solid transparent;
+  border-top-color: $color;
+  border-left-color: $color;
+  animation: spinner 1s infinite;
+}
+
 $moonSize: 8em;
 
 .moon {
@@ -259,7 +292,7 @@ $start-left-boundary: 15%;
   -webkit-animation: shoot 25s infinite linear;
 }
 
-@keyframes shoot{
+@keyframes shoot {
   10%{
     transform:rotate(-30deg) translate(-4000px, 0px);
   }
@@ -268,12 +301,12 @@ $start-left-boundary: 15%;
   }
 }
 
-@-webkit-keyframes shoot{
+@-webkit-keyframes shoot {
   10%{
-    -webkit-transform:rotate(-30deg) translate(-550px ,0px);
+    -webkit-transform: rotate(-30deg) translate(-550px ,0px);
   }
   100%{
-    -webkit-transform:rotate(-30deg) translate(-550px ,0px);
+    -webkit-transform: rotate(-30deg) translate(-550px ,0px);
   }
 
 }

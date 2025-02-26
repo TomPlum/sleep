@@ -20,10 +20,22 @@ export const HighlightsPage = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.landing' })
 
   const [started, setStarted] = useState(false)
+  const [starting, setStarting] = useState(false)
+
+  const start = () => {
+    setStarting(true)
+    setTimeout(() => {
+      setStarting(false)
+      setStarted(true)
+    }, 5000)
+  }
 
   return (
     <div className={styles.page}>
-      <NightSkyScene loading={isSleepDataLoading} />
+      <NightSkyScene
+        exit={starting}
+        loading={isSleepDataLoading}
+      />
 
       <div className={styles.content}>
         <div className={styles.header}>
@@ -54,9 +66,9 @@ export const HighlightsPage = () => {
           <Button
             color='green'
             type='primary'
+            onClick={start}
             variant='filled'
             className={styles.startButton}
-            onClick={() => setStarted(true)}
           >
             {t('start-button')}
           </Button>

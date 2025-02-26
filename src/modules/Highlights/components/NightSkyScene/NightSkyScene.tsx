@@ -55,7 +55,7 @@ const generateBackgroundStars = () => {
   })
 }
 
-export const NightSkyScene = ({ loading }: NightSkySceneProps) => {
+export const NightSkyScene = ({ loading, exit }: NightSkySceneProps) => {
   const { width } = useWindowSize()
 
   const path = useMemo(() => {
@@ -91,7 +91,7 @@ export const NightSkyScene = ({ loading }: NightSkySceneProps) => {
         {backgroundStars}
       </div>
 
-      <div className={styles.moon} />
+      <div className={classNames(styles.moon, { [styles.loading]: loading })} />
 
       <div className={styles.shootingStar1} />
       <div className={styles.shootingStar2} />
