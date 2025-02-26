@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { SleepingAnimation } from 'modules/Highlights/components/SleepingAnimation'
 import { NightSkyScene } from 'modules/Highlights/components/NightSkyScene'
 import { CompactDataLoading } from 'data/CompactDataLoading'
+import classNames from 'classnames'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
@@ -27,42 +28,45 @@ export const HighlightsPage = () => {
     setTimeout(() => {
       setStarting(false)
       setStarted(true)
-    }, 5000)
+    }, 1000)
   }
 
   return (
     <div className={styles.page}>
       <NightSkyScene
+        loaded={started}
         exiting={starting}
         loading={isSleepDataLoading}
       />
 
       <div className={styles.content}>
-        <div className={styles.header}>
-          <Typography className={styles.heading}>
-            {t('heading')}
-          </Typography>
-
-          <div className={styles.headerBottom}>
-            <Typography className={styles.subheading}>
-              {t('sub-heading')}
-
-              <PillowDataFileLink
-                className={styles.dataSourceLink}
-              />
+        {!started && (
+          <div className={classNames(styles.header, { [styles.headerExiting]: starting })}>
+            <Typography className={styles.heading}>
+              {t('heading')}
             </Typography>
 
-            <SleepingAnimation
-              className={styles.sleepingAnimation}
-            />
+            <div className={styles.headerBottom}>
+              <Typography className={styles.subheading}>
+                {t('sub-heading')}
+
+                <PillowDataFileLink
+                  className={styles.dataSourceLink}
+                />
+              </Typography>
+
+              <SleepingAnimation
+                className={styles.sleepingAnimation}
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {isSleepDataLoading && (
           <CompactDataLoading />
         )}
 
-        {!isSleepDataLoading && (
+        {!isSleepDataLoading && !started && (
           <Button
             color='green'
             type='primary'

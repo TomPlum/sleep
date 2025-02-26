@@ -55,7 +55,7 @@ const generateBackgroundStars = () => {
   })
 }
 
-export const NightSkyScene = ({ loading, exiting }: NightSkySceneProps) => {
+export const NightSkyScene = ({ loaded, loading, exiting }: NightSkySceneProps) => {
   const { width } = useWindowSize()
 
   const path = useMemo(() => {
@@ -91,55 +91,65 @@ export const NightSkyScene = ({ loading, exiting }: NightSkySceneProps) => {
         {backgroundStars}
       </div>
 
-      <div
-        className={classNames(
-          styles.moon,
-          { [styles.loading]: loading },
-          { [styles.moonExiting]: exiting }
-        )}
-      />
+      {!loaded && (
+        <div
+          className={classNames(
+            styles.moon,
+            { [styles.loading]: loading },
+            { [styles.moonExiting]: exiting }
+          )}
+        />
+      )}
 
       <div className={styles.shootingStar1} />
       <div className={styles.shootingStar2} />
 
-      <div
-        style={path}
-        className={classNames(
-          styles.mountains,
-          { [styles.landExiting]: exiting }
-        )}
-      />
+      {!loaded && (
+        <div
+          style={path}
+          className={classNames(
+            styles.mountains,
+            { [styles.landExiting]: exiting }
+          )}
+        />
+      )}
 
-      <div
-        className={classNames(
-          styles.land,
-          { [styles.landExiting]: exiting }
-        )}
-      />
+      {!loaded && (
+        <div
+          className={classNames(
+            styles.land,
+            { [styles.landExiting]: exiting }
+          )}
+        />
+      )}
 
-      <div
-        className={classNames(
-          styles.windmill,
-          { [styles.landExiting]: exiting }
-        )}
-      >
-        <div className={styles.light} />
-        <div className={styles.door} />
-        <div className={styles.top} />
-        <div className={styles.blades}>
-          <div className={classNames(styles.blade, styles.blade1)} />
-          <div className={classNames(styles.blade, styles.blade2)} />
-          <div className={classNames(styles.blade, styles.blade3)} />
-          <div className={classNames(styles.blade, styles.blade4)} />
+      {!loaded && (
+        <div
+          className={classNames(
+            styles.windmill,
+            { [styles.landExiting]: exiting }
+          )}
+        >
+          <div className={styles.light} />
+          <div className={styles.door} />
+          <div className={styles.top} />
+          <div className={styles.blades}>
+            <div className={classNames(styles.blade, styles.blade1)} />
+            <div className={classNames(styles.blade, styles.blade2)} />
+            <div className={classNames(styles.blade, styles.blade3)} />
+            <div className={classNames(styles.blade, styles.blade4)} />
+          </div>
         </div>
-      </div>
+      )}
 
-      <div
-        className={classNames(
-          styles.tree,
-          { [styles.landExiting]: exiting }
-        )}
-      />
+      {!loaded && (
+        <div
+          className={classNames(
+            styles.tree,
+            { [styles.landExiting]: exiting }
+          )}
+        />
+      )}
     </div>
   )
 }

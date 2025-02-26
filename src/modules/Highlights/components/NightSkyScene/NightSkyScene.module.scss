@@ -68,7 +68,7 @@ $color: #82c5fc;
 }
 
 .moonExiting {
-  animation: moonExiting 2s linear;
+  animation: moonExiting 3s forwards;
 }
 
 $moonSize: 8em;
@@ -119,7 +119,7 @@ $moonSize: 8em;
 }
 
 .landExiting {
-  animation: landExiting 2s linear;
+  animation: landExiting 3s forwards;
 }
 
 .land {
