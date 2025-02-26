@@ -2,6 +2,7 @@ import styles from './NightSkyScene.module.scss'
 import classNames from 'classnames'
 import { CSSProperties, useMemo } from 'react'
 import { useWindowSize } from '@uidotdev/usehooks'
+import { NightSkySceneProps } from './types'
 
 const getRandomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -54,7 +55,7 @@ const generateBackgroundStars = () => {
   })
 }
 
-export const NightSkyScene = () => {
+export const NightSkyScene = ({ loading }: NightSkySceneProps) => {
   const { width } = useWindowSize()
 
   const path = useMemo(() => {
@@ -77,14 +78,17 @@ export const NightSkyScene = () => {
     }
   }, [width]) as CSSProperties
 
+  const foregroundStars = useMemo(generateForegroundStars, [])
+  const backgroundStars = useMemo(generateBackgroundStars, [])
+
   return (
     <div className={styles.scene}>
       <div className={styles.foregroundStars}>
-        {generateForegroundStars()}
+        {foregroundStars}
       </div>
 
       <div className={styles.backgroundStars}>
-        {generateBackgroundStars()}
+        {backgroundStars}
       </div>
 
       <div className={styles.moon} />
@@ -101,10 +105,10 @@ export const NightSkyScene = () => {
         <div className={styles.door} />
         <div className={styles.top} />
         <div className={styles.blades}>
-          <div className={classNames(styles.bl, styles.blade1)} />
-          <div className={classNames(styles.bl, styles.blade2)} />
-          <div className={classNames(styles.bl, styles.blade3)} />
-          <div className={classNames(styles.bl, styles.blade4)} />
+          <div className={classNames(styles.blade, styles.blade1)} />
+          <div className={classNames(styles.blade, styles.blade2)} />
+          <div className={classNames(styles.blade, styles.blade3)} />
+          <div className={classNames(styles.blade, styles.blade4)} />
         </div>
       </div>
 

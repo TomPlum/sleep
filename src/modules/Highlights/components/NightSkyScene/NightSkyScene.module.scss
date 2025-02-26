@@ -149,14 +149,14 @@ $windmillSize: 4;
   }
 }
 
-.bl {
+.blade {
   height: #{2.5 * $windmillSize}em;
   width: #{0.8 * $windmillSize}em;
   background-color: #041524;
   position: absolute;
 }
 
-.bl:before {
+.blade:before {
   position: absolute;
   content: "";
   background-color: #041524;

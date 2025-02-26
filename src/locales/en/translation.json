@@ -200,6 +200,9 @@
       "finishing": "Finishing up",
       "done": "Done",
       "error": "An error occurred while reading the Pillow database"
+    },
+    "description": {
+      "finishing": "Preparing sleep session highlights..."
     }
   }
 }
