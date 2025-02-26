@@ -24,22 +24,24 @@ export const BestSessionShowcase = () => {
         innerPercent={bestSession.duration.total}
       />
 
-      <Typography>
-        {t('heading', { date: dayjs(bestSession.startTime).format('dddd Do YYYY') })}
-      </Typography>
+      <div className={styles.content}>
+        <Typography>
+          {t('heading', { date: dayjs(bestSession.startTime).format('dddd Do YYYY') })}
+        </Typography>
 
-      <Typography>
-        {t('duration', { duration: formatDuration(bestSession.duration.total) })}
-      </Typography>
+        <Typography>
+          {t('duration', { duration: formatDuration(bestSession.duration.total) })}
+        </Typography>
 
-      <Typography>
-        {t('quality', { quality: bestSession.sleepQuality })}
-      </Typography>
+        <Typography>
+          {t('quality', { quality: bestSession.sleepQuality })}
+        </Typography>
 
-      <SleepStatistic
-        suffix='%'
-        value={bestSession.sleepQuality}
-      />
+        <SleepStatistic
+          suffix='%'
+          value={bestSession.sleepQuality}
+        />
+      </div>
     </div>
   )
 }

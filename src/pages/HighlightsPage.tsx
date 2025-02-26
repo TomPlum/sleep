@@ -1,6 +1,6 @@
 import { useSleepContext } from 'context/SleepContext'
 import styles from './HighlightsPage.module.scss'
-import { Button, Carousel, Typography } from 'antd'
+import { Carousel, Typography } from 'antd'
 import { BestSessionShowcase } from 'modules/Highlights/components/BestSessionShowcase'
 import { OverviewShowcase } from 'modules/Highlights/components/OverviewShowcase/OverviewShowcase'
 import { useState } from 'react'
@@ -10,6 +10,7 @@ import { SleepingAnimation } from 'modules/Highlights/components/SleepingAnimati
 import { NightSkyScene } from 'modules/Highlights/components/NightSkyScene'
 import { CompactDataLoading } from 'data/CompactDataLoading'
 import classNames from 'classnames'
+import { StartButton } from 'modules/Highlights/components/StartButton'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
@@ -66,23 +67,21 @@ export const HighlightsPage = () => {
           <CompactDataLoading />
         )}
 
-        {!isSleepDataLoading && !started && (
-          <Button
-            color='green'
-            type='primary'
+        {!isSleepDataLoading && !started && !starting && (
+          <StartButton
             onClick={start}
-            variant='filled'
+            text={t('start-button')}
             className={styles.startButton}
-          >
-            {t('start-button')}
-          </Button>
+          />
         )}
 
         {started && (
-          <Carousel>
-            <OverviewShowcase />
-            <BestSessionShowcase />
-          </Carousel>
+          <div className={styles.showcases}>
+            <Carousel dotPosition='right'>
+              <OverviewShowcase />
+              <BestSessionShowcase />
+            </Carousel>
+          </div>
         )}
       </div>
     </div>

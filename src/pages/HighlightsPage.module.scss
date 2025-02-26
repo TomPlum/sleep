@@ -15,6 +15,11 @@
     flex-direction: column;
     justify-content: center;
 
+    .showcases {
+      height: 100%;
+      width: 100%;
+    }
+
     @keyframes fadeOut {
       to {
         opacity: 0;

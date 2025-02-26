@@ -29,7 +29,7 @@
 
 $size: 5rem;
 $border-thickness: 0.3rem;
-$color: #82c5fc;
+$color: #c7cbc4;
 
 @keyframes spinner {
   0% {
@@ -51,8 +51,8 @@ $color: #82c5fc;
   top: 15%;
   content: "";
   z-index: 10;
-  width: $size;
-  height: $size;
+  width: calc($size - 0.3rem);
+  height: calc($size - 0.3rem);
   border-radius: 50%;
   border: $border-thickness solid transparent;
   border-top-color: $color;
