@@ -1,0 +1,65 @@
+@import 'styles/colours';
+
+.header {
+  display: flex;
+  flex-direction: column;
+
+  .chartsLink {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+
+      .chartsLinkText {
+        color: #e7e7e7;
+      }
+    }
+
+    .chevron {
+      width: 15px;
+      height: 20px;
+      transform: rotateZ(180deg);
+    }
+
+    .chartsLinkText {
+      color: #666;
+      margin: 0 0 3px 10px;
+      font-size: 1.5em;
+      transition: color ease-in-out 0.2s;
+    }
+  }
+
+  .heading {
+    font-size: 5em;
+    line-height: 1.4em;
+    font-weight: bold;
+    margin-left: -5px;
+    margin-bottom: 0;
+    color: white;
+  }
+
+  .headerBottom {
+    display: flex;
+
+    .subheading {
+      font-size: 1.4em;
+      margin-top: 0;
+      color: #d9d9d9;
+      margin-bottom: 5em;
+
+      .dataSourceLink {
+        color: $quality;
+      }
+    }
+
+    .sleepingAnimation {
+      font-family: "Nunito", sans-serif;
+      height: 100%;
+
+      >span {
+        color: #d7d7d7;
+      }
+    }
+  }
+}

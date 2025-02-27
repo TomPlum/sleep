@@ -1,19 +1,15 @@
 import { useSleepContext } from 'context/SleepContext'
 import styles from './HighlightsPage.module.scss'
-import { Carousel, Typography } from 'antd'
+import { Carousel } from 'antd'
 import { BestSessionShowcase } from 'modules/Highlights/components/BestSessionShowcase'
 import { OverviewShowcase } from 'modules/Highlights/components/OverviewShowcase/OverviewShowcase'
 import { useState } from 'react'
-import { PillowDataFileLink } from 'components/PillowDataFileLink'
 import { useTranslation } from 'react-i18next'
-import { SleepingAnimation } from 'modules/Highlights/components/SleepingAnimation'
 import { NightSkyScene } from 'modules/Highlights/components/NightSkyScene'
 import { CompactDataLoading } from 'data/CompactDataLoading'
 import classNames from 'classnames'
 import { StartButton } from 'modules/Highlights/components/StartButton'
-import { AnimatedChevron } from 'modules/Highlights/components/AnimatedChevron'
-import { Link } from 'react-router-dom'
-import { PageRoutes } from 'routes.ts'
+import { LandingPageHeading } from 'modules/Highlights/components/LandingPageHeading'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
@@ -46,36 +42,9 @@ export const HighlightsPage = () => {
 
       <div className={styles.content}>
         {!started && (
-          <div className={classNames(styles.header, { [styles.headerExiting]: starting })}>
-            <Link className={styles.chartsLink} to={PageRoutes.SLEEP}>
-              <AnimatedChevron
-                className={styles.chevron}
-              />
-
-              <Typography className={styles.chartsLinkText}>
-                {t('go-to-charts')}
-              </Typography>
-            </Link>
-
-            
-            <Typography className={styles.heading}>
-              {t('heading')}
-            </Typography>
-
-            <div className={styles.headerBottom}>
-              <Typography className={styles.subheading}>
-                {t('sub-heading')}
-
-                <PillowDataFileLink
-                  className={styles.dataSourceLink}
-                />
-              </Typography>
-
-              <SleepingAnimation
-                className={styles.sleepingAnimation}
-              />
-            </div>
-          </div>
+          <LandingPageHeading
+            className={classNames({ [styles.headerExiting]: starting })}
+          />
         )}
 
         {isSleepDataLoading && (
