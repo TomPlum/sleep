@@ -34,6 +34,32 @@
       display: flex;
       flex-direction: column;
 
+      .chartsLink {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          cursor: pointer;
+
+          .chartsLinkText {
+            color: #e7e7e7;
+          }
+        }
+
+        .chevron {
+          width: 15px;
+          height: 20px;
+          transform: rotateZ(180deg);
+        }
+
+        .chartsLinkText {
+          color: #666;
+          margin: 0 0 3px 10px;
+          font-size: 1.5em;
+          transition: color ease-in-out 0.2s;
+        }
+      }
+
       .heading {
         font-size: 5em;
         line-height: 1.4em;

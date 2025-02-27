@@ -11,12 +11,16 @@ import { NightSkyScene } from 'modules/Highlights/components/NightSkyScene'
 import { CompactDataLoading } from 'data/CompactDataLoading'
 import classNames from 'classnames'
 import { StartButton } from 'modules/Highlights/components/StartButton'
+import { AnimatedChevron } from 'modules/Highlights/components/AnimatedChevron'
+import { Link } from 'react-router-dom'
+import { PageRoutes } from 'routes.ts'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
 // Worst Session
 // Most Recent Session
 // Trends over last N months
+// Transition into day-time gradient for average wake-up time, with sun?
 export const HighlightsPage = () => {
   const { isSleepDataLoading } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.landing' })
@@ -43,6 +47,17 @@ export const HighlightsPage = () => {
       <div className={styles.content}>
         {!started && (
           <div className={classNames(styles.header, { [styles.headerExiting]: starting })}>
+            <Link className={styles.chartsLink} to={PageRoutes.SLEEP}>
+              <AnimatedChevron
+                className={styles.chevron}
+              />
+
+              <Typography className={styles.chartsLinkText}>
+                {t('go-to-charts')}
+              </Typography>
+            </Link>
+
+            
             <Typography className={styles.heading}>
               {t('heading')}
             </Typography>

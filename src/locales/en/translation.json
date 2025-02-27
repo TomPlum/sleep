@@ -163,7 +163,8 @@
     "landing": {
       "heading": "Sleep Highlights",
       "sub-heading": "Data sourced from ",
-      "start-button": "Start"
+      "start-button": "Start",
+      "go-to-charts": "Go to sleep metric charts"
     },
     "showcases": {
       "best": {
