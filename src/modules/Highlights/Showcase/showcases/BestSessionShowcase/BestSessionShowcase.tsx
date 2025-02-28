@@ -6,7 +6,7 @@ import styles from './BestSessionShowcase.module.scss'
 import { useTranslation } from 'react-i18next'
 import { Typography } from 'antd'
 import dayjs from 'dayjs'
-import { formatDuration } from 'utils/formatDuration'
+import { formatDuration } from 'utils/formatDuration.ts'
 
 export const BestSessionShowcase = () => {
   const { bestSession } = useHighlightedSessions()
@@ -25,20 +25,21 @@ export const BestSessionShowcase = () => {
       />
 
       <div className={styles.content}>
-        <Typography>
+        <Typography className={styles.heading}>
           {t('heading', { date: dayjs(bestSession.startTime).format('dddd Do YYYY') })}
         </Typography>
 
-        <Typography>
+        <Typography className={styles.duration}>
           {t('duration', { duration: formatDuration(bestSession.duration.total) })}
         </Typography>
 
-        <Typography>
+        <Typography className={styles.quality}>
           {t('quality', { quality: bestSession.sleepQuality })}
         </Typography>
 
         <SleepStatistic
           suffix='%'
+          className={styles.sleepQuality}
           value={bestSession.sleepQuality}
         />
       </div>

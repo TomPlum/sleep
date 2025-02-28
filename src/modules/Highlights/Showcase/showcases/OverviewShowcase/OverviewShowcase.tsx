@@ -1,12 +1,23 @@
 import { useTranslation } from 'react-i18next'
 import { useSleepContext } from 'context/SleepContext'
 import { Typography } from 'antd'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { formatDuration } from 'utils/formatDuration'
+import styles from './OverviewShowcase.module.scss'
+import { useShowcaseContext } from 'modules/Highlights/Showcase/context'
 
 export const OverviewShowcase = () => {
+  const { onEnd } = useShowcaseContext()
   const { sleepData } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.showcases.overview' })
+
+  useEffect(() => {
+    // Do some animation over time, then finish
+    setTimeout(() => {
+      console.log('Calling onEnd() from OverviewShowcase')
+      onEnd()
+    }, 3000)
+  }, [onEnd])
 
   const totalTimeSlept = useMemo<string>(() => {
     const minutes = sleepData?.sessions.reduce<number>((minutesSlept, session) => {
@@ -17,7 +28,7 @@ export const OverviewShowcase = () => {
   }, [sleepData?.sessions])
 
   return (
-    <div>
+    <div className={styles.showcase}>
       <Typography>
         {t('total-sessions', { total: sleepData?.sessions.length })}
       </Typography>

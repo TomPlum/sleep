@@ -25,9 +25,15 @@ export const LandingPageHeading = ({ className }: LandingPageHeadingProps) => {
       </Link>
 
 
-      <Typography className={styles.heading}>
-        {t('heading')}
-      </Typography>
+      <div className={styles.headerMiddle}>
+        <Typography className={styles.heading}>
+          {t('heading')}
+        </Typography>
+
+        <SleepingAnimation
+          className={styles.sleepingAnimation}
+        />
+      </div>
 
       <div className={styles.headerBottom}>
         <Typography className={styles.subheading}>
@@ -37,10 +43,6 @@ export const LandingPageHeading = ({ className }: LandingPageHeadingProps) => {
             className={styles.dataSourceLink}
           />
         </Typography>
-
-        <SleepingAnimation
-          className={styles.sleepingAnimation}
-        />
       </div>
     </div>
   )

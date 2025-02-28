@@ -1,8 +1,7 @@
 import { useSleepContext } from 'context/SleepContext'
 import styles from './HighlightsPage.module.scss'
-import { Carousel } from 'antd'
-import { BestSessionShowcase } from 'modules/Highlights/components/BestSessionShowcase'
-import { OverviewShowcase } from 'modules/Highlights/components/OverviewShowcase/OverviewShowcase'
+import { BestSessionShowcase } from 'modules/Highlights/Showcase/showcases/BestSessionShowcase'
+import { OverviewShowcase } from 'modules/Highlights/Showcase/showcases/OverviewShowcase/OverviewShowcase'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NightSkyScene } from 'modules/Highlights/components/NightSkyScene'
@@ -10,6 +9,8 @@ import { CompactDataLoading } from 'data/CompactDataLoading'
 import classNames from 'classnames'
 import { StartButton } from 'modules/Highlights/components/StartButton'
 import { LandingPageHeading } from 'modules/Highlights/components/LandingPageHeading'
+import { HighlightsShowcase } from 'modules/Highlights/Showcase'
+import { ShowcaseContextProvider } from 'modules/Highlights/Showcase/context'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
@@ -60,12 +61,18 @@ export const HighlightsPage = () => {
         )}
 
         {started && (
-          <div className={styles.showcases}>
-            <Carousel dotPosition='right'>
+          /*<div className={styles.showcases}>
+            <Carousel dotPosition='right' className={styles.carousel} adaptiveHeight>
               <OverviewShowcase />
               <BestSessionShowcase />
             </Carousel>
-          </div>
+          </div>*/
+          <ShowcaseContextProvider>
+            <HighlightsShowcase>
+              <OverviewShowcase />
+              <BestSessionShowcase />
+            </HighlightsShowcase>
+          </ShowcaseContextProvider>
         )}
       </div>
     </div>
