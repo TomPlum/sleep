@@ -1,23 +1,20 @@
 import React, { PropsWithChildren } from 'react'
 import { HighlightsShowcaseProps } from 'modules/Highlights/Showcase'
-import { ShowcaseContextProvider, useShowcaseContext } from 'modules/Highlights/Showcase/context'
+import { useShowcaseContext } from 'modules/Highlights/Showcase/context'
 import styles from './HighlightsShowcase.module.scss'
 
 export const HighlightsShowcase = ({ children }: PropsWithChildren<HighlightsShowcaseProps>) => {
   const { active } = useShowcaseContext()
-  console.log('active', active)
 
   return (
     <div className={styles.wrapper}>
-      <ShowcaseContextProvider>
-        {
-          React.Children.map(children, (child, i) => {
-            if (i === active) {
-              return child
-            }
-          })
-        }
-      </ShowcaseContextProvider>
+      {
+        React.Children.map(children, (child, i) => {
+          if (i === active) {
+            return child
+          }
+        })
+      }
     </div>
   )
 }

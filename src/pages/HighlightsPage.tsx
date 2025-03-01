@@ -27,6 +27,7 @@ export const HighlightsPage = () => {
 
   const start = () => {
     setStarting(true)
+
     setTimeout(() => {
       setStarting(false)
       setStarted(true)
