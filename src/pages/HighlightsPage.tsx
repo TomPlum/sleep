@@ -11,6 +11,7 @@ import { StartButton } from 'modules/Highlights/components/StartButton'
 import { LandingPageHeading } from 'modules/Highlights/components/LandingPageHeading'
 import { HighlightsShowcase } from 'modules/Highlights/Showcase'
 import { ShowcaseContextProvider } from 'modules/Highlights/Showcase/context'
+import { WakeupShowcase } from 'modules/Highlights/Showcase/showcases/WakeupShowcase'
 
 // Overview, total session, time slept, percentage of time slept compared to days etc
 // Best Session
@@ -72,6 +73,7 @@ export const HighlightsPage = () => {
             <HighlightsShowcase>
               <OverviewShowcase />
               <BestSessionShowcase />
+              <WakeupShowcase />
             </HighlightsShowcase>
           </ShowcaseContextProvider>
         )}

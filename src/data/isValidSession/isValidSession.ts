@@ -6,5 +6,6 @@ export const isValidSession = ({ duration, isNap }: IsValidSessionProps) => {
   const isAllAwakeTime = [duration.light, duration.deep, duration.rem].every(v => v === 0) && duration.awake > 0
   const hasValidAwakeTime = duration.awake <= duration.total
   const isTooShort = !isNap && duration.total < 90
+
   return hasValidDuration && !hasInvalidBreakdown && hasValidAwakeTime && !isTooShort && !isAllAwakeTime
 }

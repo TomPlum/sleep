@@ -6,11 +6,20 @@ import styles from './BestSessionShowcase.module.scss'
 import { useTranslation } from 'react-i18next'
 import { Typography } from 'antd'
 import dayjs from 'dayjs'
-import { formatDuration } from 'utils/formatDuration.ts'
+import { formatDuration } from 'utils/formatDuration'
+import { useEffect } from 'react'
+import { useShowcaseContext } from 'modules/Highlights/Showcase/context'
 
 export const BestSessionShowcase = () => {
   const { bestSession } = useHighlightedSessions()
+  const { onEnd } = useShowcaseContext()
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.showcases.best' })
+
+  useEffect(() => {
+    setTimeout(() => {
+      onEnd()
+    }, 2000)
+  }, [onEnd])
 
   return (
     <div className={styles.showcase}>

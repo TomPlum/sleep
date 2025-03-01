@@ -76,6 +76,7 @@ Renders a single line chart for the selected metric.
 - User [Michael van Engelshoven](https://codepen.io/micha149) for his [CSS Sleep Animation](https://codepen.io/micha149/pen/MWgbNB) used in the [highlights](https://tomplum.github.io/sleep/highights) page.
 - User [Coding Artist](https://codepen.io/Coding-Artist) for their [A Beautiful Night | Pure CSS](https://codepen.io/Coding-Artist/details/XLMWYw) CodePen that was used as a baseline in the [highlights](https://tomplum.github.io/sleep/highights) page.
 - User [Nawsome](https://uiverse.io/profile/Nawsome) for their [Animated Chevron Button](https://uiverse.io/Nawsome/chilly-moose-65) on UIVerse.
+- User [Ryan Mulligan](https://codepen.io/hexagoncircle) for their [Shiny call-to-action button](https://codepen.io/hexagoncircle/pen/MWMqXbK) on Codepen.
 
 # To Do
 
