@@ -1,11 +1,18 @@
 .showcase {
-  .averageWakeupText {
-    font-size: 2em;
-    color: white;
-  }
+  width: 100%;
+  position: relative;
 
-  .averageWakeUpTime {
-    font-size: 2em;
-    color: white;
+  .content {
+    z-index: 10;
+
+    .averageWakeupText {
+      font-size: 2em;
+      color: white;
+    }
+
+    .averageWakeUpTime {
+      font-size: 2em;
+      color: white;
+    }
   }
 }

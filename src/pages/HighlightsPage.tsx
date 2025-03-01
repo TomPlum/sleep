@@ -37,47 +37,43 @@ export const HighlightsPage = () => {
 
   return (
     <div className={styles.page}>
-      <NightSkyScene
-        loaded={started}
-        exiting={starting}
-        loading={isSleepDataLoading}
-      />
-
-      <div className={styles.content}>
-        {!started && (
-          <LandingPageHeading
-            className={classNames({ [styles.headerExiting]: starting })}
+      {!started && (
+        <div className={styles.landing}>
+          <NightSkyScene
+            loaded={started}
+            exiting={starting}
+            loading={isSleepDataLoading}
           />
-        )}
 
-        {isSleepDataLoading && (
-          <CompactDataLoading />
-        )}
+          <div className={styles.content}>
+            <LandingPageHeading
+              className={classNames({ [styles.headerExiting]: starting })}
+            />
 
-        {!isSleepDataLoading && !started && !starting && (
-          <StartButton
-            onClick={start}
-            text={t('start-button')}
-            className={styles.startButton}
-          />
-        )}
+            {isSleepDataLoading && (
+              <CompactDataLoading />
+            )}
 
-        {started && (
-          /*<div className={styles.showcases}>
-            <Carousel dotPosition='right' className={styles.carousel} adaptiveHeight>
-              <OverviewShowcase />
-              <BestSessionShowcase />
-            </Carousel>
-          </div>*/
-          <ShowcaseContextProvider>
-            <HighlightsShowcase>
-              <OverviewShowcase />
-              <BestSessionShowcase />
-              <WakeupShowcase />
-            </HighlightsShowcase>
-          </ShowcaseContextProvider>
-        )}
-      </div>
+            {!isSleepDataLoading && !started && !starting && (
+              <StartButton
+                onClick={start}
+                text={t('start-button')}
+                className={styles.startButton}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      {started && (
+        <ShowcaseContextProvider>
+          <HighlightsShowcase>
+            <OverviewShowcase />
+            <BestSessionShowcase />
+            <WakeupShowcase />
+          </HighlightsShowcase>
+        </ShowcaseContextProvider>
+      )}
     </div>
   )
 }

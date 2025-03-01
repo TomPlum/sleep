@@ -1,7 +1,6 @@
 @import 'styles/colours';
 
 .page {
-  padding: 8em 0;
   display: flex;
   width: 100%;
   height: 100%;
@@ -9,40 +8,46 @@
   align-items: center;
   justify-content: stretch;
   font-family: "Nunito", sans-serif;
-  box-sizing: border-box;
 
-  .content {
-    max-width: 1200px;
+  .landing {
+    padding: 8em 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    max-width: 1200px;
+    box-sizing: border-box;
 
-    .showcases {
+    .content {
       width: 100%;
-      flex: 1;
-      border: 1px solid red;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
 
-      .carousel {
-        height: 100%;
+      .showcases {
+        width: 100%;
+        flex: 1;
+        border: 1px solid red;
+
+        .carousel {
+          height: 100%;
+        }
       }
-    }
 
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+        }
       }
-    }
 
-    .headerExiting {
-      animation: fadeOut 1s forwards;
-    }
+      .headerExiting {
+        animation: fadeOut 1s forwards;
+      }
 
-    .startButton {
-      font-weight: bold;
-      font-size: 2em;
-      padding: 25px;
-      max-width: 150px;
+      .startButton {
+        font-weight: bold;
+        font-size: 2em;
+        padding: 25px;
+        max-width: 150px;
+      }
     }
   }
 }

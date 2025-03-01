@@ -4,6 +4,7 @@ import styles from './WakeupShowcase.module.scss'
 import { Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { isValidSession } from 'data/isValidSession'
+import { LakesideSunrise } from 'modules/Highlights/components/LakesideSunrise'
 
 export const WakeupShowcase = () => {
   const { sleepData } = useSleepContext()
@@ -52,17 +53,21 @@ export const WakeupShowcase = () => {
 
   return (
     <div className={styles.showcase}>
-      <Typography className={styles.averageWakeupText}>
-        {t('average-wakeup')}
-      </Typography>
+      <LakesideSunrise />
 
-      {averageEndTimes.map(({ year, averageTime }) => (
-        <Typography key={year} className={styles.averageWakeUpTime}>
-          {year}:
-          {' '}
-          {averageTime}
+      <div className={styles.content}>
+        <Typography className={styles.averageWakeupText}>
+          {t('average-wakeup')}
         </Typography>
-      ))}
+
+        {averageEndTimes.map(({ year, averageTime }) => (
+          <Typography key={year} className={styles.averageWakeUpTime}>
+            {year}:
+            {' '}
+            {averageTime}
+          </Typography>
+        ))}
+      </div>
     </div>
   )
 }
