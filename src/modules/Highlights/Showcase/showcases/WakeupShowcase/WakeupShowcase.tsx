@@ -1,12 +1,14 @@
 import { useSleepContext } from 'context/SleepContext'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styles from './WakeupShowcase.module.scss'
 import { Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { isValidSession } from 'data/isValidSession'
 import { LakesideSunrise } from 'modules/Highlights/components/LakesideSunrise'
+import { useShowcaseContext } from 'modules/Highlights/Showcase/context'
 
 export const WakeupShowcase = () => {
+  const { onEnd } = useShowcaseContext()
   const { sleepData } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.showcases.wakeup' })
 
@@ -51,22 +53,49 @@ export const WakeupShowcase = () => {
 
   }, [sleepData?.sessions])
 
+  const [currentTime, setCurrentTime] = useState(0)
+
+  useEffect(() => {
+    setInterval(() => {
+      const nextIndex = currentTime + 1
+      if (averageEndTimes[nextIndex]) {
+        setCurrentTime(nextIndex)
+      } else {
+        // onEnd()
+      }
+    }, 2000)
+  }, [averageEndTimes, currentTime, onEnd])
+
   return (
     <div className={styles.showcase}>
       <LakesideSunrise />
 
       <div className={styles.content}>
-        <Typography className={styles.averageWakeupText}>
-          {t('average-wakeup')}
+        <div className={styles.averageWakeupText}>
+          <Typography className={styles.averageWakeupText1}>
+            {t('average-wakeup1')}
+          </Typography>
+
+          <Typography className={styles.averageWakeupText2}>
+            {t('average-wakeup2')}
+          </Typography>
+
+          <Typography className={styles.averageWakeupYear}>
+            {averageEndTimes[currentTime].year}
+          </Typography>
+
+          <Typography className={styles.averageWakeupText3}>
+            {t('average-wakeup3')}
+          </Typography>
+        </div>
+
+        <Typography className={styles.averageWakeUpTime}>
+          {averageEndTimes[currentTime].averageTime}
         </Typography>
 
-        {averageEndTimes.map(({ year, averageTime }) => (
-          <Typography key={year} className={styles.averageWakeUpTime}>
-            {year}:
-            {' '}
-            {averageTime}
-          </Typography>
-        ))}
+        <Typography className={styles.averageWakeUpTimeReflection}>
+          {averageEndTimes[currentTime].averageTime}
+        </Typography>
       </div>
     </div>
   )

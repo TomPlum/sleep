@@ -19,6 +19,9 @@ import { WakeupShowcase } from 'modules/Highlights/Showcase/showcases/WakeupShow
 // Most Recent Session
 // Trends over last N months
 // Transition into day-time gradient for average wake-up time, with sun?
+// Store slide number in query params so you can jump to one?
+// Show timings somewhere, let user click to skip
+
 export const HighlightsPage = () => {
   const { isSleepDataLoading } = useSleepContext()
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.landing' })

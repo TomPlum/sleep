@@ -177,7 +177,9 @@
         "total-time-slept": "Slept for a total time of {{ time }}."
       },
       "wakeup": {
-        "average-wakeup": "Your average wakeup time is..."
+        "average-wakeup1": "Your average wakeup ",
+        "average-wakeup2": "time in ",
+        "average-wakeup3": " was..."
       }
     }
   },
