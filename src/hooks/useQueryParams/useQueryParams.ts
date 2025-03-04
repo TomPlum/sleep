@@ -1,9 +1,9 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useCallback, useMemo } from 'react'
 import {
+  QueryParameters,
   QueryParamsResponse,
   RemoveQueryParamsArgs,
-  SleepQueryParams,
   UpdateQueryParamsArgs
 } from 'hooks/useQueryParams/types'
 import { SleepMetric } from 'modules/ChartControls'
@@ -28,7 +28,7 @@ export const useQueryParams = (): QueryParamsResponse => {
     })
   }, [navigate, searchParams])
 
-  const queryParams = useMemo<SleepQueryParams>(() => {
+  const queryParams = useMemo<QueryParameters>(() => {
     return {
       metric: searchParams.get('metric') as SleepMetric,
       start: searchParams.has('start') ? new Date(Number(searchParams.get('start'))) : undefined,
@@ -37,7 +37,8 @@ export const useQueryParams = (): QueryParamsResponse => {
       metrics: searchParams.has('metrics') ? searchParams.get('metrics')?.split(',') as SleepMetric[] : undefined,
       selected: searchParams.get('selected') ? Number(searchParams.get('selected')) : undefined,
       view: searchParams.has('view') ? searchParams.get('view') as ChartView : undefined,
-      is3D: searchParams.has('is3D') ? searchParams.get('is3D') === 'true' : undefined
+      is3D: searchParams.has('is3D') ? searchParams.get('is3D') === 'true' : undefined,
+      active: searchParams.has('active') ? Number(searchParams.get('active')) : undefined,
     }
   }, [searchParams])
 

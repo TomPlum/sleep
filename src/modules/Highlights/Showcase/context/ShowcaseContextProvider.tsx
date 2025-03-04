@@ -1,16 +1,35 @@
 import { ShowcaseContext } from 'modules/Highlights/Showcase/context/ShowcaseContext'
-import { PropsWithChildren, useMemo, useState } from 'react'
+import { PropsWithChildren, useEffect, useMemo } from 'react'
 import { ShowcaseContextBag } from 'modules/Highlights/Showcase/context/types'
+import { useQueryParams } from 'hooks/useQueryParams'
+import { PageRoutes } from 'routes.ts'
 
 export const ShowcaseContextProvider = ({ children }: PropsWithChildren) => {
-  const [active, setActive] = useState(0)
+  const { queryParams, updateQueryParam } = useQueryParams()
+  const active = queryParams.active ?? 0
+
+  useEffect(() => {
+    if (!queryParams.active) {
+      updateQueryParam({
+        route: PageRoutes.HIGHLIGHTS,
+        params: {
+          active: '0'
+        }
+      })
+    }
+  }, [queryParams.active, updateQueryParam])
 
   const value = useMemo<ShowcaseContextBag>(() => ({
     active,
     onEnd: () => {
-      setActive(i => i + 1)
+      updateQueryParam({
+        route: PageRoutes.HIGHLIGHTS,
+        params: {
+          active: (active + 1).toString()
+        }
+      })
     }
-  }), [active])
+  }), [active, updateQueryParam])
 
   return (
     <ShowcaseContext.Provider value={value}>

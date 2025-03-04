@@ -1,7 +1,7 @@
 import { SleepMetric } from 'modules/ChartControls'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
 
-export type QueryParams = Partial<Record<keyof SleepQueryParams, string>>
+export type QueryParams = Partial<Record<keyof QueryParameters, string>>
 
 export interface UpdateQueryParamsArgs {
   route: string
@@ -24,8 +24,18 @@ export interface SleepQueryParams {
   is3D?: boolean
 }
 
+export interface HighlightsQueryParams {
+  /**
+   * The index or ID of the active
+   * showcase in the highlights page.
+   */
+  active?: number
+}
+
+export type QueryParameters = SleepQueryParams & HighlightsQueryParams
+
 export interface QueryParamsResponse {
-  queryParams: SleepQueryParams
+  queryParams: QueryParameters
   updateQueryParam: (args: UpdateQueryParamsArgs) => void
   removeQueryParam: (args: RemoveQueryParamsArgs) => void
 }
