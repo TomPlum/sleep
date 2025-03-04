@@ -1,4 +1,5 @@
 @use "styles/_colours.scss" as colours;
+@use "styles/_viewports.scss";
 
 .showcase {
   width: 100%;
@@ -19,6 +20,11 @@
       left: 25%;
       top: 15vmin;
       width: 50%;
+
+      @include viewports.phone {
+        left: 5%;
+        width: 90%;
+      }
 
       .left {
         display: flex;
@@ -55,37 +61,17 @@
         font-weight: bold;
         margin-left: -5px;
       }
-
-      .dots {
-        gap: 10px;
-        display: flex;
-        flex-direction: column;
-        margin-right: 5%;
-        margin-top: 12px;
-        flex-grow: 1;
-
-        .dot {
-          background: white;
-          width: 10px;
-          height: 20px;
-          border-radius: 5px;
-          opacity: 0.1;
-
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-        .activeDot {
-          opacity: 0.8;
-        }
-      }
     }
 
     .reflectedTime {
       position: absolute;
       left: 25%;
       bottom: 30vmin;
+
+      @include viewports.phone {
+        left: 5%;
+        bottom: 70vmin;
+      }
 
       .averageWakeUpTimeReflection {
         margin-top: 15%;

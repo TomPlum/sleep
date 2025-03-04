@@ -6,13 +6,16 @@ import { useTranslation } from 'react-i18next'
 import { isValidSession } from 'data/isValidSession'
 import { LakesideSunrise } from 'modules/Highlights/components/LakesideSunrise'
 import { useShowcaseContext } from 'modules/Highlights/Showcase/context'
-import classNames from 'classnames'
 import { WAKEUP_SHOWCASE_YEAR_INTERVAL } from './types'
+import { useMediaQuery } from '@uidotdev/usehooks'
+import { ShowcaseProgressDots } from 'modules/Highlights/components/ShowcaseProgressDots'
 
 export const WakeupShowcase = () => {
   const { onEnd } = useShowcaseContext()
   const { sleepData } = useSleepContext()
+  const isMobile = useMediaQuery('only screen and (max-width : 768px)')
 
+  const [currentTime, setCurrentTime] = useState(0)
   const interval = useRef<NodeJS.Timeout | null>(null)
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.showcases.wakeup' })
 
@@ -57,11 +60,10 @@ export const WakeupShowcase = () => {
 
   }, [sleepData?.sessions])
 
-  const [currentTime, setCurrentTime] = useState(0)
-
   useEffect(() => {
     interval.current = setInterval(() => {
       const nextIndex = currentTime + 1
+      console.log('nextIndex', nextIndex)
       if (averageEndTimes[nextIndex]) {
         setCurrentTime(nextIndex)
       } else {
@@ -75,6 +77,7 @@ export const WakeupShowcase = () => {
 
     if (interval.current) {
       clearInterval(interval.current)
+      interval.current = null
     }
   }, [])
 
@@ -108,18 +111,13 @@ export const WakeupShowcase = () => {
             </Typography>
           </div>
 
-          <div className={styles.dots}>
-            {averageEndTimes.map((time, i) => (
-              <div
-                key={time.year}
-                className={classNames(
-                  styles.dot,
-                  { [styles.activeDot]: currentTime === i }
-                )}
-                onClick={() => handleClickDot(i)}
-              />
-            ))}
-          </div>
+          <ShowcaseProgressDots
+            active={currentTime}
+            className={styles.dots}
+            onClickDot={handleClickDot}
+            dots={averageEndTimes.length}
+            orientation={isMobile ? 'horizontal' : 'vertical'}
+          />
         </div>
 
         <div className={styles.reflectedTime}>
