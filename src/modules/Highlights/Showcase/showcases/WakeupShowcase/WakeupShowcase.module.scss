@@ -9,70 +9,92 @@
 
   .content {
     z-index: 10;
-    position: relative;
     width: 100%;
-    height: 50%;
-    padding: 10% 28%;
     display: flex;
-    border: 5px solid red;
+    position: relative;
 
+    .times {
+      position: absolute;
+      display: flex;
+      left: 25%;
+      top: 15vmin;
+      width: 50%;
 
-    .averageWakeupText {
-      margin-bottom: 5%;
+      .left {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 2;
+        width: 100%;
+      }
 
-      .averageWakeupText1, .averageWakeupText2, .averageWakeupText3 {
-        font-size: 2em;
-        font-weight: bold;
+      .averageWakeupText {
+        margin-bottom: 5%;
+
+        .averageWakeupText1, .averageWakeupText2, .averageWakeupText3 {
+          font-size: 2em;
+          font-weight: bold;
+          color: white;
+        }
+
+        .averageWakeupText2, .averageWakeupYear, .averageWakeupText3 {
+          display: inline-block;
+        }
+
+        .averageWakeupYear {
+          font-size: 2.5em;
+          font-weight: bold;
+          margin: 0 10px;
+          color: colours.$quality;
+          text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      .averageWakeUpTime {
+        font-size: 5em;
         color: white;
-      }
-
-      .averageWakeupText2, .averageWakeupYear, .averageWakeupText3 {
-        display: inline-block;
-      }
-
-      .averageWakeupYear {
-        font-size: 2.5em;
         font-weight: bold;
-        margin: 0 10px;
-        color: colours.$quality;
-        text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        margin-left: -5px;
+      }
+
+      .dots {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        margin-right: 5%;
+        margin-top: 12px;
+        flex-grow: 1;
+
+        .dot {
+          background: white;
+          width: 10px;
+          height: 20px;
+          border-radius: 5px;
+          opacity: 0.1;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .activeDot {
+          opacity: 0.8;
+        }
       }
     }
 
-    .averageWakeUpTime, .averageWakeUpTimeReflection {
-      font-size: 5em;
-      color: white;
-      font-weight: bold;
-    }
+    .reflectedTime {
+      position: absolute;
+      left: 25%;
+      bottom: 30vmin;
 
-    .averageWakeUpTimeReflection {
-      margin-top: 15%;
-      transform: rotateZ(180deg) rotateY(180deg) rotateX(55deg);
-      filter: blur(8px);
-    }
-  }
-
-  .dots {
-    gap: 10px;
-    display: flex;
-    flex-direction: column;
-    margin-right: 5%;
-    margin-top: 12px;
-
-    .dot {
-      background: white;
-      width: 10px;
-      height: 20px;
-      border-radius: 5px;
-      opacity: 0.1;
-
-      &:hover {
-        cursor: pointer;
+      .averageWakeUpTimeReflection {
+        margin-top: 15%;
+        transform: rotateZ(180deg) rotateY(180deg) rotateX(55deg);
+        filter: blur(8px);
+        font-size: 5em;
+        color: white;
+        font-weight: bold;
       }
-    }
-
-    .activeDot {
-      opacity: 0.8;
     }
   }
 }

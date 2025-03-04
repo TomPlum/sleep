@@ -7,8 +7,7 @@ import { isValidSession } from 'data/isValidSession'
 import { LakesideSunrise } from 'modules/Highlights/components/LakesideSunrise'
 import { useShowcaseContext } from 'modules/Highlights/Showcase/context'
 import classNames from 'classnames'
-
-const SHOWCASE_INTERVAL = 2000
+import { WAKEUP_SHOWCASE_YEAR_INTERVAL } from './types'
 
 export const WakeupShowcase = () => {
   const { onEnd } = useShowcaseContext()
@@ -68,7 +67,7 @@ export const WakeupShowcase = () => {
       } else {
         // onEnd()
       }
-    }, SHOWCASE_INTERVAL)
+    }, WAKEUP_SHOWCASE_YEAR_INTERVAL)
   }, [averageEndTimes, currentTime, onEnd])
 
   const handleClickDot = useCallback((dotIndex: number) => {
@@ -84,42 +83,46 @@ export const WakeupShowcase = () => {
       <LakesideSunrise />
 
       <div className={styles.content}>
-        <div className={styles.dots}>
-          {averageEndTimes.map((time, i) => (
-            <div
-              key={time.year}
-              className={classNames(
-                styles.dot,
-                { [styles.activeDot]: currentTime === i }
-              )}
-              onClick={() => handleClickDot(i)}
-            />
-          ))}
-        </div>
-
         <div className={styles.times}>
-          <div className={styles.averageWakeupText}>
-            <Typography className={styles.averageWakeupText1}>
-              {t('average-wakeup1')}
-            </Typography>
+          <div className={styles.left}>
+            <div className={styles.averageWakeupText}>
+              <Typography className={styles.averageWakeupText1}>
+                {t('average-wakeup1')}
+              </Typography>
 
-            <Typography className={styles.averageWakeupText2}>
-              {t('average-wakeup2')}
-            </Typography>
+              <Typography className={styles.averageWakeupText2}>
+                {t('average-wakeup2')}
+              </Typography>
 
-            <Typography className={styles.averageWakeupYear}>
-              {averageEndTimes[currentTime].year}
-            </Typography>
+              <Typography className={styles.averageWakeupYear}>
+                {averageEndTimes[currentTime].year}
+              </Typography>
 
-            <Typography className={styles.averageWakeupText3}>
-              {t('average-wakeup3')}
+              <Typography className={styles.averageWakeupText3}>
+                {t('average-wakeup3')}
+              </Typography>
+            </div>
+
+            <Typography className={styles.averageWakeUpTime}>
+              {averageEndTimes[currentTime].averageTime}
             </Typography>
           </div>
 
-          <Typography className={styles.averageWakeUpTime}>
-            {averageEndTimes[currentTime].averageTime}
-          </Typography>
+          <div className={styles.dots}>
+            {averageEndTimes.map((time, i) => (
+              <div
+                key={time.year}
+                className={classNames(
+                  styles.dot,
+                  { [styles.activeDot]: currentTime === i }
+                )}
+                onClick={() => handleClickDot(i)}
+              />
+            ))}
+          </div>
+        </div>
 
+        <div className={styles.reflectedTime}>
           <Typography className={styles.averageWakeUpTimeReflection}>
             {averageEndTimes[currentTime].averageTime}
           </Typography>
