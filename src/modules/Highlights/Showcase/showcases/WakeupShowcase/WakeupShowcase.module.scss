@@ -12,7 +12,10 @@
     position: relative;
     width: 100%;
     height: 50%;
-    padding: 10% 30%;
+    padding: 10% 28%;
+    display: flex;
+    border: 5px solid red;
+
 
     .averageWakeupText {
       margin-bottom: 5%;
@@ -46,6 +49,30 @@
       margin-top: 15%;
       transform: rotateZ(180deg) rotateY(180deg) rotateX(55deg);
       filter: blur(8px);
+    }
+  }
+
+  .dots {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5%;
+    margin-top: 12px;
+
+    .dot {
+      background: white;
+      width: 10px;
+      height: 20px;
+      border-radius: 5px;
+      opacity: 0.1;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .activeDot {
+      opacity: 0.8;
     }
   }
 }
