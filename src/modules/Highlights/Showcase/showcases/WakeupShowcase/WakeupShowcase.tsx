@@ -16,7 +16,7 @@ export const WakeupShowcase = () => {
   const isMobile = useMediaQuery('only screen and (max-width : 768px)')
 
   const [currentTime, setCurrentTime] = useState(0)
-  const interval = useRef<NodeJS.Timeout | null>(null)
+  const interval = useRef<NodeJS.Timeout>()
   const { t } = useTranslation('translation', { keyPrefix: 'highlights.showcases.wakeup' })
 
   const averageEndTimes = useMemo(() => {
@@ -70,6 +70,10 @@ export const WakeupShowcase = () => {
         // onEnd()
       }
     }, WAKEUP_SHOWCASE_YEAR_INTERVAL)
+
+    return () => {
+      clearInterval(interval.current)
+    }
   }, [averageEndTimes, currentTime, onEnd])
 
   const handleClickDot = useCallback((dotIndex: number) => {
@@ -77,7 +81,7 @@ export const WakeupShowcase = () => {
 
     if (interval.current) {
       clearInterval(interval.current)
-      interval.current = null
+      interval.current = undefined
     }
   }, [])
 
