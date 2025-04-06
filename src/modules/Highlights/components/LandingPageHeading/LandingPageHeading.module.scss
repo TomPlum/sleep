@@ -1,4 +1,4 @@
-@import 'styles/colours';
+@use 'styles/colours' as colours;
 
 .header {
   display: flex;
@@ -64,7 +64,7 @@
       margin-bottom: 5em;
 
       .dataSourceLink {
-        color: $quality;
+        color: colours.$quality;
       }
     }
   }

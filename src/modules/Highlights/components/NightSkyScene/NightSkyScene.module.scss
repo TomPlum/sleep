@@ -92,11 +92,11 @@ $moonSize: 8em;
   content: "";
   background-color: #EBEFE7;
   border-radius: 50%;
-  $size: $moonSize / 6;
+  $size: calc($moonSize / 6);
   height: $size;
   width: $size;
-  top: $moonSize / 4;
-  left: $moonSize / 5;
+  top: calc($moonSize / 4);
+  left: calc($moonSize / 5);
 }
 
 .moon:after {
@@ -104,11 +104,11 @@ $moonSize: 8em;
   content: "";
   background-color: #EBEFE7;
   border-radius: 50%;
-  $size: $moonSize / 8;
+  $size: calc($moonSize / 8);
   height: $size;
   width: $size;
-  top: $moonSize / 2.2;
-  left: $moonSize / 3;
+  top: calc($moonSize / 2.2);
+  left: calc($moonSize / 3);
 }
 
 @keyframes landExiting {
