@@ -2,11 +2,18 @@ import styles from './NestedProgressCircles.module.scss'
 import { NestedProgressCirclesProps } from 'modules/Highlights/components/NestedProgressCircles/types'
 import classNames from 'classnames'
 
-export const NestedProgressCircles = ({ size, strokeWidth, outerPercent, innerPercent, outerColor, innerColor, className }: NestedProgressCirclesProps) => {
-  const innerStrokeWidth = 8
-
+export const NestedProgressCircles = ({
+  size,
+  strokeWidth,
+  innerStrokeWidth,
+  outerPercent,
+  innerPercent,
+  outerColor,
+  innerColor,
+  className
+}: NestedProgressCirclesProps) => {
   const radius = (size - strokeWidth) / 2
-  const innerRadius = ((size - innerStrokeWidth * 2) / 2) - 11
+  const innerRadius = ((size - innerStrokeWidth * 2) / 2) - strokeWidth
   const circumference = 2 * Math.PI * radius
   const innerCircumference = 2 * Math.PI * innerRadius
 

@@ -73,6 +73,10 @@ Renders a single line chart for the selected metric.
 
 # Thanks to
 - User [Vinicius Ferreira](https://codepen.io/Suburbanno) for his open-source [Star animation CSS](https://codepen.io/Suburbanno/pen/OXeMvw) used in the loading screen.
+- User [Michael van Engelshoven](https://codepen.io/micha149) for his [CSS Sleep Animation](https://codepen.io/micha149/pen/MWgbNB) used in the [highlights](https://tomplum.github.io/sleep/highights) page.
+- User [Coding Artist](https://codepen.io/Coding-Artist) for their [A Beautiful Night | Pure CSS](https://codepen.io/Coding-Artist/details/XLMWYw) CodePen that was used as a baseline in the [highlights](https://tomplum.github.io/sleep/highights) page.
+- User [Nawsome](https://uiverse.io/profile/Nawsome) for their [Animated Chevron Button](https://uiverse.io/Nawsome/chilly-moose-65) on UIVerse.
+- User [Ryan Mulligan](https://codepen.io/hexagoncircle) for their [Shiny call-to-action button](https://codepen.io/hexagoncircle/pen/MWMqXbK) on Codepen.
 
 # To Do
 
@@ -83,4 +87,4 @@ Renders a single line chart for the selected metric.
 - If you change the date-range and the selected session is no longer in that range, what should happen?
 - Web worker makes about 800 cached resource requests while its loading
 - Looks like the line chart redraws from new each time now instead of tweening. Is it the <Line /> loop?
-- Move sleep colours to a common stylesheet
+- Upload own pillow db export file

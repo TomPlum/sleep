@@ -13,6 +13,12 @@ describe('Format Duration Utility', () => {
     expect(formattedDuration).toBe('1h 37m')
   })
 
+  it('should format a duration that is more than 24 hours', () => {
+    const duration = (60 * 24) + 51
+    const formattedDuration = formatDuration(duration)
+    expect(formattedDuration).toBe('1d 51m')
+  })
+
   it('should format a duration that is 0', () => {
     const duration = 0
     const formattedDuration = formatDuration(duration)

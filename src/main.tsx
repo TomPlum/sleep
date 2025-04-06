@@ -7,9 +7,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import SleepApp from 'SleepApp'
 import { SleepPage } from 'pages/SleepPage'
 import { NotFoundPage } from 'pages/NotFoundPage'
-import { ConfigProvider, theme } from 'antd'
+import { ConfigProvider } from 'antd'
 import { PageRoutes } from 'routes'
 import { ImprovementsPage } from 'pages/ImprovementsPage'
+import { HighlightsPage } from 'pages/HighlightsPage'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         element: <ImprovementsPage />
       },
       {
+        path: PageRoutes.HIGHLIGHTS,
+        element: <HighlightsPage />
+      },
+      {
         path: '*',
         element: <NotFoundPage />
       }
@@ -36,7 +41,6 @@ createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
     <ConfigProvider
       theme={{
-        algorithm: theme.darkAlgorithm,
         token: {
           fontFamily: 'Nunito'
         }

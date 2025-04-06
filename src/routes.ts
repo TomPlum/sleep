@@ -1,4 +1,5 @@
 export enum PageRoutes {
   SLEEP = '/sleep',
-  IMPROVEMENTS = '/sleep/improvements'
+  IMPROVEMENTS = '/sleep/improvements',
+  HIGHLIGHTS = '/highlights',
 }

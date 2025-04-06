@@ -159,6 +159,30 @@
       }
     }
   },
+  "highlights": {
+    "landing": {
+      "heading": "Sleep Highlights",
+      "sub-heading": "Data sourced from ",
+      "start-button": "Start",
+      "go-to-charts": "Go to sleep metric charts"
+    },
+    "showcases": {
+      "best": {
+        "heading": "Your best session was on the {{ date }}.",
+        "duration": "You slept for {{ duration }}...",
+        "quality": "...with {{ quality }} sleep quality!"
+      },
+      "overview": {
+        "total-sessions": "You recorded a total of {{ total }} sessions",
+        "total-time-slept": "Slept for a total time of {{ time }}."
+      },
+      "wakeup": {
+        "average-wakeup1": "Your average wakeup ",
+        "average-wakeup2": "time in ",
+        "average-wakeup3": " was..."
+      }
+    }
+  },
   "not-found": {
     "status": "404",
     "heading": "You've wandered off into dreamland!",
@@ -182,6 +206,9 @@
       "finishing": "Finishing up",
       "done": "Done",
       "error": "An error occurred while reading the Pillow database"
+    },
+    "description": {
+      "finishing": "Preparing sleep session highlights..."
     }
   }
 }

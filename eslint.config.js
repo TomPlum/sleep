@@ -28,7 +28,7 @@ export default tseslint.config(
       'object-curly-spacing': ['error', 'always'],
       'quotes': ['error', 'single'],
       'quote-props': ['error', 'as-needed'],
-      'import/extensions': ['error', 'never', { 'json': 'always' }],
+      'import/extensions': ['error', 'never', { 'json': 'always', 'scss': 'always' }],
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

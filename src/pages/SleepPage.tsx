@@ -14,7 +14,15 @@ import { SessionHighlightCard } from 'modules/Highlights/components/SessionHighl
 
 export const SleepPage = () => {
   const { isSleepDataLoading } = useSleepContext()
-  const { chartView, sleepMetric, activeMetrics, is3DActive, showHighlightsCard, setShowHighlightsCard } = useChartConfigContext()
+
+  const {
+    chartView,
+    is3DActive,
+    sleepMetric,
+    activeMetrics,
+    showHighlightsCard,
+    setShowHighlightsCard
+  } = useChartConfigContext()
 
   useDynamicFavicon()
 

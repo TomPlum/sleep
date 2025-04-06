@@ -1,0 +1,31 @@
+.dots {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5%;
+  margin-top: 12px;
+  flex-grow: 1;
+
+  .dot {
+    background: white;
+    width: 10px;
+    height: 20px;
+    border-radius: 5px;
+    opacity: 0.1;
+    transition: all ease-in-out 0.3s;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .activeDot {
+    opacity: 0.8;
+  }
+}
+
+.horizontalDots {
+  flex-direction: row;
+  width: 20px;
+  height: 10px;
+}

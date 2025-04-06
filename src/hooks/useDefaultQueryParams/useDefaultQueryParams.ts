@@ -1,10 +1,12 @@
 import { SetStateAction, useCallback, useEffect, useState } from 'react'
 import { SleepMetric } from 'modules/ChartControls'
-import { PageRoutes } from 'routes'
 import { useQueryParams } from 'hooks/useQueryParams'
 import { ChartView } from 'modules/ChartControls/components/ChartViewSelector/types'
+import { useCurrentRoute } from 'hooks/useCurrentRoute'
+import { PageRoutes } from 'routes'
 
 export const useDefaultQueryParams = () => {
+  const { currentRoute } = useCurrentRoute()
   const { queryParams: { start, end, metric, lng, metrics, selected, view, is3D }, updateQueryParam } = useQueryParams()
 
   const [language, setLanguage] = useState(lng)
@@ -16,10 +18,14 @@ export const useDefaultQueryParams = () => {
   const [activeMetrics, setActiveMetrics] = useState(metrics)
 
   useEffect(() => {
+    // We only want to set default query parameters for the main sleep page
+    if (currentRoute != PageRoutes.SLEEP) {
+      return
+    }
+
     // If any of the query parameters are undefined in their respective state hooks,
     // it means the query parameter was missing from the URL when the page was loaded.
     // Here we set them to sensible defaults if possible.
-
     if (!rangeStart || !rangeEnd || !currentMetric || !lng || !activeMetrics || !chartView || is3dActive === undefined) {
       const selectedMetric = currentMetric ?? SleepMetric.QUALITY
       setCurrentMetric(selectedMetric)
@@ -59,7 +65,7 @@ export const useDefaultQueryParams = () => {
 
       updateQueryParam({ route: PageRoutes.SLEEP, params })
     }
-  }, [chartView, currentMetric, language, lng, rangeEnd, rangeStart, activeMetrics, updateQueryParam, is3dActive])
+  }, [chartView, currentMetric, language, lng, rangeEnd, rangeStart, activeMetrics, updateQueryParam, is3dActive, currentRoute])
 
   const handleSetStackedMetrics = useCallback((setState: SetStateAction<SleepMetric[]>) => {
     setActiveMetrics(existing => {
