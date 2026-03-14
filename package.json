@@ -48,7 +48,7 @@
     "@vitejs/plugin-react-swc": "^4.0.0",
     "@vitest/ui": "^3.0.0",
     "@vitest/web-worker": "^3.0.0",
-    "antd-style": "^3.7.1",
+    "antd-style": "^4.0.0",
     "eslint": "^9.11.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
