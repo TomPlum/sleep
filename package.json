@@ -28,7 +28,7 @@
     "react-error-boundary": "^6.0.0",
     "react-force-graph-3d": "^1.24.6",
     "react-i18next": "^15.0.2",
-    "react-router-dom": "^6.27.0",
+    "react-router-dom": "^7.0.0",
     "recharts": "^2.12.7",
     "stats.js": "^0.17.0",
     "three": "0.175.0",
